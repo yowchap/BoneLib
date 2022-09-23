@@ -13,6 +13,9 @@ namespace BoneLib
 
     public class Main : MelonMod
     {
-        
+        public override void OnApplicationStart()
+        {
+            LoggerInstance.Msg("BoneLib loaded");
+        }
     }
 }
