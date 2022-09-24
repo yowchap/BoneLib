@@ -20,6 +20,7 @@ namespace BoneLibUpdater
         private bool isOffline => offlineModePref.Value;
 
         public static readonly string boneLibAssemblyPath = Path.Combine(MelonUtils.GameDirectory, "Mods", "BoneLib.dll");
+        public static readonly string boneLibUpdaterAssemblyPath = Path.Combine(MelonUtils.GameDirectory, "Plugins", "BoneLibUpdater.dll");
 
         public static MelonLogger.Instance Logger { get; private set; }
 
@@ -32,7 +33,7 @@ namespace BoneLibUpdater
             prefsCategory.SaveToFile(false);
 
             LoggerInstance.Msg(isOffline ? ConsoleColor.Yellow : ConsoleColor.Green, isOffline ? "BoneLib is in OFFLINE mode" : "BoneLib is in ONLINE mode");
-            
+
             if (isOffline)
             {
                 if (!File.Exists(boneLibAssemblyPath))
