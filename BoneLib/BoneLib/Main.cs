@@ -16,6 +16,8 @@ namespace BoneLib
         public override void OnApplicationStart()
         {
             ModConsole.Setup(LoggerInstance);
+            Preferences.Setup();
+
             ModConsole.Msg("BoneLib loaded");
         }
     }
