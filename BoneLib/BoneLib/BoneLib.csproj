@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelperMethods.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
