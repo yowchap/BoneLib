@@ -82,7 +82,7 @@ namespace BoneLibUpdater
                                         }
                                     }
                                 }
-                                else if (asset["name"] == "BoneLibLoader.dll")
+                                else if (asset["name"] == "BoneLibLoader.dll") // TODO: Change to BoneLibUpdater.dll for actual releases
                                 {
                                     string downloadUrl = asset["browser_download_url"];
                                     using (HttpClient downloadClient = new HttpClient())
