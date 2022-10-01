@@ -1,3 +1,6 @@
+$OriginalProgressPreference = $Global:ProgressPreference
+$Global:ProgressPreference = 'SilentlyContinue'
+
 $repo = "yowchap/BoneLib"
 $modFile = "BoneLib.dll"
 $pluginFile = "BoneLibUpdater.dll"
@@ -34,7 +37,12 @@ try
 		Write-Host "BoneLib is up to date"
 	}
 }
-catch
+catch [System.Exception]
 {
 	Write-Host "An error occurred, BoneLib was not updated"
+	Write-Host $error
+}
+finally
+{
+	$Global:ProgressPreference = $OriginalProgressPreference
 }

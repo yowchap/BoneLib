@@ -40,13 +40,17 @@ namespace BoneLibUpdater
                         stream.CopyTo(fileStream);
                 }
 
+                // Thanks trev
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.FileName = "powershell.exe";
-                process.StartInfo.Arguments = $"-file \"{updaterScriptPath}\" {localVersion} {MelonUtils.GameDirectory}";
+                process.StartInfo.Arguments = $"-file \"{updaterScriptPath}\" {localVersion} \"{MelonUtils.GameDirectory}\"";
+
                 process.Start();
+                string returnVal = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
+                Main.Logger.Msg(returnVal);
             }
             catch (Exception e)
             {
