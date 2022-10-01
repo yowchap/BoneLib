@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
@@ -10,7 +12,9 @@ namespace BoneLibUpdater
 {
     internal static class Updater
     {
-        private static readonly string releaseApi = "https://api.github.com/repos/yowchap/BoneLib/releases";
+        //private static readonly string releaseApi = "https://api.github.com/repos/yowchap/BoneLib/releases";
+        private static readonly string dataDir = Path.Combine(MelonUtils.UserDataDirectory, "BoneLibUpdater");
+        private static readonly string updaterScriptName = "updater.ps1";
 
         public static void UpdateMod()
         {
@@ -25,95 +29,24 @@ namespace BoneLibUpdater
 
             try
             {
-                using (HttpClient client = new HttpClient())
+                Directory.CreateDirectory(dataDir);
+                string updaterScriptPath = Path.Combine(dataDir, updaterScriptName);
+
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(updaterScriptName));
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 {
-                    // Web request for getting all versions of BoneLib from github API
-                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(releaseApi);
-                    request.Accept = "application/vnd.github.v3.raw";
-                    request.UserAgent = "BoneLibUpdater";
-                    WebResponse response = request.GetResponse();
-
-                    using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-                    {
-                        // Deserialize the response into json
-                        string fileContent = reader.ReadToEnd();
-                        JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
-                        dynamic releases = jsonSerializer.Deserialize<dynamic>(fileContent);
-
-                        // Find the release info for the latest version
-                        Version latestVersion = new Version(0, 0, 0);
-                        dynamic latestRelease = null;
-                        foreach (var release in releases)
-                        {
-                            Version version = new Version(((string)release["tag_name"]).Replace("v", ""));
-                            if (version >= latestVersion)
-                            {
-                                latestVersion = version;
-                                latestRelease = release;
-                            }
-                        }
-
-                        Main.Logger.Msg($"Latest version of BoneLib is {latestVersion}");
-
-                        if (latestVersion > localVersion)
-                        {
-                            Main.Logger.Msg("Downloading latest version...");
-                            int filesDownloaded = 0;
-                            foreach (var asset in latestRelease["assets"])
-                            {
-                                if (asset["name"] == "BoneLib.dll")
-                                {
-                                    string downloadUrl = asset["browser_download_url"];
-                                    using (HttpClient downloadClient = new HttpClient())
-                                    {
-                                        // Download the latest version of BoneLib.dll and save it to the mods folder
-                                        HttpWebRequest downloadRequest = (HttpWebRequest)WebRequest.Create(downloadUrl);
-                                        downloadRequest.Accept = "application/vnd.github.v3.raw";
-                                        downloadRequest.UserAgent = "BoneLibUpdater";
-                                        WebResponse downloadResponse = downloadRequest.GetResponse();
-                                        using (Stream downloadStream = downloadResponse.GetResponseStream())
-                                        {
-                                            using (FileStream fileStream = new FileStream(Main.boneLibAssemblyPath, FileMode.Create, FileAccess.Write))
-                                            {
-                                                downloadStream.CopyTo(fileStream);
-                                                Main.Logger.Msg("Downloaded BoneLib.dll");
-                                                filesDownloaded++;
-                                            }
-                                        }
-                                    }
-                                }
-                                else if (asset["name"] == "BoneLibLoader.dll") // TODO: Change to BoneLibUpdater.dll for actual releases
-                                {
-                                    string downloadUrl = asset["browser_download_url"];
-                                    using (HttpClient downloadClient = new HttpClient())
-                                    {
-                                        // Download the latest version of BoneLibUpdater.dll and save it to the plugins folder
-                                        HttpWebRequest downloadRequest = (HttpWebRequest)WebRequest.Create(downloadUrl);
-                                        downloadRequest.Accept = "application/vnd.github.v3.raw";
-                                        downloadRequest.UserAgent = "BoneLibUpdater";
-                                        WebResponse downloadResponse = downloadRequest.GetResponse();
-                                        using (Stream downloadStream = downloadResponse.GetResponseStream())
-                                        {
-                                            using (FileStream fileStream = new FileStream(Main.boneLibUpdaterAssemblyPath, FileMode.Create, FileAccess.Write))
-                                            {
-                                                downloadStream.CopyTo(fileStream);
-                                                Main.Logger.Msg("Downloaded BoneLibUpdater.dll");
-                                                filesDownloaded++;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (filesDownloaded == 2)
-                                Main.Logger.Msg("Successfully updated BoneLib");
-                        }
-                        else
-                        {
-                            Main.Logger.Msg("Local version is up to date");
-                        }
-                    }
+                    using (FileStream fileStream = File.Create(updaterScriptPath))
+                        stream.CopyTo(fileStream);
                 }
+
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.FileName = "powershell.exe";
+                process.StartInfo.Arguments = $"-file \"{updaterScriptPath}\" {localVersion} {MelonUtils.GameDirectory}";
+                process.Start();
+                process.WaitForExit();
             }
             catch (Exception e)
             {
