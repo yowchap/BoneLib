@@ -24,3 +24,9 @@ obj/
 # format (NuGet v4 and .NET Core).
 project.lock.json
 project.assets.json
+
+References/MelonLoader/Dependencies
+References/MelonLoader/Documentation
+References/MelonLoader/Logs
+References/MelonLoader/*.log
+References/MelonLoader/*.xml
