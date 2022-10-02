@@ -13,14 +13,14 @@ namespace BoneLib
 
     public class Main : MelonMod
     {
-        public override void OnApplicationStart()
+        public override void OnInitializeMelon()
         {
             ModConsole.Setup(LoggerInstance);
             Preferences.Setup();
 
             ModConsole.Msg("BoneLib loaded");
         }
-        
+
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
             Player.FindObjectReferences();
