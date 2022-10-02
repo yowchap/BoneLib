@@ -1,5 +1,7 @@
 ﻿using MelonLoader;
 using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,8 +16,7 @@ namespace BoneLibUpdater
     {
         //private static readonly string releaseApi = "https://api.github.com/repos/yowchap/BoneLib/releases";
         private static readonly string dataDir = Path.Combine(MelonUtils.UserDataDirectory, "BoneLibUpdater");
-        private static readonly string modUpdaterScriptName = "modupdater.ps1";
-        private static readonly string pluginUpdaterScriptName = "pluginupdater.ps1";
+        private static readonly string updaterAppName = "updater.exe";
 
         private static bool pluginNeedsUpdating = false;
 
@@ -34,29 +35,36 @@ namespace BoneLibUpdater
             try
             {
                 Directory.CreateDirectory(dataDir);
-                string updaterScriptPath = Path.Combine(dataDir, modUpdaterScriptName);
+                string updaterScriptPath = Path.Combine(dataDir, updaterAppName);
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
-                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(modUpdaterScriptName));
+                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(updaterAppName));
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 {
                     using (FileStream fileStream = File.Create(updaterScriptPath))
                         stream.CopyTo(fileStream);
                 }
 
-                // Thanks trev
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.FileName = "powershell.exe";
-                process.StartInfo.Arguments = $"-file \"{updaterScriptPath}\" {localVersion} \"{MelonUtils.GameDirectory}\"";
-
+                Process process = new Process();
+                process.StartInfo.FileName = updaterScriptPath;
+                process.StartInfo.Arguments = $"{localVersion} \"{Main.boneLibAssemblyPath}\" \"{Main.boneLibUpdaterAssemblyPath}\" \"false\"";
                 process.Start();
-                string returnVal = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
-                Main.Logger.Msg(returnVal);
-
-                pluginNeedsUpdating = returnVal.Contains("Downloaded");
+                ExitCode code = (ExitCode)process.ExitCode;
+                
+                switch(code)
+                {
+                    case ExitCode.Success:
+                        Main.Logger.Msg("BoneLib.dll updated successfully!");
+                        pluginNeedsUpdating = true;
+                        break;
+                    case ExitCode.UpToDate:
+                        Main.Logger.Msg("BoneLib.dll is already up to date");
+                        break;
+                    case ExitCode.Error:
+                        Main.Logger.Error("BoneLib.dll failed to update");
+                        break;
+                }
             }
             catch (Exception e)
             {
@@ -70,25 +78,28 @@ namespace BoneLibUpdater
             if (pluginNeedsUpdating)
             {
                 Directory.CreateDirectory(dataDir);
-                string updaterScriptPath = Path.Combine(dataDir, pluginUpdaterScriptName);
+                string updaterScriptPath = Path.Combine(dataDir, updaterAppName);
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
-                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(pluginUpdaterScriptName));
+                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(updaterAppName));
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 {
                     using (FileStream fileStream = File.Create(updaterScriptPath))
                         stream.CopyTo(fileStream);
                 }
 
-                // Thanks trev
-                System.Diagnostics.Process process = new System.Diagnostics.Process();
-                process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
-                process.StartInfo.FileName = "powershell.exe";
-                process.StartInfo.Arguments = $"-file \"{updaterScriptPath}\" \"{MelonUtils.GameDirectory}\"";
-
+                Process process = new Process();
+                process.StartInfo.FileName = updaterScriptPath;
+                process.StartInfo.Arguments = $"{new Version(0, 0, 0)} \"{Main.boneLibAssemblyPath}\" \"{Main.boneLibUpdaterAssemblyPath}\" true";
                 process.Start();
             }
         }
+    }
+
+    enum ExitCode
+    {
+        Success = 0,
+        UpToDate = 1,
+        Error = 2
     }
 }

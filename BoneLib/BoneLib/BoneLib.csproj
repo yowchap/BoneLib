@@ -50,9 +50,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>F:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>F:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="SLZ.Algorithms">
       <HintPath>F:\SteamLibrary\steamapps\common\BONELAB\MelonLoader\Managed\SLZ.Algorithms.dll</HintPath>
     </Reference>
