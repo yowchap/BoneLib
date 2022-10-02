@@ -17,7 +17,7 @@ namespace BoneLib
         {
             ModConsole.Setup(LoggerInstance);
             Preferences.Setup();
-            
+
             ModConsole.Msg("BoneLib loaded");
         }
 
