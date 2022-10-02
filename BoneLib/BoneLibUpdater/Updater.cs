@@ -14,7 +14,7 @@ namespace BoneLibUpdater
     {
         //private static readonly string releaseApi = "https://api.github.com/repos/yowchap/BoneLib/releases";
         private static readonly string dataDir = Path.Combine(MelonUtils.UserDataDirectory, "BoneLibUpdater");
-        private static readonly string updaterScriptName = "updater.ps1";
+        private static readonly string modUpdaterScriptName = "modupdater.ps1";
 
         public static void UpdateMod()
         {
@@ -30,10 +30,10 @@ namespace BoneLibUpdater
             try
             {
                 Directory.CreateDirectory(dataDir);
-                string updaterScriptPath = Path.Combine(dataDir, updaterScriptName);
+                string updaterScriptPath = Path.Combine(dataDir, modUpdaterScriptName);
 
                 Assembly assembly = Assembly.GetExecutingAssembly();
-                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(updaterScriptName));
+                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(modUpdaterScriptName));
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 {
                     using (FileStream fileStream = File.Create(updaterScriptPath))
