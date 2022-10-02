@@ -3,7 +3,6 @@ $Global:ProgressPreference = 'SilentlyContinue'
 
 $repo = "yowchap/BoneLib"
 $modFile = "BoneLib.dll"
-$pluginFile = "BoneLibUpdater.dll"
 
 $releases = "https://api.github.com/repos/$repo/releases"
 
@@ -24,10 +23,6 @@ try
 		
 		$download = "https://github.com/$repo/releases/download/$latestTag/$modFile"
 		$path = [IO.Path]::Combine($gameDir, "Mods", $modFile)
-		Invoke-WebRequest $download -Out $path
-		
-		$download = "https://github.com/$repo/releases/download/$latestTag/$pluginFile"
-		$path = [IO.Path]::Combine($gameDir, "Plugins", $pluginFile)
 		Invoke-WebRequest $download -Out $path
 		
 		Write-Host "Downloaded latest version"

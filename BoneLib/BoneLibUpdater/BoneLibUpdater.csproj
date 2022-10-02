@@ -53,9 +53,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Updater.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Resources\updater.ps1" />
+    <EmbeddedResource Include="Resources\pluginupdater.ps1" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\modupdater.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

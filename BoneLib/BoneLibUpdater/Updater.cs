@@ -15,6 +15,10 @@ namespace BoneLibUpdater
         //private static readonly string releaseApi = "https://api.github.com/repos/yowchap/BoneLib/releases";
         private static readonly string dataDir = Path.Combine(MelonUtils.UserDataDirectory, "BoneLibUpdater");
         private static readonly string modUpdaterScriptName = "modupdater.ps1";
+        private static readonly string pluginUpdaterScriptName = "pluginupdater.ps1";
+
+        private static bool pluginNeedsUpdating = false;
+
 
         public static void UpdateMod()
         {
@@ -51,11 +55,39 @@ namespace BoneLibUpdater
                 string returnVal = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
                 Main.Logger.Msg(returnVal);
+
+                pluginNeedsUpdating = returnVal.Contains("Downloaded");
             }
             catch (Exception e)
             {
                 Main.Logger.Error("Error while running BoneLib updater");
                 Main.Logger.Error(e.ToString());
+            }
+        }
+
+        public static void UpdatePlugin()
+        {
+            if (pluginNeedsUpdating)
+            {
+                Directory.CreateDirectory(dataDir);
+                string updaterScriptPath = Path.Combine(dataDir, pluginUpdaterScriptName);
+
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                string resourceName = assembly.GetManifestResourceNames().First(x => x.Contains(pluginUpdaterScriptName));
+                using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    using (FileStream fileStream = File.Create(updaterScriptPath))
+                        stream.CopyTo(fileStream);
+                }
+
+                // Thanks trev
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                process.StartInfo.UseShellExecute = false;
+                process.StartInfo.RedirectStandardOutput = true;
+                process.StartInfo.FileName = "powershell.exe";
+                process.StartInfo.Arguments = $"-file \"{updaterScriptPath}\" \"{MelonUtils.GameDirectory}\"";
+
+                process.Start();
             }
         }
     }

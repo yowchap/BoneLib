@@ -48,5 +48,10 @@ namespace BoneLibUpdater
                 Updater.UpdateMod();
             }
         }
+
+        public override void OnApplicationQuit()
+        {
+            Updater.UpdatePlugin();
+        }
     }
 }
