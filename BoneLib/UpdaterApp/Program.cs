@@ -75,7 +75,6 @@ namespace UpdaterApp
                                                 using (FileStream fileStream = new FileStream(boneLibAssemblyPath, FileMode.Create, FileAccess.Write))
                                                 {
                                                     downloadStream.CopyTo(fileStream);
-                                                    Console.WriteLine("Successfully updated BoneLib.dll");
                                                     return (int)ExitCode.Success;
                                                 }
                                             }
@@ -87,7 +86,6 @@ namespace UpdaterApp
                             }
                             else
                             {
-                                Console.WriteLine("Local version is up to date");
                                 return (int)ExitCode.UpToDate;
                             }
                         }
