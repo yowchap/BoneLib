@@ -18,7 +18,7 @@ namespace BoneLib.UI
 
         public Element[] GetElementsOfType<T>(T elementType) where T : Element
         {
-            return Elements.Where(e => e.GetType() == elementType.GetType()).ToArray();
+            return Elements.OfType<T>().ToArray();
         }
 
         public void AddElement(Element e) => Elements.Add(e);
