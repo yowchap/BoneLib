@@ -11,5 +11,7 @@ namespace BoneLib.UI
     {
         public Vector2 Position;
         public Color FrontColor;
+
+        public Action ElementAction;
     }
 }

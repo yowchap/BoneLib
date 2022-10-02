@@ -119,6 +119,8 @@
     <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Element.cs" />
+    <Compile Include="UI\Elements\ButtonElement.cs" />
+    <Compile Include="UI\Elements\FloatElement.cs" />
     <Compile Include="UI\Page.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
