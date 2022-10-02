@@ -20,5 +20,10 @@ namespace BoneLib
 
             ModConsole.Msg("BoneLib loaded");
         }
+        
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        {
+            Player.FindObjectReferences();
+        }
     }
 }
