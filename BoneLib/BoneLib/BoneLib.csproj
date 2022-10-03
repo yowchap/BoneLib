@@ -121,7 +121,6 @@
     <Compile Include="UI\Elements\ButtonElement.cs" />
     <Compile Include="UI\Elements\FloatElement.cs" />
     <Compile Include="UI\Pages\Page.cs" />
-    <Compile Include="UI\Pages\PageFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

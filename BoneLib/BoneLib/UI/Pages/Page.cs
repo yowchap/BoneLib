@@ -6,20 +6,29 @@ namespace BoneLib.UI
     public class Page
     {
         public string Title { get; set; }
-        public List<Element> Elements { get; set; }
+
+        public List<Element> elements;
 
         public Page(string title)
         {
             Title = title;
         }
 
-        public Element[] GetElementsOfType<T>(T elementType) where T : Element
+        public T[] GetElementsOfType<T>() where T : Element
         {
-            return Elements.OfType<T>().ToArray();
+            return elements.OfType<T>().ToArray();
         }
 
-        public void AddElement(Element e) => Elements.Add(e);
+        public void AddElement(Element e)
+        {
+            elements.Add(e);
+            e.parentPage = this;
+        }
 
-        public void RemoveElement(Element e) => Elements.Remove(e);
+        public void RemoveElement(Element e)
+        {
+            elements.Remove(e);
+            e.parentPage = null;
+        }
     }
 }

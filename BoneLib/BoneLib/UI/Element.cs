@@ -5,17 +5,18 @@ namespace BoneLib.UI
 {
     public abstract class Element
     {
-        public DirtyProperty<Vector2> Position;
-        public DirtyProperty<Vector2> Size;
-        public DirtyProperty<Color> FrontColor;
+        public DirtyProperty<Vector2> position;
+        public DirtyProperty<Vector2> size;
+        public DirtyProperty<Color> frontColor;
 
-        public Action ElementAction;
+        public Action elementAction;
+        public Page parentPage;
 
         public Element()
         {
-            Position.OnDirty((t) => SetDirty(true));
-            Size.OnDirty((t) => SetDirty(true));
-            FrontColor.OnDirty((t) => SetDirty(true));
+            position.OnDirty((t) => SetDirty(true));
+            size.OnDirty((t) => SetDirty(true));
+            frontColor.OnDirty((t) => SetDirty(true));
         }
 
         public bool IsDirty { get; private set; }
