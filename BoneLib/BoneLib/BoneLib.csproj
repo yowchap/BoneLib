@@ -111,6 +111,7 @@
     <Compile Include="DirtyProperty.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HelperMethods.cs" />
+    <Compile Include="Hooking.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />

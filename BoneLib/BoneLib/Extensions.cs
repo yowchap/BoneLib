@@ -2,7 +2,7 @@
 using SLZ.Combat;
 using SLZ.Props.Weapons;
 
-namespace Bonelib
+namespace BoneLib
 {
     public static class Extensions
     {
