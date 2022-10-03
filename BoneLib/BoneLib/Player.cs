@@ -1,6 +1,7 @@
 ﻿using SLZ.Interaction;
 using SLZ.Props.Weapons;
 using SLZ.Rig;
+using SLZ.VRMK;
 using UnityEngine;
 
 namespace BoneLib
@@ -21,6 +22,8 @@ namespace BoneLib
         public static BaseController rightController { get; private set; }
         public static bool controllersExist => leftController != null && rightController != null;
         private static ControllerRig controllerRig;
+
+        private static PhysicsRig physicsRig;
 
         internal static void FindObjectReferences()
         {
@@ -66,6 +69,20 @@ namespace BoneLib
             }
             return playerHead;
         }
+        /// <summary>
+        /// Returns the PhysicsRig.
+        /// </summary>
+        public static PhysicsRig GetPhysicsRig()
+        {
+            if (physicsRig == null)
+                physicsRig = GameObject.FindObjectOfType<PhysicsRig>();
+            return physicsRig;
+        }
+
+        /// <summary>
+        /// Returns the Player's current avatar.
+        /// </summary>
+        public static Avatar GetCurrentAvatar() => GetRigManager().GetComponent<RigManager>().avatar;
 
         /// <summary>
         /// Generic method for getting any component on the object the player is holding.

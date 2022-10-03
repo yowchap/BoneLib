@@ -1,4 +1,5 @@
 ﻿using MelonLoader;
+using SLZ.Interaction;
 
 namespace BoneLib
 {
@@ -18,12 +19,16 @@ namespace BoneLib
             ModConsole.Setup(LoggerInstance);
             Preferences.Setup();
 
+            Hooking.SetHarmony(HarmonyInstance);
+            Hooking.InitHooks();
+
             ModConsole.Msg("BoneLib loaded");
         }
 
-        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
             Player.FindObjectReferences();
         }
+
     }
 }
