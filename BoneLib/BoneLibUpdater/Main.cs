@@ -15,7 +15,7 @@ namespace BoneLibUpdater
 
     public class Main : MelonPlugin
     {
-        private MelonPreferences_Category prefsCategory = MelonPreferences.CreateCategory("BoneLibLoader");
+        private MelonPreferences_Category prefsCategory = MelonPreferences.CreateCategory("BoneLibUpdater");
         private MelonPreferences_Entry<bool> offlineModePref;
         private bool isOffline => offlineModePref.Value;
 

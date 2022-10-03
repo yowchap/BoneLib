@@ -1,20 +1,14 @@
 ﻿using MelonLoader;
 using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Reflection;
-using System.Text;
-using System.Web.Script.Serialization;
 
 namespace BoneLibUpdater
 {
     internal static class Updater
     {
-        //private static readonly string releaseApi = "https://api.github.com/repos/yowchap/BoneLib/releases";
         private static readonly string dataDir = Path.Combine(MelonUtils.UserDataDirectory, "BoneLibUpdater");
         private static readonly string updaterAppName = "updater.exe";
 
@@ -51,8 +45,8 @@ namespace BoneLibUpdater
                 process.Start();
                 process.WaitForExit();
                 ExitCode code = (ExitCode)process.ExitCode;
-                
-                switch(code)
+
+                switch (code)
                 {
                     case ExitCode.Success:
                         Main.Logger.Msg("BoneLib.dll updated successfully!");

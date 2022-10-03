@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace UpdaterApp
@@ -75,7 +72,6 @@ namespace UpdaterApp
                                                 using (FileStream fileStream = new FileStream(boneLibAssemblyPath, FileMode.Create, FileAccess.Write))
                                                 {
                                                     downloadStream.CopyTo(fileStream);
-                                                    Console.WriteLine("Successfully updated BoneLib.dll");
                                                     return (int)ExitCode.Success;
                                                 }
                                             }
@@ -87,7 +83,6 @@ namespace UpdaterApp
                             }
                             else
                             {
-                                Console.WriteLine("Local version is up to date");
                                 return (int)ExitCode.UpToDate;
                             }
                         }
@@ -128,7 +123,7 @@ namespace UpdaterApp
             {
                 Console.WriteLine("Error while running BoneLib updater");
                 Console.WriteLine(e.ToString());
-                
+
                 return (int)ExitCode.Error;
             }
         }
