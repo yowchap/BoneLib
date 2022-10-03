@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
-namespace BoneLib.UI.Elements
+namespace BoneLib.UI
 {
-    public class ButtonElement : Element
+    public class PageFactory
     {
-        public ButtonElement()
+        public static GameObject GenerateUI()
         {
+            return null;
         }
     }
 }

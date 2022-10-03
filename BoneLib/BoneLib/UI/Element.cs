@@ -7,11 +7,23 @@ using UnityEngine;
 
 namespace BoneLib.UI
 {
-    public class Element
+    public abstract class Element
     {
-        public Vector2 Position;
-        public Color FrontColor;
+        public DirtyProperty<Vector2> Position;
+        public DirtyProperty<Vector2> Size;
+        public DirtyProperty<Color> FrontColor;
 
         public Action ElementAction;
+
+        public Element()
+        {
+            Position.OnDirty((t) => SetDirty(true));
+            Size.OnDirty((t) => SetDirty(true));
+            FrontColor.OnDirty((t) => SetDirty(true));
+        }
+
+        public bool IsDirty { get; private set; }
+
+        public void SetDirty(bool dirty) => IsDirty = dirty;
     }
 }

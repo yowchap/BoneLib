@@ -10,7 +10,6 @@ namespace BoneLib.UI.Elements
     {
         public FloatElement()
         {
-            // Make Unity UI button and connect it to the ElementAction;
         }
     }
 }
