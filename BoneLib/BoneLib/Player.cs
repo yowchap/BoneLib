@@ -87,6 +87,7 @@ namespace BoneLib
         /// <summary>
         /// Generic method for getting any component on the object the player is holding.
         /// </summary>
+        /// <returns>null if there is no component of type <typeparamref name="T"/>, or <paramref name="hand"/> is null.</returns>
         public static T GetComponentInHand<T>(Hand hand) where T : Component
         {
             T value = null;
@@ -107,18 +108,19 @@ namespace BoneLib
         public static Gun GetGunInHand(Hand hand) => GetComponentInHand<Gun>(hand);
 
         /// <summary>
-        /// Returns the object the given hand is holding or null if the hand is null.
+        /// Returns the object <paramref name="hand"/> is holding or null if <paramref name="hand"/> is null.
         /// </summary>
         public static GameObject GetObjectInHand(Hand hand) => hand?.m_CurrentAttachedGO;
 
         /// <summary>
-        /// Positive values: Clockwise rotation
+        /// Positive values: Clockwise rotation 
+        /// <para/>
         /// Negative values: Counterclockwise rotation
         /// </summary>
-        public static void RotatePlayer(float rotation)
+        public static void RotatePlayer(float degrees)
         {
             if (controllerRig != null)
-                controllerRig.SetTwist(rotation);
+                controllerRig.SetTwist(degrees);
         }
     }
 }
