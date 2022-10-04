@@ -6,6 +6,9 @@ namespace BoneLib
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Set rounds-per-minute.
+        /// </summary>
         public static void SetRpm(this Gun gun, float rpm)
         {
             gun.roundsPerMinute = rpm;

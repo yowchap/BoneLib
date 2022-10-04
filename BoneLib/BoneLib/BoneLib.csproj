@@ -108,6 +108,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLMasks.cs" />
     <Compile Include="DirtyProperty.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HelperMethods.cs" />

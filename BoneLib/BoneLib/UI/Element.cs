@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace BoneLib.UI
 {
+    // @Todo(Parzival): Should add summaries to UI API when it's more fleshed out.
     public abstract class Element
     {
         public DirtyProperty<Vector2> position;
