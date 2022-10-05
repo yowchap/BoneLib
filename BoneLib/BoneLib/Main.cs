@@ -1,5 +1,4 @@
 ﻿using MelonLoader;
-using SLZ.Interaction;
 
 namespace BoneLib
 {

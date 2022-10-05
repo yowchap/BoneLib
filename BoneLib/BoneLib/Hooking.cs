@@ -1,14 +1,14 @@
-﻿using System;
-using SLZ.VRMK;
-using System.Reflection;
+﻿using HarmonyLib;
 using MelonLoader;
-using HarmonyLib;
 using SLZ.Interaction;
 using SLZ.Props.Weapons;
+using SLZ.Rig;
+using SLZ.VRMK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
-using SLZ.Rig;
 
 namespace BoneLib
 {
