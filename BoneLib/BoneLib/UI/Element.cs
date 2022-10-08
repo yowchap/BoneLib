@@ -1,26 +1,33 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace BoneLib.UI
 {
-    public abstract class Element
+    [MelonLoader.RegisterTypeInIl2Cpp]
+    public abstract class Element : MonoBehaviour
     {
         public DirtyProperty<Vector2> position;
         public DirtyProperty<Vector2> size;
-        public DirtyProperty<Color> frontColor;
 
         public Action elementAction;
         public Page parentPage;
 
-        public Element()
+        public void Start()
         {
-            position.OnDirty((t) => SetDirty(true));
-            size.OnDirty((t) => SetDirty(true));
-            frontColor.OnDirty((t) => SetDirty(true));
         }
 
-        public bool IsDirty { get; private set; }
+        public void Update()
+        {
+            position.OnDirty((t) =>
+            {
+                transform.position = t;
+            });
 
-        public void SetDirty(bool dirty) => IsDirty = dirty;
+            size.OnDirty((t) =>
+            {
+                transform.localScale = t;
+            });
+        }
     }
 }

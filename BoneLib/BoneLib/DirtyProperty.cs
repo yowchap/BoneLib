@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BoneLib
 {
@@ -11,7 +14,10 @@ namespace BoneLib
         public bool isDirty = true;
         protected T value;
 
-        public DirtyProperty(T initial) => value = initial;
+        public DirtyProperty(T value)
+        {
+            this.value = value;
+        }
 
         public delegate void DirtyHandler(T input);
 
@@ -21,7 +27,10 @@ namespace BoneLib
                 handler(this);
         }
 
-        public static implicit operator DirtyProperty<T>(T value) => new DirtyProperty<T>(value); // Setter
+        public static implicit operator DirtyProperty<T>(T value) // Setter
+        {
+            return new DirtyProperty<T>(value);
+        }
 
         public static implicit operator T(DirtyProperty<T> prop) // Getter
         {
