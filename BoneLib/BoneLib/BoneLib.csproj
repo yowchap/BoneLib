@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +33,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -76,6 +78,7 @@
     <Reference Include="UnhollowerRuntimeLib">
       <HintPath>..\..\References\MelonLoader\Managed\UnhollowerRuntimeLib.dll</HintPath>
     </Reference>
+    <Reference Include="UniTask, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Unity.TextMeshPro">
       <HintPath>..\..\References\MelonLoader\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -84,6 +87,10 @@
     </Reference>
     <Reference Include="UnityEngine.AssetBundleModule">
       <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.CoreModule.dll</HintPath>
@@ -109,12 +116,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DirtyProperty.cs" />
+    <Compile Include="GameLayers.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooking.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
+    <Compile Include="Nullables\NullableExtensions.cs" />
+    <Compile Include="Nullables\BoxedNullable.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
