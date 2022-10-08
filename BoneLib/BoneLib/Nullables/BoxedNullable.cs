@@ -1,10 +1,10 @@
-﻿namespace BoneLib.Nullables
-{
-    using HarmonyLib;
-    using System;
-    using System.Runtime.InteropServices;
-    using UnhollowerBaseLib;
+﻿using HarmonyLib;
+using System;
+using System.Runtime.InteropServices;
+using UnhollowerBaseLib;
 
+namespace BoneLib.Nullables
+{
     public class BoxedNullable<T> : Il2CppSystem.ValueType where T : unmanaged
     {
         private static readonly IntPtr classPtr;
@@ -118,5 +118,16 @@
         {
             return new Il2CppSystem.Nullable<T>(me.Pointer);
         }
+    }
+}
+
+namespace System.Runtime.CompilerServices
+{
+    /// <summary>
+    /// Allows <see cref="BoneLib.Nullables.BoxedNullable{T}"/> to compile, with its <c>where T : unmanaged</c> type stipulation.
+    /// </summary>
+    public class IsUnmanagedAttribute
+    {
+
     }
 }

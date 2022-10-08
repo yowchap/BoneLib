@@ -123,7 +123,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
-    <Compile Include="Nullables\Compiler_IsUnmanagedAttribute.cs" />
     <Compile Include="Nullables\NullableExtensions.cs" />
     <Compile Include="Nullables\BoxedNullable.cs" />
     <Compile Include="Player.cs" />
