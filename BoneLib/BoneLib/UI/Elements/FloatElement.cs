@@ -1,6 +1,6 @@
 ﻿namespace BoneLib.UI.Elements
 {
-    [ElementPrefab("float")]
+    //[ElementPrefab("float")]
     public class FloatElement : Element
     {
         public FloatElement()
