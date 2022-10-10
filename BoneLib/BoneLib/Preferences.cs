@@ -11,7 +11,11 @@ namespace BoneLib
 
         public static void Setup()
         {
+            ModConsole.Msg("Starting preferences setup", LoggingMode.DEBUG);
+
             loggingMode = new ModPref<LoggingMode>(category, "LoggingMode", LoggingMode.NORMAL);
+
+            ModConsole.Msg("Finished preferences setup", LoggingMode.DEBUG);
         }
     }
 }

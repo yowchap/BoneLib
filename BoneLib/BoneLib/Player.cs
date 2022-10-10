@@ -27,6 +27,8 @@ namespace BoneLib
 
         internal static void FindObjectReferences()
         {
+            ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
+
             Hand[] hands = GameObject.FindObjectsOfType<Hand>();
             foreach (Hand hand in hands)
             {
@@ -44,6 +46,8 @@ namespace BoneLib
                     rightController = baseController;
             }
             controllerRig = GameObject.FindObjectOfType<ControllerRig>();
+
+            ModConsole.Msg("Found player object references", LoggingMode.DEBUG);
         }
         /// <summary>
         /// Returns the root gameobject in the player rig manager.
