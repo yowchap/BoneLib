@@ -98,6 +98,10 @@
     <Reference Include="UnityEngine.Il2CppAssetBundleManager">
       <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.Il2CppAssetBundleManager.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.InputLegacyModule">
       <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
@@ -122,11 +126,13 @@
     <Compile Include="Main.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
+    <Compile Include="MonoBehaviours\PopupBox.cs" />
     <Compile Include="Nullables\NullableExtensions.cs" />
     <Compile Include="Nullables\BoxedNullable.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomShit\PopupBoxManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
