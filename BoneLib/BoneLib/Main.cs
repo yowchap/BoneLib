@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using BoneLib.RandomShit;
+using MelonLoader;
 
 namespace BoneLib
 {
@@ -7,7 +8,7 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "Gnonme"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "1.1.0"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "1.2.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
@@ -21,12 +22,15 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
+            //PopupBoxManager.StartCoroutines();
+
             ModConsole.Msg("BoneLib loaded");
         }
 
         public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
             Player.FindObjectReferences();
+            PopupBoxManager.CreateBaseAd();
         }
 
     }
