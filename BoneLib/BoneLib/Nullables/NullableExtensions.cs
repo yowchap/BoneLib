@@ -11,7 +11,7 @@ using UnhollowerBaseLib;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace ModThatIsNotMod.Nullables
+namespace BoneLib.Nullables
 {
     public static class NullableMethodExtensions
     {
