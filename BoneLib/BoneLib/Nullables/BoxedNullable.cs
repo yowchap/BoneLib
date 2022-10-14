@@ -19,7 +19,7 @@ namespace BoneLib.Nullables
             TClassPtr = Il2CppClassPointerStore<T>.NativeClassPtr;
 
             uint align = 0;
-            hasValueOffset = (int)IL2CPP.il2cpp_field_get_offset(IL2CPP.GetIl2CppField(classPtr, "has_value"));
+            hasValueOffset = (int)IL2CPP.il2cpp_field_get_offset(IL2CPP.GetIl2CppField(classPtr, "hasValue"));
             valueSize = IL2CPP.il2cpp_class_value_size(TClassPtr, ref align);
             marshalSize = Marshal.SizeOf(typeof(T));
         }
