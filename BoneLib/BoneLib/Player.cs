@@ -25,29 +25,27 @@ namespace BoneLib
 
         private static PhysicsRig physicsRig;
 
-        internal static void FindObjectReferences()
+        internal static bool FindObjectReferences(RigManager rigManager = null)
         {
             ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
 
-            Hand[] hands = GameObject.FindObjectsOfType<Hand>();
-            foreach (Hand hand in hands)
-            {
-                if (hand.name.ToLower().Contains("left"))
-                    leftHand = hand;
-                else if (hand.name.ToLower().Contains("right"))
-                    rightHand = hand;
-            }
-            BaseController[] baseControllers = GameObject.FindObjectsOfType<BaseController>();
-            foreach (BaseController baseController in baseControllers)
-            {
-                if (baseController.name.ToLower().Contains("left"))
-                    leftController = baseController;
-                else if (baseController.name.ToLower().Contains("right"))
-                    rightController = baseController;
-            }
-            controllerRig = GameObject.FindObjectOfType<ControllerRig>();
+            if (controllersExist && handsExist && controllerRig != null)
+                return false;
+            if (rigManager == null)
+                rigManager = GameObject.FindObjectOfType<RigManager>();
+
+            leftController = rigManager?.ControllerRig?.leftController;
+            rightController = rigManager?.ControllerRig?.rightController;
+
+            controllerRig = rigManager?.ControllerRig;
+
+            leftHand = rigManager?.physicsRig?.leftHand;
+            rightHand = rigManager?.physicsRig?.rightHand;
+            physicsRig = rigManager?.physicsRig;
 
             ModConsole.Msg("Found player object references", LoggingMode.DEBUG);
+
+            return controllersExist && handsExist && controllerRig != null;
         }
         /// <summary>
         /// Returns the root gameobject in the player rig manager.

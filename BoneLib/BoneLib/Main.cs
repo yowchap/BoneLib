@@ -27,9 +27,8 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
-        public override void OnSceneWasInitialized(int buildIndex, string sceneName)
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            Player.FindObjectReferences();
             PopupBoxManager.CreateBaseAd();
         }
 

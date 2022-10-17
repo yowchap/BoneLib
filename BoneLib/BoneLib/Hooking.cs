@@ -34,6 +34,8 @@ namespace BoneLib
         public static event Action<bool> OnPlayerDeathImminent;
         public static event Action OnPlayerDeath;
 
+        public static event Action OnPlayerReferencesFound;
+
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
         internal static void InitHooks()
         {
@@ -49,9 +51,12 @@ namespace BoneLib
             CreateHook(typeof(Grip).GetMethod("OnAttachedToHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripAttachedPostfix), AccessTools.all));
             CreateHook(typeof(Grip).GetMethod("OnDetachedFromHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
 
+            CreateHook(typeof(RigManager).GetMethod("Awake", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerAwake), AccessTools.all));
+
             Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
             Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
             Player_Health.add_OnPlayerDeath(OnPlayerDeath);
+
 
             while (delayedHooks.Count > 0)
             {
@@ -93,7 +98,11 @@ namespace BoneLib
 
         private static void OnGripAttachedPostfix(Grip __instance, Hand hand) => OnGripAttached?.Invoke(__instance, hand);
         private static void OnGripDetachedPostfix(Grip __instance, Hand hand) => OnGripDetached?.Invoke(__instance, hand);
-
+        private static void OnRigManagerAwake(RigManager __instance)
+        {
+            if (Player.FindObjectReferences(__instance))
+                OnPlayerReferencesFound?.Invoke();
+        }
         struct DelayedHookData
         {
             public MethodInfo original;
