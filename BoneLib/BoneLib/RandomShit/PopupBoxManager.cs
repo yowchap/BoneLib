@@ -68,16 +68,29 @@ namespace BoneLib.RandomShit
             "which one is your tabloid tabloid \nwhat"
         };
 
-        private static GameObject baseAd;
+        private static GameObject basePopup;
 
 
         public static GameObject CreateNewPopupBox() => CreateNewPopupBox(adMessages[Random.Range(0, adMessages.Count)]);
         public static GameObject CreateNewPopupBox(string adText)
         {
-            GameObject newPopup = GameObject.Instantiate(baseAd);
+            if (basePopup == null)
+            {
+                ModConsole.Error("PopupBoxManager: Base popup is null");
+                return null;
+            }
+
+            GameObject newPopup = GameObject.Instantiate(basePopup);
             TextMeshPro tmpro = newPopup.GetComponentInChildren<TextMeshPro>();
+            
             tmpro.text = adText;
             newPopup.SetActive(true);
+            
+            tmpro.enableAutoSizing = true;
+            tmpro.fontSizeMin = 0.5f;
+            tmpro.fontSizeMax = 4;
+            tmpro.alignment = TextAlignmentOptions.Center;
+            tmpro.enableWordWrapping = true;
             tmpro.alignment = TextAlignmentOptions.Center; // For some reason this has to be set here as well ¯\_(ツ)_/¯
 
             if (adText == "haha you can't grab this one")
@@ -99,7 +112,7 @@ namespace BoneLib.RandomShit
             ImageConversion.LoadImage(texture, imageBytes);
 
             // Instantiate the ad gameobject and disable the text
-            GameObject newPopup = GameObject.Instantiate(baseAd);
+            GameObject newPopup = GameObject.Instantiate(basePopup);
             newPopup.GetComponentInChildren<TextMeshPro>().gameObject.SetActive(false);
 
             // Assign the picture to the material
@@ -138,7 +151,7 @@ namespace BoneLib.RandomShit
 
             //yield return new WaitForSeconds(Random.Range(Preferences.timeBetweenAds.value.x, Preferences.timeBetweenAds.value.y));
 
-            while (baseAd == null)
+            while (basePopup == null)
                 yield return new WaitForSeconds(5f);
 
             GameObject newAd = CreateNewPopupBox();
@@ -179,15 +192,15 @@ namespace BoneLib.RandomShit
             #endregion
 
             #region Base object
-            baseAd = new GameObject($"Ad Base");
-            baseAd.SetActive(false);
+            basePopup = new GameObject($"Ad Base");
+            basePopup.SetActive(false);
 
-            Rigidbody rb = baseAd.AddComponent<Rigidbody>();
+            Rigidbody rb = basePopup.AddComponent<Rigidbody>();
             rb.mass = 8;
             rb.drag = 0.15f;
             rb.angularDrag = 0.15f;
 
-            ImpactProperties impactProperties = baseAd.AddComponent<ImpactProperties>();
+            ImpactProperties impactProperties = basePopup.AddComponent<ImpactProperties>();
             impactProperties.material = ImpactPropertiesVariables.Material.PureMetal;
             impactProperties.modelType = ImpactPropertiesVariables.ModelType.Model;
             impactProperties.MainColor = Color.white;
@@ -196,7 +209,7 @@ namespace BoneLib.RandomShit
             impactProperties.megaPascalModifier = 1;
             impactProperties.FireResistance = 100;
 
-            ImpactSFX sfx = baseAd.AddComponent<ImpactSFX>();
+            ImpactSFX sfx = basePopup.AddComponent<ImpactSFX>();
             sfx.impactSoft = sounds.ToArray();
             sfx.impactHard = sounds.ToArray();
             //sfx.outputMixer = Audio.sfxMixer; // TODO: Audio class
@@ -206,14 +219,14 @@ namespace BoneLib.RandomShit
             sfx.velocityClipSplit = 4;
             sfx.jointBreakVolume = 1;
 
-            InteractableHost host = baseAd.AddComponent<InteractableHost>();
+            InteractableHost host = basePopup.AddComponent<InteractableHost>();
             host.HasRigidbody = true;
             #endregion
 
             #region Mesh object
             GameObject mesh = GameObject.CreatePrimitive(PrimitiveType.Cube);
             mesh.name = "Mesh";
-            mesh.transform.parent = baseAd.transform;
+            mesh.transform.parent = basePopup.transform;
             mesh.transform.localPosition = Vector3.zero;
             mesh.transform.localScale = new Vector3(2f, 1f, 0.02f);
             mesh.GetComponent<MeshRenderer>().material.color = new Color(0.1509434f, 0.1509434f, 0.1509434f);
@@ -221,7 +234,7 @@ namespace BoneLib.RandomShit
 
             #region Grip object
             GameObject grip = new GameObject("Grip");
-            grip.transform.parent = baseAd.transform;
+            grip.transform.parent = basePopup.transform;
             grip.layer = LayerMask.NameToLayer("Interactable");
 
             BoxCollider col = grip.AddComponent<BoxCollider>();
@@ -273,7 +286,7 @@ namespace BoneLib.RandomShit
             #endregion
 
             #region Destructable object
-            ObjectDestructable destructable = baseAd.AddComponent<ObjectDestructable>();
+            ObjectDestructable destructable = basePopup.AddComponent<ObjectDestructable>();
             destructable.damageFromImpact = true;
             //destructable.blasterType = StressLevelZero.Pool.PoolSpawner.BlasterType.Sparks; // TODO: destruction effects
             destructable.blasterScale = Vector3.one * 3;
@@ -292,7 +305,7 @@ namespace BoneLib.RandomShit
 
             #region Text object
             GameObject text = new GameObject("Text");
-            text.transform.parent = baseAd.transform;
+            text.transform.parent = basePopup.transform;
 
             TextMeshPro tmpro = text.AddComponent<TextMeshPro>();
             tmpro.enableAutoSizing = true;
