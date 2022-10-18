@@ -229,6 +229,7 @@ namespace BoneLib.RandomShit
             mesh.transform.parent = basePopup.transform;
             mesh.transform.localPosition = Vector3.zero;
             mesh.transform.localScale = new Vector3(2f, 1f, 0.02f);
+            mesh.GetComponent<MeshRenderer>().material.shader = Shader.Find("Universal Render Pipeline/Lit (PBR Workflow)");
             mesh.GetComponent<MeshRenderer>().material.color = new Color(0.1509434f, 0.1509434f, 0.1509434f);
             #endregion
 
