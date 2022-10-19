@@ -23,6 +23,7 @@ namespace BoneLib
 
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
+
             Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();

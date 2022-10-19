@@ -5,13 +5,16 @@ using SLZ.Interaction;
 using SLZ.Props.Weapons;
 using SLZ.Rig;
 using SLZ.VRMK;
+using SLZ.SceneStreaming;
 using SLZ.Marrow.Utilities;
+using SLZ.Marrow.Warehouse;
 using PuppetMasta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
+using SLZ.Marrow.SceneStreaming;
 
 namespace BoneLib
 {
@@ -22,6 +25,8 @@ namespace BoneLib
         private static Queue<DelayedHookData> delayedHooks = new Queue<DelayedHookData>();
 
         public static event Action OnMarrowGameStarted;
+
+        public static event Action<MarrowSceneInfo> OnMarrowSceneLoaded;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
@@ -51,6 +56,8 @@ namespace BoneLib
         internal static void InitHooks()
         {
             MarrowGame.RegisterOnReadyAction(OnMarrowGameStarted);
+
+            CreateHook(typeof(SceneStreamer).GetMethod("Load", new Type[] {typeof(LevelCrateReference), typeof(LevelCrateReference)}), typeof(Hooking).GetMethod(nameof(OnSceneMarrowLoaded), AccessTools.all));
 
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
@@ -105,6 +112,18 @@ namespace BoneLib
             ModConsole.Msg($"New {(isPrefix ? "PREFIX" : "POSTFIX")} on {original.DeclaringType.Name}.{original.Name} to {hook.DeclaringType.Name}.{hook.Name}", LoggingMode.DEBUG);
         }
 
+        private static void OnSceneMarrowLoaded(LevelCrateReference level, LevelCrateReference loadLevel)
+        {
+            MarrowSceneInfo sceneInfo = new MarrowSceneInfo()
+            {
+                LevelTitle = level.Crate.Title,
+                Barcode = level.Barcode.ID,
+                MarrowScene = level.Crate.MainAsset.Cast<MarrowScene>()
+            };
+
+            OnMarrowSceneLoaded?.Invoke(sceneInfo);
+        }
+
         private static void OnAvatarSwitchPrefix(Avatar newAvatar) => OnSwitchAvatarPrefix?.Invoke(newAvatar);
         private static void OnAvatarSwitchPostfix(Avatar newAvatar) => OnSwitchAvatarPostfix?.Invoke(newAvatar);
 
@@ -122,11 +141,11 @@ namespace BoneLib
                 OnPlayerReferencesFound?.Invoke();
         }
 
-        private static void OnBrainNPCDie(AIBrain brain) => OnNPCBrainDie?.Invoke(brain);
-        private static void OnBrainNPCResurrected(AIBrain brain) => OnNPCBrainResurrected?.Invoke(brain);
+        private static void OnBrainNPCDie(AIBrain __instance) => OnNPCBrainDie?.Invoke(__instance);
+        private static void OnBrainNPCResurrected(AIBrain __instance) => OnNPCBrainResurrected?.Invoke(__instance);
 
-        private static void OnKillNPCStart(BehaviourBaseNav behaviour) => OnNPCKillStart?.Invoke(behaviour);
-        private static void OnKillNPCEnd(BehaviourBaseNav behaviour) => OnNPCKillEnd?.Invoke(behaviour);
+        private static void OnKillNPCStart(BehaviourBaseNav __instance) => OnNPCKillStart?.Invoke(__instance);
+        private static void OnKillNPCEnd(BehaviourBaseNav __instance) => OnNPCKillEnd?.Invoke(__instance);
 
         struct DelayedHookData
         {
