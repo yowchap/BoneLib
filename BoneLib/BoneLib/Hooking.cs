@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using SLZ.Marrow.SceneStreaming;
+using System.Runtime.CompilerServices;
 
 namespace BoneLib
 {
@@ -93,6 +94,7 @@ namespace BoneLib
         /// <summary>
         /// Hooks the method and debug logs some info.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void CreateHook(MethodInfo original, MethodInfo hook, bool isPrefix = false)
         {
             if (baseHarmony == null)
