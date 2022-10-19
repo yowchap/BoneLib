@@ -79,6 +79,9 @@
       <HintPath>..\..\References\MelonLoader\Managed\UnhollowerRuntimeLib.dll</HintPath>
     </Reference>
     <Reference Include="UniTask, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Unity.ResourceManager.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>..\..\References\MelonLoader\Managed\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -124,6 +127,7 @@
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooking.cs" />
     <Compile Include="Main.cs" />
+    <Compile Include="MarrowSceneInfo.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
     <Compile Include="MonoBehaviours\PopupBox.cs" />
