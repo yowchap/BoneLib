@@ -1,9 +1,12 @@
 ﻿using HarmonyLib;
 using MelonLoader;
+using SLZ.AI;
 using SLZ.Interaction;
 using SLZ.Props.Weapons;
 using SLZ.Rig;
 using SLZ.VRMK;
+using SLZ.Marrow.Utilities;
+using PuppetMasta;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +20,8 @@ namespace BoneLib
         private static HarmonyLib.Harmony baseHarmony;
 
         private static Queue<DelayedHookData> delayedHooks = new Queue<DelayedHookData>();
+
+        public static event Action OnMarrowGameStarted;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
@@ -34,11 +39,19 @@ namespace BoneLib
         public static event Action<bool> OnPlayerDeathImminent;
         public static event Action OnPlayerDeath;
 
+        public static event Action<AIBrain> OnNPCBrainDie;
+        public static event Action<AIBrain> OnNPCBrainResurrected;
+
+        public static event Action<BehaviourBaseNav> OnNPCKillStart;
+        public static event Action<BehaviourBaseNav> OnNPCKillEnd;
+
         public static event Action OnPlayerReferencesFound;
 
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
         internal static void InitHooks()
         {
+            MarrowGame.RegisterOnReadyAction(OnMarrowGameStarted);
+
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
 
@@ -53,10 +66,15 @@ namespace BoneLib
 
             CreateHook(typeof(RigManager).GetMethod("Awake", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerAwake), AccessTools.all));
 
+            CreateHook(typeof(AIBrain).GetMethod("OnDeath", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
+            CreateHook(typeof(AIBrain).GetMethod("OnResurrection", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCResurrected), AccessTools.all));
+
+            CreateHook(typeof(BehaviourBaseNav).GetMethod("KillStart", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCStart), AccessTools.all));
+            CreateHook(typeof(BehaviourBaseNav).GetMethod("KillEnd", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCEnd), AccessTools.all));
+
             Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
             Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
             Player_Health.add_OnPlayerDeath(OnPlayerDeath);
-
 
             while (delayedHooks.Count > 0)
             {
@@ -103,6 +121,13 @@ namespace BoneLib
             if (Player.FindObjectReferences(__instance))
                 OnPlayerReferencesFound?.Invoke();
         }
+
+        private static void OnBrainNPCDie(AIBrain brain) => OnNPCBrainDie?.Invoke(brain);
+        private static void OnBrainNPCResurrected(AIBrain brain) => OnNPCBrainResurrected?.Invoke(brain);
+
+        private static void OnKillNPCStart(BehaviourBaseNav behaviour) => OnNPCKillStart?.Invoke(behaviour);
+        private static void OnKillNPCEnd(BehaviourBaseNav behaviour) => OnNPCKillEnd?.Invoke(behaviour);
+
         struct DelayedHookData
         {
             public MethodInfo original;
