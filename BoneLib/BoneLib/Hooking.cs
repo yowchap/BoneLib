@@ -15,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using SLZ.Marrow.SceneStreaming;
+using System.Runtime.CompilerServices;
 
 namespace BoneLib
 {
@@ -93,6 +94,7 @@ namespace BoneLib
         /// <summary>
         /// Hooks the method and debug logs some info.
         /// </summary>
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static void CreateHook(MethodInfo original, MethodInfo hook, bool isPrefix = false)
         {
             if (baseHarmony == null)
@@ -124,28 +126,28 @@ namespace BoneLib
             OnMarrowSceneLoaded?.Invoke(sceneInfo);
         }
 
-        private static void OnAvatarSwitchPrefix(Avatar newAvatar) => OnSwitchAvatarPrefix?.Invoke(newAvatar);
-        private static void OnAvatarSwitchPostfix(Avatar newAvatar) => OnSwitchAvatarPostfix?.Invoke(newAvatar);
+        private static void OnAvatarSwitchPrefix(Avatar newAvatar) => InvokeActionSafe(OnSwitchAvatarPrefix, newAvatar);
+        private static void OnAvatarSwitchPostfix(Avatar newAvatar) => InvokeActionSafe(OnSwitchAvatarPostfix, newAvatar);
 
-        private static void OnFirePrefix(Gun __instance) => OnPreFireGun?.Invoke(__instance);
-        private static void OnFirePostfix(Gun __instance) => OnPostFireGun?.Invoke(__instance);
+        private static void OnFirePrefix(Gun __instance) => InvokeActionSafe(OnPreFireGun, __instance);
+        private static void OnFirePostfix(Gun __instance) => InvokeActionSafe(OnPostFireGun, __instance);
 
-        private static void OnAttachObjectPostfix(GameObject objectToAttach, Hand __instance) => OnGrabObject?.Invoke(objectToAttach, __instance);
-        private static void OnDetachObjectPostfix(Hand __instance) => OnReleaseObject?.Invoke(__instance);
+        private static void OnAttachObjectPostfix(GameObject objectToAttach, Hand __instance) => InvokeActionSafe(OnGrabObject, objectToAttach, __instance);
+        private static void OnDetachObjectPostfix(Hand __instance) => InvokeActionSafe(OnReleaseObject, __instance);
 
-        private static void OnGripAttachedPostfix(Grip __instance, Hand hand) => OnGripAttached?.Invoke(__instance, hand);
-        private static void OnGripDetachedPostfix(Grip __instance, Hand hand) => OnGripDetached?.Invoke(__instance, hand);
+        private static void OnGripAttachedPostfix(Grip __instance, Hand hand) => InvokeActionSafe(OnGripAttached, __instance, hand);
+        private static void OnGripDetachedPostfix(Grip __instance, Hand hand) => InvokeActionSafe(OnGripDetached, __instance, hand);
         private static void OnRigManagerAwake(RigManager __instance)
         {
             if (Player.FindObjectReferences(__instance))
-                OnPlayerReferencesFound?.Invoke();
+                InvokeActionSafe(OnPlayerReferencesFound);
         }
 
-        private static void OnBrainNPCDie(AIBrain __instance) => OnNPCBrainDie?.Invoke(__instance);
-        private static void OnBrainNPCResurrected(AIBrain __instance) => OnNPCBrainResurrected?.Invoke(__instance);
+        private static void OnBrainNPCDie(AIBrain __instance) => InvokeActionSafe(OnNPCBrainDie, __instance);
+        private static void OnBrainNPCResurrected(AIBrain __instance) => InvokeActionSafe(OnNPCBrainResurrected, __instance);
 
-        private static void OnKillNPCStart(BehaviourBaseNav __instance) => OnNPCKillStart?.Invoke(__instance);
-        private static void OnKillNPCEnd(BehaviourBaseNav __instance) => OnNPCKillEnd?.Invoke(__instance);
+        private static void OnKillNPCStart(BehaviourBaseNav __instance) => InvokeActionSafe(OnNPCKillStart, __instance);
+        private static void OnKillNPCEnd(BehaviourBaseNav __instance) => InvokeActionSafe(OnNPCKillEnd, __instance);
 
         struct DelayedHookData
         {
@@ -158,6 +160,60 @@ namespace BoneLib
                 this.original = original;
                 this.hook = hook;
                 this.isPrefix = isPrefix;
+            }
+        }
+
+        private static void InvokeActionSafe(Action action)
+        {
+            if (action == null) return;
+            foreach (Delegate invoker in action.GetInvocationList())
+            {
+                try
+                {
+                    Action call = (Action)invoker;
+                    call();
+                }
+                catch(Exception ex)
+                {
+                    ModConsole.Error("Exception while invoking hook callback!");
+                    ModConsole.Error(ex.ToString());
+                }
+            }
+        }
+
+        private static void InvokeActionSafe<T>(Action<T> action, T param)
+        {
+            if (action == null) return;
+            foreach (Delegate invoker in action.GetInvocationList())
+            {
+                try
+                {
+                    Action<T> call = (Action<T>)invoker;
+                    call(param);
+                }
+                catch (Exception ex)
+                {
+                    ModConsole.Error("Exception while invoking hook callback!");
+                    ModConsole.Error(ex.ToString());
+                }
+            }
+        }
+
+        private static void InvokeActionSafe<T1, T2>(Action<T1, T2> action, T1 param1, T2 param2)
+        {
+            if (action == null) return;
+            foreach (Delegate invoker in action.GetInvocationList())
+            {
+                try
+                {
+                    Action<T1, T2> call = (Action<T1, T2>)invoker;
+                    call(param1, param2);
+                }
+                catch (Exception ex)
+                {
+                    ModConsole.Error("Exception while invoking hook callback!");
+                    ModConsole.Error(ex.ToString());
+                }
             }
         }
     }
