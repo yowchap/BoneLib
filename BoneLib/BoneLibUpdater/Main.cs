@@ -24,7 +24,6 @@ namespace BoneLibUpdater
 
         public static MelonLogger.Instance Logger { get; private set; }
 
-
         public override void OnPreInitialization()
         {
             Logger = LoggerInstance;

@@ -1,4 +1,5 @@
-﻿using MelonLoader;
+﻿using BoneLib.UI;
+using MelonLoader;
 
 namespace BoneLib
 {
@@ -21,6 +22,8 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
+            UIResources.LoadPrefabs();
+
             ModConsole.Msg("BoneLib loaded");
         }
 
@@ -28,6 +31,5 @@ namespace BoneLib
         {
             Player.FindObjectReferences();
         }
-
     }
 }
