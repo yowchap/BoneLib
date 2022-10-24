@@ -21,7 +21,7 @@ namespace BoneLib
         public static BaseController leftController { get; private set; }
         public static BaseController rightController { get; private set; }
         public static bool controllersExist => leftController != null && rightController != null;
-        private static ControllerRig controllerRig;
+        public static ControllerRig controllerRig { get; private set; }
 
         private static PhysicsRig physicsRig;
 
