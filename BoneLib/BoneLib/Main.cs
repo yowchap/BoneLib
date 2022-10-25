@@ -1,6 +1,7 @@
 ﻿using BoneLib.MonoBehaviours;
 using BoneLib.RandomShit;
 using MelonLoader;
+using SLZ.Marrow.SceneStreaming;
 using UnhollowerRuntimeLib;
 
 namespace BoneLib

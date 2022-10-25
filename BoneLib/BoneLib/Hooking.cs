@@ -26,7 +26,9 @@ namespace BoneLib
 
         public static event Action OnMarrowGameStarted;
 
+        public static event Action<MarrowSceneInfo> OnMarrowSceneInitialized;
         public static event Action<MarrowSceneInfo> OnMarrowSceneLoaded;
+        public static event Action OnMarrowSceneUnloaded;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
@@ -57,7 +59,7 @@ namespace BoneLib
         {
             MarrowGame.RegisterOnReadyAction(OnMarrowGameStarted);
 
-            CreateHook(typeof(SceneStreamer).GetMethod("Load", new Type[] {typeof(LevelCrateReference), typeof(LevelCrateReference)}), typeof(Hooking).GetMethod(nameof(OnSceneMarrowLoaded), AccessTools.all));
+            CreateHook(typeof(SceneStreamer).GetMethod("Load", new Type[] {typeof(LevelCrateReference), typeof(LevelCrateReference)}), typeof(Hooking).GetMethod(nameof(OnSceneMarrowInitialized), AccessTools.all));
 
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
@@ -72,6 +74,7 @@ namespace BoneLib
             CreateHook(typeof(Grip).GetMethod("OnDetachedFromHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
 
             CreateHook(typeof(RigManager).GetMethod("Awake", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerAwake), AccessTools.all));
+            CreateHook(typeof(RigManager).GetMethod("OnDestroy", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroy), AccessTools.all));
 
             CreateHook(typeof(AIBrain).GetMethod("OnDeath", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
             CreateHook(typeof(AIBrain).GetMethod("OnResurrection", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCResurrected), AccessTools.all));
@@ -112,7 +115,7 @@ namespace BoneLib
             ModConsole.Msg($"New {(isPrefix ? "PREFIX" : "POSTFIX")} on {original.DeclaringType.Name}.{original.Name} to {hook.DeclaringType.Name}.{hook.Name}", LoggingMode.DEBUG);
         }
 
-        private static void OnSceneMarrowLoaded(LevelCrateReference level, LevelCrateReference loadLevel)
+        private static void OnSceneMarrowInitialized(LevelCrateReference level, LevelCrateReference loadLevel)
         {
             MarrowSceneInfo sceneInfo = new MarrowSceneInfo()
             {
@@ -121,7 +124,26 @@ namespace BoneLib
                 MarrowScene = level.Crate.MainAsset.Cast<MarrowScene>()
             };
 
-            OnMarrowSceneLoaded?.Invoke(sceneInfo);
+            OnMarrowSceneInitialized?.Invoke(sceneInfo);
+        }
+
+        private static void OnSceneMarrowLoaded()
+        {
+            var level = SceneStreamer.Session.Level;
+
+            MarrowSceneInfo info = new MarrowSceneInfo()
+            {
+                LevelTitle = level.Title,
+                MarrowScene = level.MainScene,
+                Barcode = level.Barcode.ID
+            };
+
+            OnMarrowSceneLoaded?.Invoke(info);
+        }
+
+        private static void OnSceneMarrowUnloaded()
+        {
+            OnMarrowSceneUnloaded?.Invoke();
         }
 
         private static void OnAvatarSwitchPrefix(Avatar newAvatar) => OnSwitchAvatarPrefix?.Invoke(newAvatar);
@@ -137,8 +159,15 @@ namespace BoneLib
         private static void OnGripDetachedPostfix(Grip __instance, Hand hand) => OnGripDetached?.Invoke(__instance, hand);
         private static void OnRigManagerAwake(RigManager __instance)
         {
+            OnSceneMarrowLoaded();
+
             if (Player.FindObjectReferences(__instance))
                 OnPlayerReferencesFound?.Invoke();
+        }
+
+        private static void OnRigManagerDestroy(RigManager __instance)
+        {
+            OnSceneMarrowUnloaded();
         }
 
         private static void OnBrainNPCDie(AIBrain __instance) => OnNPCBrainDie?.Invoke(__instance);
