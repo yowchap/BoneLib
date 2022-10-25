@@ -28,7 +28,7 @@ namespace BoneLib
 
         public static event Action<MarrowSceneInfo> OnMarrowSceneInitialized;
         public static event Action<MarrowSceneInfo> OnMarrowSceneLoaded;
-        public static event Action OnMarrowSceneUnloaded;
+        public static event Action<MarrowSceneInfo, MarrowSceneInfo> OnMarrowSceneUnloaded;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
@@ -53,6 +53,10 @@ namespace BoneLib
         public static event Action<BehaviourBaseNav> OnNPCKillEnd;
 
         public static event Action OnPlayerReferencesFound;
+
+        internal static MarrowSceneInfo _lastScene;
+        internal static MarrowSceneInfo _currentScene;
+        internal static MarrowSceneInfo _nextScene;
 
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
         internal static void InitHooks()
@@ -117,14 +121,15 @@ namespace BoneLib
 
         private static void OnSceneMarrowInitialized(LevelCrateReference level, LevelCrateReference loadLevel)
         {
-            MarrowSceneInfo sceneInfo = new MarrowSceneInfo()
+            MarrowSceneInfo info = new MarrowSceneInfo()
             {
                 LevelTitle = level.Crate.Title,
                 Barcode = level.Barcode.ID,
                 MarrowScene = level.Crate.MainAsset.Cast<MarrowScene>()
             };
 
-            OnMarrowSceneInitialized?.Invoke(sceneInfo);
+            _nextScene = info;
+            OnMarrowSceneInitialized?.Invoke(info);
         }
 
         private static void OnSceneMarrowLoaded()
@@ -138,12 +143,14 @@ namespace BoneLib
                 Barcode = level.Barcode.ID
             };
 
-            OnMarrowSceneLoaded?.Invoke(info);
+            _currentScene = info;
+            _lastScene = _currentScene;
+            OnMarrowSceneLoaded?.Invoke(_currentScene);
         }
 
         private static void OnSceneMarrowUnloaded()
         {
-            OnMarrowSceneUnloaded?.Invoke();
+            OnMarrowSceneUnloaded?.Invoke(_lastScene, _nextScene);
         }
 
         private static void OnAvatarSwitchPrefix(Avatar newAvatar) => OnSwitchAvatarPrefix?.Invoke(newAvatar);
