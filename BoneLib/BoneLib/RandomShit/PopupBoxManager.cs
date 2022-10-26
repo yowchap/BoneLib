@@ -5,15 +5,8 @@ using SLZ.Interaction;
 using SLZ.Marrow.Data;
 using SLZ.Props;
 using SLZ.SFX;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -82,10 +75,10 @@ namespace BoneLib.RandomShit
 
             GameObject newPopup = GameObject.Instantiate(basePopup);
             TextMeshPro tmpro = newPopup.GetComponentInChildren<TextMeshPro>();
-            
+
             tmpro.text = adText;
             newPopup.SetActive(true);
-            
+
             tmpro.enableAutoSizing = true;
             tmpro.fontSizeMin = 0.5f;
             tmpro.fontSizeMax = 4;
