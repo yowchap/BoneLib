@@ -80,7 +80,7 @@
     </Reference>
     <Reference Include="UniTask, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="Unity.ResourceManager">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Unity.ResourceManager.dll</HintPath>
+      <HintPath>..\..\References\MelonLoader\Managed\Unity.ResourceManager.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>..\..\References\MelonLoader\Managed\Unity.TextMeshPro.dll</HintPath>
