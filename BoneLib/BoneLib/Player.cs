@@ -25,6 +25,7 @@ namespace BoneLib
 
         private static PhysicsRig physicsRig;
 
+        
         internal static bool FindObjectReferences(RigManager rigManager = null)
         {
             ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
@@ -47,6 +48,7 @@ namespace BoneLib
 
             return controllersExist && handsExist && controllerRig != null;
         }
+
         /// <summary>
         /// Returns the root gameobject in the player rig manager.
         /// </summary>
@@ -71,6 +73,7 @@ namespace BoneLib
             }
             return playerHead;
         }
+        
         /// <summary>
         /// Returns the PhysicsRig.
         /// </summary>
