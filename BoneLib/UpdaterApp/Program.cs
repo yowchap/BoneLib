@@ -17,6 +17,7 @@ namespace UpdaterApp
             {
                 Version localVersion = new Version(args[0]);
                 string boneLibAssemblyPath = args[1];
+                string boneLibDocsPath = args[1].Replace(".dll", ".xml");
                 string boneLibUpdaterAssemblyPath = args[2];
                 bool updatePlugin = args[3] == "true";
 
@@ -55,6 +56,7 @@ namespace UpdaterApp
                             if (latestVersion > localVersion)
                             {
                                 Console.WriteLine("Downloading latest version...");
+                                bool downloadedMod = false;
                                 foreach (var asset in latestRelease["assets"])
                                 {
                                     if (asset["name"] == "BoneLib.dll")
@@ -72,13 +74,34 @@ namespace UpdaterApp
                                                 using (FileStream fileStream = new FileStream(boneLibAssemblyPath, FileMode.Create, FileAccess.Write))
                                                 {
                                                     downloadStream.CopyTo(fileStream);
-                                                    return (int)ExitCode.Success;
+                                                    downloadedMod = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else if (asset["name"] == "BoneLib.xml")
+                                    {
+                                        string downloadUrl = asset["browser_download_url"];
+                                        using (HttpClient downloadClient = new HttpClient())
+                                        {
+                                            // Download the latest version of BoneLib.xml and save it to the mods folder
+                                            HttpWebRequest downloadRequest = (HttpWebRequest)WebRequest.Create(downloadUrl);
+                                            downloadRequest.Accept = "application/vnd.github.v3.raw";
+                                            downloadRequest.UserAgent = "BoneLibUpdater";
+                                            WebResponse downloadResponse = downloadRequest.GetResponse();
+                                            using (Stream downloadStream = downloadResponse.GetResponseStream())
+                                            {
+                                                using (FileStream fileStream = new FileStream(boneLibDocsPath, FileMode.Create, FileAccess.Write))
+                                                {
+                                                    downloadStream.CopyTo(fileStream);
                                                 }
                                             }
                                         }
                                     }
                                 }
-
+                                
+                                if (downloadedMod)
+                                    return (int)ExitCode.Success;
                                 return (int)ExitCode.Error;
                             }
                             else
