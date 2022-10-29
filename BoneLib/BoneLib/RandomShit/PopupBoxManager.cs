@@ -58,7 +58,11 @@ namespace BoneLib.RandomShit
             "Nexus Mods is mid!",
             "Oops!... I corrupted the memory profile again",
             "haha you can't grab this one",
-            "which one is your tabloid tabloid \nwhat"
+            "which one is your tabloid tabloid \nwhat",
+            "Tabloid \"What, you think they're gonna have a mario-kart level? Yeah right\" A",
+            "Parzival x Chromium: My Immortal",
+            "The Fog is Coming",
+            "hoi! im cam! visit my pwofile uwu \n\nhttps://chaturbate.com/Cammy-the-Camboi"
         };
 
         private static GameObject basePopup;

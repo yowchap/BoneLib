@@ -104,8 +104,13 @@ namespace BoneLib
         }
 
         /// <summary>
-        /// Hooks the method and debug logs some info.
+        /// Hooks the <paramref name="original"/> method and logs some debug info.
         /// </summary>
+        /// <param name="original">Method to be patched</param>
+        /// <param name="hook">Method to be applied as a patch</param>
+        /// <param name="isPrefix">
+        /// Controls whether <paramref name="hook"/> is applied as a Prefix or Postfix patch
+        /// </param>
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static void CreateHook(MethodInfo original, MethodInfo hook, bool isPrefix = false)
         {
