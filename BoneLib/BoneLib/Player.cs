@@ -25,7 +25,7 @@ namespace BoneLib
 
         private static PhysicsRig physicsRig;
 
-        
+
         internal static bool FindObjectReferences(RigManager rigManager = null)
         {
             ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
