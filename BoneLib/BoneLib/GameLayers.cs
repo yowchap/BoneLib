@@ -7,7 +7,6 @@
     /// Can be used with <see href="https://en.wikipedia.org/wiki/Mask_(computing)">bitwise</see> 
     /// <see href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators">operators</see>.
     /// </remarks>
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public enum GameLayers
     {
         DEFAULT = 1 << 0,
@@ -38,4 +37,3 @@
         BACKGROUND = 1 << 31,
     }
 }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
