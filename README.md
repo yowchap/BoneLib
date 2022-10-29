@@ -48,6 +48,9 @@ OfflineMode = true
 
 ## Changelogs (BoneLib)
 
+#### v1.3.1:
+- Fixed `Hooking.OnMarrowGameStarted` event
+
 #### v1.3.0:
 - Added `SafeActions` class for invoking actions with error handling
 - Added MarrowGame and MarrowScene events in Hooking
