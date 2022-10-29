@@ -1,5 +1,7 @@
-﻿using BoneLib.RandomShit;
+﻿using BoneLib.MonoBehaviours;
+using BoneLib.RandomShit;
 using MelonLoader;
+using UnhollowerRuntimeLib;
 
 namespace BoneLib
 {
@@ -22,15 +24,18 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
+            Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
+
+            ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
+
             //PopupBoxManager.StartCoroutines();
 
             ModConsole.Msg("BoneLib loaded");
         }
 
-        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
+        private void OnPlayerReferencesFound()
         {
             PopupBoxManager.CreateBaseAd();
         }
-
     }
 }

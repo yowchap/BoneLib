@@ -8,6 +8,7 @@ BoneLib is fully open source so feel free to make a PR for new features and bug 
 - Events for common actions, such as guns firing, grabbing items, changing avatars, etc
 - Helper and extension methods for changing the RPM of guns, damaging enemies, getting clean object names
 - Extension methods to call functions with nullable parameters that would otherwise crash the game
+- Spawn message boxes for the player
 - Lots of other small features
 
 Many more features will be added as we continue to develop the mod.
@@ -38,11 +39,19 @@ OfflineMode = true
 
 **Parzival:** Added enum with all game layers, improved documentation
 
-**Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM
+**Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing
 
 <br>
 
 ## Changelogs
+
+#### v1.2.0:
+- Added `Hooking.OnPlayerReferencesFound` since the melonloader level load/init functions are unreliable
+- Added a way to spawn message boxes
+- Fixed Nullables being in the wrong namespace
+- Fixed Nullables crashing the game
+- Removed extensions backwards compatibility for wrong namespace
+- Code cleanup
 
 #### v1.1.0:
 - Added Hooking class with events for common actions

@@ -21,10 +21,11 @@ namespace BoneLib
         public static BaseController leftController { get; private set; }
         public static BaseController rightController { get; private set; }
         public static bool controllersExist => leftController != null && rightController != null;
-        private static ControllerRig controllerRig;
+        public static ControllerRig controllerRig { get; private set; }
 
         private static PhysicsRig physicsRig;
 
+        
         internal static bool FindObjectReferences(RigManager rigManager = null)
         {
             ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
@@ -47,6 +48,7 @@ namespace BoneLib
 
             return controllersExist && handsExist && controllerRig != null;
         }
+
         /// <summary>
         /// Returns the root gameobject in the player rig manager.
         /// </summary>
@@ -71,6 +73,7 @@ namespace BoneLib
             }
             return playerHead;
         }
+        
         /// <summary>
         /// Returns the PhysicsRig.
         /// </summary>
