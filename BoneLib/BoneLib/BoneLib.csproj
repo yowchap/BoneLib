@@ -141,6 +141,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"</PostBuildEvent>
+    <PostBuildEvent>ECHO Copying BoneLib.dll to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
+COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"</PostBuildEvent>
   </PropertyGroup>
 </Project>
