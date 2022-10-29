@@ -62,7 +62,7 @@ namespace BoneLib
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
         internal static void InitHooks()
         {
-            MarrowGame.RegisterOnReadyAction(OnMarrowGameStarted);
+            MarrowGame.RegisterOnReadyAction(new Action(() => InvokeActionSafe(OnMarrowGameStarted)));
 
             CreateHook(typeof(SceneStreamer).GetMethod("Load", new Type[] {typeof(LevelCrateReference), typeof(LevelCrateReference)}), typeof(Hooking).GetMethod(nameof(OnSceneMarrowInitialized), AccessTools.all));
 
