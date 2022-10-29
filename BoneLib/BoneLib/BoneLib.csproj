@@ -131,7 +131,7 @@
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
     <Compile Include="MonoBehaviours\PopupBox.cs" />
-    <Compile Include="Nullables\NullableExtensions.cs" />
+    <Compile Include="Nullables\NullableMethodExtensions.cs" />
     <Compile Include="Nullables\BoxedNullable.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Preferences.cs" />

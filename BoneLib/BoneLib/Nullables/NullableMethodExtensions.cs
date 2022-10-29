@@ -15,7 +15,7 @@ namespace BoneLib.Nullables
     /// <summary>
     /// Wraps BONELAB methods that use nullable types, so you can easily use them on the mono side.
     /// </summary>
-    public static class NullableExtensions
+    public static class NullableMethodExtensions
     {
         public static void Attenuate(this AudioPlayer inst, float? volume = null, float? pitch = null, float? minDistance = null)
         {
