@@ -50,7 +50,7 @@ namespace BoneLib
         }
 
         /// <summary>
-        /// Returns the root gameobject in the player rig manager.
+        /// Returns the root gameobject of the Player's <see cref="RigManager"/>.
         /// </summary>
         public static GameObject GetRigManager()
         {
@@ -61,7 +61,7 @@ namespace BoneLib
         }
 
         /// <summary>
-        /// Returns the gameobject of the player's head.
+        /// Returns the gameobject of the Player's head.
         /// </summary>
         public static GameObject GetPlayerHead()
         {
@@ -73,9 +73,9 @@ namespace BoneLib
             }
             return playerHead;
         }
-        
+
         /// <summary>
-        /// Returns the PhysicsRig.
+        /// Returns the <see cref="PhysicsRig"/>.
         /// </summary>
         public static PhysicsRig GetPhysicsRig()
         {
@@ -85,12 +85,12 @@ namespace BoneLib
         }
 
         /// <summary>
-        /// Returns the Player's current avatar.
+        /// Returns the Player's current <see cref="Avatar"/>.
         /// </summary>
         public static Avatar GetCurrentAvatar() => GetRigManager().GetComponent<RigManager>().avatar;
 
         /// <summary>
-        /// Generic method for getting any component on the object the player is holding.
+        /// Generic method for getting any component on the object the Player is holding.
         /// </summary>
         /// <returns>null if there is no component of type <typeparamref name="T"/>, or <paramref name="hand"/> is null.</returns>
         public static T GetComponentInHand<T>(Hand hand) where T : Component
