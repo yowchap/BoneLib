@@ -122,6 +122,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoneMenu\MenuManager.cs" />
     <Compile Include="GameLayers.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HelperMethods.cs" />
@@ -131,8 +132,8 @@
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
     <Compile Include="MonoBehaviours\PopupBox.cs" />
-    <Compile Include="Nullables\NullableExtensions.cs" />
     <Compile Include="Nullables\BoxedNullable.cs" />
+    <Compile Include="Nullables\NullableExtensions.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
