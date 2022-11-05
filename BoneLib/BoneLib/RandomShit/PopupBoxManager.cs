@@ -8,14 +8,9 @@ using SLZ.SFX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 namespace BoneLib.RandomShit
@@ -65,11 +60,19 @@ namespace BoneLib.RandomShit
             "Nexus Mods is mid!",
             "Oops!... I corrupted the memory profile again",
             "haha you can't grab this one",
-            "which one is your tabloid tabloid \nwhat"
+            "which one is your tabloid tabloid \nwhat",
+            "Tabloid \"What, you think they're gonna have a mario-kart level? Yeah right\" A",
+            "Parzival x Chromium: My Immortal",
+            "The Fog is Coming"
         };
 
         private static GameObject basePopup;
 
+        // private const string API_ALL_DOGS = "https://dog.ceo/api/breeds/image/random"; different format
+        // may be able to use https://random.dog/woof.json too, but also diff format
+        private const string API_SHIBE = "http://shibe.online/api/shibes";
+        private const string API_CAT = "http://shibe.online/api/cats";
+        private const string API_BIRD = "http://shibe.online/api/birds";
 
         public static GameObject CreateNewPopupBox() => CreateNewPopupBox(adMessages[Random.Range(0, adMessages.Count)]);
         public static GameObject CreateNewPopupBox(string adText)
@@ -82,10 +85,10 @@ namespace BoneLib.RandomShit
 
             GameObject newPopup = GameObject.Instantiate(basePopup);
             TextMeshPro tmpro = newPopup.GetComponentInChildren<TextMeshPro>();
-            
+
             tmpro.text = adText;
             newPopup.SetActive(true);
-            
+
             tmpro.enableAutoSizing = true;
             tmpro.fontSizeMin = 0.5f;
             tmpro.fontSizeMax = 4;
@@ -118,7 +121,8 @@ namespace BoneLib.RandomShit
             // Assign the picture to the material
             MeshRenderer renderer = newPopup.GetComponentInChildren<MeshRenderer>();
             Material mat = renderer.material;
-            mat.mainTexture = texture;
+            //mat.mainTexture = texture;
+            mat.SetTexture("_BaseMap", texture);
             mat.color = Color.white;
 
             // Scale the mesh and grip so the pic isn't stretched
@@ -137,6 +141,93 @@ namespace BoneLib.RandomShit
             newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.GetPlayerHead().transform.position);
 
             return newPopup;
+        }
+
+        /// <summary>
+        /// Creates an image popup with an image of a Shibe Inu.
+        /// </summary>
+        /// <param name="returnCallback">A callback that will be executed when the popup spawns, or <see langword="null"/> if there was an error.</param>
+        public static void CreateNewShibePopup(Action<GameObject> returnCallback = null)
+        {
+            IEnumerator coroutine = SpawnImagePopupFromApi(API_SHIBE, returnCallback);
+            MelonCoroutines.Start(coroutine);
+        }
+
+        public static void CreateNewCatPopup(Action<GameObject> returnCallback = null)
+        {
+            IEnumerator coroutine = SpawnImagePopupFromApi(API_CAT, returnCallback);
+            MelonCoroutines.Start(coroutine);
+        }
+
+        public static void CreateNewBirdPopup(Action<GameObject> returnCallback = null)
+        {
+            IEnumerator coroutine = SpawnImagePopupFromApi(API_BIRD, returnCallback);
+            MelonCoroutines.Start(coroutine);
+        }
+
+        // only works with the shibe.online api (or anything else that returns a json array)
+        private static IEnumerator SpawnImagePopupFromApi(string apiBase, Action<GameObject> callback)
+        {
+            UnityWebRequest urlReq = UnityWebRequest.Get(apiBase);
+            yield return urlReq.BeginWebRequest();
+            while (urlReq.result == UnityWebRequest.Result.InProgress)
+            {
+                ModConsole.Msg($"Initial API request progress={urlReq.downloadProgress}", LoggingMode.DEBUG);
+                // todo: remove
+                yield return null;
+            }
+
+            switch (urlReq.result)
+            {
+                case UnityWebRequest.Result.Success:
+                    break;
+                default:
+                    try
+                    {
+                        callback?.Invoke(null);
+                    }
+                    finally
+                    {
+                        ModConsole.Error("Exception whilst invoking image popup callback with null to signify error.", LoggingMode.NORMAL);
+                        ModConsole.Msg($"Initial API web request failed, status = {urlReq.result}", LoggingMode.DEBUG);
+
+                    }
+                    yield break;
+            }
+
+            string jsonUrls = urlReq.downloadHandler.text; // return value is something like ["https://cdn.shibe.online/shibes/8f0792fcac8df87a5d2953031a837a2939fda430.jpg"]
+            string imageUrl = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(jsonUrls)[0];
+            ModConsole.Msg($"Image url={imageUrl}");
+
+            UnityWebRequest imageReq = UnityWebRequest.Get(imageUrl);
+            imageReq.BeginWebRequest();
+            while (imageReq.result == UnityWebRequest.Result.InProgress)
+            {
+                ModConsole.Msg($"Image request progress={urlReq.downloadProgress}", LoggingMode.DEBUG);
+                // todo: remove
+                yield return null;
+            }
+
+            switch (imageReq.result)
+            {
+                case UnityWebRequest.Result.Success:
+                    break;
+                default:
+                    try
+                    {
+                        callback?.Invoke(null);
+                    }
+                    finally
+                    {
+                        ModConsole.Error("Exception whilst invoking image popup callback with null to signify error.", LoggingMode.NORMAL);
+                        ModConsole.Msg($"Image web request failed, status = {urlReq.result}", LoggingMode.DEBUG);
+                    }
+                    yield break;
+            }
+
+            // dont inline otherwise createnewimagepopup wont be called
+            GameObject createdPopup = CreateNewImagePopup(imageReq.downloadHandler.data);
+            callback?.Invoke(createdPopup);
         }
 
         internal static void StartCoroutines()

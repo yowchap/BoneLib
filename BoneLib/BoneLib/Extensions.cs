@@ -1,7 +1,6 @@
 ﻿using SLZ.AI;
 using SLZ.Combat;
 using SLZ.Props.Weapons;
-using System;
 
 namespace BoneLib
 {
