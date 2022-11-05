@@ -123,9 +123,6 @@ namespace BoneLib
 
         private static void OnRigManagerAwake(RigManager __instance)
         {
-            if (Player.handsExist)
-                return;
-
             OnSceneMarrowLoaded();
 
             if (Player.FindObjectReferences(__instance))
