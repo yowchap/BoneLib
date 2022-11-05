@@ -21,10 +21,9 @@ namespace BoneLib
         public static BaseController leftController { get; private set; }
         public static BaseController rightController { get; private set; }
         public static bool controllersExist => leftController != null && rightController != null;
-        public static ControllerRig controllerRig { get; private set; }
+        private static ControllerRig controllerRig;
 
         private static PhysicsRig physicsRig;
-
 
         internal static bool FindObjectReferences(RigManager rigManager = null)
         {
@@ -48,9 +47,8 @@ namespace BoneLib
 
             return controllersExist && handsExist && controllerRig != null;
         }
-
         /// <summary>
-        /// Returns the root gameobject of the Player's <see cref="RigManager"/>.
+        /// Returns the root gameobject in the player rig manager.
         /// </summary>
         public static GameObject GetRigManager()
         {
@@ -61,7 +59,7 @@ namespace BoneLib
         }
 
         /// <summary>
-        /// Returns the gameobject of the Player's head.
+        /// Returns the gameobject of the player's head.
         /// </summary>
         public static GameObject GetPlayerHead()
         {
@@ -73,9 +71,8 @@ namespace BoneLib
             }
             return playerHead;
         }
-
         /// <summary>
-        /// Returns the <see cref="PhysicsRig"/>.
+        /// Returns the PhysicsRig.
         /// </summary>
         public static PhysicsRig GetPhysicsRig()
         {
@@ -85,12 +82,12 @@ namespace BoneLib
         }
 
         /// <summary>
-        /// Returns the Player's current <see cref="Avatar"/>.
+        /// Returns the Player's current avatar.
         /// </summary>
         public static Avatar GetCurrentAvatar() => GetRigManager().GetComponent<RigManager>().avatar;
 
         /// <summary>
-        /// Generic method for getting any component on the object the Player is holding.
+        /// Generic method for getting any component on the object the player is holding.
         /// </summary>
         /// <returns>null if there is no component of type <typeparamref name="T"/>, or <paramref name="hand"/> is null.</returns>
         public static T GetComponentInHand<T>(Hand hand) where T : Component

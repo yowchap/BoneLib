@@ -13,7 +13,6 @@ namespace BoneLib
         {
             loggingMode = new ModPref<LoggingMode>(category, "LoggingMode", LoggingMode.NORMAL);
 
-            category.SaveToFile(false);
             ModConsole.Msg("Finished preferences setup", LoggingMode.DEBUG);
         }
     }

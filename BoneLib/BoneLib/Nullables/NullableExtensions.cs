@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using BoneLib.Nullables;
+using Cysharp.Threading.Tasks;
 using Il2CppSystem;
 using SLZ;
 using SLZ.AI;
@@ -12,12 +13,9 @@ using UnityEngine.Audio;
 
 namespace BoneLib.Nullables
 {
-    /// <summary>
-    /// Wraps BONELAB methods that use nullable types, so you can easily use them on the mono side.
-    /// </summary>
     public static class NullableMethodExtensions
     {
-        public static void Attenuate(this AudioPlayer inst, float? volume = null, float? pitch = null, float? minDistance = null)
+        public static void Attenuate(this AudioPlayer inst, float? volume, float? pitch, float? minDistance)
         {
             inst.Attenuate(
                 new BoxedNullable<float>(volume),
@@ -25,7 +23,7 @@ namespace BoneLib.Nullables
                 new BoxedNullable<float>(minDistance));
         }
 
-        public static void Play(this AudioPlayer inst, AudioClip clip, AudioMixerGroup mixerGroup = null, float? volume = null, bool? isLooping = null, float? pitch = null, float? minDistance = null)
+        public static void Play(this AudioPlayer inst, AudioClip clip, AudioMixerGroup mixerGroup, float? volume, bool? isLooping, float? pitch, float? minDistance)
         {
             inst.Play(clip, mixerGroup,
                 new BoxedNullable<float>(volume),
@@ -34,7 +32,7 @@ namespace BoneLib.Nullables
                 new BoxedNullable<float>(minDistance));
         }
 
-        public static void Play(this AudioPlayer inst, AudioClip[] clips, AudioMixerGroup mixerGroup = null, float? volume = null, bool? isLooping = null, float? pitch = null, float? minDistance = null)
+        public static void Play(this AudioPlayer inst, AudioClip[] clips, AudioMixerGroup mixerGroup, float? volume, bool? isLooping, float? pitch, float? minDistance)
         {
             Il2CppReferenceArray<AudioClip> clipsArr = new Il2CppReferenceArray<AudioClip>(clips);
             inst.Play(clipsArr, mixerGroup,
@@ -44,7 +42,7 @@ namespace BoneLib.Nullables
                 new BoxedNullable<float>(minDistance));
         }
 
-        public static void AudioPlayer_PlayAtPoint(AudioClip clip, Vector3 position, AudioMixerGroup mixerGroup = null, float? volume = null, bool? isLooping = null, float? pitch = null, float? minDistance = null)
+        public static void AudioPlayer_PlayAtPoint(AudioClip clip, Vector3 position, AudioMixerGroup mixerGroup, float? volume, bool? isLooping, float? pitch, float? minDistance)
         {
             AudioPlayer.PlayAtPoint(clip, position, mixerGroup,
                 new BoxedNullable<float>(volume),
@@ -53,7 +51,7 @@ namespace BoneLib.Nullables
                 new BoxedNullable<float>(minDistance));
         }
 
-        public static void AudioPlayer_PlayAtPoint(AudioClip[] clips, Vector3 position, AudioMixerGroup mixerGroup = null, float? volume = null, bool? isLooping = null, float? pitch = null, float? minDistance = null)
+        public static void AudioPlayer_PlayAtPoint(AudioClip[] clips, Vector3 position, AudioMixerGroup mixerGroup, float? volume, bool? isLooping, float? pitch, float? minDistance)
         {
             Il2CppReferenceArray<AudioClip> clipsArr = new Il2CppReferenceArray<AudioClip>(clips);
             AudioPlayer.PlayAtPoint(clipsArr, position, mixerGroup,
@@ -63,7 +61,7 @@ namespace BoneLib.Nullables
                 new BoxedNullable<float>(minDistance));
         }
 
-        public static void SetTrigger(this AITrigger inst, float? radius = null, float? fov = null, TriggerManager.TriggerTypes? type = null)
+        public static void SetTrigger(this AITrigger inst, float? radius, float? fov, TriggerManager.TriggerTypes? type)
         {
             inst.SetTrigger(
                 new BoxedNullable<float>(radius),
@@ -71,7 +69,7 @@ namespace BoneLib.Nullables
             new BoxedNullable<TriggerManager.TriggerTypes>(type));
         }
 
-        public static UniTask<AssetPoolee> Spawn(this AssetPool inst, Vector3 position = default, Quaternion rotation = default, Vector3? scale = null, bool? autoEnable = null)
+        public static UniTask<AssetPoolee> Spawn(this AssetPool inst, Vector3 position, Quaternion rotation, Vector3? scale = null, bool? autoEnable = null)
         {
             return inst.Spawn(position, rotation,
                 new BoxedNullable<Vector3>(scale),
@@ -102,7 +100,7 @@ namespace BoneLib.Nullables
             AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy, new BoxedNullable<int>(groupID), spawnCallback, despawnCallback);
         }
 
-        public static void SetRigidbody(this SpawnFragment inst, int idx, Vector3? velocity = null, Vector3? angularVelocity = null, float? mass = null, Vector3? worldCenter = null, float? explosiveForce = null)
+        public static void SetRigidbody(this SpawnFragment inst, int idx, Vector3? velocity, Vector3? angularVelocity, float? mass, Vector3? worldCenter, float? explosiveForce)
         {
             inst.SetRigidbody(idx,
                 new BoxedNullable<Vector3>(velocity),
@@ -112,7 +110,7 @@ namespace BoneLib.Nullables
                 new BoxedNullable<float>(explosiveForce));
         }
 
-        public static void Despawn(this ZoneTracker inst, bool? playVFX = null)
+        public static void Despawn(this ZoneTracker inst, bool? playVFX)
         {
             inst.Despawn(new BoxedNullable<bool>(playVFX));
         }
