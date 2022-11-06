@@ -145,6 +145,7 @@
     <Compile Include="BoneMenu\UI\UICategoryField.cs" />
     <Compile Include="BoneMenu\UI\UIElement.cs" />
     <Compile Include="BoneMenu\UI\UIFunctionField.cs" />
+    <Compile Include="BoneMenu\UI\UIManager.cs" />
     <Compile Include="BoneMenu\UI\UIPage.cs" />
     <Compile Include="BoneMenu\UI\UIValueField.cs" />
     <Compile Include="GameLayers.cs" />
