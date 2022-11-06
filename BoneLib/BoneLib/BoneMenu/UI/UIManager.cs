@@ -13,6 +13,9 @@ namespace BoneLib.BoneMenu.UI
 
         public static UIManager Instance { get; private set; }
 
+        public UIPage RootPage { get; private set; }
+        public UIPage ActivePage { get; private set; }
+
         private void Awake()
         {
             if(Instance == null)

@@ -151,15 +151,6 @@ namespace BoneLib.BoneMenu
         public static void Init()
         {
             UI.Init();
-
-            OnCategoryCreated += OnCreateCategory;
-        }
-
-        public static void OnCreateCategory(MenuElement element)
-        {
-            var test = GameObject.Instantiate(UI.CategoryFieldObject, UI.MainPage.transform.Find("Viewport/ElementGrid"));
-            var testco = test.GetComponent<UICategoryField>();
-            testco.AssignElement(element);
         }
 
         public static MenuCategory CreateCategory(string name, Color color)
