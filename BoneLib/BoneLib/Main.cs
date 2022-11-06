@@ -3,6 +3,8 @@ using BoneLib.RandomShit;
 using MelonLoader;
 using UnhollowerRuntimeLib;
 
+using BoneLib.BoneMenu;
+
 namespace BoneLib
 {
     public static class BuildInfo
@@ -25,6 +27,8 @@ namespace BoneLib
             Hooking.InitHooks();
 
             Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
+            Hooking.OnMarrowGameStarted += OnMarrowGameStarted;
+            Hooking.OnMarrowSceneLoaded += (data) => OnMarrowSceneLoaded();
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -33,8 +37,20 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
+        private void OnMarrowGameStarted()
+        {
+            MenuManager.Bundles.Init();
+            MenuManager.UI.AddComponents();
+        }
+
+        private void OnMarrowSceneLoaded()
+        {
+            MenuManager.Init();
+        }
+
         private void OnPlayerReferencesFound()
         {
+            
             PopupBoxManager.CreateBaseAd();
         }
     }

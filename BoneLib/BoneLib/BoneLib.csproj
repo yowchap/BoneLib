@@ -135,6 +135,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoneMenu\Elements\FunctionElement.cs" />
+    <Compile Include="BoneMenu\Elements\GenericElement.cs" />
+    <Compile Include="BoneMenu\Elements\IntElement.cs" />
+    <Compile Include="BoneMenu\Elements\MenuCategory.cs" />
+    <Compile Include="BoneMenu\Elements\MenuElement.cs" />
+    <Compile Include="BoneMenu\Interfaces\IIndexable.cs" />
+    <Compile Include="BoneMenu\MenuManager.cs" />
+    <Compile Include="BoneMenu\UI\UICategoryField.cs" />
+    <Compile Include="BoneMenu\UI\UIElement.cs" />
+    <Compile Include="BoneMenu\UI\UIFunctionField.cs" />
+    <Compile Include="BoneMenu\UI\UIPage.cs" />
+    <Compile Include="BoneMenu\UI\UIValueField.cs" />
     <Compile Include="GameLayers.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="HelperMethods.cs" />
@@ -152,10 +164,14 @@
     <Compile Include="RandomShit\PopupBoxManager.cs" />
     <Compile Include="SafeActions.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bonemenu.pack" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>ECHO Copying BoneLib.dll to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
 COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"</PostBuildEvent>
+COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"
+"C:\Program Files (x86)\Steam\steamapps\common\BONELAB\BONELAB_Steam_Windows64.exe"</PostBuildEvent>
   </PropertyGroup>
 </Project>
