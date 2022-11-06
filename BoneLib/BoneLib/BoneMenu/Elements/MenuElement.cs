@@ -15,6 +15,8 @@ namespace BoneLib.BoneMenu
         public string Name { get; protected set; }
         public Color Color { get; protected set; }
 
+        public virtual string Type { get => ElementType.Type_Default; }
+
         protected TextMeshPro _nameText;
         protected TextMeshPro _valueText;
 

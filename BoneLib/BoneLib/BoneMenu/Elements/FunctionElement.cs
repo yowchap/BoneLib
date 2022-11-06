@@ -13,6 +13,8 @@ namespace BoneLib.BoneMenu
             Action = action;
         }
 
+        public override string Type => ElementType.Type_Function;
+
         public Action Action { get; private set; }
 
         public override void OnSelectElement()

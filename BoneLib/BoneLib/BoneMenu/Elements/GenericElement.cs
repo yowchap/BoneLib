@@ -12,6 +12,8 @@ namespace BoneLib.BoneMenu
             Color = color;
         }
 
+        public override string Type => ElementType.Type_Value;
+
         protected T value;
         protected Action<T> action;
 

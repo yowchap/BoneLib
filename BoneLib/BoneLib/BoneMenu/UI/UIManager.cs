@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using System.Collections.Generic;
+
 namespace BoneLib.BoneMenu.UI
 {
     /// <summary>
@@ -13,8 +15,10 @@ namespace BoneLib.BoneMenu.UI
 
         public static UIManager Instance { get; private set; }
 
-        public UIPage RootPage { get; private set; }
-        public UIPage ActivePage { get; private set; }
+        public UIPool PagePool { get; private set; }
+        public UIPool CategoryPool { get; private set; }
+        public UIPool FunctionPool { get; private set; }
+        public UIPool ValuePool { get; private set; }
 
         private void Awake()
         {
@@ -26,6 +30,8 @@ namespace BoneLib.BoneMenu.UI
             {
                 Destroy(Instance.gameObject);
             }
+
+            SetupPools();
         }
 
         private void OnEnable()
@@ -48,6 +54,34 @@ namespace BoneLib.BoneMenu.UI
         public void OnCategorySelected(MenuCategory category)
         {
 
+        }
+
+        private void SetupPools()
+        {
+            GameObject pagePool = new GameObject("Pool");
+            GameObject categoryPool = new GameObject("Pool");
+            GameObject functionPool = new GameObject("Pool");
+            GameObject valuePool = new GameObject("Pool");
+
+            PagePool = pagePool.AddComponent<UIPool>();
+            CategoryPool = categoryPool.AddComponent<UIPool>();
+            FunctionPool = functionPool.AddComponent<UIPool>();
+            ValuePool = valuePool.AddComponent<UIPool>();
+
+            PagePool.SetPrefab(MenuManager.UI.PageObject);
+            CategoryPool.SetPrefab(MenuManager.UI.CategoryFieldObject);
+            FunctionPool.SetPrefab(MenuManager.UI.FunctionFieldObject);
+            ValuePool.SetPrefab(MenuManager.UI.NumberFieldObject);
+
+            PagePool.SetCount(1);
+            CategoryPool.SetCount(1);
+            FunctionPool.SetCount(1);
+            ValuePool.SetCount(1);
+
+            PagePool.Populate(PagePool.Count);
+            CategoryPool.Populate(PagePool.Count);
+            FunctionPool.Populate(PagePool.Count);
+            ValuePool.Populate(PagePool.Count);
         }
     }
 }

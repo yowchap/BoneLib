@@ -10,6 +10,8 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIFunctionField(System.IntPtr ptr) : base(ptr) { }
 
+        public override string Type => ElementType.Type_Function;
+
         private Button _functionButton;
 
         private void Awake()

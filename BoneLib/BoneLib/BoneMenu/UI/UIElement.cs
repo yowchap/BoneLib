@@ -12,6 +12,8 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIElement(IntPtr ptr) : base(ptr) { }
 
+        public virtual string Type { get => ElementType.Type_Default; }
+
         protected MenuElement _element;
 
         protected virtual TextMeshPro _nameText { get => GetTextMesh("Name"); }
