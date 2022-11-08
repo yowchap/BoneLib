@@ -38,5 +38,25 @@ namespace BoneLib.BoneMenu.UI
 
             return transform.Find(path).GetComponent<TextMeshPro>();
         }
+
+        public void UpdateText(TextMeshPro tmPro, float value)
+        {
+            UpdateText(tmPro, value.ToString());
+        }
+
+        public void UpdateText(TextMeshPro tmPro, int value)
+        {
+            UpdateText(tmPro, value.ToString());
+        }
+
+        public void UpdateText(TextMeshPro tmPro, string text)
+        {
+            if (tmPro == null)
+            {
+                return;
+            }
+
+            tmPro.text = text;
+        }
     }
 }

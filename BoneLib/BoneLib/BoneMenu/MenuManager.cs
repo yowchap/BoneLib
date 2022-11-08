@@ -81,12 +81,12 @@ namespace BoneLib.BoneMenu
             public static GameObject OptionsPanel { get => PanelView.pages[0]; }
             public static Transform OptionsGrid { get => OptionsPanel.transform.Find("grid_Options"); }
 
-            public static GameObject PageObject = Bundles.FindBundleObject("[BoneMenu] - Generic Page");
-            public static GameObject CategoryFieldObject = Bundles.FindBundleObject("[BoneMenu] - Category Element");
-            public static GameObject FunctionFieldObject = Bundles.FindBundleObject("[BoneMenu] - Function Property");
-            public static GameObject NumberFieldObject = Bundles.FindBundleObject("[BoneMenu] - Number Property");
+            public static GameObject PagePrefab = Bundles.FindBundleObject("Element_Page");
+            public static GameObject CategoryPrefab = Bundles.FindBundleObject("Element_Category");
+            public static GameObject FunctionPrefab = Bundles.FindBundleObject("Element_Function");
+            public static GameObject ValuePrefab = Bundles.FindBundleObject("Element_Value");
 
-            public static GameObject BMButtonObject = Bundles.FindBundleObject("[BoneMenu] - Option Button");
+            public static GameObject BMButtonObject = Bundles.FindBundleObject("BoneMenuButton");
 
             public static GameObject MainPage { get => _mainPage; }
 
@@ -98,7 +98,7 @@ namespace BoneLib.BoneMenu
 
             public static void Init()
             {
-                _mainPage = SetupElement(PageObject, PanelView.transform, false);
+                _mainPage = SetupElement(PagePrefab, PanelView.transform, false);
                 _optionButton = SetupElement(BMButtonObject, OptionsGrid, true);
 
                 ModifyBaseUI();
@@ -106,10 +106,10 @@ namespace BoneLib.BoneMenu
 
             public static void AddComponents()
             {
-                PageObject.AddComponent<UIPage>();
-                CategoryFieldObject.AddComponent<UICategoryField>();
-                FunctionFieldObject.AddComponent<UIFunctionField>();
-                NumberFieldObject.AddComponent<UIValueField>();
+                PagePrefab.AddComponent<UIPage>();
+                CategoryPrefab.AddComponent<UICategoryField>();
+                FunctionPrefab.AddComponent<UIFunctionField>();
+                ValuePrefab.AddComponent<UIValueField>();
             }
 
             static void ModifyBaseUI()
@@ -117,7 +117,7 @@ namespace BoneLib.BoneMenu
                 _optionButtonComponent = _optionButton.GetComponent<Button>();
                 _optionButtonComponent.onClick.AddListener(new Action(() => PanelView.PAGESELECT(6)));
 
-                _arrowButtonComponent = _mainPage.transform.Find("[Button] - Return").GetComponent<Button>();
+                _arrowButtonComponent = _mainPage.transform.Find("Return").GetComponent<Button>();
                 _arrowButtonComponent.onClick.AddListener(new Action(() => PanelView.PAGESELECT(PanelView.defaultPage)));
 
                 var list = new UnhollowerBaseLib.Il2CppReferenceArray<GameObject>(7);
@@ -142,14 +142,20 @@ namespace BoneLib.BoneMenu
             }
         }
 
+        public static MenuCategory RootCategory { get => _rootCategory; }
+        public static MenuCategory ActiveCategory { get => _activeCategory; }
+        public static List<MenuCategory> Categories { get => _categories; }
+
         public static Action<MenuCategory> OnCategoryCreated;
         public static Action<MenuCategory> OnCategorySelected;
 
         private static List<MenuCategory> _categories = new List<MenuCategory>();
+        private static MenuCategory _rootCategory = null;
         private static MenuCategory _activeCategory = null;
 
         public static void Init()
         {
+            _rootCategory = CreateCategory("BoneMenu", Color.white);
             UI.Init();
         }
 

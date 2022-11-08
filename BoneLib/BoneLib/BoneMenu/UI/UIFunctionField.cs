@@ -16,7 +16,7 @@ namespace BoneLib.BoneMenu.UI
 
         private void Awake()
         {
-            _functionButton = transform.Find("button_Function").GetComponent<Button>();
+            _functionButton = transform.Find("Button").GetComponent<Button>();
 
             SetupListeners();
         }

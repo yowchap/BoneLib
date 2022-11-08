@@ -19,7 +19,7 @@ namespace BoneLib.BoneMenu
 
         public override void OnSelectElement()
         {
-            throw new NotImplementedException();
+            SafeActions.InvokeActionSafe(Action);
         }
     }
 }

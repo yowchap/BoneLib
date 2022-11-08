@@ -10,13 +10,15 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIValueField(IntPtr ptr) : base(ptr) { }
 
+        public override string Type => ElementType.Type_Value;
+
         private Button _leftButton;
         private Button _rightButton;
 
         private void Awake()
         {
-            _leftButton = transform.Find("button_stUP").GetComponent<Button>();
-            _rightButton = transform.Find("button_stDown").GetComponent<Button>();
+            _leftButton = transform.Find("ButtonUp").GetComponent<Button>();
+            _rightButton = transform.Find("ButtonDown").GetComponent<Button>();
 
             SetupListeners();
         }

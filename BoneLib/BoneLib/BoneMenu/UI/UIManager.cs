@@ -20,9 +20,16 @@ namespace BoneLib.BoneMenu.UI
         public UIPool FunctionPool { get; private set; }
         public UIPool ValuePool { get; private set; }
 
+        public UIPage MainPage;
+
+        private GameObject pagePool;
+        private GameObject categoryPool;
+        private GameObject functionPool;
+        private GameObject valuePool;
+
         private void Awake()
         {
-            if(Instance == null)
+            if (Instance == null)
             {
                 Instance = this;
             }
@@ -32,6 +39,11 @@ namespace BoneLib.BoneMenu.UI
             }
 
             SetupPools();
+        }
+
+        private void Start()
+        {
+
         }
 
         private void OnEnable()
@@ -48,40 +60,44 @@ namespace BoneLib.BoneMenu.UI
 
         public void OnCategoryCreated(MenuCategory category)
         {
-            var categoryObject = GameObject.Instantiate(MenuManager.UI.CategoryFieldObject);
+            if (category == null)
+            {
+                return;
+            }
         }
 
         public void OnCategorySelected(MenuCategory category)
         {
+            if (category == null)
+            {
+                return;
+            }
 
+            MainPage = PagePool.Enable(transform).GetComponent<UIPage>();
+            MainPage.Draw();
         }
 
         private void SetupPools()
         {
-            GameObject pagePool = new GameObject("Pool");
-            GameObject categoryPool = new GameObject("Pool");
-            GameObject functionPool = new GameObject("Pool");
-            GameObject valuePool = new GameObject("Pool");
+            PagePool = pagePool?.GetComponent<UIPool>();
+            CategoryPool = categoryPool?.GetComponent<UIPool>();
+            FunctionPool = functionPool?.GetComponent<UIPool>();
+            ValuePool = valuePool?.GetComponent<UIPool>();
 
-            PagePool = pagePool.AddComponent<UIPool>();
-            CategoryPool = categoryPool.AddComponent<UIPool>();
-            FunctionPool = functionPool.AddComponent<UIPool>();
-            ValuePool = valuePool.AddComponent<UIPool>();
+            PagePool.SetCount(2);
+            CategoryPool.SetCount(2);
+            FunctionPool.SetCount(2);
+            ValuePool.SetCount(2);
 
-            PagePool.SetPrefab(MenuManager.UI.PageObject);
-            CategoryPool.SetPrefab(MenuManager.UI.CategoryFieldObject);
-            FunctionPool.SetPrefab(MenuManager.UI.FunctionFieldObject);
-            ValuePool.SetPrefab(MenuManager.UI.NumberFieldObject);
-
-            PagePool.SetCount(1);
-            CategoryPool.SetCount(1);
-            FunctionPool.SetCount(1);
-            ValuePool.SetCount(1);
+            PagePool.SetPrefab(MenuManager.UI.PagePrefab);
+            CategoryPool.SetPrefab(MenuManager.UI.CategoryPrefab);
+            FunctionPool.SetPrefab(MenuManager.UI.FunctionPrefab);
+            ValuePool.SetPrefab(MenuManager.UI.ValuePrefab);
 
             PagePool.Populate(PagePool.Count);
-            CategoryPool.Populate(PagePool.Count);
-            FunctionPool.Populate(PagePool.Count);
-            ValuePool.Populate(PagePool.Count);
+            CategoryPool.Populate(CategoryPool.Count);
+            FunctionPool.Populate(FunctionPool.Count);
+            ValuePool.Populate(ValuePool.Count);
         }
     }
 }

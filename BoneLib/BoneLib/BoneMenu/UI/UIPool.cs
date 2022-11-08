@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BoneLib.BoneMenu.UI
 {
@@ -13,20 +14,14 @@ namespace BoneLib.BoneMenu.UI
         public GameObject Prefab { get => _prefab; }
         public int Count { get => _count; }
 
-        private List<GameObject> _pool;
-
         private GameObject _prefab;
+        private List<GameObject> _pool;
         private int _count;
 
         private void Awake()
         {
             name = $"[Pool] - {_prefab.name}";
-        }
-
-        private void Start()
-        {
             _pool = new List<GameObject>();
-            transform.parent = UIManager.Instance.transform;
         }
 
         public void SetCount(int count)
@@ -41,21 +36,32 @@ namespace BoneLib.BoneMenu.UI
 
         public void Populate(int byElements)
         {
-            if(_prefab == null)
+            if (_prefab == null)
             {
                 return;
             }
 
-            for(int i = 0; i < byElements; i++)
+            for (int i = 0; i < byElements; i++)
             {
-                _pool.Add(CreatePrefab(_prefab));
+                var prefab = CreatePrefab(_prefab);
+                prefab.AddComponent<UIPoolee>().SetParent(this);
+                prefab.SetActive(false);
+                _pool.Add(prefab);
             }
+        }
+
+        public GameObject Enable(Transform parent)
+        {
+            var selected = _pool.First();
+            selected.transform.SetParent(parent);
+            selected.SetActive(true);
+            return selected;
         }
 
         private GameObject CreatePrefab(GameObject prefab)
         {
             var _object = GameObject.Instantiate(prefab, transform);
-            _object.SetActive(false);
+            _object.SetActive(true);
             return _object;
         }
     }

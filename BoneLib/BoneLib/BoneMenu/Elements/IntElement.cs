@@ -26,26 +26,22 @@ namespace BoneLib.BoneMenu
 
         public override void OnSelectLeft()
         {
-            int value = _value += _increment;
+            _value += _increment;
 
-            if (value >= _maxValue)
+            if (_value >= _maxValue)
             {
-                value = _maxValue;
+                _value = _maxValue;
             }
-
-            UpdateText(_valueText, value);
         }
 
         public override void OnSelectRight()
         {
-            int value = _value -= _increment;
+            _value -= _increment;
 
-            if (value <= _minValue)
+            if (_value <= _minValue)
             {
-                value = _minValue;
+                _value = _minValue;
             }
-
-            UpdateText(_valueText, value);
         }
 
         protected override void OnValueChanged() { }
