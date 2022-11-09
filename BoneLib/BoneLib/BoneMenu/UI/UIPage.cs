@@ -28,7 +28,19 @@ namespace BoneLib.BoneMenu.UI
 
         private void Start()
         {
-            Action returnAction = () => MenuManager.SelectCategory(MenuManager.RootCategory);
+            Action returnAction = () =>
+            {
+                var category = (MenuCategory)_element;
+
+                if (category.Parent != null)
+                {
+                    MenuManager.SelectCategory(category.Parent);
+                }
+                else
+                {
+                    MenuManager.SelectCategory(MenuManager.RootCategory);
+                }
+            };
 
             if (_returnButton != null)
             {
@@ -47,31 +59,35 @@ namespace BoneLib.BoneMenu.UI
                 return;
             }
 
-            foreach (var element in MenuManager.ActiveCategory.Elements)
+            SetText(activeCategory.Name);
+
+            for (int i = 0; i < activeCategory.Elements.Count; i++)
             {
+                var element = activeCategory.Elements[i];
                 UIElement uiElement = null;
 
                 if (element.Type == ElementType.Type_Category)
                 {
-                    var obj = UIManager.Instance.CategoryPool.Enable(_elementGrid.transform);
+                    var obj = UIManager.Instance.CategoryPool.Spawn(_elementGrid.transform, true);
                     uiElement = obj.GetComponent<UICategoryField>();
                     uiElement.AssignElement(element);
-                    Elements?.Add(uiElement);
                 }
-                else if (element.Type == ElementType.Type_Function)
+
+                if (element.Type == ElementType.Type_Function)
                 {
-                    var obj = UIManager.Instance.FunctionPool.Enable(_elementGrid.transform);
+                    var obj = UIManager.Instance.FunctionPool.Spawn(_elementGrid.transform, true);
                     uiElement = obj.GetComponent<UIFunctionField>();
                     uiElement.AssignElement(element);
-                    Elements?.Add(uiElement);
                 }
-                else if (element.Type == ElementType.Type_Value)
+
+                if (element.Type == ElementType.Type_Value)
                 {
-                    var obj = UIManager.Instance.ValuePool.Enable(_elementGrid.transform);
+                    var obj = UIManager.Instance.ValuePool.Spawn(_elementGrid.transform, true);
                     uiElement = obj.GetComponent<UIValueField>();
                     uiElement.AssignElement(element);
-                    Elements?.Add(uiElement);
                 }
+
+                Elements?.Add(uiElement);
             }
         }
 

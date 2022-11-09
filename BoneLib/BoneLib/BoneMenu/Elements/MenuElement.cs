@@ -16,9 +16,7 @@ namespace BoneLib.BoneMenu
         public Color Color { get; protected set; }
 
         public virtual string Type { get => ElementType.Type_Default; }
-
-        protected TextMeshPro _nameText;
-        protected TextMeshPro _valueText;
+        public virtual string DisplayValue { get => "Default"; }
 
         public void SetName(string name)
         {
@@ -30,38 +28,8 @@ namespace BoneLib.BoneMenu
             Color = color;
         }
 
-        public void SetNameTextMesh(TextMeshPro nameText)
-        {
-            _nameText = nameText;
-        }
-
-        public void SetValueTextMesh(TextMeshPro valueText)
-        {
-            _valueText = valueText;
-        }
-
         public virtual void OnSelectElement() { }
         public virtual void OnSelectLeft() { }
         public virtual void OnSelectRight() { }
-
-        protected void UpdateText(TextMeshPro tmPro, float value)
-        {
-            UpdateText(tmPro, value.ToString());
-        }
-
-        protected void UpdateText(TextMeshPro tmPro, int value)
-        {
-            UpdateText(tmPro, value.ToString());
-        }
-
-        protected void UpdateText(TextMeshPro tmPro, string text)
-        {
-            if(tmPro == null)
-            {
-                return;
-            }
-
-            tmPro.text = text;
-        }
     }
 }

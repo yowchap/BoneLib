@@ -149,6 +149,7 @@
     <Compile Include="BoneMenu\UI\UIManager.cs" />
     <Compile Include="BoneMenu\UI\UIPage.cs" />
     <Compile Include="BoneMenu\UI\UIPool.cs" />
+    <Compile Include="BoneMenu\UI\UIPoolee.cs" />
     <Compile Include="BoneMenu\UI\UIValueField.cs" />
     <Compile Include="GameLayers.cs" />
     <Compile Include="Extensions.cs" />

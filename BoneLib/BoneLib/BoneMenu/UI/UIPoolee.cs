@@ -16,8 +16,10 @@ namespace BoneLib.BoneMenu.UI
 
         public void Return()
         {
+            parent.Active.Remove(this);
             transform.SetParent(parent.transform);
             gameObject.SetActive(false);
+            parent.Inactive.Add(this);
         }
     }
 }

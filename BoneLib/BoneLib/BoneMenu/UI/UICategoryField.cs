@@ -14,7 +14,7 @@ namespace BoneLib.BoneMenu.UI
 
         private void Awake()
         {
-            _categoryButton = transform.Find("[Button] - Category").GetComponent<Button>();
+            _categoryButton = transform.Find("Button").GetComponent<Button>();
             SetupListeners();
         }
 
@@ -22,10 +22,11 @@ namespace BoneLib.BoneMenu.UI
         {
             Action action = () =>
             {
-                MenuManager.SelectCategory((MenuCategory)_element);
+                var category = (MenuCategory)_element;
+                MenuManager.SelectCategory(category);
             };
 
-            if(_categoryButton != null)
+            if (_categoryButton != null)
             {
                 _categoryButton.onClick.AddListener(action);
             }

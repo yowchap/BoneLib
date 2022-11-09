@@ -22,11 +22,17 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(MenuElement element)
         {
             _element = element;
-            _element.SetNameTextMesh(_nameText);
-            _element.SetValueTextMesh(_valueText);
 
-            _nameText.text = _element.Name;
-            _nameText.color = _element.Color;
+            if (_nameText != null)
+            {
+                _nameText.text = _element.Name;
+                _nameText.color = _element.Color;
+            }
+
+            if (_valueText != null)
+            {
+                _valueText.text = _element.DisplayValue;
+            }
         }
 
         public TextMeshPro GetTextMesh(string path)
@@ -39,24 +45,21 @@ namespace BoneLib.BoneMenu.UI
             return transform.Find(path).GetComponent<TextMeshPro>();
         }
 
-        public void UpdateText(TextMeshPro tmPro, float value)
+        public void SetText(string name = "", string value = "")
         {
-            UpdateText(tmPro, value.ToString());
-        }
-
-        public void UpdateText(TextMeshPro tmPro, int value)
-        {
-            UpdateText(tmPro, value.ToString());
-        }
-
-        public void UpdateText(TextMeshPro tmPro, string text)
-        {
-            if (tmPro == null)
+            if (_nameText == null)
             {
                 return;
             }
 
-            tmPro.text = text;
+            _nameText.text = name;
+
+            if (_valueText == null)
+            {
+                return;
+            }
+
+            _valueText.text = value;
         }
     }
 }

@@ -39,11 +39,8 @@ namespace BoneLib.BoneMenu.UI
             }
 
             SetupPools();
-        }
 
-        private void Start()
-        {
-
+            MainPage = PagePool.Spawn(transform).GetComponent<UIPage>();
         }
 
         private void OnEnable()
@@ -73,8 +70,9 @@ namespace BoneLib.BoneMenu.UI
                 return;
             }
 
-            MainPage = PagePool.Enable(transform).GetComponent<UIPage>();
+            MainPage.AssignElement(category);
             MainPage.Draw();
+            MainPage.gameObject.SetActive(true);
         }
 
         private void SetupPools()
@@ -85,14 +83,14 @@ namespace BoneLib.BoneMenu.UI
             ValuePool = valuePool?.GetComponent<UIPool>();
 
             PagePool.SetCount(2);
-            CategoryPool.SetCount(2);
-            FunctionPool.SetCount(2);
-            ValuePool.SetCount(2);
+            CategoryPool.SetCount(6);
+            FunctionPool.SetCount(6);
+            ValuePool.SetCount(6);
 
-            PagePool.SetPrefab(MenuManager.UI.PagePrefab);
-            CategoryPool.SetPrefab(MenuManager.UI.CategoryPrefab);
-            FunctionPool.SetPrefab(MenuManager.UI.FunctionPrefab);
-            ValuePool.SetPrefab(MenuManager.UI.ValuePrefab);
+            PagePool.SetPrefab(DataManager.UI.PagePrefab);
+            CategoryPool.SetPrefab(DataManager.UI.CategoryPrefab);
+            FunctionPool.SetPrefab(DataManager.UI.FunctionPrefab);
+            ValuePool.SetPrefab(DataManager.UI.ValuePrefab);
 
             PagePool.Populate(PagePool.Count);
             CategoryPool.Populate(CategoryPool.Count);

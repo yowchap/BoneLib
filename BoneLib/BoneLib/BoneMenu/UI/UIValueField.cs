@@ -25,10 +25,19 @@ namespace BoneLib.BoneMenu.UI
 
         private void SetupListeners()
         {
-            Action onLeftPressed = () => _element?.OnSelectLeft();
-            Action onRightPressed = () => _element?.OnSelectRight();
+            Action onLeftPressed = () =>
+            {
+                _element?.OnSelectLeft();
+                SetText(_element.Name, _element.DisplayValue);
+            };
 
-            if(_leftButton != null)
+            Action onRightPressed = () =>
+            {
+                _element?.OnSelectRight();
+                SetText(_element.Name, _element.DisplayValue);
+            };
+
+            if (_leftButton != null)
             {
                 _leftButton.onClick.AddListener(onLeftPressed);
             }

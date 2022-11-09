@@ -10,18 +10,25 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIPool(System.IntPtr ptr) : base(ptr) { }
 
-        public List<GameObject> Pool { get => _pool; }
+        public List<UIPoolee> Pool { get => _pool; }
+
+        public List<UIPoolee> Active { get => _active; }
+        public List<UIPoolee> Inactive { get => _inactive; }
+
         public GameObject Prefab { get => _prefab; }
         public int Count { get => _count; }
 
         private GameObject _prefab;
-        private List<GameObject> _pool;
+
+        private List<UIPoolee> _pool = new List<UIPoolee>();
+        private List<UIPoolee> _active = new List<UIPoolee>();
+        private List<UIPoolee> _inactive = new List<UIPoolee>();
+
         private int _count;
 
         private void Awake()
         {
             name = $"[Pool] - {_prefab.name}";
-            _pool = new List<GameObject>();
         }
 
         public void SetCount(int count)
@@ -44,17 +51,25 @@ namespace BoneLib.BoneMenu.UI
             for (int i = 0; i < byElements; i++)
             {
                 var prefab = CreatePrefab(_prefab);
-                prefab.AddComponent<UIPoolee>().SetParent(this);
+                var poolee = prefab.AddComponent<UIPoolee>();
+
+                poolee.SetParent(this);
                 prefab.SetActive(false);
-                _pool.Add(prefab);
+
+                _pool.Add(poolee);
+                _inactive.Add(poolee);
             }
         }
 
-        public GameObject Enable(Transform parent)
+        public UIPoolee Spawn(Transform parent, bool startActive = false)
         {
-            var selected = _pool.First();
+            var selected = _inactive.First();
             selected.transform.SetParent(parent);
-            selected.SetActive(true);
+            selected.gameObject.SetActive(startActive);
+
+            _active.Add(selected);
+            _inactive.Remove(selected);
+
             return selected;
         }
 
