@@ -5,6 +5,8 @@ using UnhollowerRuntimeLib;
 
 using BoneLib.BoneMenu;
 
+using UnityEngine;
+
 namespace BoneLib
 {
     public static class BuildInfo
@@ -26,7 +28,15 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
+            MenuManager.SetRoot(MenuManager.CreateCategory("BoneMenu", Color.white));
+
+            TestBonemenuStuff();
+
+            DataManager.Bundles.Init();
+            DataManager.UI.AddComponents();
+
             Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
+            Hooking.OnMarrowSceneLoaded += (data) => OnMarrowSceneLoaded();
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -35,9 +45,21 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
+        private void OnMarrowSceneLoaded()
+        {
+            DataManager.UI.Init();
+            new GameObject("[BoneMenu] - UI Manager").AddComponent<BoneMenu.UI.UIManager>();
+        }
+
         private void OnPlayerReferencesFound()
         {
             PopupBoxManager.CreateBaseAd();
+        }
+
+        private void TestBonemenuStuff()
+        {
+            var testCat = MenuManager.RootCategory.CreateCategory("Test", Color.white);
+            testCat.CreateFunctionElement("Test Function", Color.green, () => LoggerInstance.Msg("I have been ran. Run."));
         }
     }
 }

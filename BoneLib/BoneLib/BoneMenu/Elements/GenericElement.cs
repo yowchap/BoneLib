@@ -12,11 +12,13 @@ namespace BoneLib.BoneMenu
             Color = color;
         }
 
+        public static Action<T> OnValueChanged;
+
         public override string Type => ElementType.Type_Value;
 
         protected T value;
         protected Action<T> action;
 
-        protected virtual void OnValueChanged() { }
+        protected virtual void OnChangedValue() { }
     }
 }

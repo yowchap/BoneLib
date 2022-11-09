@@ -77,10 +77,15 @@ namespace BoneLib.BoneMenu.UI
 
         private void SetupPools()
         {
-            PagePool = pagePool?.GetComponent<UIPool>();
-            CategoryPool = categoryPool?.GetComponent<UIPool>();
-            FunctionPool = functionPool?.GetComponent<UIPool>();
-            ValuePool = valuePool?.GetComponent<UIPool>();
+            pagePool = new GameObject("Page Pool");
+            categoryPool = new GameObject("Category Pool");
+            functionPool = new GameObject("Function Pool");
+            valuePool = new GameObject("Value Pool");
+
+            PagePool = pagePool?.AddComponent<UIPool>();
+            CategoryPool = categoryPool?.AddComponent<UIPool>();
+            FunctionPool = functionPool?.AddComponent<UIPool>();
+            ValuePool = valuePool?.AddComponent<UIPool>();
 
             PagePool.SetCount(2);
             CategoryPool.SetCount(6);

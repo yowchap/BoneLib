@@ -29,7 +29,6 @@ namespace BoneLib.BoneMenu
         {
             Array values = System.Enum.GetValues(value.GetType());
             int nextIndex = Array.IndexOf(values, value) + 1;
-            Debug.Log(nextIndex);
             return nextIndex == values.Length ? (Enum)values.GetValue(0) : (Enum)values.GetValue(nextIndex);
         }
 
@@ -37,7 +36,6 @@ namespace BoneLib.BoneMenu
         {
             Array values = System.Enum.GetValues(value.GetType());
             int previousIndex = Array.IndexOf(values, value) - 1;
-            Debug.Log(previousIndex);
             return previousIndex > -1 ? (Enum)values.GetValue(previousIndex) : (Enum)values.GetValue(values.Length - 1);
         }
     }

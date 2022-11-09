@@ -112,11 +112,14 @@ namespace BoneLib.BoneMenu
 
             static void ModifyBaseUI()
             {
-                _optionButtonComponent = _optionButton.GetComponent<Button>();
-                _optionButtonComponent.onClick.AddListener(new Action(() => PanelView.PAGESELECT(6)));
+                Action optionButtonAction = () =>
+                {
+                    PanelView.ALLOFF();
+                    MenuManager.SelectCategory(MenuManager.RootCategory);
+                };
 
-                _arrowButtonComponent = _mainPage.transform.Find("Return").GetComponent<Button>();
-                _arrowButtonComponent.onClick.AddListener(new Action(() => PanelView.PAGESELECT(PanelView.defaultPage)));
+                _optionButtonComponent = _optionButton.GetComponent<Button>();
+                _optionButtonComponent.onClick.AddListener(optionButtonAction);
 
                 var list = new UnhollowerBaseLib.Il2CppReferenceArray<GameObject>(7);
 
