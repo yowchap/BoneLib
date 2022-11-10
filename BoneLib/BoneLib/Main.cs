@@ -2,6 +2,7 @@
 using BoneLib.RandomShit;
 using MelonLoader;
 using UnhollowerRuntimeLib;
+using UnityEngine;
 
 namespace BoneLib
 {
@@ -25,6 +26,7 @@ namespace BoneLib
             Hooking.InitHooks();
 
             Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
+            Hooking.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -36,6 +38,41 @@ namespace BoneLib
         private void OnPlayerReferencesFound()
         {
             PopupBoxManager.CreateBaseAd();
+        }
+
+        private void OnMarrowSceneLoaded(MarrowSceneInfo info)
+        {
+            if(info.LevelTitle == "00 - Main Menu" || info.LevelTitle == "15 - Void G114")
+            {
+                SkipIntro();
+            }
+        }
+
+        private void SkipIntro()
+        {
+            GameObject uiRoot = GameObject.Find("CANVAS_UX");
+
+            GameObject slzWobble = uiRoot.transform.Find("SLZ_ROOT").gameObject;
+            GameObject marrowWobble = uiRoot.transform.Find("CREDITS_ROOT").gameObject;
+            GameObject boneBeaker = uiRoot.transform.Find("BONELAB_ANIM").gameObject;
+
+            GameObject.Destroy(slzWobble);
+            GameObject.Destroy(marrowWobble);
+
+            boneBeaker.transform.localPosition = Vector3.up * 0.375f;
+            boneBeaker.transform.localScale = Vector3.one * 0.5f;
+
+            GameObject requiredUI = uiRoot.transform.Find("REQUIRED").gameObject;
+            requiredUI.SetActiveRecursively(true);
+
+            GameObject menuUI = uiRoot.transform.Find("MENU").gameObject;
+            menuUI.gameObject.SetActive(true);
+
+            menuUI.transform.Find("group_Enter").gameObject.SetActive(false);
+            menuUI.transform.Find("group_Options").gameObject.SetActive(false);
+            menuUI.transform.Find("group_Mods").gameObject.SetActive(false);
+            menuUI.transform.Find("group_Info").gameObject.SetActive(false);
+            menuUI.transform.Find("group_BETA").gameObject.SetActive(false);
         }
     }
 }
