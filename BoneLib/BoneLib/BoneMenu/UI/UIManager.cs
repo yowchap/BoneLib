@@ -9,12 +9,10 @@ namespace BoneLib.BoneMenu.UI
     /// The UI manager's purpose is to tie the internal menu together with the UI.
     /// It can show/hide pages, go back to pages, and add/remove elements.
     /// </summary>
-    public class UIManager
+    [MelonLoader.RegisterTypeInIl2Cpp]
+    public class UIManager : MonoBehaviour
     {
-        public UIManager()
-        {
-            Awake();
-        }
+        public UIManager(System.IntPtr ptr) : base(ptr) { }
 
         public static UIManager Instance { get; private set; }
 
@@ -30,31 +28,23 @@ namespace BoneLib.BoneMenu.UI
         private GameObject functionPool;
         private GameObject valuePool;
 
-        private GameObject gameObject;
-
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-
-            gameObject = new GameObject("[BoneMenu] - UI Manager");
+            Instance = this;
 
             gameObject.AddComponent<Canvas>();
             gameObject.AddComponent<GraphicRaycaster>();
 
             SetupPools();
-            Start();
-        }
 
-        private void Start()
-        {
-            ModConsole.Msg($"PagePool collected?: {PagePool?.WasCollected}");
-            ModConsole.Msg($"PanelView collected?: {DataManager.UI.PanelView?.WasCollected}");
-            ModConsole.Msg($"PanelView Page Component collected?: {DataManager.UI.PanelView?.GetComponent<UIPage>()?.WasCollected}");
             MainPage = PagePool.Spawn(DataManager.UI.PanelView.transform, false).GetComponent<UIPage>();
             DataManager.UI.Init();
+        }
+
+        private void Update()
+        {
+            MainPage.transform.position = DataManager.UI.PanelView.transform.position;
+            MainPage.transform.rotation = DataManager.UI.PanelView.transform.rotation;
         }
 
         private void OnEnable()
@@ -67,11 +57,6 @@ namespace BoneLib.BoneMenu.UI
         {
             MenuManager.OnCategoryCreated -= OnCategoryCreated;
             MenuManager.OnCategorySelected -= OnCategorySelected;
-        }
-
-        private void Update()
-        {
-            MainPage.transform.position = DataManager.UI.PanelView.transform.position;
         }
 
         public void OnCategoryCreated(MenuCategory category)
@@ -87,7 +72,9 @@ namespace BoneLib.BoneMenu.UI
             if (category == null)
             {
                 return;
-            }
+            } 
+
+            MelonLoader.MelonLogger.Msg("Invoked");
 
             MainPage.AssignElement(category);
             MainPage.Draw();

@@ -39,6 +39,7 @@ namespace BoneLib.BoneMenu.UI
         public void SetPrefab(GameObject prefab)
         {
             _prefab = prefab;
+            _prefab.hideFlags = HideFlags.DontUnloadUnusedAsset;
         }
 
         public void Populate(int byElements)
@@ -68,6 +69,7 @@ namespace BoneLib.BoneMenu.UI
             selected.gameObject.SetActive(startActive);
 
             selected.transform.localPosition = Vector3.zero;
+            selected.transform.rotation = parent.rotation;
 
             _active.Add(selected);
             _inactive.Remove(selected);

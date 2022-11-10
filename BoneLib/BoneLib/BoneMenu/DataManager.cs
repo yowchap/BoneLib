@@ -119,7 +119,8 @@ namespace BoneLib.BoneMenu
             {
                 Action optionButtonAction = () =>
                 {
-                    PanelView.ALLOFF();
+                    MelonLoader.MelonLogger.Msg("test");
+                    PanelView.PAGESELECT(9);
                     MenuManager.SelectCategory(MenuManager.RootCategory);
                 };
 
