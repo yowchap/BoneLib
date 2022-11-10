@@ -129,6 +129,10 @@
     <Reference Include="UnityEngine.UIElementsModule">
       <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.UIElementsModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>

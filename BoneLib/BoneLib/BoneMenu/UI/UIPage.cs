@@ -38,7 +38,16 @@ namespace BoneLib.BoneMenu.UI
                 }
                 else
                 {
-                    MenuManager.SelectCategory(MenuManager.RootCategory);
+                    if(MenuManager.ActiveCategory == MenuManager.RootCategory)
+                    {
+                        // return to base game options menu
+                        gameObject.SetActive(false);
+                        DataManager.UI.PanelView.PAGESELECT(0);
+                    }
+                    else
+                    {
+                        MenuManager.SelectCategory(MenuManager.RootCategory);
+                    }
                 }
             };
 

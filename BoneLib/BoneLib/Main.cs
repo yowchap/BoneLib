@@ -47,7 +47,7 @@ namespace BoneLib
 
         private void OnMarrowSceneLoaded()
         {
-            DataManager.UI.Init();
+            DataManager.UI.InitializeReferences();
             new GameObject("[BoneMenu] - UI Manager").AddComponent<BoneMenu.UI.UIManager>();
         }
 

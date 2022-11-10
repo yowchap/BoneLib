@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 using System.Collections.Generic;
 
@@ -38,9 +39,16 @@ namespace BoneLib.BoneMenu.UI
                 Destroy(Instance.gameObject);
             }
 
-            SetupPools();
+            gameObject.AddComponent<Canvas>();
+            gameObject.AddComponent<GraphicRaycaster>();
 
-            MainPage = PagePool.Spawn(transform).GetComponent<UIPage>();
+            SetupPools();
+        }
+
+        private void Start()
+        {
+            MainPage = PagePool.Spawn(DataManager.UI.PanelView.transform, false).GetComponent<UIPage>();
+            DataManager.UI.Init();
         }
 
         private void OnEnable()
@@ -53,6 +61,11 @@ namespace BoneLib.BoneMenu.UI
         {
             MenuManager.OnCategoryCreated -= OnCategoryCreated;
             MenuManager.OnCategorySelected -= OnCategorySelected;
+        }
+
+        private void Update()
+        {
+            MainPage.transform.position = DataManager.UI.PanelView.transform.position;
         }
 
         public void OnCategoryCreated(MenuCategory category)
@@ -81,6 +94,11 @@ namespace BoneLib.BoneMenu.UI
             categoryPool = new GameObject("Category Pool");
             functionPool = new GameObject("Function Pool");
             valuePool = new GameObject("Value Pool");
+
+            pagePool.transform.SetParent(transform);
+            categoryPool.transform.SetParent(transform);
+            functionPool.transform.SetParent(transform);
+            valuePool.transform.SetParent(transform);
 
             PagePool = pagePool?.AddComponent<UIPool>();
             CategoryPool = categoryPool?.AddComponent<UIPool>();

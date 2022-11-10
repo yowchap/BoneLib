@@ -9,6 +9,18 @@ namespace BoneLib.BoneMenu.UI
 
         public UIPool parent { get; private set; }
 
+        private Vector3 _localScale;
+
+        private void Awake()
+        {
+            _localScale = transform.localScale;
+        }
+
+        private void OnEnable()
+        {
+            transform.localScale = _localScale;
+        }
+
         public void SetParent(UIPool parent)
         {
             this.parent = parent;

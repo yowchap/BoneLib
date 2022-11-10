@@ -26,7 +26,7 @@ namespace BoneLib.BoneMenu.UI
 
         private int _count;
 
-        private void Awake()
+        private void Start()
         {
             name = $"[Pool] - {_prefab.name}";
         }
@@ -66,6 +66,8 @@ namespace BoneLib.BoneMenu.UI
             var selected = _inactive.First();
             selected.transform.SetParent(parent);
             selected.gameObject.SetActive(startActive);
+
+            selected.transform.localPosition = Vector3.zero;
 
             _active.Add(selected);
             _inactive.Remove(selected);

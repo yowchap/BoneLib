@@ -14,7 +14,7 @@ using BoneLib.BoneMenu.UI;
 
 namespace BoneLib.BoneMenu
 {
-    public static class DataManager
+    internal static class DataManager
     {
         public static class Bundles
         {
@@ -75,9 +75,9 @@ namespace BoneLib.BoneMenu
 
         public static class UI
         {
-            public static PreferencesPanelView PanelView { get => Player.UIRig.popUpMenu.preferencesPanelView; }
-            public static GameObject OptionsPanel { get => PanelView.pages[0]; }
-            public static Transform OptionsGrid { get => OptionsPanel.transform.Find("grid_Options"); }
+            public static PreferencesPanelView PanelView;
+            public static GameObject OptionsPanel;
+            public static Transform OptionsGrid;
 
             public static GameObject PagePrefab = Bundles.FindBundleObject("Element_Page");
             public static GameObject CategoryPrefab = Bundles.FindBundleObject("Element_Category");
@@ -92,14 +92,19 @@ namespace BoneLib.BoneMenu
             static GameObject _optionButton;
 
             static Button _optionButtonComponent;
-            static Button _arrowButtonComponent;
 
             public static void Init()
             {
-                _mainPage = SetupElement(PagePrefab, PanelView.transform, false);
                 _optionButton = SetupElement(BMButtonObject, OptionsGrid, true);
 
                 ModifyBaseUI();
+            }
+
+            public static void InitializeReferences()
+            {
+                PanelView = Player.UIRig.popUpMenu.preferencesPanelView;
+                OptionsPanel = PanelView.pages[PanelView.defaultPage];
+                OptionsGrid = OptionsPanel.transform.Find("grid_Options");
             }
 
             public static void AddComponents()
@@ -121,16 +126,21 @@ namespace BoneLib.BoneMenu
                 _optionButtonComponent = _optionButton.GetComponent<Button>();
                 _optionButtonComponent.onClick.AddListener(optionButtonAction);
 
-                var list = new UnhollowerBaseLib.Il2CppReferenceArray<GameObject>(7);
+                InjectPage();
+            }
 
-                for (int i = 0; i < 6; i++)
+            static void InjectPage()
+            {
+                var refArray = new UnhollowerBaseLib.Il2CppReferenceArray<GameObject>(10);
+
+                for(int i = 0; i <= 8; i++)
                 {
-                    list[i] = PanelView.pages[i];
+                    refArray[i] = PanelView.pages[i];
                 }
 
-                list[6] = _mainPage;
+                refArray[9] = UIManager.Instance.MainPage.gameObject;
 
-                PanelView.pages = list;
+                PanelView.pages = refArray;
             }
 
             static GameObject SetupElement(GameObject objectToCreate, Transform parent, bool startActive)
