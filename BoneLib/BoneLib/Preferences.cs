@@ -7,10 +7,11 @@ namespace BoneLib
         private static MelonPreferences_Category category = MelonPreferences.CreateCategory("BoneLib");
 
         public static ModPref<LoggingMode> loggingMode;
-
+        public static ModPref<bool> skipIntro;
 
         public static void Setup()
         {
+            skipIntro = new ModPref<bool>(category, "Skip Intro", true);
             loggingMode = new ModPref<LoggingMode>(category, "LoggingMode", LoggingMode.NORMAL);
 
             category.SaveToFile(false);
