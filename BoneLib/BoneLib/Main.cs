@@ -54,7 +54,7 @@ namespace BoneLib
             }
 
             DataManager.UI.InitializeReferences();
-            new GameObject("[BoneMenu] - UI Manager").AddComponent<BoneMenu.UI.UIManager>();
+            new BoneMenu.UI.UIManager();
         }
 
         private void SkipIntro()

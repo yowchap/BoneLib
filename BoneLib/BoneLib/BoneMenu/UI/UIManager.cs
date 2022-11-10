@@ -9,10 +9,12 @@ namespace BoneLib.BoneMenu.UI
     /// The UI manager's purpose is to tie the internal menu together with the UI.
     /// It can show/hide pages, go back to pages, and add/remove elements.
     /// </summary>
-    [MelonLoader.RegisterTypeInIl2Cpp]
-    public class UIManager : MonoBehaviour
+    public class UIManager
     {
-        public UIManager(System.IntPtr ptr) : base(ptr) { }
+        public UIManager()
+        {
+            Awake();
+        }
 
         public static UIManager Instance { get; private set; }
 
@@ -28,25 +30,29 @@ namespace BoneLib.BoneMenu.UI
         private GameObject functionPool;
         private GameObject valuePool;
 
+        private GameObject gameObject;
+
         private void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
             }
-            else
-            {
-                Destroy(Instance.gameObject);
-            }
+
+            gameObject = new GameObject("[BoneMenu] - UI Manager");
 
             gameObject.AddComponent<Canvas>();
             gameObject.AddComponent<GraphicRaycaster>();
 
             SetupPools();
+            Start();
         }
 
         private void Start()
         {
+            ModConsole.Msg($"PagePool collected?: {PagePool?.WasCollected}");
+            ModConsole.Msg($"PanelView collected?: {DataManager.UI.PanelView?.WasCollected}");
+            ModConsole.Msg($"PanelView Page Component collected?: {DataManager.UI.PanelView?.GetComponent<UIPage>()?.WasCollected}");
             MainPage = PagePool.Spawn(DataManager.UI.PanelView.transform, false).GetComponent<UIPage>();
             DataManager.UI.Init();
         }
@@ -95,10 +101,10 @@ namespace BoneLib.BoneMenu.UI
             functionPool = new GameObject("Function Pool");
             valuePool = new GameObject("Value Pool");
 
-            pagePool.transform.SetParent(transform);
-            categoryPool.transform.SetParent(transform);
-            functionPool.transform.SetParent(transform);
-            valuePool.transform.SetParent(transform);
+            pagePool.transform.SetParent(gameObject.transform);
+            categoryPool.transform.SetParent(gameObject.transform);
+            functionPool.transform.SetParent(gameObject.transform);
+            valuePool.transform.SetParent(gameObject.transform);
 
             PagePool = pagePool?.AddComponent<UIPool>();
             CategoryPool = categoryPool?.AddComponent<UIPool>();
