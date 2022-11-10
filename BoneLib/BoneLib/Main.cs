@@ -50,6 +50,11 @@ namespace BoneLib
 
         private void SkipIntro()
         {
+            if (!Preferences.skipIntro)
+            {
+                return;
+            }
+
             GameObject uiRoot = GameObject.Find("CANVAS_UX");
 
             GameObject slzWobble = uiRoot.transform.Find("SLZ_ROOT").gameObject;
