@@ -29,9 +29,9 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
-            MenuManager.SetRoot(MenuManager.CreateCategory("BoneMenu", Color.white));
+            MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
 
-            TestBonemenuStuff();
+            SetupBoneMenu();
 
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
@@ -94,10 +94,10 @@ namespace BoneLib
             PopupBoxManager.CreateBaseAd();
         }
 
-        private void TestBonemenuStuff()
+        private void SetupBoneMenu()
         {
-            var testCat = MenuManager.RootCategory.CreateCategory("Test", Color.white);
-            testCat.CreateFunctionElement("Test Function", Color.green, () => LoggerInstance.Msg("I have been ran. Run."));
+            var mainCategory = MenuManager.CreateCategory("BoneLib", Color.white);
+            mainCategory.CreateFunctionElement("Spawn Ad", Color.yellow, () => PopupBoxManager.CreateBaseAd());
         }
     }
 }

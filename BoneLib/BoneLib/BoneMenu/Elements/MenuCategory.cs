@@ -33,6 +33,13 @@ namespace BoneLib.BoneMenu
             return category;
         }
 
+        public MenuCategory CreateCategory(string name, string hexColor)
+        {
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateCategory(name, color);
+        }
+
         public FunctionElement CreateFunctionElement(string name, Color color, Action action)
         {
             var element = new FunctionElement(name, color, action);
@@ -42,22 +49,59 @@ namespace BoneLib.BoneMenu
             return element;
         }
 
-        public IntElement CreateIntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue)
+        public FunctionElement CreateFunctionElement(string name, string hexColor, Action action)
         {
-            var element = new IntElement(name, color, startValue, increment, minValue, maxValue);
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateFunctionElement(name, color, action);
+        }
+
+        public IntElement CreateIntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
+        {
+            var element = new IntElement(name, color, startValue, increment, minValue, maxValue, action);
             Elements?.Add(element);
             OnElementCreated?.Invoke(this, element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
         }
 
-        public EnumElement<T> CreateEnumElement<T>(string name, Color color) where T : Enum
+        public IntElement CreateIntElement(string name, string hexColor, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
         {
-            var element = new EnumElement<T>(name, color);
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateIntElement(name, color, startValue, increment, minValue, maxValue, action);
+        }
+
+        public EnumElement<T> CreateEnumElement<T>(string name, Color color, Action<T> action = null) where T : Enum
+        {
+            var element = new EnumElement<T>(name, color, action);
             Elements?.Add(element);
             OnElementCreated?.Invoke(this, element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
+        }
+
+        public EnumElement<T> CreateEnumElement<T>(string name, string hexColor, Action<T> action = null) where T : Enum
+        {
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateEnumElement<T>(name, color, action);
+        }
+
+        public FloatElement CreateFloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> action = null)
+        {
+            var element = new FloatElement(name, color, startValue, increment, minValue, maxValue, action);
+            Elements?.Add(element);
+            OnElementCreated?.Invoke(this, element);
+            SafeActions.InvokeActionSafe(OnElementCreated, this, element);
+            return element;
+        }
+
+        public FloatElement CreateFloatElement(string name, string hexColor, float startValue, float increment, float minValue, float maxValue, Action<float> action = null)
+        {
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateFloatElement(name, color, startValue, increment, minValue, maxValue, action);
         }
 
         public override void OnSelectElement()

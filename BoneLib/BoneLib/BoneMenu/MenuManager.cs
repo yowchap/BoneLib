@@ -31,7 +31,7 @@ namespace BoneLib.BoneMenu
 
         public static MenuCategory CreateCategory(string name, Color color)
         {
-            MenuCategory category = new MenuCategory(name, color);
+            MenuCategory category = RootCategory.CreateCategory(name, color);
             _categories?.Add(category);
             SafeActions.InvokeActionSafe(OnCategoryCreated, category);
             return category;

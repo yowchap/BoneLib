@@ -6,12 +6,14 @@ namespace BoneLib.BoneMenu
 {
     public class EnumElement<Enum> : GenericElement<Enum>
     {
-        public EnumElement(string name, Color color) : base(name, color)
+        public EnumElement(string name, Color color, Action<Enum> action = null) : base(name, color, action)
         {
             Name = name;
             Color = color;
+            this.action = action;
         }
 
+        public override string Type => ElementType.Type_Value;
         public override string DisplayValue => value.ToString();
 
         public override void OnSelectLeft()

@@ -3,9 +3,9 @@ using System;
 
 namespace BoneLib.BoneMenu
 {
-    public class IntElement : GenericElement<int>
+    public class FloatElement : GenericElement<float>
     {
-        public IntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> action = null) : base(name, color, action)
+        public FloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> action = null) : base(name, color, action)
         {
             Name = name;
             Color = color;
@@ -19,15 +19,15 @@ namespace BoneLib.BoneMenu
         public override string Type => ElementType.Type_Value;
         public override string DisplayValue => _value.ToString();
 
-        public int Value { get => _value; }
-        public int Increment { get => _increment; }
-        public int MinValue { get => _minValue; }
-        public int MaxValue { get => _maxValue; }
+        public float Value { get => _value; }
+        public float Increment { get => _increment; }
+        public float MinValue { get => _minValue; }
+        public float MaxValue { get => _maxValue; }
 
-        private int _value;
-        private int _increment;
-        private int _minValue;
-        private int _maxValue;
+        private float _value;
+        private float _increment;
+        private float _minValue;
+        private float _maxValue;
 
         public override void OnSelectLeft()
         {

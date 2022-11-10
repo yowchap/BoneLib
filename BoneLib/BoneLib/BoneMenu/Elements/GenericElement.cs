@@ -6,19 +6,23 @@ namespace BoneLib.BoneMenu
 {
     public abstract class GenericElement<T> : MenuElement
     {
-        public GenericElement(string name, Color color) : base(name, color)
+        public GenericElement(string name, Color color, Action<T> onChangedAction = null) : base(name, color)
         {
             Name = name;
             Color = color;
+            onValueChanged = onChangedAction;
         }
 
-        public static Action<T> OnValueChanged;
+        protected Action<T> onValueChanged;
 
         public override string Type => ElementType.Type_Value;
 
         protected T value;
         protected Action<T> action;
 
-        protected virtual void OnChangedValue() { }
+        protected virtual void OnChangedValue()
+        {
+            SafeActions.InvokeActionSafe(onValueChanged, value);
+        }
     }
 }
