@@ -10,10 +10,8 @@ namespace BoneLib.BoneMenu
         {
             Name = name;
             Color = color;
-            onValueChanged = onChangedAction;
+            action = onChangedAction;
         }
-
-        protected Action<T> onValueChanged;
 
         public override string Type => ElementType.Type_Value;
 
@@ -22,7 +20,7 @@ namespace BoneLib.BoneMenu
 
         protected virtual void OnChangedValue()
         {
-            SafeActions.InvokeActionSafe(onValueChanged, value);
+            SafeActions.InvokeActionSafe(action, value);
         }
     }
 }
