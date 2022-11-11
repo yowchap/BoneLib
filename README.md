@@ -40,13 +40,18 @@ OfflineMode = true
 
 **Parzival:** Added enum with all game layers, improved documentation, made some extension method parameters optional
 
-**Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing, added InvokeActionSafe methods
+**Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing, added InvokeActionSafe methods, added animal image popup methods
 
-**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes
+**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added skip intro pref
 
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v1.4.0:
+- Added a preference to skip the intro
+- Added methods to spawn popup objects with random animal photos on them for fun
+- Forced preferences to always save to file
 
 #### v1.3.1:
 - Fixed `Hooking.OnMarrowGameStarted` event
