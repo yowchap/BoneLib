@@ -83,6 +83,8 @@ namespace BoneLib.BoneMenu
             public static GameObject CategoryPrefab = Bundles.FindBundleObject("Element_Category");
             public static GameObject FunctionPrefab = Bundles.FindBundleObject("Element_Function");
             public static GameObject ValuePrefab = Bundles.FindBundleObject("Element_Value");
+            public static GameObject DropdownPrefab = Bundles.FindBundleObject("Element_Dropdown");
+            public static GameObject TogglePrefab = Bundles.FindBundleObject("Element_Toggle");
 
             public static GameObject BMButtonObject = Bundles.FindBundleObject("BoneMenuButton");
 

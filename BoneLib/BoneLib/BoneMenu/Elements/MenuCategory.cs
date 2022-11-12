@@ -9,7 +9,7 @@ namespace BoneLib.BoneMenu
     {
         public MenuCategory(string Name, Color Color) : base(Name, Color) { }
 
-        public override string Type => ElementType.Type_Category;
+        public override string Type => ElementType.Category;
 
         public static Action<MenuCategory, MenuElement> OnElementCreated;
         public static Action<MenuCategory, MenuElement> OnElementSelected;
@@ -56,6 +56,21 @@ namespace BoneLib.BoneMenu
             return CreateFunctionElement(name, color, action);
         }
 
+        public BoolElement CreateBoolElement(string name, Color color, bool value)
+        {
+            var element = new BoolElement(name, color, value);
+            Elements?.Add(element);
+            OnElementCreated?.Invoke(this, element);
+            return element;
+        }
+
+        public BoolElement CreateBoolElement(string name, string hexColor, bool value)
+        {
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateBoolElement(name, color, value);
+        }
+
         public IntElement CreateIntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
         {
             var element = new IntElement(name, color, startValue, increment, minValue, maxValue, action);
@@ -88,11 +103,18 @@ namespace BoneLib.BoneMenu
             return CreateEnumElement<T>(name, color, action);
         }
 
+        public BoolElement CreateFloatElement(string name, Color color, bool value)
+        {
+            var element = new BoolElement(name, color, value);
+            Elements?.Add(element);
+            SafeActions.InvokeActionSafe(OnElementCreated, this, element);
+            return element;
+        }
+
         public FloatElement CreateFloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> action = null)
         {
             var element = new FloatElement(name, color, startValue, increment, minValue, maxValue, action);
             Elements?.Add(element);
-            OnElementCreated?.Invoke(this, element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
         }
@@ -102,6 +124,21 @@ namespace BoneLib.BoneMenu
             Color32 color;
             ColorUtility.DoTryParseHtmlColor(hexColor, out color);
             return CreateFloatElement(name, color, startValue, increment, minValue, maxValue, action);
+        }
+
+        public ListElement<T> CreateListElement<T>(string name, Color color) where T : class
+        {
+            var element = new ListElement<T>(name, color);
+            Elements?.Add(element);
+            OnElementCreated?.Invoke(this, element);
+            return element;
+        }
+
+        public ListElement<T> CreateListElement<T>(string name, string hexColor) where T : class
+        {
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateListElement<T>(name, color);
         }
 
         public override void OnSelectElement()

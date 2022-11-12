@@ -64,7 +64,14 @@ namespace BoneLib.BoneMenu.UI
 
         public UIPoolee Spawn(Transform parent, bool startActive = false)
         {
-            var selected = _inactive.First();
+            var selected = GetInactive();
+
+            if(selected == null)
+            {
+                Populate(2);
+                return Spawn(parent, startActive);
+            }
+
             selected.transform.SetParent(parent);
             selected.gameObject.SetActive(startActive);
 
@@ -82,6 +89,16 @@ namespace BoneLib.BoneMenu.UI
             var _object = GameObject.Instantiate(prefab, transform);
             _object.SetActive(true);
             return _object;
+        }
+
+        private UIPoolee GetInactive()
+        {
+            foreach(var inactiveObject in _inactive)
+            {
+                return inactiveObject;
+            }
+
+            return null;
         }
     }
 }

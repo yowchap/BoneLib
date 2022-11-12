@@ -13,10 +13,10 @@ namespace BoneLib.BoneMenu
             _increment = increment;
             _minValue = minValue;
             _maxValue = maxValue;
-            this.action = action;
+            _action = action;
         }
 
-        public override string Type => ElementType.Type_Value;
+        public override string Type => ElementType.Value;
         public override string DisplayValue => _value.ToString();
 
         public int Value { get => _value; }
@@ -24,7 +24,6 @@ namespace BoneLib.BoneMenu
         public int MinValue { get => _minValue; }
         public int MaxValue { get => _maxValue; }
 
-        private int _value;
         private int _increment;
         private int _minValue;
         private int _maxValue;
@@ -51,6 +50,11 @@ namespace BoneLib.BoneMenu
             }
 
             OnChangedValue();
+        }
+
+        protected override void OnChangedValue()
+        {
+            base.OnChangedValue();
         }
     }
 }

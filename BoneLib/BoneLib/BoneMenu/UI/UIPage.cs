@@ -73,30 +73,7 @@ namespace BoneLib.BoneMenu.UI
             for (int i = 0; i < activeCategory.Elements.Count; i++)
             {
                 var element = activeCategory.Elements[i];
-                UIElement uiElement = null;
-
-                if (element.Type == ElementType.Type_Category)
-                {
-                    var obj = UIManager.Instance.CategoryPool.Spawn(_elementGrid.transform, true);
-                    uiElement = obj.GetComponent<UICategoryField>();
-                    uiElement.AssignElement(element);
-                }
-
-                if (element.Type == ElementType.Type_Function)
-                {
-                    var obj = UIManager.Instance.FunctionPool.Spawn(_elementGrid.transform, true);
-                    uiElement = obj.GetComponent<UIFunctionField>();
-                    uiElement.AssignElement(element);
-                }
-
-                if (element.Type == ElementType.Type_Value)
-                {
-                    var obj = UIManager.Instance.ValuePool.Spawn(_elementGrid.transform, true);
-                    uiElement = obj.GetComponent<UIValueField>();
-                    uiElement.AssignElement(element);
-                }
-
-                Elements?.Add(uiElement);
+                AssignUIElement(element);
             }
         }
 
@@ -110,6 +87,48 @@ namespace BoneLib.BoneMenu.UI
             }
 
             Elements.Clear();
+        }
+
+        private void AssignUIElement(MenuElement element)
+        {
+            UIElement uiElement = null;
+
+            if (element.Type == ElementType.Category)
+            {
+                var obj = UIManager.Instance.CategoryPool.Spawn(_elementGrid.transform, true);
+                uiElement = obj.GetComponent<UICategoryField>();
+                uiElement.AssignElement(element);
+            }
+
+            if (element.Type == ElementType.Function)
+            {
+                var obj = UIManager.Instance.FunctionPool.Spawn(_elementGrid.transform, true);
+                uiElement = obj.GetComponent<UIFunctionField>();
+                uiElement.AssignElement(element);
+            }
+
+            if (element.Type == ElementType.Value)
+            {
+                var obj = UIManager.Instance.ValuePool.Spawn(_elementGrid.transform, true);
+                uiElement = obj.GetComponent<UIValueField>();
+                uiElement.AssignElement(element);
+            }
+
+            if(element.Type == ElementType.Dropdown)
+            {
+                var obj = UIManager.Instance.DropdownPool.Spawn(_elementGrid.transform, true);
+                uiElement = obj.GetComponent<UIDropdownField>();
+                uiElement.AssignElement(element);
+            }
+
+            if (element.Type == ElementType.Toggle)
+            {
+                var obj = UIManager.Instance.TogglePool.Spawn(_elementGrid.transform, true);
+                uiElement = obj.GetComponent<UIToggleField>();
+                uiElement.AssignElement(element);
+            }
+
+            Elements?.Add(uiElement);
         }
     }
 }

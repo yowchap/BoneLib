@@ -12,7 +12,7 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIElement(IntPtr ptr) : base(ptr) { }
 
-        public virtual string Type { get => ElementType.Type_Default; }
+        public virtual string Type { get => ElementType.Default; }
 
         protected MenuElement _element;
 

@@ -98,6 +98,7 @@ namespace BoneLib
         {
             var mainCategory = MenuManager.CreateCategory("BoneLib", Color.white);
             mainCategory.CreateFunctionElement("Spawn Ad", Color.yellow, () => PopupBoxManager.CreateBaseAd());
+            mainCategory.CreateBoolElement("Test Bool", "#FF33E6", false);
         }
     }
 }

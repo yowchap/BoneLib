@@ -20,6 +20,8 @@ namespace BoneLib.BoneMenu.UI
         public UIPool CategoryPool { get; private set; }
         public UIPool FunctionPool { get; private set; }
         public UIPool ValuePool { get; private set; }
+        public UIPool DropdownPool { get; private set; }
+        public UIPool TogglePool { get; private set; }
 
         public UIPage MainPage;
 
@@ -27,6 +29,8 @@ namespace BoneLib.BoneMenu.UI
         private GameObject categoryPool;
         private GameObject functionPool;
         private GameObject valuePool;
+        private GameObject dropdownPool;
+        private GameObject togglePool;
 
         private void Awake()
         {
@@ -87,31 +91,43 @@ namespace BoneLib.BoneMenu.UI
             categoryPool = new GameObject("Category Pool");
             functionPool = new GameObject("Function Pool");
             valuePool = new GameObject("Value Pool");
+            dropdownPool = new GameObject("Dropdown Pool");
+            togglePool = new GameObject("Toggle Pool");
 
             pagePool.transform.SetParent(gameObject.transform);
             categoryPool.transform.SetParent(gameObject.transform);
             functionPool.transform.SetParent(gameObject.transform);
             valuePool.transform.SetParent(gameObject.transform);
+            dropdownPool.transform.SetParent(gameObject.transform);
+            togglePool.transform.SetParent(gameObject.transform);
 
             PagePool = pagePool?.AddComponent<UIPool>();
             CategoryPool = categoryPool?.AddComponent<UIPool>();
             FunctionPool = functionPool?.AddComponent<UIPool>();
             ValuePool = valuePool?.AddComponent<UIPool>();
+            DropdownPool = dropdownPool?.AddComponent<UIPool>();
+            TogglePool = togglePool?.AddComponent<UIPool>();
 
             PagePool.SetCount(2);
             CategoryPool.SetCount(6);
             FunctionPool.SetCount(6);
             ValuePool.SetCount(6);
+            DropdownPool.SetCount(6);
+            TogglePool.SetCount(6);
 
             PagePool.SetPrefab(DataManager.UI.PagePrefab);
             CategoryPool.SetPrefab(DataManager.UI.CategoryPrefab);
             FunctionPool.SetPrefab(DataManager.UI.FunctionPrefab);
             ValuePool.SetPrefab(DataManager.UI.ValuePrefab);
+            DropdownPool.SetPrefab(DataManager.UI.DropdownPrefab);
+            TogglePool.SetPrefab(DataManager.UI.TogglePrefab);
 
             PagePool.Populate(PagePool.Count);
             CategoryPool.Populate(CategoryPool.Count);
             FunctionPool.Populate(FunctionPool.Count);
             ValuePool.Populate(ValuePool.Count);
+            DropdownPool.Populate(ValuePool.Count);
+            TogglePool.Populate(ValuePool.Count);
         }
     }
 }

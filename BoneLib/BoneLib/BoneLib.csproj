@@ -140,23 +140,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoneMenu\DataManager.cs" />
+    <Compile Include="BoneMenu\Elements\BoolElement.cs" />
     <Compile Include="BoneMenu\Elements\ElementType.cs" />
     <Compile Include="BoneMenu\Elements\EnumElement.cs" />
     <Compile Include="BoneMenu\Elements\FloatElement.cs" />
     <Compile Include="BoneMenu\Elements\FunctionElement.cs" />
     <Compile Include="BoneMenu\Elements\GenericElement.cs" />
     <Compile Include="BoneMenu\Elements\IntElement.cs" />
-    <Compile Include="BoneMenu\Elements\CollectionElement.cs" />
+    <Compile Include="BoneMenu\Elements\ListElement.cs" />
     <Compile Include="BoneMenu\Elements\MenuCategory.cs" />
     <Compile Include="BoneMenu\Elements\MenuElement.cs" />
     <Compile Include="BoneMenu\MenuManager.cs" />
     <Compile Include="BoneMenu\UI\UICategoryField.cs" />
+    <Compile Include="BoneMenu\UI\UIDropdownField.cs" />
     <Compile Include="BoneMenu\UI\UIElement.cs" />
     <Compile Include="BoneMenu\UI\UIFunctionField.cs" />
     <Compile Include="BoneMenu\UI\UIManager.cs" />
     <Compile Include="BoneMenu\UI\UIPage.cs" />
     <Compile Include="BoneMenu\UI\UIPool.cs" />
     <Compile Include="BoneMenu\UI\UIPoolee.cs" />
+    <Compile Include="BoneMenu\UI\UIToggleField.cs" />
     <Compile Include="BoneMenu\UI\UIValueField.cs" />
     <Compile Include="GameLayers.cs" />
     <Compile Include="Extensions.cs" />
@@ -182,7 +185,6 @@
   <PropertyGroup>
     <PostBuildEvent>ECHO Copying BoneLib.dll to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
 COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"
-"C:\Program Files (x86)\Steam\steamapps\common\BONELAB\BONELAB_Steam_Windows64.exe"</PostBuildEvent>
+COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"</PostBuildEvent>
   </PropertyGroup>
 </Project>
