@@ -1,6 +1,7 @@
 ﻿using SLZ.AI;
 using SLZ.Combat;
 using SLZ.Props.Weapons;
+using System;
 
 namespace BoneLib
 {
@@ -27,5 +28,8 @@ namespace BoneLib
                 });
             }
         }
+        public static void InvokeActionSafe(this Action action) => SafeActions.InvokeActionSafe(action);
+        public static void InvokeActionSafe<T>(this Action<T> action, T param) => SafeActions.InvokeActionSafe(action, param);
+        public static void InvokeActionSafe<T1, T2>(this Action<T1, T2> action, T1 param1, T2 param2) => SafeActions.InvokeActionSafe(action, param1, param2);
     }
 }
