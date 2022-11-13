@@ -55,6 +55,8 @@ namespace BoneLib
                 return;
             }
 
+            
+
             GameObject uiRoot = GameObject.Find("CANVAS_UX");
 
             GameObject slzWobble = uiRoot.transform.Find("SLZ_ROOT").gameObject;
@@ -78,6 +80,19 @@ namespace BoneLib
             menuUI.transform.Find("group_Mods").gameObject.SetActive(false);
             menuUI.transform.Find("group_Info").gameObject.SetActive(false);
             menuUI.transform.Find("group_BETA").gameObject.SetActive(false);
+
+            GameControl_MenuVoidG114 controller = GameObject.FindObjectOfType<GameControl_MenuVoidG114>();
+
+            if (controller != null)
+            {
+                controller.holdTime = 0;
+                controller.holdTime_SLZ = 0;
+                controller.holdTime_Credits = 0;
+                controller.holdTime_GameTitle = 0;
+                controller.timerHold = 0;
+                controller.holdTime_Rest = 0;
+                controller.canClick = true;
+            }
         }
     }
 }
