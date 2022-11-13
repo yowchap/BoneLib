@@ -116,7 +116,7 @@ namespace BoneLib.BoneMenu.UI
 
             if(element.Type == ElementType.Dropdown)
             {
-                var obj = UIManager.Instance.DropdownPool.Spawn(_elementGrid.transform, true);
+                var obj = UIManager.Instance.ValueListPool.Spawn(_elementGrid.transform, true);
                 uiElement = obj.GetComponent<UIDropdownField>();
                 uiElement.AssignElement(element);
             }

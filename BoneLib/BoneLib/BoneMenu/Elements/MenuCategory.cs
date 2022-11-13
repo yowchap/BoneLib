@@ -56,19 +56,19 @@ namespace BoneLib.BoneMenu
             return CreateFunctionElement(name, color, action);
         }
 
-        public BoolElement CreateBoolElement(string name, Color color, bool value)
+        public BoolElement CreateBoolElement(string name, Color color, bool value, Action<bool> action = null)
         {
-            var element = new BoolElement(name, color, value);
+            var element = new BoolElement(name, color, value, action);
             Elements?.Add(element);
             OnElementCreated?.Invoke(this, element);
             return element;
         }
 
-        public BoolElement CreateBoolElement(string name, string hexColor, bool value)
+        public BoolElement CreateBoolElement(string name, string hexColor, bool value, Action<bool> action = null)
         {
             Color32 color;
             ColorUtility.DoTryParseHtmlColor(hexColor, out color);
-            return CreateBoolElement(name, color, value);
+            return CreateBoolElement(name, color, value, action);
         }
 
         public IntElement CreateIntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
@@ -101,14 +101,6 @@ namespace BoneLib.BoneMenu
             Color32 color;
             ColorUtility.DoTryParseHtmlColor(hexColor, out color);
             return CreateEnumElement<T>(name, color, action);
-        }
-
-        public BoolElement CreateFloatElement(string name, Color color, bool value)
-        {
-            var element = new BoolElement(name, color, value);
-            Elements?.Add(element);
-            SafeActions.InvokeActionSafe(OnElementCreated, this, element);
-            return element;
         }
 
         public FloatElement CreateFloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> action = null)

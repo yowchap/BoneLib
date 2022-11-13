@@ -37,6 +37,14 @@ namespace BoneLib.BoneMenu
             return category;
         }
 
+        public static MenuCategory CreateCategory(string name, string hexColor)
+        {
+            MenuCategory category = RootCategory.CreateCategory(name, hexColor);
+            _categories?.Add(category);
+            SafeActions.InvokeActionSafe(OnCategoryCreated, category);
+            return category;
+        }
+
         public static void SelectCategory(MenuCategory category)
         {
             if (category == null)
