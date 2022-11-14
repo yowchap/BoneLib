@@ -24,8 +24,19 @@ namespace BoneLib.BoneMenu
             _parent = parent;
         }
 
+        /// <summary>
+        /// Creates a category with a name and a color. 
+        /// </summary>
+        /// <param name="name">The name of the category.</param>
+        /// <param name="color">The name's color.</param>
+        /// <returns>A new category.</returns>
         public MenuCategory CreateCategory(string name, Color color)
         {
+            if (Elements.Exists((item) => item.Name == name))
+            {
+                return Elements.Find((item) => item.Name == name) as MenuCategory;
+            }
+
             var category = new MenuCategory(name, color);
             category.SetParent(this);
             Elements?.Add(category);
@@ -33,6 +44,14 @@ namespace BoneLib.BoneMenu
             return category;
         }
 
+        /// <summary>
+        /// Creates a category with a name and a hex color input.
+        /// </summary>
+        /// <param name="name">The name of the category.</param>
+        /// <param name="hexColor">The color in hexadecimal.
+        /// <code>"Example: #00CA11 for green."</code>
+        /// </param>
+        /// <returns>A new category with a hex color.</returns>
         public MenuCategory CreateCategory(string name, string hexColor)
         {
             Color32 color;
@@ -40,6 +59,15 @@ namespace BoneLib.BoneMenu
             return CreateCategory(name, color);
         }
 
+        /// <summary>
+        /// Creates a function element that can be used to execute actions when pressed.
+        /// </summary>
+        /// <param name="name">The name of the element.</param>
+        /// <param name="color">The name color of the element.</param>
+        /// <param name="action">The action that will be executed when pressed.
+        /// <code>Example: () => ExampleMethod()</code>
+        /// </param>
+        /// <returns>A function element.</returns>
         public FunctionElement CreateFunctionElement(string name, Color color, Action action)
         {
             var element = new FunctionElement(name, color, action);
@@ -49,6 +77,15 @@ namespace BoneLib.BoneMenu
             return element;
         }
 
+        /// <summary>
+        /// Creates a function element that can be used to execute actions when pressed.
+        /// </summary>
+        /// <param name="name">The name of the element.</param>
+        /// <param name="hexColor">The name hex color of the element.
+        /// <code>"Example: #00CA11 for green."</code> </param>
+        /// <param name="action">The action that will be executed when pressed.
+        /// <code>Example: () => ExampleMethod()</code> </param>
+        /// <returns>A function element with a hex color.</returns>
         public FunctionElement CreateFunctionElement(string name, string hexColor, Action action)
         {
             Color32 color;
@@ -56,6 +93,15 @@ namespace BoneLib.BoneMenu
             return CreateFunctionElement(name, color, action);
         }
 
+        /// <summary>
+        /// Creates a bool element that enables or disables a boolean.
+        /// </summary>
+        /// <param name="name">The name of the element.</param>
+        /// <param name="color">The name color of the element.</param>
+        /// <param name="value">The starting boolean value.</param>
+        /// <param name="action">The method to execute with a boolean parameter.
+        /// <code>Example: (bool) => ExampleMethod(bool);</code></param>
+        /// <returns>A bool element.</returns>
         public BoolElement CreateBoolElement(string name, Color color, bool value, Action<bool> action = null)
         {
             var element = new BoolElement(name, color, value, action);
@@ -64,6 +110,14 @@ namespace BoneLib.BoneMenu
             return element;
         }
 
+        /// <summary>
+        /// Creates a bool element that enables or disables a boolean.
+        /// </summary>
+        /// <param name="name">The name of the element.</param>
+        /// <param name="hexColor">The name hex color of the element. <code>"Example: #00CA11 for green."</code> </param>
+        /// <param name="value">The starting boolean value. <code>Example: (bool) => ExampleMethod(bool);</code> </param>
+        /// <param name="action">The method to execute with a boolean parameter. <code>Example: (bool) => ExampleMethod(bool);</code></param>
+        /// <returns>A bool element with a hex color.</returns>
         public BoolElement CreateBoolElement(string name, string hexColor, bool value, Action<bool> action = null)
         {
             Color32 color;
@@ -71,6 +125,17 @@ namespace BoneLib.BoneMenu
             return CreateBoolElement(name, color, value, action);
         }
 
+        /// <summary>
+        /// Creates an int element that can be incremented up or down, with a range.
+        /// </summary>
+        /// <param name="name">The name of the element.</param>
+        /// <param name="color">The name color of the element.</param>
+        /// <param name="startValue">The starting value.</param>
+        /// <param name="increment">The value that will be increased/decreased to the starting value.</param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <param name="action">The method to execute with a integer parameter. <code>Example: (int) => ExampleMethod(int);</code></param>
+        /// <returns>An integer element.</returns>
         public IntElement CreateIntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
         {
             var element = new IntElement(name, color, startValue, increment, minValue, maxValue, action);
@@ -80,6 +145,17 @@ namespace BoneLib.BoneMenu
             return element;
         }
 
+        /// <summary>
+        /// Creates an int element that can be incremented up or down, with a range.
+        /// </summary>
+        /// <param name="name">The name of the element.</param>
+        /// <param name="hexColor">The hex color of the element. <code>"Example: #00CA11 for green."</code></param>
+        /// <param name="startValue">The starting value.</param>
+        /// <param name="increment">The value that will be increased/decreased to the starting value.</param>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <param name="action">The method to execute with a integer parameter. <code>Example: (int) => ExampleMethod(int);</code></param>
+        /// <returns>An integer element with a hex color.</returns>
         public IntElement CreateIntElement(string name, string hexColor, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
         {
             Color32 color;
