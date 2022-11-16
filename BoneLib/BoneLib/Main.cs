@@ -25,8 +25,6 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
-            Hooking.OnLevelLoading += (info) => MelonLogger.Msg($"OnLevelLoading: {info.title} | {info.barcode}");
-            Hooking.OnLevelUnloaded += () => MelonLogger.Msg("OnLevelUnloaded");
             Hooking.OnLevelInitialized += OnLevelInitialized;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
@@ -34,16 +32,6 @@ namespace BoneLib
             //PopupBoxManager.StartCoroutines();
 
             ModConsole.Msg("BoneLib loaded");
-        }
-
-        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
-        {
-            MelonLogger.Msg("OnSceneWasLoaded: " + sceneName);
-        }
-
-        public override void OnSceneWasInitialized(int buildIndex, string sceneName)
-        {
-            MelonLogger.Msg("OnSceneWasInitialized: " + sceneName);
         }
 
         // @Note(Parzival): Dynamic MelonLoader Callback. Do not call!
@@ -54,7 +42,7 @@ namespace BoneLib
 
         private void OnLevelInitialized(LevelInfo info)
         {
-            MelonLogger.Msg($"OnLevelInitialized: {info.title} | {info.barcode}");
+            ModConsole.Msg($"OnLevelInitialized: {info.title} | {info.barcode}", loggingMode: LoggingMode.DEBUG);
 
             PopupBoxManager.CreateBaseAd();
 
