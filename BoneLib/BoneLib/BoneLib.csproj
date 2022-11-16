@@ -139,8 +139,8 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooking.cs" />
+    <Compile Include="LevelInfo.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="MarrowSceneInfo.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
     <Compile Include="MonoBehaviours\PopupBox.cs" />
@@ -156,6 +156,6 @@
   <PropertyGroup>
     <PostBuildEvent>ECHO Copying BoneLib.dll to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
 COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"</PostBuildEvent>
+</PostBuildEvent>
   </PropertyGroup>
 </Project>

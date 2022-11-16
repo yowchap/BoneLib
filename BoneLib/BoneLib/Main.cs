@@ -11,7 +11,7 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "Gnonme"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "1.4.0"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "1.5.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
@@ -25,8 +25,9 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
-            Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
-            Hooking.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
+            Hooking.OnLevelLoading += (info) => MelonLogger.Msg($"OnLevelLoading: {info.title} | {info.barcode}");
+            Hooking.OnLevelUnloaded += () => MelonLogger.Msg("OnLevelUnloaded");
+            Hooking.OnLevelInitialized += OnLevelInitialized;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -35,14 +36,31 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
-        private void OnPlayerReferencesFound()
+        public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
-            PopupBoxManager.CreateBaseAd();
+            MelonLogger.Msg("OnSceneWasLoaded: " + sceneName);
         }
 
-        private void OnMarrowSceneLoaded(MarrowSceneInfo info)
+        public override void OnSceneWasInitialized(int buildIndex, string sceneName)
         {
-            if(info.LevelTitle == "00 - Main Menu" || info.LevelTitle == "15 - Void G114")
+            MelonLogger.Msg("OnSceneWasInitialized: " + sceneName);
+        }
+
+        /// <summary>
+        /// Dynamic MelonLoader Callback. Do not call!
+        /// </summary>
+        private void BONELAB_OnLoadingScreen()
+        {
+            Hooking.OnBONELABLevelLoading();
+        }
+
+        private void OnLevelInitialized(LevelInfo info)
+        {
+            MelonLogger.Msg($"OnLevelInitialized: {info.title} | {info.barcode}");
+
+            PopupBoxManager.CreateBaseAd();
+
+            if(info.title == "00 - Main Menu" || info.title == "15 - Void G114")
             {
                 SkipIntro();
             }
