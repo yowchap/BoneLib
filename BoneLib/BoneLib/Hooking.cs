@@ -41,7 +41,9 @@ namespace BoneLib
         public static event Action OnLevelUnloaded;
 
         // Player
-        [Obsolete("Use " + nameof(OnLevelInitialized) + " instead")]
+        // @Todo(Parzival): currently they're equivalent, but I'd like to fix the early
+        // initialization bug which would make this event unique again.
+        [Obsolete("Use " + nameof(OnLevelInitialized) + " instead")] 
         public static event Action OnPlayerReferencesFound;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
@@ -68,7 +70,7 @@ namespace BoneLib
         public static event Action<BehaviourBaseNav> OnNPCKillStart;
         public static event Action<BehaviourBaseNav> OnNPCKillEnd;
 
-        internal static bool currentLevelUnloaded = true;
+        private static bool currentLevelUnloaded = true;
 
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
         internal static void InitHooks()

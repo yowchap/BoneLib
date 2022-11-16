@@ -3,7 +3,7 @@
 namespace BoneLib
 {
     /// <summary>
-    /// A wrapper struct for <see cref="LevelCrate"/>
+    /// A <see cref="LevelCrate"/> wrapper for use with <see cref="Hooking"/> Level loading events.
     /// </summary>
     public struct LevelInfo
     {

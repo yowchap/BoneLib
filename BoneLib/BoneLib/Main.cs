@@ -46,9 +46,7 @@ namespace BoneLib
             MelonLogger.Msg("OnSceneWasInitialized: " + sceneName);
         }
 
-        /// <summary>
-        /// Dynamic MelonLoader Callback. Do not call!
-        /// </summary>
+        // @Note(Parzival): Dynamic MelonLoader Callback. Do not call!
         private void BONELAB_OnLoadingScreen()
         {
             Hooking.OnBONELABLevelLoading();
