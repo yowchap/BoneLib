@@ -15,7 +15,7 @@ namespace BoneLib
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
-    public class Main : MelonMod
+    internal class Main : MelonMod
     {
         public override void OnInitializeMelon()
         {
