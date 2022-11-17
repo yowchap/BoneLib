@@ -1,14 +1,17 @@
 ﻿using System;
 using TMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
+
+using BoneLib.BoneMenu.Elements;
 
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
     public class UIFunctionField : UIElement
     {
-        public UIFunctionField(System.IntPtr ptr) : base(ptr) { }
+        public UIFunctionField(IntPtr ptr) : base(ptr) { }
 
         public override string Type => ElementType.Function;
 

@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace BoneLib.BoneMenu
+namespace BoneLib.BoneMenu.Elements
 {
     public abstract class GenericElement<T> : MenuElement
     {

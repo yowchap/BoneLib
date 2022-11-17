@@ -2,7 +2,7 @@
 
 using TMPro;
 
-namespace BoneLib.BoneMenu
+namespace BoneLib.BoneMenu.Elements
 {
     public abstract class MenuElement
     {

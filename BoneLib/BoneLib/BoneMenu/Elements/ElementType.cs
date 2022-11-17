@@ -1,4 +1,4 @@
-﻿namespace BoneLib.BoneMenu
+﻿namespace BoneLib.BoneMenu.Elements
 {
     public static class ElementType
     {

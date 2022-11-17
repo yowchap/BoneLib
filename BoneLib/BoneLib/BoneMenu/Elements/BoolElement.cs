@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace BoneLib.BoneMenu
+namespace BoneLib.BoneMenu.Elements
 {
     public class BoolElement : GenericElement<bool>
     {

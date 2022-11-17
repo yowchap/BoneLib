@@ -6,8 +6,6 @@ using UnityEngine;
 
 using BoneLib.BoneMenu;
 
-using UnityEngine;
-
 namespace BoneLib
 {
     public static class BuildInfo

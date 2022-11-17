@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace BoneLib.BoneMenu
+namespace BoneLib.BoneMenu.Elements
 {
     public class EnumElement<Enum> : GenericElement<Enum>
     {

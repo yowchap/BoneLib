@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 using TMPro;
 
+using BoneLib.BoneMenu.Elements;
+
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp]

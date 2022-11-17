@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BoneLib.BoneMenu
+namespace BoneLib.BoneMenu.Elements
 {
     public class ListElement<T> : GenericElement<T> where T : class
     {

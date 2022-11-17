@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace BoneLib.BoneMenu
+namespace BoneLib.BoneMenu.Elements
 {
     public class IntElement : GenericElement<int>
     {

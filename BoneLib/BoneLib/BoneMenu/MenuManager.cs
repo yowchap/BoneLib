@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Reflection;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 using UnityEngine;
-using UnityEngine.UI;
-
-using SLZ.Rig;
-using SLZ.UI.Radial;
-
-using BoneLib.BoneMenu.UI;
-
-using TMPro;
+using BoneLib.BoneMenu.Elements;
 
 namespace BoneLib.BoneMenu
 {
