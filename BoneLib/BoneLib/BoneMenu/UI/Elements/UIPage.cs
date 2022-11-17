@@ -13,7 +13,8 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIPage(IntPtr ptr) : base(ptr) { }
 
-        public List<UIElement> Elements { get; private set; } = new List<UIElement>();
+        public IReadOnlyList<UIElement> Elements => _elements.AsReadOnly();
+        private List<UIElement> _elements;
 
         private Transform elementGrid;
         private Transform returnArrow;
@@ -88,7 +89,7 @@ namespace BoneLib.BoneMenu.UI
                 poolee.gameObject.SetActive(false);
             }
 
-            Elements.Clear();
+            _elements.Clear();
         }
 
         private void AssignUIElement(MenuElement element)
