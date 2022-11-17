@@ -111,7 +111,7 @@ namespace BoneLib.BoneMenu.UI
                 case ElementType.Toggle: togglePool.Spawn<UIToggleField>(elementGrid.transform, true).AssignElement(element); break;
             }
 
-            Elements?.Add(uiElement);
+            _elements?.Add(uiElement);
         }
     }
 }
