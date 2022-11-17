@@ -28,7 +28,7 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
-            //MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
+            MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
 
             SetupBoneMenu();
 
