@@ -15,7 +15,7 @@ namespace BoneLib.BoneMenu.Elements
         public string Name { get; protected set; }
         public Color Color { get; protected set; }
 
-        public virtual string Type { get => ElementType.Default; }
+        public virtual ElementType Type { get => ElementType.Default; }
         public virtual string DisplayValue { get => "Default"; }
 
         public void SetName(string name)

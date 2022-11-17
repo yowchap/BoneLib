@@ -49,35 +49,66 @@ namespace BoneLib.BoneMenu
 
             static AssetBundle GetEmbeddedBundle()
             {
-                AssetBundle bundle = null;
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
-                var manifestNames = assembly.GetManifestResourceNames();
-
-                using (Stream stream = assembly.GetManifestResourceStream(manifestNames.First(x => x.Contains("BoneLib.Resources.bonemenu.pack"))))
+                using (var resourceStream = assembly.GetManifestResourceStream("BoneLib.Resources.bonemenu.pack"))
                 {
-                    using (MemoryStream memoryStream = new MemoryStream())
+                    using (var memoryStream = new MemoryStream())
                     {
-                        stream.CopyTo(memoryStream);
-                        bundle = AssetBundle.LoadFromMemory(memoryStream.ToArray());
+                        resourceStream.CopyTo(memoryStream);
+                        return AssetBundle.LoadFromMemory(memoryStream.ToArray());
                     }
                 }
-
-                return bundle;
             }
         }
 
         public static class Player
         {
-            public static RigManager RigManager { get => BoneLib.Player.GetRigManager().GetComponent<RigManager>(); }
-            public static UIRig UIRig { get => RigManager.uiRig; }
+            public static RigManager RigManager
+            {
+                get
+                {
+                    if (_rigManager is null || _rigManager.WasCollected)
+                    {
+                        return null;
+                    }
+
+                    return _rigManager;
+                }
+            }
+            public static UIRig UIRig
+            {
+                get
+                {
+                    if(_rigManager == null)
+                    {
+                        return null;
+                    }
+
+                    return _uiRig = _rigManager.uiRig;
+                }
+            }
+
+            static RigManager _rigManager;
+            static UIRig _uiRig;
         }
 
         public static class UI
         {
             public static PreferencesPanelView PanelView;
             public static GameObject OptionsPanel;
-            public static Transform OptionsGrid;
+            public static Transform OptionsGrid
+            {
+                get
+                {
+                    if(_optionsGrid is null || _optionsGrid.WasCollected)
+                    {
+                        return null;
+                    }
+
+                    return _optionsGrid;
+                }
+            }
 
             public static GameObject PagePrefab = Bundles.FindBundleObject("Element_Page");
             public static GameObject CategoryPrefab = Bundles.FindBundleObject("Element_Category");
@@ -93,6 +124,8 @@ namespace BoneLib.BoneMenu
             static GameObject _mainPage;
             static GameObject _optionButton;
 
+            static Transform _optionsGrid;
+
             static Button _optionButtonComponent;
 
             public static void Init()
@@ -106,7 +139,7 @@ namespace BoneLib.BoneMenu
             {
                 PanelView = Player.UIRig.popUpMenu.preferencesPanelView;
                 OptionsPanel = PanelView.pages[PanelView.defaultPage];
-                OptionsGrid = OptionsPanel.transform.Find("grid_Options");
+                _optionsGrid = OptionsPanel.transform.Find("grid_Options");
             }
 
             public static void AddComponents()

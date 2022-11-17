@@ -5,6 +5,7 @@ using UnhollowerRuntimeLib;
 using UnityEngine;
 
 using BoneLib.BoneMenu;
+using BoneLib.BoneMenu.Elements;
 
 namespace BoneLib
 {
@@ -27,7 +28,7 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
-            MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
+            //MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
 
             SetupBoneMenu();
 

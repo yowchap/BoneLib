@@ -12,7 +12,7 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIValueField(IntPtr ptr) : base(ptr) { }
 
-        public override string Type => ElementType.Value;
+        public override ElementType Type => ElementType.Value;
 
         private Button _leftButton;
         private Button _rightButton;

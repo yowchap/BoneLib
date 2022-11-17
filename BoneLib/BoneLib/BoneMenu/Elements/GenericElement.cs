@@ -13,7 +13,7 @@ namespace BoneLib.BoneMenu.Elements
             _action = action;
         }
 
-        public override string Type => ElementType.Value;
+        public override ElementType Type => ElementType.Value;
 
         protected T _value;
         protected Action<T> _action;

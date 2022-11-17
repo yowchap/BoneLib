@@ -13,7 +13,7 @@ namespace BoneLib.BoneMenu.Elements
             Action = action;
         }
 
-        public override string Type => ElementType.Function;
+        public override ElementType Type => ElementType.Function;
 
         public Action Action { get; private set; }
 

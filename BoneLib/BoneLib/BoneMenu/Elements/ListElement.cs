@@ -15,7 +15,7 @@ namespace BoneLib.BoneMenu.Elements
             _elements = list != null ? list : new List<T>();
         }
 
-        public override string Type => ElementType.Toggle;
+        public override ElementType Type => ElementType.Toggle;
         public T this[int i] { get => _elements[i]; }
 
         protected List<T> _elements;

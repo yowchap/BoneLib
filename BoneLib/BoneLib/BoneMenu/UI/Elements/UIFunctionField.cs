@@ -13,7 +13,7 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIFunctionField(IntPtr ptr) : base(ptr) { }
 
-        public override string Type => ElementType.Function;
+        public override ElementType Type => ElementType.Function;
 
         private Button _functionButton;
 

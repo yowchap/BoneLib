@@ -13,7 +13,7 @@ namespace BoneLib.BoneMenu.Elements
             this._action = action;
         }
 
-        public override string Type => ElementType.Toggle;
+        public override ElementType Type => ElementType.Toggle;
         public override string DisplayValue => _value ? "Enabled" : "Disabled";
 
         public bool Value { get => _value; }

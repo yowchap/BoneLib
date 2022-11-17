@@ -62,6 +62,28 @@ namespace BoneLib.BoneMenu.UI
             }
         }
 
+        public T Spawn<T>(Transform parent, bool startActive = false) where T : UIElement
+        {
+            var selected = GetInactive();
+
+            if (selected == null)
+            {
+                Populate(2);
+                return Spawn<T>(parent, startActive);
+            }
+
+            selected.transform.SetParent(parent);
+            selected.gameObject.SetActive(startActive);
+
+            selected.transform.localPosition = Vector3.zero;
+            selected.transform.rotation = parent.rotation;
+
+            _active.Add(selected);
+            _inactive.Remove(selected);
+
+            return selected.GetComponent<T>();
+        }
+
         public UIPoolee Spawn(Transform parent, bool startActive = false)
         {
             var selected = GetInactive();

@@ -14,26 +14,32 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIElement(IntPtr ptr) : base(ptr) { }
 
-        public virtual string Type { get => ElementType.Default; }
+        public virtual ElementType Type { get => ElementType.Default; }
+
+        public TextMeshPro NameText { get; private set; }
+        public TextMeshPro ValueText { get; private set; }
 
         protected MenuElement _element;
 
-        protected virtual TextMeshPro _nameText { get => GetTextMesh("Name"); }
-        protected virtual TextMeshPro _valueText { get => GetTextMesh("Value"); }
+        private void Awake()
+        {
+            NameText = GetTextMesh("Name");
+            ValueText = GetTextMesh("Value");
+        }
 
         public void AssignElement(MenuElement element)
         {
             _element = element;
 
-            if (_nameText != null)
+            if (NameText != null)
             {
-                _nameText.text = _element.Name;
-                _nameText.color = _element.Color;
+                NameText.text = _element.Name;
+                NameText.color = _element.Color;
             }
 
-            if (_valueText != null)
+            if (ValueText != null)
             {
-                _valueText.text = _element.DisplayValue;
+                ValueText.text = _element.DisplayValue;
             }
         }
 
@@ -49,19 +55,19 @@ namespace BoneLib.BoneMenu.UI
 
         public void SetText(string name = "", string value = "")
         {
-            if (_nameText == null)
+            if (NameText == null)
             {
                 return;
             }
 
-            _nameText.text = name;
+            NameText.text = name;
 
-            if (_valueText == null)
+            if (ValueText == null)
             {
                 return;
             }
 
-            _valueText.text = value;
+            ValueText.text = value;
         }
     }
 }

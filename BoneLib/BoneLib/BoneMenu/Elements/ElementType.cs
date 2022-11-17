@@ -1,13 +1,13 @@
 ﻿namespace BoneLib.BoneMenu.Elements
 {
-    public static class ElementType
+    public enum ElementType : byte
     {
-        public static readonly string Default = "Default";
-        public static readonly string Category = "Category";
-        public static readonly string Page = "Page";
-        public static readonly string Function = "Function";
-        public static readonly string Value = "Value";
-        public static readonly string Dropdown = "Dropdown";
-        public static readonly string Toggle = "Toggle";
+        Default,
+        Category,
+        Page,
+        Function,
+        Value,
+        ValueList,
+        Toggle
     }
 }

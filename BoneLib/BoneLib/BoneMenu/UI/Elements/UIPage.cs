@@ -15,17 +15,17 @@ namespace BoneLib.BoneMenu.UI
 
         public List<UIElement> Elements { get; private set; } = new List<UIElement>();
 
-        private Transform _elementGrid;
-        private Transform _returnArrow;
+        private Transform elementGrid;
+        private Transform returnArrow;
 
-        private Button _returnButton;
+        private Button returnButton;
 
         private void Awake()
         {
-            _elementGrid = transform.Find("Viewport/ElementGrid");
-            _returnArrow = transform.Find("Return");
+            elementGrid = transform.Find("Viewport/ElementGrid");
+            returnArrow = transform.Find("Return");
 
-            _returnButton = _returnArrow.GetComponent<Button>();
+            returnButton = returnArrow.GetComponent<Button>();
         }
 
         private void Start()
@@ -53,9 +53,9 @@ namespace BoneLib.BoneMenu.UI
                 }
             };
 
-            if (_returnButton != null)
+            if (returnButton != null)
             {
-                _returnButton.onClick.AddListener(returnAction);
+                returnButton.onClick.AddListener(returnAction);
             }
         }
 
@@ -95,39 +95,19 @@ namespace BoneLib.BoneMenu.UI
         {
             UIElement uiElement = null;
 
-            if (element.Type == ElementType.Category)
-            {
-                var obj = UIManager.Instance.CategoryPool.Spawn(_elementGrid.transform, true);
-                uiElement = obj.GetComponent<UICategoryField>();
-                uiElement.AssignElement(element);
-            }
+            var categoryPool = UIManager.Instance.CategoryPool;
+            var functionPool = UIManager.Instance.FunctionPool;
+            var valuePool = UIManager.Instance.ValuePool;
+            var valueListPool = UIManager.Instance.ValueListPool;
+            var togglePool = UIManager.Instance.TogglePool;
 
-            if (element.Type == ElementType.Function)
+            switch (element.Type)
             {
-                var obj = UIManager.Instance.FunctionPool.Spawn(_elementGrid.transform, true);
-                uiElement = obj.GetComponent<UIFunctionField>();
-                uiElement.AssignElement(element);
-            }
-
-            if (element.Type == ElementType.Value)
-            {
-                var obj = UIManager.Instance.ValuePool.Spawn(_elementGrid.transform, true);
-                uiElement = obj.GetComponent<UIValueField>();
-                uiElement.AssignElement(element);
-            }
-
-            if(element.Type == ElementType.Dropdown)
-            {
-                var obj = UIManager.Instance.ValueListPool.Spawn(_elementGrid.transform, true);
-                uiElement = obj.GetComponent<UIDropdownField>();
-                uiElement.AssignElement(element);
-            }
-
-            if (element.Type == ElementType.Toggle)
-            {
-                var obj = UIManager.Instance.TogglePool.Spawn(_elementGrid.transform, true);
-                uiElement = obj.GetComponent<UIToggleField>();
-                uiElement.AssignElement(element);
+                case ElementType.Category: categoryPool.Spawn<UICategoryField>(elementGrid.transform, true).AssignElement(element); break;
+                case ElementType.Function: functionPool.Spawn<UIFunctionField>(elementGrid.transform, true).AssignElement(element); break;
+                case ElementType.Value: valuePool.Spawn<UIValueField>(elementGrid.transform, true).AssignElement(element); break;
+                case ElementType.ValueList: valueListPool.Spawn<UIDropdownField>(elementGrid.transform, true).AssignElement(element); break;
+                case ElementType.Toggle: togglePool.Spawn<UIToggleField>(elementGrid.transform, true).AssignElement(element); break;
             }
 
             Elements?.Add(uiElement);

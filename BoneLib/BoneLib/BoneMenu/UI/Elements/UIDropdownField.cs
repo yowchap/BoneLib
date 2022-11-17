@@ -14,7 +14,7 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIDropdownField(IntPtr ptr) : base(ptr) { }
 
-        public override string Type => ElementType.Toggle;
+        public override ElementType Type => ElementType.Toggle;
 
         private TMPro.TMP_Dropdown _dropdown;
 

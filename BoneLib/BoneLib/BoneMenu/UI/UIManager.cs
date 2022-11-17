@@ -53,36 +53,38 @@ namespace BoneLib.BoneMenu.UI
 
         private void OnEnable()
         {
-            MenuManager.OnCategoryCreated += OnCategoryCreated;
-            MenuManager.OnCategorySelected += OnCategorySelected;
+            MenuManager.OnCategorySelected += OnCategoryUpdated;
+            MenuCategory.OnElementCreated += OnElementAdded;
         }
 
         private void OnDisable()
         {
-            MenuManager.OnCategoryCreated -= OnCategoryCreated;
-            MenuManager.OnCategorySelected -= OnCategorySelected;
+            MenuManager.OnCategorySelected -= OnCategoryUpdated;
+            MenuCategory.OnElementCreated -= OnElementAdded;
         }
 
-        public void OnCategoryCreated(MenuCategory category)
+        public void OnCategoryUpdated(MenuCategory category)
         {
             if (category == null)
             {
                 return;
             }
-        }
 
-        public void OnCategorySelected(MenuCategory category)
-        {
-            if (category == null)
-            {
-                return;
-            } 
-
-            MelonLoader.MelonLogger.Msg("Invoked");
-
+            // for that cool UI drop effect
+            MainPage.gameObject.SetActive(false);
             MainPage.AssignElement(category);
             MainPage.Draw();
             MainPage.gameObject.SetActive(true);
+        }
+
+        public void OnElementAdded(MenuCategory category, MenuElement element)
+        {
+            OnCategoryUpdated(category);
+        }
+
+        public void OnElementRemoved(MenuCategory category, MenuElement element)
+        {
+            OnCategoryUpdated(category);
         }
 
         private void SetupPools()

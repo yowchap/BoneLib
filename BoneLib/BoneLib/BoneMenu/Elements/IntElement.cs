@@ -16,7 +16,7 @@ namespace BoneLib.BoneMenu.Elements
             _action = action;
         }
 
-        public override string Type => ElementType.Value;
+        public override ElementType Type => ElementType.Value;
         public override string DisplayValue => _value.ToString();
 
         public int Value { get => _value; }

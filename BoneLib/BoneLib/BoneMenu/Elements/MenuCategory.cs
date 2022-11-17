@@ -9,7 +9,7 @@ namespace BoneLib.BoneMenu.Elements
     {
         public MenuCategory(string Name, Color Color) : base(Name, Color) { }
 
-        public override string Type => ElementType.Category;
+        public override ElementType Type => ElementType.Category;
 
         public static Action<MenuCategory, MenuElement> OnElementCreated;
         public static Action<MenuCategory, MenuElement> OnElementSelected;
