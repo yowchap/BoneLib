@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using SLZ.Rig;
-using SLZ.UI.Radial;
+using SLZ.UI;
 
 using BoneLib.BoneMenu.UI;
 
@@ -80,17 +80,17 @@ namespace BoneLib.BoneMenu
             {
                 get
                 {
-                    if(_rigManager == null)
+                    if(_rigManager is null || _rigManager.WasCollected)
                     {
                         return null;
                     }
 
-                    return _uiRig = _rigManager.uiRig;
+                    return _uiRig;
                 }
             }
 
-            static RigManager _rigManager;
-            static UIRig _uiRig;
+            internal static RigManager _rigManager;
+            internal static UIRig _uiRig;
         }
 
         public static class UI
@@ -137,6 +137,8 @@ namespace BoneLib.BoneMenu
 
             public static void InitializeReferences()
             {
+                Player._rigManager = BoneLib.Player.GetRigManager().GetComponent<RigManager>();
+                Player._uiRig = Player.RigManager.uiRig;
                 PanelView = Player.UIRig.popUpMenu.preferencesPanelView;
                 OptionsPanel = PanelView.pages[PanelView.defaultPage];
                 _optionsGrid = OptionsPanel.transform.Find("grid_Options");

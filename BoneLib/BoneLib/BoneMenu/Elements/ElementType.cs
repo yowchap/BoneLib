@@ -6,6 +6,7 @@
         Category,
         Page,
         Function,
+        Confirmer,
         Value,
         ValueList,
         Toggle

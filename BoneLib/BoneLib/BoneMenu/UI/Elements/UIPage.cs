@@ -13,8 +13,9 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIPage(IntPtr ptr) : base(ptr) { }
 
-        public IReadOnlyList<UIElement> Elements => _elements.AsReadOnly();
-        private List<UIElement> _elements;
+        public List<UIElement> Elements { get; private set; } = new List<UIElement>();
+
+        private SLZ.UI.UIGridEnable gridEnable;
 
         private Transform elementGrid;
         private Transform returnArrow;
@@ -26,6 +27,7 @@ namespace BoneLib.BoneMenu.UI
             elementGrid = transform.Find("Viewport/ElementGrid");
             returnArrow = transform.Find("Return");
 
+            gridEnable = transform.Find("Viewport/ElementGrid").GetComponent<SLZ.UI.UIGridEnable>();
             returnButton = returnArrow.GetComponent<Button>();
         }
 
@@ -64,6 +66,11 @@ namespace BoneLib.BoneMenu.UI
         {
             ClearDraw();
 
+            if (gridEnable != null)
+            {
+                gridEnable.enabled = true;
+            }
+
             var activeCategory = MenuManager.ActiveCategory;
 
             if (activeCategory == null)
@@ -82,6 +89,11 @@ namespace BoneLib.BoneMenu.UI
 
         public void ClearDraw()
         {
+            if(gridEnable != null)
+            {
+                gridEnable.enabled = false;
+            }
+
             foreach (var element in Elements)
             {
                 var poolee = element.GetComponent<UIPoolee>();
@@ -89,29 +101,42 @@ namespace BoneLib.BoneMenu.UI
                 poolee.gameObject.SetActive(false);
             }
 
-            _elements.Clear();
+            Elements.Clear();
         }
 
         private void AssignUIElement(MenuElement element)
         {
             UIElement uiElement = null;
 
-            var categoryPool = UIManager.Instance.CategoryPool;
-            var functionPool = UIManager.Instance.FunctionPool;
-            var valuePool = UIManager.Instance.ValuePool;
-            var valueListPool = UIManager.Instance.ValueListPool;
-            var togglePool = UIManager.Instance.TogglePool;
-
-            switch (element.Type)
+            if (element.Type == ElementType.Category)
             {
-                case ElementType.Category: categoryPool.Spawn<UICategoryField>(elementGrid.transform, true).AssignElement(element); break;
-                case ElementType.Function: functionPool.Spawn<UIFunctionField>(elementGrid.transform, true).AssignElement(element); break;
-                case ElementType.Value: valuePool.Spawn<UIValueField>(elementGrid.transform, true).AssignElement(element); break;
-                case ElementType.ValueList: valueListPool.Spawn<UIDropdownField>(elementGrid.transform, true).AssignElement(element); break;
-                case ElementType.Toggle: togglePool.Spawn<UIToggleField>(elementGrid.transform, true).AssignElement(element); break;
+                var obj = UIManager.Instance.CategoryPool.Spawn(elementGrid.transform, true);
+                uiElement = obj.GetComponent<UICategoryField>();
+                uiElement.AssignElement(element);
             }
 
-            _elements?.Add(uiElement);
+            if (element.Type == ElementType.Function || element.Type == ElementType.Confirmer)
+            {
+                var obj = UIManager.Instance.FunctionPool.Spawn(elementGrid.transform, true);
+                uiElement = obj.GetComponent<UIFunctionField>();
+                uiElement.AssignElement(element);
+            }
+
+            if (element.Type == ElementType.Value)
+            {
+                var obj = UIManager.Instance.ValuePool.Spawn(elementGrid.transform, true);
+                uiElement = obj.GetComponent<UIValueField>();
+                uiElement.AssignElement(element);
+            }
+
+            if (element.Type == ElementType.Toggle)
+            {
+                var obj = UIManager.Instance.TogglePool.Spawn(elementGrid.transform, true);
+                uiElement = obj.GetComponent<UIToggleField>();
+                uiElement.AssignElement(element);
+            }
+
+            Elements?.Add(uiElement);
         }
     }
 }

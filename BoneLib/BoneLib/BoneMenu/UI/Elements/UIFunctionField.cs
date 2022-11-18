@@ -15,23 +15,43 @@ namespace BoneLib.BoneMenu.UI
 
         public override ElementType Type => ElementType.Function;
 
-        private Button _functionButton;
+        private Button functionButton;
+        private Button confirmerButton;
+
+        private TextMeshPro confirmerText;
 
         private void Awake()
         {
-            _functionButton = transform.Find("Button").GetComponent<Button>();
+            functionButton = transform.Find("Button").GetComponent<Button>();
+            confirmerButton = transform.Find("Confirmer").GetComponent<Button>();
+            confirmerText = confirmerButton.transform.Find("ConfirmValue").GetComponent<TextMeshPro>();
 
-            SetupListeners();
+            Initialize();
         }
 
-        private void SetupListeners()
+        private void Initialize()
         {
-            Action onPressed = () => _element?.OnSelectElement();
-
-            if(_functionButton != null)
+            Action onPressed = () =>
             {
-                _functionButton.onClick.AddListener(onPressed);
-            }
+                var functionElement = (FunctionElement)_element;
+                confirmerText.text = functionElement.ConfirmText;
+                functionElement.OnSelectElement();
+
+                if (functionElement.Confirmer)
+                {
+                    confirmerButton.gameObject.SetActive(true);
+                }
+            };
+
+            Action onConfirmerPressed = () =>
+            {
+                var functionElement = (FunctionElement)_element;
+                functionElement.OnSelectConfirm();
+                confirmerButton.gameObject.SetActive(false);
+            };
+
+            functionButton?.onClick.AddListener(onPressed);
+            confirmerButton?.onClick.AddListener(onConfirmerPressed);
         }
     }
 }

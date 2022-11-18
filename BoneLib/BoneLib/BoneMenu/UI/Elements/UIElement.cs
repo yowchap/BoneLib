@@ -16,16 +16,10 @@ namespace BoneLib.BoneMenu.UI
 
         public virtual ElementType Type { get => ElementType.Default; }
 
-        public TextMeshPro NameText { get; private set; }
-        public TextMeshPro ValueText { get; private set; }
+        public TextMeshPro NameText { get => GetTextMesh("Name"); }
+        public TextMeshPro ValueText { get => GetTextMesh("Value"); }
 
         protected MenuElement _element;
-
-        private void Awake()
-        {
-            NameText = GetTextMesh("Name");
-            ValueText = GetTextMesh("Value");
-        }
 
         public void AssignElement(MenuElement element)
         {

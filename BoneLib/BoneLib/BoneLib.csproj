@@ -41,8 +41,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\References\MelonLoader\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\References\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\References\MelonLoader\Managed\Assembly-CSharp-firstpass.dll</HintPath>
@@ -147,12 +148,10 @@
     <Compile Include="BoneMenu\Elements\FunctionElement.cs" />
     <Compile Include="BoneMenu\Elements\GenericElement.cs" />
     <Compile Include="BoneMenu\Elements\IntElement.cs" />
-    <Compile Include="BoneMenu\Elements\ListElement.cs" />
     <Compile Include="BoneMenu\Elements\MenuCategory.cs" />
     <Compile Include="BoneMenu\Elements\MenuElement.cs" />
     <Compile Include="BoneMenu\MenuManager.cs" />
     <Compile Include="BoneMenu\UI\Elements\UICategoryField.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UIDropdownField.cs" />
     <Compile Include="BoneMenu\UI\Elements\UIElement.cs" />
     <Compile Include="BoneMenu\UI\Elements\UIFunctionField.cs" />
     <Compile Include="BoneMenu\UI\UIManager.cs" />

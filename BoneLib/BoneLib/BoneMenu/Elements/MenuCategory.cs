@@ -78,6 +78,25 @@ namespace BoneLib.BoneMenu.Elements
         }
 
         /// <summary>
+        /// Creates a function element with a confirm option. When confirmed, the action will run.
+        /// </summary>
+        /// <param name="name">The name of the element.</param>
+        /// <param name="color">The name color of the element.</param>
+        /// <param name="action">The action that will be executed when pressed.
+        /// <param name="confirmText">The text that will be displayed before you confirm.</param>
+        /// <code>Example: () => ExampleMethod()</code>
+        /// </param>
+        /// <returns>A function element with a confirm option.</returns>
+        public FunctionElement CreateFunctionElement(string name, Color color, Action action, string confirmText = "")
+        {
+            var element = new FunctionElement(name, color, action, confirmText);
+            Elements?.Add(element);
+            OnElementCreated?.Invoke(this, element);
+            SafeActions.InvokeActionSafe(OnElementCreated, this, element);
+            return element;
+        }
+
+        /// <summary>
         /// Creates a function element that can be used to execute actions when pressed.
         /// </summary>
         /// <param name="name">The name of the element.</param>
@@ -230,21 +249,6 @@ namespace BoneLib.BoneMenu.Elements
             Color32 color;
             ColorUtility.DoTryParseHtmlColor(hexColor, out color);
             return CreateFloatElement(name, color, startValue, increment, minValue, maxValue, action);
-        }
-
-        public ListElement<T> CreateListElement<T>(string name, Color color) where T : class
-        {
-            var element = new ListElement<T>(name, color);
-            Elements?.Add(element);
-            OnElementCreated?.Invoke(this, element);
-            return element;
-        }
-
-        public ListElement<T> CreateListElement<T>(string name, string hexColor) where T : class
-        {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
-            return CreateListElement<T>(name, color);
         }
 
         public override void OnSelectElement()
