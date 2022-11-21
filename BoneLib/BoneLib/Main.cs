@@ -104,7 +104,16 @@ namespace BoneLib
         private void TestCategory()
         {
             var testCategory = MenuManager.CreateCategory("Test Category", "#7012a3");
+
             testCategory.CreateCategory("Sub Category", Color.white);
+
+            var subcat = testCategory.CreateSubPanel("Sub Panel", Color.white);
+            subcat.CreateIntElement("Yeah", Color.white, 0, 1, 0, 10);
+            subcat.CreateFunctionElement("Test Function", Color.white, null);
+            subcat.CreateFunctionElement("Test Function", Color.white, null);
+            subcat.CreateFunctionElement("Test Function", Color.white, null);
+            subcat.CreateFunctionElement("Test Function", Color.white, null);
+
             testCategory.CreateBoolElement("Bool Element", Color.white, false);
             testCategory.CreateEnumElement<ElementType>("Enum Element", Color.white);
             testCategory.CreateFloatElement("Float Element", Color.white, 0f, 1f, 0f, 10f);

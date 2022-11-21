@@ -150,10 +150,12 @@
     <Compile Include="BoneMenu\Elements\IntElement.cs" />
     <Compile Include="BoneMenu\Elements\MenuCategory.cs" />
     <Compile Include="BoneMenu\Elements\MenuElement.cs" />
+    <Compile Include="BoneMenu\Elements\SubPanelElement.cs" />
     <Compile Include="BoneMenu\MenuManager.cs" />
     <Compile Include="BoneMenu\UI\Elements\UICategoryField.cs" />
     <Compile Include="BoneMenu\UI\Elements\UIElement.cs" />
     <Compile Include="BoneMenu\UI\Elements\UIFunctionField.cs" />
+    <Compile Include="BoneMenu\UI\Elements\UISubPanelField.cs" />
     <Compile Include="BoneMenu\UI\UIManager.cs" />
     <Compile Include="BoneMenu\UI\Elements\UIPage.cs" />
     <Compile Include="BoneMenu\UI\UIPool.cs" />

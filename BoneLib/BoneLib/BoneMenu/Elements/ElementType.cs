@@ -9,6 +9,7 @@
         Confirmer,
         Value,
         ValueList,
-        Toggle
+        Toggle,
+        SubPanel
     }
 }

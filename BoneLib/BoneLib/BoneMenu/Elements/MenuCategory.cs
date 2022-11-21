@@ -60,6 +60,33 @@ namespace BoneLib.BoneMenu.Elements
         }
 
         /// <summary>
+        /// Creates a sub-panel with a name and a color. 
+        /// </summary>
+        /// <param name="name">The name of the category.</param>
+        /// <param name="color">The name's color.</param>
+        /// <returns>A new sub-panel in your page.</returns>
+        public SubPanelElement CreateSubPanel(string name, Color color)
+        {
+            var panel = new SubPanelElement(name, color);
+            Elements?.Add(panel);
+            return panel;
+        }
+
+        /// <summary>
+        /// Creates a sub-panel with a name and a hex color input.
+        /// </summary>
+        /// <param name="name">The name of the category.</param>
+        /// <param name="hexColor">The color in hexadecimal.
+        /// <code>"Example: #00CA11 for green."</code>
+        /// <returns>A new sub-panel in your page.</returns>
+        public SubPanelElement CreateSubPanel(string name, string hexColor)
+        {
+            Color32 color;
+            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            return CreateSubPanel(name, color);
+        }
+
+        /// <summary>
         /// Creates a function element that can be used to execute actions when pressed.
         /// </summary>
         /// <param name="name">The name of the element.</param>

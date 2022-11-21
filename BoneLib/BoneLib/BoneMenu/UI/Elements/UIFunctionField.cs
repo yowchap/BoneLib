@@ -26,6 +26,9 @@ namespace BoneLib.BoneMenu.UI
             confirmerButton = transform.Find("Confirmer").GetComponent<Button>();
             confirmerText = confirmerButton.transform.Find("ConfirmValue").GetComponent<TextMeshPro>();
 
+            confirmerButton.gameObject.SetActive(false);
+            confirmerText.gameObject.SetActive(false);
+
             Initialize();
         }
 

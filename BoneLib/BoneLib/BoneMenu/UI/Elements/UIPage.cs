@@ -14,17 +14,17 @@ namespace BoneLib.BoneMenu.UI
         public UIPage(IntPtr ptr) : base(ptr) { }
 
         public List<UIElement> Elements { get; private set; } = new List<UIElement>();
+        public Transform ElementGrid { get; private set; }
 
         private SLZ.UI.UIGridEnable gridEnable;
 
-        private Transform elementGrid;
         private Transform returnArrow;
 
         private Button returnButton;
 
         private void Awake()
         {
-            elementGrid = transform.Find("Viewport/ElementGrid");
+            ElementGrid = transform.Find("Viewport/ElementGrid");
             returnArrow = transform.Find("Return");
 
             gridEnable = transform.Find("Viewport/ElementGrid").GetComponent<SLZ.UI.UIGridEnable>();
@@ -92,6 +92,7 @@ namespace BoneLib.BoneMenu.UI
             if(gridEnable != null)
             {
                 gridEnable.enabled = false;
+                gridEnable.enabled = true;
             }
 
             foreach (var element in Elements)
@@ -110,29 +111,36 @@ namespace BoneLib.BoneMenu.UI
 
             if (element.Type == ElementType.Category)
             {
-                var obj = UIManager.Instance.CategoryPool.Spawn(elementGrid.transform, true);
+                var obj = UIManager.Instance.CategoryPool.Spawn(ElementGrid.transform, true);
                 uiElement = obj.GetComponent<UICategoryField>();
                 uiElement.AssignElement(element);
             }
 
             if (element.Type == ElementType.Function || element.Type == ElementType.Confirmer)
             {
-                var obj = UIManager.Instance.FunctionPool.Spawn(elementGrid.transform, true);
+                var obj = UIManager.Instance.FunctionPool.Spawn(ElementGrid.transform, true);
                 uiElement = obj.GetComponent<UIFunctionField>();
                 uiElement.AssignElement(element);
             }
 
             if (element.Type == ElementType.Value)
             {
-                var obj = UIManager.Instance.ValuePool.Spawn(elementGrid.transform, true);
+                var obj = UIManager.Instance.ValuePool.Spawn(ElementGrid.transform, true);
                 uiElement = obj.GetComponent<UIValueField>();
                 uiElement.AssignElement(element);
             }
 
             if (element.Type == ElementType.Toggle)
             {
-                var obj = UIManager.Instance.TogglePool.Spawn(elementGrid.transform, true);
+                var obj = UIManager.Instance.TogglePool.Spawn(ElementGrid.transform, true);
                 uiElement = obj.GetComponent<UIToggleField>();
+                uiElement.AssignElement(element);
+            }
+
+            if (element.Type == ElementType.SubPanel)
+            {
+                var obj = UIManager.Instance.SubPanelPool.Spawn(ElementGrid.transform, true);
+                uiElement = obj.GetComponent<UISubPanelField>();
                 uiElement.AssignElement(element);
             }
 

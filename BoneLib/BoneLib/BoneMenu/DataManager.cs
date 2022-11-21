@@ -116,6 +116,8 @@ namespace BoneLib.BoneMenu
             public static GameObject ValuePrefab = Bundles.FindBundleObject("Element_Value");
             public static GameObject ValueListPrefab = Bundles.FindBundleObject("Element_ValueList");
             public static GameObject TogglePrefab = Bundles.FindBundleObject("Element_Toggle");
+            public static GameObject SubPanelPrefab = Bundles.FindBundleObject("Element_SubPanel");
+            public static GameObject EmptyPrefab = Bundles.FindBundleObject("Element_Empty");
 
             public static GameObject BMButtonObject = Bundles.FindBundleObject("BoneMenuButton");
 
@@ -156,7 +158,6 @@ namespace BoneLib.BoneMenu
             {
                 Action optionButtonAction = () =>
                 {
-                    MelonLoader.MelonLogger.Msg("test");
                     PanelView.PAGESELECT(9);
                     MenuManager.SelectCategory(MenuManager.RootCategory);
                 };
