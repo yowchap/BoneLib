@@ -22,8 +22,24 @@ namespace BoneLib.BoneMenu.UI
 
         private Button returnButton;
 
+        /// <summary>
+        /// Dictionary that contains the proper pools for each element type.
+        /// </summary>
+        private Dictionary<ElementType, UIPool> elementTypes;
+
         private void Awake()
         {
+            elementTypes = new Dictionary<ElementType, UIPool>()
+            {
+                { ElementType.Default, UIManager.Instance.FunctionPool },
+                { ElementType.SubPanel, UIManager.Instance.SubPanelPool },
+                { ElementType.Category, UIManager.Instance.CategoryPool },
+                { ElementType.Function, UIManager.Instance.FunctionPool },
+                { ElementType.Confirmer, UIManager.Instance.FunctionPool },
+                { ElementType.Value, UIManager.Instance.ValuePool },
+                { ElementType.Toggle, UIManager.Instance.TogglePool }
+            };
+
             ElementGrid = transform.Find("Viewport/ElementGrid");
             returnArrow = transform.Find("Return");
 
@@ -107,42 +123,8 @@ namespace BoneLib.BoneMenu.UI
 
         private void AssignUIElement(MenuElement element)
         {
-            UIElement uiElement = null;
-
-            if (element.Type == ElementType.Category)
-            {
-                var obj = UIManager.Instance.CategoryPool.Spawn(ElementGrid.transform, true);
-                uiElement = obj.GetComponent<UICategoryField>();
-                uiElement.AssignElement(element);
-            }
-
-            if (element.Type == ElementType.Function || element.Type == ElementType.Confirmer)
-            {
-                var obj = UIManager.Instance.FunctionPool.Spawn(ElementGrid.transform, true);
-                uiElement = obj.GetComponent<UIFunctionField>();
-                uiElement.AssignElement(element);
-            }
-
-            if (element.Type == ElementType.Value)
-            {
-                var obj = UIManager.Instance.ValuePool.Spawn(ElementGrid.transform, true);
-                uiElement = obj.GetComponent<UIValueField>();
-                uiElement.AssignElement(element);
-            }
-
-            if (element.Type == ElementType.Toggle)
-            {
-                var obj = UIManager.Instance.TogglePool.Spawn(ElementGrid.transform, true);
-                uiElement = obj.GetComponent<UIToggleField>();
-                uiElement.AssignElement(element);
-            }
-
-            if (element.Type == ElementType.SubPanel)
-            {
-                var obj = UIManager.Instance.SubPanelPool.Spawn(ElementGrid.transform, true);
-                uiElement = obj.GetComponent<UISubPanelField>();
-                uiElement.AssignElement(element);
-            }
+            var uiElement = elementTypes[element.Type].Spawn(ElementGrid.transform, true).GetComponent<UIElement>();
+            uiElement.AssignElement(element);
 
             Elements?.Add(uiElement);
         }

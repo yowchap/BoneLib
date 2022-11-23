@@ -14,13 +14,13 @@ namespace BoneLib.BoneMenu.UI
 
         public override ElementType Type => ElementType.Value;
 
-        private Button _leftButton;
-        private Button _rightButton;
+        private Button leftButton;
+        private Button rightButton;
 
         private void Awake()
         {
-            _leftButton = transform.Find("ButtonUp").GetComponent<Button>();
-            _rightButton = transform.Find("ButtonDown").GetComponent<Button>();
+            leftButton = transform.Find("ButtonUp").GetComponent<Button>();
+            rightButton = transform.Find("ButtonDown").GetComponent<Button>();
 
             SetupListeners();
         }
@@ -39,14 +39,14 @@ namespace BoneLib.BoneMenu.UI
                 SetText(_element.Name, _element.DisplayValue);
             };
 
-            if (_leftButton != null)
+            if (leftButton != null)
             {
-                _leftButton.onClick.AddListener(onLeftPressed);
+                leftButton.onClick.AddListener(onLeftPressed);
             }
 
-            if (_rightButton != null)
+            if (rightButton != null)
             {
-                _rightButton.onClick.AddListener(onRightPressed);
+                rightButton.onClick.AddListener(onRightPressed);
             }
         }
     }

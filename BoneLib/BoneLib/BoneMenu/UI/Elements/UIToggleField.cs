@@ -14,11 +14,12 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIToggleField(IntPtr ptr) : base(ptr) { }
 
-        private Button _toggleButton;
+        private Button toggleButton;
 
         private void Awake()
         {
-            _toggleButton = transform.Find("Button").GetComponent<Button>();
+            toggleButton = transform.Find("Button").GetComponent<Button>();
+
             SetupListeners();
         }
 
@@ -30,9 +31,9 @@ namespace BoneLib.BoneMenu.UI
                 SetText(_element.Name, _element.DisplayValue);
             };
 
-            if(_toggleButton != null)
+            if(toggleButton != null)
             {
-                _toggleButton.onClick.AddListener(action);
+                toggleButton.onClick.AddListener(action);
             }
         }
     }

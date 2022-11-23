@@ -13,11 +13,12 @@ namespace BoneLib.BoneMenu.UI
     {
         public UICategoryField(IntPtr ptr) : base(ptr) { }
 
-        private Button _categoryButton;
+        private Button categoryButton;
 
         private void Awake()
         {
-            _categoryButton = transform.Find("Button").GetComponent<Button>();
+            categoryButton = transform.Find("Button").GetComponent<Button>();
+
             SetupListeners();
         }
 
@@ -29,9 +30,9 @@ namespace BoneLib.BoneMenu.UI
                 MenuManager.SelectCategory(category);
             };
 
-            if (_categoryButton != null)
+            if (categoryButton != null)
             {
-                _categoryButton.onClick.AddListener(action);
+                categoryButton.onClick.AddListener(action);
             }
         }
     }

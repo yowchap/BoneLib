@@ -72,6 +72,7 @@ namespace BoneLib.BoneMenu.UI
                 return;
             }
 
+            MainPage.gameObject.SetActive(false);
             MainPage.AssignElement(category);
             MainPage.Draw();
             MainPage.gameObject.SetActive(true);
