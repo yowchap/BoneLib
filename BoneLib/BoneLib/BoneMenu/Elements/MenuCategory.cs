@@ -69,6 +69,7 @@ namespace BoneLib.BoneMenu.Elements
         {
             var panel = new SubPanelElement(name, color);
             Elements?.Add(panel);
+            SafeActions.InvokeActionSafe(OnElementCreated, this, panel);
             return panel;
         }
 
@@ -99,7 +100,6 @@ namespace BoneLib.BoneMenu.Elements
         {
             var element = new FunctionElement(name, color, action);
             Elements?.Add(element);
-            OnElementCreated?.Invoke(this, element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
         }
@@ -118,7 +118,6 @@ namespace BoneLib.BoneMenu.Elements
         {
             var element = new FunctionElement(name, color, action, confirmText);
             Elements?.Add(element);
-            OnElementCreated?.Invoke(this, element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
         }
@@ -152,7 +151,7 @@ namespace BoneLib.BoneMenu.Elements
         {
             var element = new BoolElement(name, color, value, action);
             Elements?.Add(element);
-            OnElementCreated?.Invoke(this, element);
+            SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
         }
 
@@ -186,7 +185,6 @@ namespace BoneLib.BoneMenu.Elements
         {
             var element = new IntElement(name, color, startValue, increment, minValue, maxValue, action);
             Elements?.Add(element);
-            OnElementCreated?.Invoke(this, element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
         }
@@ -221,7 +219,6 @@ namespace BoneLib.BoneMenu.Elements
         {
             var element = new EnumElement<T>(name, color, action);
             Elements?.Add(element);
-            OnElementCreated?.Invoke(this, element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
         }
