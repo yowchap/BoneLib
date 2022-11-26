@@ -30,8 +30,7 @@ namespace BoneLib
 
             MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
 
-            SetupBoneMenu();
-            TestCategory();
+            DefaultMenu.CreateDefaultElements();
 
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
@@ -92,33 +91,6 @@ namespace BoneLib
         private void OnPlayerReferencesFound()
         {
             PopupBoxManager.CreateBaseAd();
-        }
-
-        private void SetupBoneMenu()
-        {
-            var mainCategory = MenuManager.CreateCategory("BoneLib", Color.white);
-            mainCategory.CreateFunctionElement("Spawn Ad", Color.yellow, () => PopupBoxManager.CreateBaseAd());
-            mainCategory.CreateBoolElement("Test Bool", "#FF33E6", false);
-        }
-
-        private void TestCategory()
-        {
-            var testCategory = MenuManager.CreateCategory("Test Category", "#7012a3");
-
-            testCategory.CreateCategory("Sub Category", Color.white);
-
-            var subcat = testCategory.CreateSubPanel("Sub Panel", Color.white);
-            subcat.CreateIntElement("Yeah", Color.white, 0, 1, 0, 10);
-            subcat.CreateFunctionElement("Test Function", Color.white, null);
-            subcat.CreateFunctionElement("Test Function", Color.white, null);
-            subcat.CreateFunctionElement("Test Function", Color.white, null);
-            subcat.CreateFunctionElement("Test Function", Color.white, null);
-
-            testCategory.CreateBoolElement("Bool Element", Color.white, false);
-            testCategory.CreateEnumElement<ElementType>("Enum Element", Color.white);
-            testCategory.CreateFloatElement("Float Element", Color.white, 0f, 1f, 0f, 10f);
-            testCategory.CreateIntElement("Int Element", Color.white, 0, 1, 0, 10);
-            testCategory.CreateFunctionElement("Function Element (with confirmer)", Color.white, null, "You will delete everything if you confirm!");
         }
     }
 }

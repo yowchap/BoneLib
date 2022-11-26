@@ -2,6 +2,13 @@
 using SLZ.Combat;
 using SLZ.Props.Weapons;
 
+using SLZ.Marrow.Pool;
+using SLZ.Marrow.Warehouse;
+
+using System.Collections.Generic;
+
+using UnityEngine;
+
 namespace BoneLib
 {
     public static class Extensions
@@ -26,6 +33,12 @@ namespace BoneLib
                     damage = damage
                 });
             }
+        }
+
+        public static T GetRandom<T>(this List<T> list) where T : class
+        {
+            int random = UnityEngine.Random.Range(0, list.Count);
+            return list[random];
         }
     }
 }

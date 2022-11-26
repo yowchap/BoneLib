@@ -96,6 +96,7 @@ namespace BoneLib.BoneMenu.UI
             }
 
             Elements.Clear();
+            emptyObjects.Clear();
         }
 
         private void AssignUIElement(MenuElement element)

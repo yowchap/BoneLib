@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoneMenu\DataManager.cs" />
+    <Compile Include="BoneMenu\DefaultMenu.cs" />
     <Compile Include="BoneMenu\Elements\BoolElement.cs" />
     <Compile Include="BoneMenu\Elements\ElementType.cs" />
     <Compile Include="BoneMenu\Elements\EnumElement.cs" />
