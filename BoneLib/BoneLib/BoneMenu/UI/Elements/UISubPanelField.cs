@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 using BoneLib.BoneMenu.Elements;
 
+using SLZ.UI;
+
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
@@ -25,11 +27,18 @@ namespace BoneLib.BoneMenu.UI
 
         private List<GameObject> emptyObjects;
 
+        private ButtonHoverClick subpanelFeedback;
+
         private void Awake()
         {
             emptyObjects = new List<GameObject>();
             dropdownButton = transform.Find("Button").GetComponent<Button>();
             gridObject = transform.Find("Grid").gameObject;
+
+            subpanelFeedback = dropdownButton.GetComponent<ButtonHoverClick>();
+
+            subpanelFeedback.feedback_audio = DataManager.Player.UIRig.feedbackAudio;
+            subpanelFeedback.feedback_tactile = DataManager.Player.UIRig.feedbackTactile;
 
             Initialize();
         }

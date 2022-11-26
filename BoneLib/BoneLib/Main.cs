@@ -90,6 +90,7 @@ namespace BoneLib
 
         private void OnPlayerReferencesFound()
         {
+            DataManager.Player.FindReferences();
             PopupBoxManager.CreateBaseAd();
         }
     }

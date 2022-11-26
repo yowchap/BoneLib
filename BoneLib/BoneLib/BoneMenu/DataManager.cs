@@ -64,6 +64,12 @@ namespace BoneLib.BoneMenu
 
         public static class Player
         {
+            internal static void FindReferences()
+            {
+                _rigManager = BoneLib.Player.GetRigManager().GetComponent<RigManager>();
+                _uiRig = _rigManager.uiRig;
+            }
+
             public static RigManager RigManager
             {
                 get

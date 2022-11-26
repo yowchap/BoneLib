@@ -60,9 +60,9 @@ namespace BoneLib.BoneMenu
             ammo.CreateFunctionElement("Add Medium Ammo", Color.white, () => ammoInventory.AddCartridge(mediumAmmo, mediumAmmoValue));
             ammo.CreateFunctionElement("Add Heavy Ammo", Color.white, () => ammoInventory.AddCartridge(heavyAmmo, heavyAmmoValue));
 
-            ammo.CreateIntElement("Light Ammo", "#d6d13e", lightAmmoValue, 100, 0, int.MaxValue, (value) => lightAmmoValue = value);
-            ammo.CreateIntElement("Medium Ammo", "#d69e3e", mediumAmmoValue, 100, 0, int.MaxValue, (value) => mediumAmmoValue = value);
-            ammo.CreateIntElement("Heavy Ammo", "#d63e3e", heavyAmmoValue, 100, 0, int.MaxValue, (value) => heavyAmmoValue = value);
+            ammo.CreateIntElement("Light Ammo", "#ffe11c", lightAmmoValue, 100, 0, int.MaxValue, (value) => lightAmmoValue = value);
+            ammo.CreateIntElement("Medium Ammo", "#ff9d1c", mediumAmmoValue, 100, 0, int.MaxValue, (value) => mediumAmmoValue = value);
+            ammo.CreateIntElement("Heavy Ammo", "#ff2f1c", heavyAmmoValue, 100, 0, int.MaxValue, (value) => heavyAmmoValue = value);
 
             itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, () => SpawnUtilityGun());
             itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, () => SpawnNimbusGun());

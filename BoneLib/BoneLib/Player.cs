@@ -2,6 +2,7 @@
 using SLZ.Props.Weapons;
 using SLZ.Rig;
 using SLZ.VRMK;
+using SLZ.UI;
 using UnityEngine;
 
 namespace BoneLib
@@ -21,34 +22,50 @@ namespace BoneLib
         public static BaseController leftController { get; private set; }
         public static BaseController rightController { get; private set; }
         public static bool controllersExist => leftController != null && rightController != null;
+
+        // Rigs
+        public static PhysicsRig physicsRig { get; private set; }
         public static ControllerRig controllerRig { get; private set; }
+        public static RealtimeSkeletonRig heptaRig { get; private set; }
+        public static GameWorldSkeletonRig virtualHeptaRig { get; private set; }
+        public static UIRig uiRig { get; private set; }
 
-        private static PhysicsRig physicsRig;
-
+        // UI Feedback
+        public static Feedback_Audio feedbackAudio { get => uiRig.feedbackAudio; }
+        public static Feedback_Tactile feedbackTactile { get => uiRig.feedbackTactile; }
 
         internal static bool FindObjectReferences(RigManager rigManager = null)
         {
             ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
 
             if (controllersExist && handsExist && controllerRig != null)
+            {
                 return false;
+            }
+                
             if (rigManager == null)
-                rigManager = GameObject.FindObjectOfType<RigManager>();
+            {
+                rigManager = GetManager();
+            }
 
-            leftController = rigManager?.ControllerRig?.leftController;
-            rightController = rigManager?.ControllerRig?.rightController;
-
-            controllerRig = rigManager?.ControllerRig;
-
-            leftHand = rigManager?.physicsRig?.leftHand;
-            rightHand = rigManager?.physicsRig?.rightHand;
             physicsRig = rigManager?.physicsRig;
+            controllerRig = rigManager?.ControllerRig;
+            heptaRig = rigManager?.realHeptaRig;
+            virtualHeptaRig = rigManager?.virtualHeptaRig;
+            uiRig = rigManager?.uiRig;
+
+            leftController = controllerRig?.leftController;
+            rightController = controllerRig?.rightController;
+
+            leftHand = physicsRig?.leftHand;
+            rightHand = physicsRig?.rightHand;
 
             ModConsole.Msg("Found player object references", LoggingMode.DEBUG);
 
             return controllersExist && handsExist && controllerRig != null;
         }
 
+        [System.Obsolete]
         /// <summary>
         /// Returns the root gameobject of the Player's <see cref="RigManager"/>.
         /// </summary>
@@ -58,6 +75,11 @@ namespace BoneLib
                 rigManager = GameObject.Find(rigManagerName);
 
             return rigManager;
+        }
+
+        public static RigManager GetManager()
+        {
+            return GameObject.Find(rigManagerName).GetComponent<RigManager>();
         }
 
         /// <summary>
@@ -74,6 +96,7 @@ namespace BoneLib
             return playerHead;
         }
 
+        [System.Obsolete]
         /// <summary>
         /// Returns the <see cref="PhysicsRig"/>.
         /// </summary>

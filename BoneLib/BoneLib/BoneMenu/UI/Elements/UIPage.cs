@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 using BoneLib.BoneMenu.Elements;
 
+using SLZ.UI;
+
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp]
@@ -21,6 +23,8 @@ namespace BoneLib.BoneMenu.UI
         private Transform returnArrow;
 
         private Button returnButton;
+
+        private ButtonHoverClick returnFeedback;
 
         /// <summary>
         /// Dictionary that contains the proper pools for each element type.
@@ -45,6 +49,11 @@ namespace BoneLib.BoneMenu.UI
 
             gridEnable = transform.Find("Viewport/ElementGrid").GetComponent<SLZ.UI.UIGridEnable>();
             returnButton = returnArrow.GetComponent<Button>();
+
+            returnFeedback = returnButton.GetComponent<ButtonHoverClick>();
+
+            returnFeedback.feedback_audio = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackAudio;
+            returnFeedback.feedback_tactile = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackTactile;
         }
 
         private void Start()
