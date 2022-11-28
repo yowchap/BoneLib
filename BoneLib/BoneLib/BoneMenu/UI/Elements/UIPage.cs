@@ -24,8 +24,6 @@ namespace BoneLib.BoneMenu.UI
 
         private Button returnButton;
 
-        private ButtonHoverClick returnFeedback;
-
         /// <summary>
         /// Dictionary that contains the proper pools for each element type.
         /// </summary>
@@ -49,11 +47,6 @@ namespace BoneLib.BoneMenu.UI
 
             gridEnable = transform.Find("Viewport/ElementGrid").GetComponent<SLZ.UI.UIGridEnable>();
             returnButton = returnArrow.GetComponent<Button>();
-
-            returnFeedback = returnButton.GetComponent<ButtonHoverClick>();
-
-            returnFeedback.feedback_audio = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackAudio;
-            returnFeedback.feedback_tactile = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackTactile;
         }
 
         private void Start()

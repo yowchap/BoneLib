@@ -22,9 +22,6 @@ namespace BoneLib.BoneMenu.UI
 
         private TextMeshPro confirmerText;
 
-        private ButtonHoverClick functionFeedback;
-        private ButtonHoverClick confirmerFeedback;
-
         private void Awake()
         {
             functionButton = transform.Find("Button").GetComponent<Button>();
@@ -33,15 +30,6 @@ namespace BoneLib.BoneMenu.UI
 
             confirmerButton.gameObject.SetActive(false);
             confirmerText.gameObject.SetActive(false);
-
-            functionFeedback = functionButton.GetComponent<ButtonHoverClick>();
-            confirmerFeedback = confirmerButton.GetComponent<ButtonHoverClick>();
-
-            functionFeedback.feedback_audio = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackAudio;
-            functionFeedback.feedback_tactile = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackTactile;
-
-            confirmerFeedback.feedback_audio = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackAudio;
-            confirmerFeedback.feedback_tactile = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackTactile;
 
             Initialize();
         }
