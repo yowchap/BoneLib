@@ -4,6 +4,9 @@ using MelonLoader;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
+using BoneLib.BoneMenu;
+using BoneLib.BoneMenu.Elements;
+
 namespace BoneLib
 {
     public static class BuildInfo
@@ -11,7 +14,7 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "Gnonme"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "1.3.1"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "1.4.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
@@ -25,6 +28,13 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
+            MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
+
+            DefaultMenu.CreateDefaultElements();
+
+            DataManager.Bundles.Init();
+            DataManager.UI.AddComponents();
+
             Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
             Hooking.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
 
@@ -35,17 +45,15 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
-        private void OnPlayerReferencesFound()
-        {
-            PopupBoxManager.CreateBaseAd();
-        }
-
         private void OnMarrowSceneLoaded(MarrowSceneInfo info)
         {
-            if(info.LevelTitle == "00 - Main Menu" || info.LevelTitle == "15 - Void G114")
+            if (info.LevelTitle == "00 - Main Menu" || info.LevelTitle == "15 - Void G114")
             {
                 SkipIntro();
             }
+
+            DataManager.UI.InitializeReferences();
+            new GameObject("[BoneMenu] - UI Manager").AddComponent<BoneMenu.UI.UIManager>();
         }
 
         private void SkipIntro()
@@ -93,6 +101,12 @@ namespace BoneLib
                 controller.holdTime_Rest = 0;
                 controller.canClick = true;
             }
+        }
+
+        private void OnPlayerReferencesFound()
+        {
+            DataManager.Player.FindReferences();
+            PopupBoxManager.CreateBaseAd();
         }
     }
 }

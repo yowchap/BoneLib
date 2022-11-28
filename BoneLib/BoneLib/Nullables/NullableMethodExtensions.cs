@@ -2,6 +2,7 @@
 using Il2CppSystem;
 using SLZ;
 using SLZ.AI;
+using SLZ.Props;
 using SLZ.Marrow.Data;
 using SLZ.Marrow.Pool;
 using SLZ.Utilities;
