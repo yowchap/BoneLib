@@ -8,56 +8,41 @@ namespace BoneLib
 {
     public static class Player
     {
-        private static readonly string rigManagerName = "[RigManager (Blank)]";
-        private static readonly string playerHeadPath = "[PhysicsRig]/Head"; // The path to the head relative to the rig manager
-
-        private static GameObject rigManager;
         private static GameObject playerHead;
 
-        public static Hand leftHand { get; private set; }
-        public static Hand rightHand { get; private set; }
+        public static RigManager rigManager
+        {
+            get
+            {
+                if(_rigManager == null)
+                {
+                    _rigManager = GameObject.FindObjectOfType<RigManager>();
+                }
+
+                return _rigManager;
+            }
+        }
+
+        public static PhysicsRig physicsRig { get => rigManager?.physicsRig; }
+        public static ControllerRig controllerRig { get => rigManager?.ControllerRig; }
+        public static UIRig uiRig { get => rigManager?.uiRig; }
+
+        public static Hand leftHand { get => physicsRig?.leftHand; }
+        public static Hand rightHand { get => physicsRig?.rightHand; }
         public static bool handsExist => leftHand != null && rightHand != null;
 
-        public static BaseController leftController { get; private set; }
-        public static BaseController rightController { get; private set; }
+        public static BaseController leftController { get => controllerRig?.leftController; }
+        public static BaseController rightController { get => controllerRig?.rightController; }
         public static bool controllersExist => leftController != null && rightController != null;
-        public static ControllerRig controllerRig { get; private set; }
 
-        private static PhysicsRig physicsRig;
-
-
-        internal static bool FindObjectReferences(RigManager rigManager = null)
-        {
-            ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
-
-            if (controllersExist && handsExist && controllerRig != null)
-                return false;
-            if (rigManager == null)
-                rigManager = GameObject.FindObjectOfType<RigManager>();
-
-            leftController = rigManager?.ControllerRig?.leftController;
-            rightController = rigManager?.ControllerRig?.rightController;
-
-            controllerRig = rigManager?.ControllerRig;
-
-            leftHand = rigManager?.physicsRig?.leftHand;
-            rightHand = rigManager?.physicsRig?.rightHand;
-            physicsRig = rigManager?.physicsRig;
-
-            ModConsole.Msg("Found player object references", LoggingMode.DEBUG);
-
-            return controllersExist && handsExist && controllerRig != null;
-        }
+        private static RigManager _rigManager;
 
         /// <summary>
         /// Returns the root gameobject of the Player's <see cref="RigManager"/>.
         /// </summary>
         public static GameObject GetRigManager()
         {
-            if (rigManager == null)
-                rigManager = GameObject.Find(rigManagerName);
-
-            return rigManager;
+            return rigManager.gameObject;
         }
 
         /// <summary>
@@ -65,13 +50,7 @@ namespace BoneLib
         /// </summary>
         public static GameObject GetPlayerHead()
         {
-            if (playerHead == null)
-            {
-                GameObject rig = GetRigManager();
-                if (rig != null)
-                    playerHead = rig.transform.Find(playerHeadPath).gameObject;
-            }
-            return playerHead;
+            return physicsRig.m_head.gameObject;
         }
 
         /// <summary>
@@ -79,8 +58,6 @@ namespace BoneLib
         /// </summary>
         public static PhysicsRig GetPhysicsRig()
         {
-            if (physicsRig == null)
-                physicsRig = GameObject.FindObjectOfType<PhysicsRig>();
             return physicsRig;
         }
 
