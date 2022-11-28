@@ -85,7 +85,7 @@ namespace BoneLib
 
             CreateHook(typeof(RigManager).GetMethod("Awake", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerAwake), AccessTools.all));
             CreateHook(typeof(RigManager).GetMethod("OnDestroy", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroyed), AccessTools.all));
-
+                
             CreateHook(typeof(AIBrain).GetMethod("OnDeath", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
             CreateHook(typeof(AIBrain).GetMethod("OnResurrection", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCResurrected), AccessTools.all));
 
@@ -138,8 +138,10 @@ namespace BoneLib
 
             OnSceneMarrowLoaded();
 
-            if (Player.FindObjectReferences(__instance))
+            if (Player.rigManager != null)
+            {
                 SafeActions.InvokeActionSafe(OnPlayerReferencesFound);
+            }
         }
 
         private static void OnSceneMarrowInitialized(LevelCrateReference level, LevelCrateReference loadLevel)
