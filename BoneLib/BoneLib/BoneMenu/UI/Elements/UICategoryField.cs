@@ -17,16 +17,9 @@ namespace BoneLib.BoneMenu.UI
 
         private Button categoryButton;
 
-        private ButtonHoverClick categoryFeedback;
-
         private void Awake()
         {
             categoryButton = transform.Find("Button").GetComponent<Button>();
-
-            categoryFeedback = categoryButton.GetComponent<ButtonHoverClick>();
-
-            categoryFeedback.feedback_audio = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackAudio;
-            categoryFeedback.feedback_tactile = Player.GetRigManager().GetComponent<SLZ.Rig.RigManager>().uiRig.feedbackTactile;
 
             SetupListeners();
         }

@@ -18,16 +18,9 @@ namespace BoneLib.BoneMenu.UI
 
         private Button toggleButton;
 
-        private ButtonHoverClick toggleFeedback;
-
         private void Awake()
         {
             toggleButton = transform.Find("Button").GetComponent<Button>();
-
-            toggleFeedback = toggleButton.GetComponent<ButtonHoverClick>();
-
-            toggleFeedback.feedback_audio = DataManager.Player.UIRig.feedbackAudio;
-            toggleFeedback.feedback_tactile = DataManager.Player.UIRig.feedbackTactile;
 
             SetupListeners();
         }
