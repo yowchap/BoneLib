@@ -3,13 +3,10 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 using UnityEngine;
 using UnityEngine.UI;
-
 using SLZ.Rig;
 using SLZ.UI;
-
 using BoneLib.BoneMenu.UI;
 
 namespace BoneLib.BoneMenu
@@ -20,11 +17,11 @@ namespace BoneLib.BoneMenu
         {
             public static void Init()
             {
-                BundleObjects = new List<GameObject>();
+                _bundleObjects = new List<GameObject>();
                 _bundle = GetEmbeddedBundle();
                 _bundle.hideFlags = HideFlags.DontUnloadUnusedAsset;
 
-                var assets = Bundle.LoadAllAssets();
+                var assets = bundle.LoadAllAssets();
 
                 foreach (var asset in assets)
                 {
@@ -32,19 +29,20 @@ namespace BoneLib.BoneMenu
                     {
                         var go = asset.Cast<GameObject>();
                         go.hideFlags = HideFlags.DontUnloadUnusedAsset;
-                        BundleObjects.Add(go);
+                        _bundleObjects.Add(go);
                     }
                 }
             }
 
-            public static AssetBundle Bundle { get => _bundle; }
-            public static List<GameObject> BundleObjects { get; private set; }
+            public static readonly AssetBundle bundle;
+            public static IReadOnlyList<GameObject> BundleObjects { get => _bundleObjects.AsReadOnly(); }
 
             private static AssetBundle _bundle;
+            private static List<GameObject> _bundleObjects;
 
             public static GameObject FindBundleObject(string name)
             {
-                return BundleObjects.Find(x => x.name == name);
+                return _bundleObjects.Find(x => x.name == name);
             }
 
             static AssetBundle GetEmbeddedBundle()
@@ -101,8 +99,8 @@ namespace BoneLib.BoneMenu
 
         public static class UI
         {
-            public static PreferencesPanelView PanelView;
-            public static GameObject OptionsPanel;
+            public static PreferencesPanelView panelView;
+            public static GameObject optionsPanel;
             public static Transform OptionsGrid
             {
                 get
@@ -116,16 +114,16 @@ namespace BoneLib.BoneMenu
                 }
             }
 
-            public static GameObject PagePrefab = Bundles.FindBundleObject("Element_Page");
-            public static GameObject CategoryPrefab = Bundles.FindBundleObject("Element_Category");
-            public static GameObject FunctionPrefab = Bundles.FindBundleObject("Element_Function");
-            public static GameObject ValuePrefab = Bundles.FindBundleObject("Element_Value");
-            public static GameObject ValueListPrefab = Bundles.FindBundleObject("Element_ValueList");
-            public static GameObject TogglePrefab = Bundles.FindBundleObject("Element_Toggle");
-            public static GameObject SubPanelPrefab = Bundles.FindBundleObject("Element_SubPanel");
-            public static GameObject EmptyPrefab = Bundles.FindBundleObject("Element_Empty");
+            public static GameObject pagePrefab = Bundles.FindBundleObject("Element_Page");
+            public static GameObject categoryPrefab = Bundles.FindBundleObject("Element_Category");
+            public static GameObject functionPrefab = Bundles.FindBundleObject("Element_Function");
+            public static GameObject valuePrefab = Bundles.FindBundleObject("Element_Value");
+            public static GameObject valueListPrefab = Bundles.FindBundleObject("Element_ValueList");
+            public static GameObject togglePrefab = Bundles.FindBundleObject("Element_Toggle");
+            public static GameObject subPanelPrefab = Bundles.FindBundleObject("Element_SubPanel");
+            public static GameObject emptyPrefab = Bundles.FindBundleObject("Element_Empty");
 
-            public static GameObject BMButtonObject = Bundles.FindBundleObject("BoneMenuButton");
+            public static GameObject bmButtonObject = Bundles.FindBundleObject("BoneMenuButton");
 
             public static GameObject MainPage { get => _mainPage; }
 
@@ -138,7 +136,7 @@ namespace BoneLib.BoneMenu
 
             public static void Init()
             {
-                _optionButton = SetupElement(BMButtonObject, OptionsGrid, true);
+                _optionButton = SetupElement(bmButtonObject, OptionsGrid, true);
 
                 ModifyBaseUI();
             }
@@ -147,24 +145,24 @@ namespace BoneLib.BoneMenu
             {
                 Player._rigManager = BoneLib.Player.GetRigManager().GetComponent<RigManager>();
                 Player._uiRig = Player.RigManager.uiRig;
-                PanelView = Player.UIRig.popUpMenu.preferencesPanelView;
-                OptionsPanel = PanelView.pages[PanelView.defaultPage];
-                _optionsGrid = OptionsPanel.transform.Find("grid_Options");
+                panelView = Player.UIRig.popUpMenu.preferencesPanelView;
+                optionsPanel = panelView.pages[panelView.defaultPage];
+                _optionsGrid = optionsPanel.transform.Find("grid_Options");
             }
 
             public static void AddComponents()
             {
-                PagePrefab.GetComponent<UIPage>();
-                CategoryPrefab.GetComponent<UICategoryField>();
-                FunctionPrefab.GetComponent<UIFunctionField>();
-                ValuePrefab.GetComponent<UIValueField>();
+                pagePrefab.GetComponent<UIPage>();
+                categoryPrefab.GetComponent<UICategoryField>();
+                functionPrefab.GetComponent<UIFunctionField>();
+                valuePrefab.GetComponent<UIValueField>();
             }
 
             static void ModifyBaseUI()
             {
                 Action optionButtonAction = () =>
                 {
-                    PanelView.PAGESELECT(9);
+                    panelView.PAGESELECT(9);
                     MenuManager.SelectCategory(MenuManager.RootCategory);
                 };
 
@@ -180,12 +178,12 @@ namespace BoneLib.BoneMenu
 
                 for(int i = 0; i <= 8; i++)
                 {
-                    refArray[i] = PanelView.pages[i];
+                    refArray[i] = panelView.pages[i];
                 }
 
                 refArray[9] = UIManager.Instance.MainPage.gameObject;
 
-                PanelView.pages = refArray;
+                panelView.pages = refArray;
             }
 
             static GameObject SetupElement(GameObject objectToCreate, Transform parent, bool startActive)

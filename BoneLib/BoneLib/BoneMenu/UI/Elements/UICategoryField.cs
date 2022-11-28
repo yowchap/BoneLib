@@ -28,7 +28,7 @@ namespace BoneLib.BoneMenu.UI
         {
             Action action = () =>
             {
-                var category = (MenuCategory)_element;
+                var category = (MenuCategory)element;
                 MenuManager.SelectCategory(category);
             };
 

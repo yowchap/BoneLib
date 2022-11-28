@@ -43,14 +43,14 @@ namespace BoneLib.BoneMenu.UI
 
             SetupPools();
 
-            MainPage = PagePool.Spawn(DataManager.UI.PanelView.transform, false).GetComponent<UIPage>();
+            MainPage = PagePool.Spawn(DataManager.UI.panelView.transform, false).GetComponent<UIPage>();
             DataManager.UI.Init();
         }
 
         private void Update()
         {
-            MainPage.transform.position = DataManager.UI.PanelView.transform.position;
-            MainPage.transform.rotation = DataManager.UI.PanelView.transform.rotation;
+            MainPage.transform.position = DataManager.UI.panelView.transform.position;
+            MainPage.transform.rotation = DataManager.UI.panelView.transform.rotation;
         }
 
         private void OnEnable()
@@ -122,13 +122,13 @@ namespace BoneLib.BoneMenu.UI
             SubPanelPool.SetCount(6);
             EmptyPool.SetCount(6);
 
-            PagePool.SetPrefab(DataManager.UI.PagePrefab);
-            CategoryPool.SetPrefab(DataManager.UI.CategoryPrefab);
-            FunctionPool.SetPrefab(DataManager.UI.FunctionPrefab);
-            ValuePool.SetPrefab(DataManager.UI.ValuePrefab);
-            TogglePool.SetPrefab(DataManager.UI.TogglePrefab);
-            SubPanelPool.SetPrefab(DataManager.UI.SubPanelPrefab);
-            EmptyPool.SetPrefab(DataManager.UI.EmptyPrefab);
+            PagePool.SetPrefab(DataManager.UI.pagePrefab);
+            CategoryPool.SetPrefab(DataManager.UI.categoryPrefab);
+            FunctionPool.SetPrefab(DataManager.UI.functionPrefab);
+            ValuePool.SetPrefab(DataManager.UI.valuePrefab);
+            TogglePool.SetPrefab(DataManager.UI.togglePrefab);
+            SubPanelPool.SetPrefab(DataManager.UI.subPanelPrefab);
+            EmptyPool.SetPrefab(DataManager.UI.emptyPrefab);
 
             PagePool.Populate(PagePool.Count);
             CategoryPool.Populate(CategoryPool.Count);

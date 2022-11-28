@@ -14,26 +14,26 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIElement(IntPtr ptr) : base(ptr) { }
 
-        public virtual ElementType Type { get => ElementType.Default; }
+        public virtual ElementType Type => ElementType.Default;
 
-        public TextMeshPro NameText { get => GetTextMesh("Name"); }
-        public TextMeshPro ValueText { get => GetTextMesh("Value"); }
+        public TextMeshPro NameText => GetTextMesh("Name");
+        public TextMeshPro ValueText => GetTextMesh("Value");
 
-        protected MenuElement _element;
+        protected MenuElement element;
 
         public void AssignElement(MenuElement element)
         {
-            _element = element;
+            this.element = element;
 
             if (NameText != null)
             {
-                NameText.text = _element.Name;
-                NameText.color = _element.Color;
+                NameText.text = this.element.Name;
+                NameText.color = this.element.Color;
             }
 
             if (ValueText != null)
             {
-                ValueText.text = _element.DisplayValue;
+                ValueText.text = this.element.DisplayValue;
             }
         }
 

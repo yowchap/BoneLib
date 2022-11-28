@@ -113,12 +113,7 @@ namespace BoneLib.BoneMenu.UI
 
         private UIPoolee GetInactive()
         {
-            foreach(var inactiveObject in _inactive)
-            {
-                return inactiveObject;
-            }
-
-            return null;
+            return _inactive.FirstOrDefault();
         }
     }
 }

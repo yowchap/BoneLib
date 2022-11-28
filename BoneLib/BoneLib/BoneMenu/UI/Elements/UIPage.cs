@@ -53,7 +53,7 @@ namespace BoneLib.BoneMenu.UI
         {
             Action returnAction = () =>
             {
-                var category = (MenuCategory)_element;
+                var category = (MenuCategory)element;
 
                 if (category.Parent != null)
                 {
@@ -65,7 +65,7 @@ namespace BoneLib.BoneMenu.UI
                     {
                         // return to base game options menu
                         gameObject.SetActive(false);
-                        DataManager.UI.PanelView.PAGESELECT(0);
+                        DataManager.UI.panelView.PAGESELECT(0);
                     }
                     else
                     {
@@ -128,7 +128,7 @@ namespace BoneLib.BoneMenu.UI
             var uiElement = elementTypes[element.Type].Spawn(ElementGrid.transform, true).GetComponent<UIElement>();
             uiElement.AssignElement(element);
 
-            Elements?.Add(uiElement);
+            Elements.Add(uiElement);
         }
     }
 }

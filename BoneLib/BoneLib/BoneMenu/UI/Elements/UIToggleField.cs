@@ -29,8 +29,8 @@ namespace BoneLib.BoneMenu.UI
         {
             Action action = () =>
             {
-                _element?.OnSelectElement();
-                SetText(_element.Name, _element.DisplayValue);
+                element?.OnSelectElement();
+                SetText(element.Name, element.DisplayValue);
             };
 
             if(toggleButton != null)

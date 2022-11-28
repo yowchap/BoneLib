@@ -61,7 +61,7 @@ namespace BoneLib.BoneMenu.UI
                 return;
             }
 
-            var subPanel = (SubPanelElement)_element;
+            var subPanel = (SubPanelElement)element;
 
             if (subPanel == null)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace BoneLib.BoneMenu
 {
     public static class MenuManager
     {
-        public static List<MenuCategory> Categories { get => _categories; }
+        public static IReadOnlyList<MenuCategory> Categories { get => _categories.AsReadOnly(); }
         public static MenuCategory RootCategory { get => _rootCategory; }
         public static MenuCategory ActiveCategory { get => _activeCategory; }
 
@@ -28,7 +29,7 @@ namespace BoneLib.BoneMenu
         public static MenuCategory CreateCategory(string name, Color color)
         {
             MenuCategory category = RootCategory.CreateCategory(name, color);
-            _categories?.Add(category);
+            _categories.Add(category);
             SafeActions.InvokeActionSafe(OnCategoryCreated, category);
             return category;
         }
@@ -42,7 +43,7 @@ namespace BoneLib.BoneMenu
         public static MenuCategory CreateCategory(string name, string hexColor)
         {
             MenuCategory category = RootCategory.CreateCategory(name, hexColor);
-            _categories?.Add(category);
+            _categories.Add(category);
             SafeActions.InvokeActionSafe(OnCategoryCreated, category);
             return category;
         }
@@ -77,15 +78,7 @@ namespace BoneLib.BoneMenu
 
         public static MenuCategory GetCategory(string name)
         {
-            foreach (var category in Categories)
-            {
-                if (category.Name == name)
-                {
-                    return category;
-                }
-            }
-
-            return null;
+            return _categories.Find((match) => match.Name == name);
         }
     }
 }

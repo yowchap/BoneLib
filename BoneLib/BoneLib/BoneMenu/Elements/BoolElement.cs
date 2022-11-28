@@ -16,7 +16,7 @@ namespace BoneLib.BoneMenu.Elements
         public override ElementType Type => ElementType.Toggle;
         public override string DisplayValue => _value ? "Enabled" : "Disabled";
 
-        public bool Value { get => _value; }
+        public bool Value => _value;
 
         public override void OnSelectElement()
         {

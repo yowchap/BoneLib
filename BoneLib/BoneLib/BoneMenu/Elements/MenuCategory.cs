@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 namespace BoneLib.BoneMenu.Elements
@@ -49,13 +48,11 @@ namespace BoneLib.BoneMenu.Elements
         /// </summary>
         /// <param name="name">The name of the category.</param>
         /// <param name="hexColor">The color in hexadecimal.
-        /// <code>"Example: #00CA11 for green."</code>
-        /// </param>
+        /// <code>"Example: "#00CA11" for green."</code></param>
         /// <returns>A new category with a hex color.</returns>
         public MenuCategory CreateCategory(string name, string hexColor)
         {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            ColorUtility.DoTryParseHtmlColor(hexColor, out Color32 color);
             return CreateCategory(name, color);
         }
 
@@ -82,8 +79,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A new sub-panel in your page.</returns>
         public SubPanelElement CreateSubPanel(string name, string hexColor)
         {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            ColorUtility.DoTryParseHtmlColor(hexColor, out Color32 color);
             return CreateSubPanel(name, color);
         }
 
@@ -93,8 +89,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <param name="name">The name of the element.</param>
         /// <param name="color">The name color of the element.</param>
         /// <param name="action">The action that will be executed when pressed.
-        /// <code>Example: () => ExampleMethod()</code>
-        /// </param>
+        /// <code>Example: () => ExampleMethod()</code></param>
         /// <returns>A function element.</returns>
         public FunctionElement CreateFunctionElement(string name, Color color, Action action)
         {
@@ -111,8 +106,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <param name="color">The name color of the element.</param>
         /// <param name="action">The action that will be executed when pressed.
         /// <param name="confirmText">The text that will be displayed before you confirm.</param>
-        /// <code>Example: () => ExampleMethod()</code>
-        /// </param>
+        /// <code>Example: () => ExampleMethod()</code></param>
         /// <returns>A function element with a confirm option.</returns>
         public FunctionElement CreateFunctionElement(string name, Color color, Action action, string confirmText = "")
         {
@@ -127,14 +121,13 @@ namespace BoneLib.BoneMenu.Elements
         /// </summary>
         /// <param name="name">The name of the element.</param>
         /// <param name="hexColor">The name hex color of the element.
-        /// <code>"Example: #00CA11 for green."</code> </param>
+        /// <code>"Example: "#00CA11" for green."</code> </param>
         /// <param name="action">The action that will be executed when pressed.
         /// <code>Example: () => ExampleMethod()</code> </param>
         /// <returns>A function element with a hex color.</returns>
         public FunctionElement CreateFunctionElement(string name, string hexColor, Action action)
         {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            ColorUtility.DoTryParseHtmlColor(hexColor, out Color32 color);
             return CreateFunctionElement(name, color, action);
         }
 
@@ -159,14 +152,13 @@ namespace BoneLib.BoneMenu.Elements
         /// Creates a bool element that enables or disables a boolean.
         /// </summary>
         /// <param name="name">The name of the element.</param>
-        /// <param name="hexColor">The name hex color of the element. <code>"Example: #00CA11 for green."</code> </param>
+        /// <param name="hexColor">The name hex color of the element. <code>"Example: "#00CA11" for green."</code> </param>
         /// <param name="value">The starting boolean value. <code>Example: (bool) => ExampleMethod(bool);</code> </param>
         /// <param name="action">The method to execute with a boolean parameter. <code>Example: (bool) => ExampleMethod(bool);</code></param>
         /// <returns>A bool element with a hex color.</returns>
         public BoolElement CreateBoolElement(string name, string hexColor, bool value, Action<bool> action = null)
         {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            ColorUtility.DoTryParseHtmlColor(hexColor, out Color32 color);
             return CreateBoolElement(name, color, value, action);
         }
 
@@ -193,7 +185,7 @@ namespace BoneLib.BoneMenu.Elements
         /// Creates an int element that can be incremented up or down, with a range.
         /// </summary>
         /// <param name="name">The name of the element.</param>
-        /// <param name="hexColor">The hex color of the element. <code>"Example: #00CA11 for green."</code></param>
+        /// <param name="hexColor">The hex color of the element. <code>"Example: "#00CA11" for green."</code></param>
         /// <param name="startValue">The starting value.</param>
         /// <param name="increment">The value that will be increased/decreased to the starting value.</param>
         /// <param name="minValue"></param>
@@ -202,8 +194,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>An integer element with a hex color.</returns>
         public IntElement CreateIntElement(string name, string hexColor, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
         {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            ColorUtility.DoTryParseHtmlColor(hexColor, out Color32 color);
             return CreateIntElement(name, color, startValue, increment, minValue, maxValue, action);
         }
 
@@ -228,13 +219,12 @@ namespace BoneLib.BoneMenu.Elements
         /// </summary>
         /// <typeparam name="T">Enum type.</typeparam>
         /// <param name="name">The name of the element.</param>
-        /// <param name="hexColor">The hex color of the element. <code>"Example: #00CA11 for green."</code></param>
+        /// <param name="hexColor">The hex color of the element. <code>"Example: "#00CA11" for green."</code></param>
         /// <param name="action">The method that executes with an enum parameter. <code>Example: (enum) => ExampleMethod(enum);</code></param>
         /// <returns>An enum element with a hex name color.</returns>
         public EnumElement<T> CreateEnumElement<T>(string name, string hexColor, Action<T> action = null) where T : Enum
         {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            ColorUtility.DoTryParseHtmlColor(hexColor, out Color32 color);
             return CreateEnumElement<T>(name, color, action);
         }
 
@@ -261,7 +251,7 @@ namespace BoneLib.BoneMenu.Elements
         /// Creates an float element that can be incremented up or down, with a range.
         /// </summary>
         /// <param name="name">The name of the element.</param>
-        /// <param name="hexColor">The hex color of the element. <code>"Example: #00CA11 for green."</code></param>
+        /// <param name="hexColor">The hex color of the element. <code>"Example: "#00CA11" for green."</code></param>
         /// <param name="startValue">The starting value.</param>
         /// <param name="increment">The value that will be increased/decreased to the starting value.</param>
         /// <param name="minValue"></param>
@@ -270,8 +260,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A float element with a hex color.</returns>
         public FloatElement CreateFloatElement(string name, string hexColor, float startValue, float increment, float minValue, float maxValue, Action<float> action = null)
         {
-            Color32 color;
-            ColorUtility.DoTryParseHtmlColor(hexColor, out color);
+            ColorUtility.DoTryParseHtmlColor(hexColor, out Color32 color);
             return CreateFloatElement(name, color, startValue, increment, minValue, maxValue, action);
         }
 

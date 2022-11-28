@@ -1,13 +1,10 @@
 ﻿using SLZ.AI;
 using SLZ.Combat;
 using SLZ.Props.Weapons;
-
 using SLZ.Marrow.Pool;
 using SLZ.Marrow.Warehouse;
-
-using System.Collections.Generic;
-
-using UnityEngine;
+using System;
+using System.Linq;
 
 namespace BoneLib
 {
@@ -35,10 +32,14 @@ namespace BoneLib
             }
         }
 
-        public static T GetRandom<T>(this List<T> list) where T : class
+        public static void InvokeActionSafe(this Action action) => SafeActions.InvokeActionSafe(action);
+        public static void InvokeActionSafe<T>(this Action<T> action, T param) => SafeActions.InvokeActionSafe(action, param);
+        public static void InvokeActionSafe<T1, T2>(this Action<T1, T2> action, T1 param1, T2 param2) => SafeActions.InvokeActionSafe(action, param1, param2);
+
+        public static T GetRandom<T>(this System.Collections.Generic.List<T> list)
         {
             int random = UnityEngine.Random.Range(0, list.Count);
-            return list[random];
+            return list.ElementAt<T>(random);
         }
     }
 }

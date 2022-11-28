@@ -31,14 +31,14 @@ namespace BoneLib.BoneMenu.UI
         {
             Action onLeftPressed = () =>
             {
-                _element?.OnSelectLeft();
-                SetText(_element.Name, _element.DisplayValue);
+                element?.OnSelectLeft();
+                SetText(element.Name, element.DisplayValue);
             };
 
             Action onRightPressed = () =>
             {
-                _element?.OnSelectRight();
-                SetText(_element.Name, _element.DisplayValue);
+                element?.OnSelectRight();
+                SetText(element.Name, element.DisplayValue);
             };
 
             if (leftButton != null)

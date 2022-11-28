@@ -14,7 +14,7 @@ namespace BoneLib
         {
             get
             {
-                if(_rigManager == null)
+                if(_rigManager is null || _rigManager.WasCollected)
                 {
                     _rigManager = GameObject.FindObjectOfType<RigManager>();
                 }
@@ -23,16 +23,16 @@ namespace BoneLib
             }
         }
 
-        public static PhysicsRig physicsRig { get => rigManager?.physicsRig; }
-        public static ControllerRig controllerRig { get => rigManager?.ControllerRig; }
-        public static UIRig uiRig { get => rigManager?.uiRig; }
+        public static PhysicsRig physicsRig => rigManager.physicsRig;
+        public static ControllerRig controllerRig => rigManager.ControllerRig;
+        public static UIRig uiRig => rigManager.uiRig;
 
-        public static Hand leftHand { get => physicsRig?.leftHand; }
-        public static Hand rightHand { get => physicsRig?.rightHand; }
+        public static Hand leftHand => physicsRig.leftHand;
+        public static Hand rightHand => physicsRig.rightHand;
         public static bool handsExist => leftHand != null && rightHand != null;
 
-        public static BaseController leftController { get => controllerRig?.leftController; }
-        public static BaseController rightController { get => controllerRig?.rightController; }
+        public static BaseController leftController => controllerRig.leftController;
+        public static BaseController rightController => controllerRig.rightController;
         public static bool controllersExist => leftController != null && rightController != null;
 
         private static RigManager _rigManager;
