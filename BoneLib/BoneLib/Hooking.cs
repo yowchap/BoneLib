@@ -138,10 +138,8 @@ namespace BoneLib
 
             OnSceneMarrowLoaded();
 
-            if (Player.rigManager != null)
-            {
+            if (Player.FindObjectReferences(__instance))
                 SafeActions.InvokeActionSafe(OnPlayerReferencesFound);
-            }
         }
 
         private static void OnSceneMarrowInitialized(LevelCrateReference level, LevelCrateReference loadLevel)
