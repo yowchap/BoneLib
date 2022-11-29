@@ -6,6 +6,7 @@ using UnityEngine;
 
 using BoneLib.BoneMenu;
 using BoneLib.BoneMenu.Elements;
+using SLZ.Bonelab;
 
 namespace BoneLib
 {

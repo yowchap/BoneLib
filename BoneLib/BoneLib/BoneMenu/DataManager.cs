@@ -34,7 +34,7 @@ namespace BoneLib.BoneMenu
                 }
             }
 
-            public static readonly AssetBundle bundle;
+            public static AssetBundle bundle => _bundle;
             public static IReadOnlyList<GameObject> BundleObjects { get => _bundleObjects.AsReadOnly(); }
 
             private static AssetBundle _bundle;
