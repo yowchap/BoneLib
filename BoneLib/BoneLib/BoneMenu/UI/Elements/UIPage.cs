@@ -15,6 +15,7 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIPage(IntPtr ptr) : base(ptr) { }
 
+        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
         public List<UIElement> Elements { get; private set; } = new List<UIElement>();
         public Transform ElementGrid { get; private set; }
 

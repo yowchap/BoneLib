@@ -21,6 +21,7 @@ namespace BoneLib.BoneMenu.UI
 
         protected MenuElement element;
 
+        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
         public void AssignElement(MenuElement element)
         {
             this.element = element;
