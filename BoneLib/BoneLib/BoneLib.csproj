@@ -168,7 +168,6 @@
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Hooking.cs" />
     <Compile Include="Main.cs" />
-    <Compile Include="MarrowSceneInfo.cs" />
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
     <Compile Include="MonoBehaviours\PopupBox.cs" />
