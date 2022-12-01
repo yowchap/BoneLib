@@ -11,11 +11,11 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "Gnonme"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "1.4.0"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "1.5.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
-    public class Main : MelonMod
+    internal class Main : MelonMod
     {
         public override void OnInitializeMelon()
         {
@@ -25,8 +25,7 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
-            Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
-            Hooking.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
+            Hooking.OnLevelInitialized += OnLevelInitialized;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -35,14 +34,19 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
-        private void OnPlayerReferencesFound()
+        // @Note(Parzival): Dynamic MelonLoader Callback. Do not call!
+        private void BONELAB_OnLoadingScreen()
         {
-            PopupBoxManager.CreateBaseAd();
+            Hooking.OnBONELABLevelLoading();
         }
 
-        private void OnMarrowSceneLoaded(MarrowSceneInfo info)
+        private void OnLevelInitialized(LevelInfo info)
         {
-            if(info.LevelTitle == "00 - Main Menu" || info.LevelTitle == "15 - Void G114")
+            ModConsole.Msg($"OnLevelInitialized: {info.title} | {info.barcode}", loggingMode: LoggingMode.DEBUG);
+
+            PopupBoxManager.CreateBaseAd();
+
+            if(info.title == "00 - Main Menu" || info.title == "15 - Void G114")
             {
                 SkipIntro();
             }

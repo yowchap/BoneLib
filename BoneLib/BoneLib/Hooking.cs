@@ -27,11 +27,23 @@ namespace BoneLib
         // Marrow
         public static event Action OnMarrowGameStarted;
 
-        public static event Action<MarrowSceneInfo> OnMarrowSceneInitialized;
-        public static event Action<MarrowSceneInfo> OnMarrowSceneLoaded;
-        public static event Action<MarrowSceneInfo, MarrowSceneInfo> OnMarrowSceneUnloaded;
+        /// <summary>
+        /// Called at the start of a loading screen.
+        /// </summary>
+        public static event Action<LevelInfo> OnLevelLoading;
+        /// <summary>
+        /// Called when the current Level is fully initialized.
+        /// </summary>
+        public static event Action<LevelInfo> OnLevelInitialized;
+        /// <summary>
+        /// Called when the current Level unloads.
+        /// </summary>
+        public static event Action OnLevelUnloaded;
 
         // Player
+        // @Todo(Parzival): currently they're equivalent, but I'd like to fix the early
+        // initialization bug which would make this event unique again.
+        [Obsolete("Use " + nameof(OnLevelInitialized) + " instead")] 
         public static event Action OnPlayerReferencesFound;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
@@ -58,18 +70,12 @@ namespace BoneLib
         public static event Action<BehaviourBaseNav> OnNPCKillStart;
         public static event Action<BehaviourBaseNav> OnNPCKillEnd;
 
-
-        internal static MarrowSceneInfo lastScene;
-        internal static MarrowSceneInfo currentScene;
-        internal static MarrowSceneInfo nextScene;
-
+        private static bool currentLevelUnloaded = true;
 
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
         internal static void InitHooks()
         {
             MarrowGame.RegisterOnReadyAction(new Action(() => SafeActions.InvokeActionSafe(OnMarrowGameStarted)));
-
-            CreateHook(typeof(SceneStreamer).GetMethod("Load", new Type[] { typeof(LevelCrateReference), typeof(LevelCrateReference) }), typeof(Hooking).GetMethod(nameof(OnSceneMarrowInitialized), AccessTools.all));
 
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
@@ -136,44 +142,32 @@ namespace BoneLib
             if (Player.handsExist)
                 return;
 
-            OnSceneMarrowLoaded();
-
             if (Player.FindObjectReferences(__instance))
+            {
+                // @Todo(Parzival): Some levels aren't done loading when RigManager.Awake is called!
+                // Ideally this should be invoked right before the loading screen dissapears, but this is
+                // the closest I can get it for now.
+                SafeActions.InvokeActionSafe(OnLevelInitialized, new LevelInfo(SceneStreamer.Session.Level));
+
                 SafeActions.InvokeActionSafe(OnPlayerReferencesFound);
+            }
         }
 
-        private static void OnSceneMarrowInitialized(LevelCrateReference level, LevelCrateReference loadLevel)
+        private static void OnRigManagerDestroyed()
         {
-            MarrowSceneInfo info = new MarrowSceneInfo()
-            {
-                LevelTitle = level.Crate.Title,
-                Barcode = level.Barcode.ID,
-                MarrowScene = level.Crate.MainAsset.Cast<MarrowScene>()
-            };
-
-            nextScene = info;
-            SafeActions.InvokeActionSafe(OnMarrowSceneInitialized, info);
+            currentLevelUnloaded = true;
+            SafeActions.InvokeActionSafe(OnLevelUnloaded);
         }
 
-        private static void OnSceneMarrowLoaded()
+        internal static void OnBONELABLevelLoading()
         {
-            LevelCrate level = SceneStreamer.Session.Level;
-
-            MarrowSceneInfo info = new MarrowSceneInfo()
+            if (currentLevelUnloaded)
             {
-                LevelTitle = level.Title,
-                MarrowScene = level.MainScene,
-                Barcode = level.Barcode.ID
-            };
-
-            currentScene = info;
-            lastScene = currentScene;
-
-            SafeActions.InvokeActionSafe(OnMarrowSceneLoaded, currentScene);
+                SafeActions.InvokeActionSafe(OnLevelLoading, new LevelInfo(SceneStreamer.Session.Level));
+                currentLevelUnloaded = false;
+            }
         }
-
-        private static void OnRigManagerDestroyed(RigManager __instance) => SafeActions.InvokeActionSafe(OnMarrowSceneUnloaded, lastScene, nextScene);
-
+        
         private static void OnAvatarSwitchPrefix(Avatar newAvatar) => SafeActions.InvokeActionSafe(OnSwitchAvatarPrefix, newAvatar);
         private static void OnAvatarSwitchPostfix(Avatar newAvatar) => SafeActions.InvokeActionSafe(OnSwitchAvatarPostfix, newAvatar);
 
@@ -193,7 +187,7 @@ namespace BoneLib
         private static void OnKillNPCEnd(BehaviourBaseNav __instance) => SafeActions.InvokeActionSafe(OnNPCKillEnd, __instance);
 
 
-        struct DelayedHookData
+        private struct DelayedHookData
         {
             public MethodInfo original;
             public MethodInfo hook;
