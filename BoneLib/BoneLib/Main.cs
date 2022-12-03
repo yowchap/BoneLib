@@ -37,6 +37,7 @@ namespace BoneLib
             DataManager.UI.AddComponents();
 
             Hooking.OnLevelInitialized += OnPlayerReferencesFound;
+            Hooking.OnLevelInitialized += OnLevelInitialized;
             Hooking.OnLevelLoading += OnMarrowSceneLoaded;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
@@ -46,8 +47,10 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
-        private void OnMarrowSceneLoaded(LevelInfo info)
+        private void OnLevelInitialized(LevelInfo info)
         {
+            ModConsole.Msg("initialized");
+
             if (info.title == "00 - Main Menu" || info.title == "15 - Void G114")
             {
                 SkipIntro();
