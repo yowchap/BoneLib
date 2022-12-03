@@ -36,8 +36,8 @@ namespace BoneLib
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
 
-            Hooking.OnPlayerReferencesFound += OnPlayerReferencesFound;
-            Hooking.OnMarrowSceneLoaded += OnMarrowSceneLoaded;
+            Hooking.OnLevelInitialized += OnPlayerReferencesFound;
+            Hooking.OnLevelLoading += OnMarrowSceneLoaded;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -46,9 +46,9 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
-        private void OnMarrowSceneLoaded(MarrowSceneInfo info)
+        private void OnMarrowSceneLoaded(LevelInfo info)
         {
-            if (info.LevelTitle == "00 - Main Menu" || info.LevelTitle == "15 - Void G114")
+            if (info.title == "00 - Main Menu" || info.title == "15 - Void G114")
             {
                 SkipIntro();
             }
@@ -63,8 +63,6 @@ namespace BoneLib
             {
                 return;
             }
-
-            
 
             GameObject uiRoot = GameObject.Find("CANVAS_UX");
 
@@ -104,7 +102,7 @@ namespace BoneLib
             }
         }
 
-        private void OnPlayerReferencesFound()
+        private void OnPlayerReferencesFound(LevelInfo info)
         {
             DataManager.Player.FindReferences();
             PopupBoxManager.CreateBaseAd();
