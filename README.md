@@ -51,7 +51,10 @@ OfflineMode = true
 
 ## Changelogs (BoneLib)
 
-#### v2.0.0
+#### v2.0.1:
+- Fixed startup crash
+
+#### v2.0.0:
 - Added BoneMenu
 - Added extension methods for safe action invoking
 - Changed level loading events in Hooking
