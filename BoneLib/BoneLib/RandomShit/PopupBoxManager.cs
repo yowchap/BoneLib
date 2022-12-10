@@ -197,7 +197,6 @@ namespace BoneLib.RandomShit
 
             string jsonUrls = urlReq.downloadHandler.text; // return value is something like ["https://cdn.shibe.online/shibes/8f0792fcac8df87a5d2953031a837a2939fda430.jpg"]
             string imageUrl = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(jsonUrls)[0];
-            ModConsole.Msg($"Image url={imageUrl}");
 
             UnityWebRequest imageReq = UnityWebRequest.Get(imageUrl);
             imageReq.BeginWebRequest();

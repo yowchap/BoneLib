@@ -45,8 +45,6 @@ namespace BoneLib
 
         private void OnLevelInitialized(LevelInfo info)
         {
-            ModConsole.Msg("initialized");
-
             DataManager.Player.FindReferences();
             PopupBoxManager.CreateBaseAd();
 
