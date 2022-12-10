@@ -1,4 +1,5 @@
 ﻿using BoneLib.BoneMenu.Elements;
+using SLZ.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -119,7 +120,7 @@ namespace BoneLib.BoneMenu.UI
 
             Elements.Clear();
         }
-
+        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
         private void AssignUIElement(MenuElement element)
         {
             UIElement uiElement = elementTypes[element.Type].Spawn(ElementGrid.transform, true).GetComponent<UIElement>();

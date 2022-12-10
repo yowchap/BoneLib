@@ -93,7 +93,7 @@ namespace BoneLib.BoneMenu.UI
             Elements.Clear();
             emptyObjects.Clear();
         }
-
+        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
         private void AssignUIElement(MenuElement element)
         {
             UIElement uiElement = null;

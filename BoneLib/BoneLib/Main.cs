@@ -3,6 +3,7 @@ using BoneLib.BoneMenu.Elements;
 using BoneLib.MonoBehaviours;
 using BoneLib.RandomShit;
 using MelonLoader;
+using SLZ.Bonelab;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
