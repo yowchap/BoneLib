@@ -1,6 +1,6 @@
 ﻿using BoneLib.BoneMenu.UI;
 using SLZ.Rig;
-using SLZ.UI.Radial;
+using SLZ.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
