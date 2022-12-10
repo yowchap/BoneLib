@@ -4,6 +4,10 @@ using MelonLoader;
 using UnhollowerRuntimeLib;
 using UnityEngine;
 
+using BoneLib.BoneMenu;
+using BoneLib.BoneMenu.Elements;
+using SLZ.Bonelab;
+
 namespace BoneLib
 {
     public static class BuildInfo
@@ -11,11 +15,11 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "Gnonme"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "1.5.0"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "1.4.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
-    internal class Main : MelonMod
+    public class Main : MelonMod
     {
         public override void OnInitializeMelon()
         {
@@ -25,7 +29,16 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
+            MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
+
+            DefaultMenu.CreateDefaultElements();
+
+            DataManager.Bundles.Init();
+            DataManager.UI.AddComponents();
+
+            Hooking.OnLevelInitialized += OnPlayerReferencesFound;
             Hooking.OnLevelInitialized += OnLevelInitialized;
+            Hooking.OnLevelLoading += OnMarrowSceneLoaded;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -34,22 +47,17 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
-        // @Note(Parzival): Dynamic MelonLoader Callback. Do not call!
-        private void BONELAB_OnLoadingScreen()
-        {
-            Hooking.OnBONELABLevelLoading();
-        }
-
         private void OnLevelInitialized(LevelInfo info)
         {
-            ModConsole.Msg($"OnLevelInitialized: {info.title} | {info.barcode}", loggingMode: LoggingMode.DEBUG);
+            ModConsole.Msg("initialized");
 
-            PopupBoxManager.CreateBaseAd();
-
-            if(info.title == "00 - Main Menu" || info.title == "15 - Void G114")
+            if (info.title == "00 - Main Menu" || info.title == "15 - Void G114")
             {
                 SkipIntro();
             }
+
+            DataManager.UI.InitializeReferences();
+            new GameObject("[BoneMenu] - UI Manager").AddComponent<BoneMenu.UI.UIManager>();
         }
 
         private void SkipIntro()
@@ -82,6 +90,25 @@ namespace BoneLib
             menuUI.transform.Find("group_Mods").gameObject.SetActive(false);
             menuUI.transform.Find("group_Info").gameObject.SetActive(false);
             menuUI.transform.Find("group_BETA").gameObject.SetActive(false);
+
+            GameControl_MenuVoidG114 controller = GameObject.FindObjectOfType<GameControl_MenuVoidG114>();
+
+            if (controller != null)
+            {
+                controller.holdTime = 0;
+                controller.holdTime_SLZ = 0;
+                controller.holdTime_Credits = 0;
+                controller.holdTime_GameTitle = 0;
+                controller.timerHold = 0;
+                controller.holdTime_Rest = 0;
+                controller.canClick = true;
+            }
+        }
+
+        private void OnPlayerReferencesFound(LevelInfo info)
+        {
+            DataManager.Player.FindReferences();
+            PopupBoxManager.CreateBaseAd();
         }
     }
 }
