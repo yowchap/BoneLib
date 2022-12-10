@@ -11,17 +11,17 @@ namespace BoneLib.BoneMenu
 {
     internal static class DefaultMenu
     {
-        static AmmoInventory AmmoInventory => AmmoInventory.Instance;
+        private static AmmoInventory AmmoInventory => AmmoInventory.Instance;
 
-        static AmmoGroup LightAmmo => AmmoInventory.lightAmmoGroup;
+        private static AmmoGroup LightAmmo => AmmoInventory.lightAmmoGroup;
 
-        static AmmoGroup MediumAmmo => AmmoInventory.mediumAmmoGroup;
+        private static AmmoGroup MediumAmmo => AmmoInventory.mediumAmmoGroup;
 
-        static AmmoGroup HeavyAmmo => AmmoInventory.heavyAmmoGroup;
+        private static AmmoGroup HeavyAmmo => AmmoInventory.heavyAmmoGroup;
 
-        static int lightAmmoValue = 100;
-        static int mediumAmmoValue = 100;
-        static int heavyAmmoValue = 100;
+        private static int lightAmmoValue = 100;
+        private static int mediumAmmoValue = 100;
+        private static int heavyAmmoValue = 100;
 
         public static void CreateDefaultElements()
         {

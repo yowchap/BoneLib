@@ -44,7 +44,7 @@ namespace BoneLib.BoneMenu
                 return _bundleObjects.Find(x => x.name == name);
             }
 
-            static AssetBundle GetEmbeddedBundle()
+            private static AssetBundle GetEmbeddedBundle()
             {
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
@@ -123,12 +123,9 @@ namespace BoneLib.BoneMenu
             public static GameObject emptyPrefab = Bundles.FindBundleObject("Element_Empty");
 
             public static GameObject bmButtonObject = Bundles.FindBundleObject("BoneMenuButton");
-
-            static GameObject _optionButton;
-
-            static Transform _optionsGrid;
-
-            static Button _optionButtonComponent;
+            private static GameObject _optionButton;
+            private static Transform _optionsGrid;
+            private static Button _optionButtonComponent;
 
             public static void Init()
             {
@@ -154,7 +151,7 @@ namespace BoneLib.BoneMenu
                 valuePrefab.GetComponent<UIValueField>();
             }
 
-            static void ModifyBaseUI()
+            private static void ModifyBaseUI()
             {
                 Action optionButtonAction = () =>
                 {
@@ -168,7 +165,7 @@ namespace BoneLib.BoneMenu
                 InjectPage();
             }
 
-            static void InjectPage()
+            private static void InjectPage()
             {
                 var refArray = new UnhollowerBaseLib.Il2CppReferenceArray<GameObject>(10);
 
@@ -182,7 +179,7 @@ namespace BoneLib.BoneMenu
                 panelView.pages = refArray;
             }
 
-            static GameObject SetupElement(GameObject objectToCreate, Transform parent, bool startActive)
+            private static GameObject SetupElement(GameObject objectToCreate, Transform parent, bool startActive)
             {
                 GameObject newInstance = GameObject.Instantiate(objectToCreate, parent);
                 newInstance.SetActive(startActive);
