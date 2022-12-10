@@ -17,7 +17,7 @@ namespace BoneLib
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
-    public class Main : MelonMod
+    internal class Main : MelonMod
     {
         public override void OnInitializeMelon()
         {
@@ -60,9 +60,7 @@ namespace BoneLib
         private void SkipIntro()
         {
             if (!Preferences.skipIntro)
-            {
                 return;
-            }
 
             GameObject uiRoot = GameObject.Find("CANVAS_UX");
 

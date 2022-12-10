@@ -11,7 +11,7 @@ namespace BoneLib
 
         public static void Setup()
         {
-            skipIntro = new ModPref<bool>(category, "Skip Intro", true);
+            skipIntro = new ModPref<bool>(category, "Skip Intro", false);
             loggingMode = new ModPref<LoggingMode>(category, "LoggingMode", LoggingMode.NORMAL);
 
             category.SaveToFile(false);

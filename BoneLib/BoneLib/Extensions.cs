@@ -4,6 +4,8 @@ using SLZ.Combat;
 using SLZ.Props.Weapons;
 using System;
 using System.Linq;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace BoneLib
 {
@@ -37,7 +39,7 @@ namespace BoneLib
 
         public static T GetRandom<T>(this System.Collections.Generic.List<T> list)
         {
-            int random = UnityEngine.Random.Range(0, list.Count);
+            int random = Random.Range(0, list.Count);
             return list.ElementAt<T>(random);
         }
     }
