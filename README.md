@@ -4,6 +4,7 @@ A BONELAB mod for making life easier for other mod creators.
 BoneLib is fully open source so feel free to make a PR for new features and bug fixes. Just make sure the code is commented/easily understandable, and doesn't noticeably affect performance.
 
 ## Features
+- A menu system for other mods to use
 - Easy access to data related to the player (held items, position, controllers, current avatar, etc)
 - Events for common actions, such as guns firing, grabbing items, changing avatars, NPCs dying, etc
 - Helper and extension methods for changing the RPM of guns, damaging enemies, getting clean object names
@@ -21,7 +22,9 @@ You will have to run the game once with the mod installed before the preferences
 
 Preferences are stored in `UserData\MelonPreferences.cfg`.
 
-- LoggingMode: "NORMAL" or "DEBUG". For most people normal is fine, debug will just show more info to help with development.
+- LoggingMode: `NORMAL` or `DEBUG`. For most people normal is fine, debug will just show more info to help with development.
+
+- SkipIntro: `true` to not play the intro at the start of the game and go straight to the menu.
 
 <br>
 
@@ -42,11 +45,17 @@ OfflineMode = true
 
 **Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing, added InvokeActionSafe methods, added animal image popup methods
 
-**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added skip intro pref
+**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added skip intro pref, added BoneMenu
 
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v2.0.0
+- Added BoneMenu
+- Added extension methods for safe action invoking
+- Changed level loading events in Hooking
+- Note: this update is not guaranteed to be compatible with mods made for BoneLib v1.x.x
 
 #### v1.4.0:
 - Added a preference to skip the intro
