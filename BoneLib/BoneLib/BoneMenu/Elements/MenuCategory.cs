@@ -74,7 +74,7 @@ namespace BoneLib.BoneMenu.Elements
         /// Creates a sub-panel with a name and a hex color input.
         /// </summary>
         /// <param name="name">The name of the category.</param>
-        /// <param name="hexColor">The color in hexadecimal.
+        /// <param name="hexColor">The color in hexadecimal.</param>
         /// <code>"Example: #00CA11 for green."</code>
         /// <returns>A new sub-panel in your page.</returns>
         public SubPanelElement CreateSubPanel(string name, string hexColor)

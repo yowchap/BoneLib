@@ -36,9 +36,7 @@ namespace BoneLib
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
 
-            Hooking.OnLevelInitialized += OnPlayerReferencesFound;
             Hooking.OnLevelInitialized += OnLevelInitialized;
-            Hooking.OnLevelLoading += OnMarrowSceneLoaded;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -51,10 +49,11 @@ namespace BoneLib
         {
             ModConsole.Msg("initialized");
 
+            DataManager.Player.FindReferences();
+            PopupBoxManager.CreateBaseAd();
+
             if (info.title == "00 - Main Menu" || info.title == "15 - Void G114")
-            {
                 SkipIntro();
-            }
 
             DataManager.UI.InitializeReferences();
             new GameObject("[BoneMenu] - UI Manager").AddComponent<BoneMenu.UI.UIManager>();
@@ -103,12 +102,6 @@ namespace BoneLib
                 controller.holdTime_Rest = 0;
                 controller.canClick = true;
             }
-        }
-
-        private void OnPlayerReferencesFound(LevelInfo info)
-        {
-            DataManager.Player.FindReferences();
-            PopupBoxManager.CreateBaseAd();
         }
     }
 }

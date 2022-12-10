@@ -102,8 +102,8 @@ namespace BoneLib.RandomShit
             newPopup.AddComponent<PopupBox>();
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.GetPlayerHead().transform.position + Player.GetPlayerHead().transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.GetPlayerHead().transform.position);
+            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
 
             return newPopup;
         }
@@ -137,8 +137,8 @@ namespace BoneLib.RandomShit
             newPopup.SetActive(true);
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.GetPlayerHead().transform.position + Player.GetPlayerHead().transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.GetPlayerHead().transform.position);
+            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
 
             return newPopup;
         }
@@ -246,8 +246,8 @@ namespace BoneLib.RandomShit
                 yield return new WaitForSeconds(5f);
 
             GameObject newAd = CreateNewPopupBox();
-            newAd.transform.position = Player.GetPlayerHead().transform.position + Player.GetPlayerHead().transform.forward * 2;
-            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.GetPlayerHead().transform.position);
+            newAd.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
+            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.playerHead.transform.position);
 
             MelonCoroutines.Start(CoSpawnAds());
         }

@@ -53,7 +53,7 @@ namespace BoneLib.BoneMenu
 
         internal static void SpawnUtilityGun()
         {
-            var head = Player.GetPlayerHead().transform;
+            var head = Player.playerHead.transform;
 
             string barcode = "c1534c5a-5747-42a2-bd08-ab3b47616467";
             SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
@@ -69,7 +69,7 @@ namespace BoneLib.BoneMenu
 
         internal static void SpawnNimbusGun()
         {
-            var head = Player.GetPlayerHead().transform;
+            var head = Player.playerHead.transform;
 
             string barcode = "c1534c5a-6b38-438a-a324-d7e147616467";
             SpawnableCrateReference reference = new SpawnableCrateReference(barcode);

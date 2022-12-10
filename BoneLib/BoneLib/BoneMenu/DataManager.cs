@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using SLZ.Rig;
 using SLZ.UI;
 using BoneLib.BoneMenu.UI;
+using SLZ.UI.Radial;
 
 namespace BoneLib.BoneMenu
 {
@@ -64,7 +65,7 @@ namespace BoneLib.BoneMenu
         {
             internal static void FindReferences()
             {
-                _rigManager = BoneLib.Player.GetRigManager().GetComponent<RigManager>();
+                _rigManager = BoneLib.Player.rigManager.GetComponent<RigManager>();
                 _uiRig = _rigManager.uiRig;
             }
 
@@ -125,9 +126,6 @@ namespace BoneLib.BoneMenu
 
             public static GameObject bmButtonObject = Bundles.FindBundleObject("BoneMenuButton");
 
-            public static GameObject MainPage { get => _mainPage; }
-
-            static GameObject _mainPage;
             static GameObject _optionButton;
 
             static Transform _optionsGrid;
@@ -143,7 +141,7 @@ namespace BoneLib.BoneMenu
 
             public static void InitializeReferences()
             {
-                Player._rigManager = BoneLib.Player.GetRigManager().GetComponent<RigManager>();
+                Player._rigManager = BoneLib.Player.rigManager.GetComponent<RigManager>();
                 Player._uiRig = Player.RigManager.uiRig;
                 panelView = Player.UIRig.popUpMenu.preferencesPanelView;
                 optionsPanel = panelView.pages[panelView.defaultPage];

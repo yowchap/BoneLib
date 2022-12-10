@@ -192,7 +192,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <typeparam name="T">Enum type.</typeparam>
         /// <param name="name">The name of the element.</param>
         /// <param name="color">The name color of the element.</param>
-        /// <param name="action">The method that execut
+        /// <param name="action">The method that execut</param>
         public EnumElement<T> CreateEnumElement<T>(string name, Color color, Action<T> action = null) where T : Enum
         {
             var element = new EnumElement<T>(name, color, action);

@@ -40,12 +40,6 @@ namespace BoneLib
         /// </summary>
         public static event Action OnLevelUnloaded;
 
-        // Player
-        // @Todo(Parzival): currently they're equivalent, but I'd like to fix the early
-        // initialization bug which would make this event unique again.
-        [Obsolete("Use " + nameof(OnLevelInitialized) + " instead")] 
-        public static event Action OnPlayerReferencesFound;
-
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
 
@@ -148,8 +142,6 @@ namespace BoneLib
                 // Ideally this should be invoked right before the loading screen dissapears, but this is
                 // the closest I can get it for now.
                 SafeActions.InvokeActionSafe(OnLevelInitialized, new LevelInfo(SceneStreamer.Session.Level));
-
-                SafeActions.InvokeActionSafe(OnPlayerReferencesFound);
             }
         }
 

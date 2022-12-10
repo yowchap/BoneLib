@@ -19,7 +19,7 @@ namespace BoneLib.BoneMenu.UI
         public List<UIElement> Elements { get; private set; } = new List<UIElement>();
         public Transform ElementGrid { get; private set; }
 
-        private SLZ.UI.UIGridEnable gridEnable;
+        private UIGridEnable gridEnable;
 
         private Transform returnArrow;
 
@@ -46,7 +46,7 @@ namespace BoneLib.BoneMenu.UI
             ElementGrid = transform.Find("Viewport/ElementGrid");
             returnArrow = transform.Find("Return");
 
-            gridEnable = transform.Find("Viewport/ElementGrid").GetComponent<SLZ.UI.UIGridEnable>();
+            gridEnable = transform.Find("Viewport/ElementGrid").GetComponent<UIGridEnable>();
             returnButton = returnArrow.GetComponent<Button>();
         }
 

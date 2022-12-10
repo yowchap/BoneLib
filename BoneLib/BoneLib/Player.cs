@@ -8,7 +8,6 @@ namespace BoneLib
 {
     public static class Player
     {
-        private static readonly string rigManagerName = "[RigManager (Blank)]";
         private static readonly string playerHeadPath = "[PhysicsRig]/Head"; // The path to the head relative to the rig manager
 
         public static RigManager rigManager { get; private set; }
@@ -46,36 +45,11 @@ namespace BoneLib
             leftHand = manager?.physicsRig?.leftHand;
             rightHand = manager?.physicsRig?.rightHand;
 
+            playerHead = rigManager.transform.Find(playerHeadPath);
+
             ModConsole.Msg("Found player object references", LoggingMode.DEBUG);
 
             return controllersExist && handsExist && controllerRig != null;
-        }
-
-        [System.Obsolete("Use Player.rigManager instead, which is a RigManager object.")]
-        /// <summary>
-        /// Returns the root gameobject of the Player's <see cref="RigManager"/>.
-        /// </summary>
-        public static GameObject GetRigManager()
-        {
-            if (rigManager == null)
-                rigManager = GameObject.Find(rigManagerName).GetComponent<RigManager>();
-
-            return rigManager.gameObject;
-        }
-
-        [System.Obsolete("Use Player.playerHead instead, which is a Transform object.")]
-        /// <summary>
-        /// Returns the gameobject of the Player's head.
-        /// </summary>
-        public static GameObject GetPlayerHead()
-        {
-            if (playerHead == null)
-            {
-                GameObject rig = GetRigManager();
-                if (rig != null)
-                    playerHead = rig.transform.Find(playerHeadPath);
-            }
-            return playerHead.gameObject;
         }
 
         /// <summary>
