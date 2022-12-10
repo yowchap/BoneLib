@@ -17,7 +17,7 @@ namespace BoneLib.BoneMenu.Elements
         }
 
         public override ElementType Type => ElementType.Value;
-        public override string DisplayValue => _value.ToString();
+        public override string DisplayValue => _value.ToString("0.####");
 
         public float Value { get => _value; }
         public float Increment { get => _increment; }
