@@ -1,15 +1,8 @@
-﻿using System;
+﻿using BoneLib.BoneMenu.Elements;
+using System;
 using System.Collections.Generic;
-
-using TMPro;
-
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-
-using BoneLib.BoneMenu.Elements;
-
-using SLZ.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
@@ -90,7 +83,7 @@ namespace BoneLib.BoneMenu.UI
                 poolee.gameObject.SetActive(false);
             }
 
-            foreach(var empty in emptyObjects)
+            foreach (var empty in emptyObjects)
             {
                 var poolee = empty.GetComponent<UIPoolee>();
                 poolee.Return();

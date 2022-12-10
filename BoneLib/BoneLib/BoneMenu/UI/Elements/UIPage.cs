@@ -1,12 +1,8 @@
-﻿using System;
+﻿using BoneLib.BoneMenu.Elements;
+using System;
 using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.UI;
-
-using BoneLib.BoneMenu.Elements;
-
-using SLZ.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
@@ -62,7 +58,7 @@ namespace BoneLib.BoneMenu.UI
                 }
                 else
                 {
-                    if(MenuManager.ActiveCategory == MenuManager.RootCategory)
+                    if (MenuManager.ActiveCategory == MenuManager.RootCategory)
                     {
                         // return to base game options menu
                         gameObject.SetActive(false);
@@ -108,7 +104,7 @@ namespace BoneLib.BoneMenu.UI
 
         public void ClearDraw()
         {
-            if(gridEnable != null)
+            if (gridEnable != null)
             {
                 gridEnable.enabled = false;
                 gridEnable.enabled = true;

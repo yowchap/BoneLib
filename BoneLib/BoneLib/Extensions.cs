@@ -1,8 +1,6 @@
 ﻿using SLZ.AI;
 using SLZ.Combat;
 using SLZ.Props.Weapons;
-using SLZ.Marrow.Pool;
-using SLZ.Marrow.Warehouse;
 using System;
 using System.Linq;
 

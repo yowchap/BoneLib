@@ -1,14 +1,12 @@
-﻿using System;
-using System.Reflection;
+﻿using BoneLib.BoneMenu.UI;
+using SLZ.Rig;
+using SLZ.UI.Radial;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
-using SLZ.Rig;
-using SLZ.UI;
-using BoneLib.BoneMenu.UI;
-using SLZ.UI.Radial;
 
 namespace BoneLib.BoneMenu
 {
@@ -85,7 +83,7 @@ namespace BoneLib.BoneMenu
             {
                 get
                 {
-                    if(_rigManager is null || _rigManager.WasCollected)
+                    if (_rigManager is null || _rigManager.WasCollected)
                     {
                         return null;
                     }
@@ -106,7 +104,7 @@ namespace BoneLib.BoneMenu
             {
                 get
                 {
-                    if(_optionsGrid is null || _optionsGrid.WasCollected)
+                    if (_optionsGrid is null || _optionsGrid.WasCollected)
                     {
                         return null;
                     }
@@ -174,7 +172,7 @@ namespace BoneLib.BoneMenu
             {
                 var refArray = new UnhollowerBaseLib.Il2CppReferenceArray<GameObject>(10);
 
-                for(int i = 0; i <= 8; i++)
+                for (int i = 0; i <= 8; i++)
                 {
                     refArray[i] = panelView.pages[i];
                 }

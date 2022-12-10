@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using TMPro;
 
 namespace BoneLib.BoneMenu.Elements
 {

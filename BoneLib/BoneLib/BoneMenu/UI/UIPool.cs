@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace BoneLib.BoneMenu.UI
 {
@@ -66,7 +65,7 @@ namespace BoneLib.BoneMenu.UI
         {
             var selected = GetInactive();
 
-            if(selected == null)
+            if (selected == null)
             {
                 Populate(2);
                 return Spawn(parent, startActive);

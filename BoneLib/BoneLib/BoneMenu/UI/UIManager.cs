@@ -1,7 +1,6 @@
-﻿using UnityEngine;
+﻿using BoneLib.BoneMenu.Elements;
+using UnityEngine;
 using UnityEngine.UI;
-
-using BoneLib.BoneMenu.Elements;
 
 namespace BoneLib.BoneMenu.UI
 {

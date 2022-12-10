@@ -1,11 +1,7 @@
-﻿using System;
-
-using UnityEngine;
-using UnityEngine.UI;
-
+﻿using BoneLib.BoneMenu.Elements;
+using System;
 using TMPro;
-
-using BoneLib.BoneMenu.Elements;
+using UnityEngine;
 
 namespace BoneLib.BoneMenu.UI
 {
@@ -40,7 +36,7 @@ namespace BoneLib.BoneMenu.UI
 
         public TextMeshPro GetTextMesh(string path)
         {
-            if(transform.Find(path) == null)
+            if (transform.Find(path) == null)
             {
                 return null;
             }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using BoneLib.BoneMenu.Elements;
+using System;
 using System.Collections.Generic;
-
 using UnityEngine;
-using BoneLib.BoneMenu.Elements;
 
 namespace BoneLib.BoneMenu
 {

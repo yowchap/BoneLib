@@ -1,12 +1,7 @@
-﻿using System;
+﻿using BoneLib.BoneMenu.Elements;
+using System;
 using TMPro;
-
-using UnityEngine;
 using UnityEngine.UI;
-
-using BoneLib.BoneMenu.Elements;
-
-using SLZ.UI;
 
 namespace BoneLib.BoneMenu.UI
 {

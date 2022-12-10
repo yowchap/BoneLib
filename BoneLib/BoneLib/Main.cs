@@ -1,12 +1,10 @@
-﻿using BoneLib.MonoBehaviours;
+﻿using BoneLib.BoneMenu;
+using BoneLib.BoneMenu.Elements;
+using BoneLib.MonoBehaviours;
 using BoneLib.RandomShit;
 using MelonLoader;
 using UnhollowerRuntimeLib;
 using UnityEngine;
-
-using BoneLib.BoneMenu;
-using BoneLib.BoneMenu.Elements;
-using SLZ.Bonelab;
 
 namespace BoneLib
 {

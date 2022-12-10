@@ -1,13 +1,5 @@
 ﻿using System;
-using TMPro;
-
-using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-
-using BoneLib.BoneMenu.Elements;
-
-using SLZ.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
@@ -33,7 +25,7 @@ namespace BoneLib.BoneMenu.UI
                 SetText(element.Name, element.DisplayValue);
             };
 
-            if(toggleButton != null)
+            if (toggleButton != null)
             {
                 toggleButton.onClick.AddListener(action);
             }
