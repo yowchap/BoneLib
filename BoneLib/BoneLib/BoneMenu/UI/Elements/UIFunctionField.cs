@@ -33,7 +33,7 @@ namespace BoneLib.BoneMenu.UI
         {
             Action onPressed = () =>
             {
-                var functionElement = (FunctionElement)element;
+                FunctionElement functionElement = (FunctionElement)element;
                 confirmerText.text = functionElement.ConfirmText;
                 functionElement.OnSelectElement();
 
@@ -45,7 +45,7 @@ namespace BoneLib.BoneMenu.UI
 
             Action onConfirmerPressed = () =>
             {
-                var functionElement = (FunctionElement)element;
+                FunctionElement functionElement = (FunctionElement)element;
                 functionElement.OnSelectConfirm();
                 confirmerButton.gameObject.SetActive(false);
             };

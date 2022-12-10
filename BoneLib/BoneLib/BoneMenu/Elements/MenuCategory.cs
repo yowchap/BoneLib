@@ -36,7 +36,7 @@ namespace BoneLib.BoneMenu.Elements
                 return Elements.Find((item) => item.Name == name) as MenuCategory;
             }
 
-            var category = new MenuCategory(name, color);
+            MenuCategory category = new MenuCategory(name, color);
             category.SetParent(this);
             Elements?.Add(category);
             SafeActions.InvokeActionSafe(OnElementCreated, this, category);
@@ -64,7 +64,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A new sub-panel in your page.</returns>
         public SubPanelElement CreateSubPanel(string name, Color color)
         {
-            var panel = new SubPanelElement(name, color);
+            SubPanelElement panel = new SubPanelElement(name, color);
             Elements?.Add(panel);
             SafeActions.InvokeActionSafe(OnElementCreated, this, panel);
             return panel;
@@ -93,7 +93,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A function element.</returns>
         public FunctionElement CreateFunctionElement(string name, Color color, Action action)
         {
-            var element = new FunctionElement(name, color, action);
+            FunctionElement element = new FunctionElement(name, color, action);
             Elements?.Add(element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
@@ -110,7 +110,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A function element with a confirm option.</returns>
         public FunctionElement CreateFunctionElement(string name, Color color, Action action, string confirmText = "")
         {
-            var element = new FunctionElement(name, color, action, confirmText);
+            FunctionElement element = new FunctionElement(name, color, action, confirmText);
             Elements?.Add(element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
@@ -142,7 +142,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A bool element.</returns>
         public BoolElement CreateBoolElement(string name, Color color, bool value, Action<bool> action = null)
         {
-            var element = new BoolElement(name, color, value, action);
+            BoolElement element = new BoolElement(name, color, value, action);
             Elements?.Add(element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
@@ -175,7 +175,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>An integer element.</returns>
         public IntElement CreateIntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> action = null)
         {
-            var element = new IntElement(name, color, startValue, increment, minValue, maxValue, action);
+            IntElement element = new IntElement(name, color, startValue, increment, minValue, maxValue, action);
             Elements?.Add(element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
@@ -208,7 +208,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>An enum element.</returns>
         public EnumElement<T> CreateEnumElement<T>(string name, Color color, Action<T> action = null) where T : Enum
         {
-            var element = new EnumElement<T>(name, color, action);
+            EnumElement<T> element = new EnumElement<T>(name, color, action);
             Elements?.Add(element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;
@@ -241,7 +241,7 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A float element.</returns>
         public FloatElement CreateFloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> action = null)
         {
-            var element = new FloatElement(name, color, startValue, increment, minValue, maxValue, action);
+            FloatElement element = new FloatElement(name, color, startValue, increment, minValue, maxValue, action);
             Elements?.Add(element);
             SafeActions.InvokeActionSafe(OnElementCreated, this, element);
             return element;

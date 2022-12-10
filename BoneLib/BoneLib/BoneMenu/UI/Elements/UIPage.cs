@@ -50,7 +50,7 @@ namespace BoneLib.BoneMenu.UI
         {
             Action returnAction = () =>
             {
-                var category = (MenuCategory)element;
+                MenuCategory category = (MenuCategory)element;
 
                 if (category.Parent != null)
                 {
@@ -86,7 +86,7 @@ namespace BoneLib.BoneMenu.UI
                 gridEnable.enabled = true;
             }
 
-            var activeCategory = MenuManager.ActiveCategory;
+            MenuCategory activeCategory = MenuManager.ActiveCategory;
 
             if (activeCategory == null)
             {
@@ -97,7 +97,7 @@ namespace BoneLib.BoneMenu.UI
 
             for (int i = 0; i < activeCategory.Elements.Count; i++)
             {
-                var element = activeCategory.Elements[i];
+                MenuElement element = activeCategory.Elements[i];
                 AssignUIElement(element);
             }
         }
@@ -110,9 +110,9 @@ namespace BoneLib.BoneMenu.UI
                 gridEnable.enabled = true;
             }
 
-            foreach (var element in Elements)
+            foreach (UIElement element in Elements)
             {
-                var poolee = element.GetComponent<UIPoolee>();
+                UIPoolee poolee = element.GetComponent<UIPoolee>();
                 poolee.Return();
                 poolee.gameObject.SetActive(false);
             }
@@ -122,7 +122,7 @@ namespace BoneLib.BoneMenu.UI
 
         private void AssignUIElement(MenuElement element)
         {
-            var uiElement = elementTypes[element.Type].Spawn(ElementGrid.transform, true).GetComponent<UIElement>();
+            UIElement uiElement = elementTypes[element.Type].Spawn(ElementGrid.transform, true).GetComponent<UIElement>();
             uiElement.AssignElement(element);
 
             Elements.Add(uiElement);

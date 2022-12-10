@@ -260,7 +260,7 @@ namespace BoneLib.RandomShit
             #region Resources
             AudioClip[] clips = Resources.FindObjectsOfTypeAll<AudioClip>();
             List<AudioClip> sounds = new List<AudioClip>();
-            foreach (var clip in clips)
+            foreach (AudioClip clip in clips)
                 if (clip.name.Contains("ImpactSoft_SwordBroad"))
                     sounds.Add(clip);
 
@@ -269,7 +269,7 @@ namespace BoneLib.RandomShit
             HandPose cornerGrip = null;
             HandPose faceGrip = null;
             HandPose[] poses = Resources.FindObjectsOfTypeAll<HandPose>();
-            foreach (var p in poses)
+            foreach (HandPose p in poses)
             {
                 if (p.name == "BoxSandwichGrip")
                     sandwichGrip = p;

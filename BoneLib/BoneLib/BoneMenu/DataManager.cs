@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using UnhollowerBaseLib;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,13 +21,13 @@ namespace BoneLib.BoneMenu
                 _bundle = GetEmbeddedBundle();
                 _bundle.hideFlags = HideFlags.DontUnloadUnusedAsset;
 
-                var assets = bundle.LoadAllAssets();
+                Il2CppReferenceArray<UnityEngine.Object> assets = bundle.LoadAllAssets();
 
                 foreach (var asset in assets)
                 {
                     if (asset.TryCast<GameObject>() != null)
                     {
-                        var go = asset.Cast<GameObject>();
+                        GameObject go = asset.Cast<GameObject>();
                         go.hideFlags = HideFlags.DontUnloadUnusedAsset;
                         _bundleObjects.Add(go);
                     }
@@ -48,9 +49,9 @@ namespace BoneLib.BoneMenu
             {
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
-                using (var resourceStream = assembly.GetManifestResourceStream("BoneLib.Resources.bonemenu.pack"))
+                using (Stream resourceStream = assembly.GetManifestResourceStream("BoneLib.Resources.bonemenu.pack"))
                 {
-                    using (var memoryStream = new MemoryStream())
+                    using (MemoryStream memoryStream = new MemoryStream())
                     {
                         resourceStream.CopyTo(memoryStream);
                         return AssetBundle.LoadFromMemory(memoryStream.ToArray());
@@ -72,21 +73,18 @@ namespace BoneLib.BoneMenu
                 get
                 {
                     if (_rigManager is null || _rigManager.WasCollected)
-                    {
                         return null;
-                    }
 
                     return _rigManager;
                 }
             }
+
             public static UIRig UIRig
             {
                 get
                 {
                     if (_rigManager is null || _rigManager.WasCollected)
-                    {
                         return null;
-                    }
 
                     return _uiRig;
                 }
@@ -100,14 +98,13 @@ namespace BoneLib.BoneMenu
         {
             public static PreferencesPanelView panelView;
             public static GameObject optionsPanel;
+
             public static Transform OptionsGrid
             {
                 get
                 {
                     if (_optionsGrid is null || _optionsGrid.WasCollected)
-                    {
                         return null;
-                    }
 
                     return _optionsGrid;
                 }
@@ -167,12 +164,10 @@ namespace BoneLib.BoneMenu
 
             private static void InjectPage()
             {
-                var refArray = new UnhollowerBaseLib.Il2CppReferenceArray<GameObject>(10);
+                Il2CppReferenceArray<GameObject> refArray = new Il2CppReferenceArray<GameObject>(10);
 
                 for (int i = 0; i <= 8; i++)
-                {
                     refArray[i] = panelView.pages[i];
-                }
 
                 refArray[9] = UIManager.Instance.MainPage.gameObject;
 

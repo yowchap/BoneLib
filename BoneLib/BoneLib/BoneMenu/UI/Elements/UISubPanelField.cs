@@ -54,7 +54,7 @@ namespace BoneLib.BoneMenu.UI
                 return;
             }
 
-            var subPanel = (SubPanelElement)element;
+            SubPanelElement subPanel = (SubPanelElement)element;
 
             if (subPanel == null)
             {
@@ -63,29 +63,29 @@ namespace BoneLib.BoneMenu.UI
 
             for (int i = 0; i < subPanel.Elements.Count; i++)
             {
-                var element = subPanel.Elements[i];
+                MenuElement element = subPanel.Elements[i];
                 AssignUIElement(element);
             }
 
             for (int i = 0; i < subPanel.Elements.Count - 1; i++)
             {
-                var empty = UIManager.Instance.EmptyPool.Spawn(UIManager.Instance.MainPage.ElementGrid, transform.GetSiblingIndex() + 1, true);
+                UIPoolee empty = UIManager.Instance.EmptyPool.Spawn(UIManager.Instance.MainPage.ElementGrid, transform.GetSiblingIndex() + 1, true);
                 emptyObjects?.Add(empty.gameObject);
             }
         }
 
         public void ClearDraw()
         {
-            foreach (var element in Elements)
+            foreach (UIElement element in Elements)
             {
-                var poolee = element.GetComponent<UIPoolee>();
+                UIPoolee poolee = element.GetComponent<UIPoolee>();
                 poolee.Return();
                 poolee.gameObject.SetActive(false);
             }
 
-            foreach (var empty in emptyObjects)
+            foreach (GameObject empty in emptyObjects)
             {
-                var poolee = empty.GetComponent<UIPoolee>();
+                UIPoolee poolee = empty.GetComponent<UIPoolee>();
                 poolee.Return();
                 poolee.gameObject.SetActive(false);
             }
@@ -100,28 +100,28 @@ namespace BoneLib.BoneMenu.UI
 
             if (element.Type == ElementType.Category)
             {
-                var obj = UIManager.Instance.CategoryPool.Spawn(gridObject.transform, true);
+                UIPoolee obj = UIManager.Instance.CategoryPool.Spawn(gridObject.transform, true);
                 uiElement = obj.GetComponent<UICategoryField>();
                 uiElement.AssignElement(element);
             }
 
             if (element.Type == ElementType.Function || element.Type == ElementType.Confirmer)
             {
-                var obj = UIManager.Instance.FunctionPool.Spawn(gridObject.transform, true);
+                UIPoolee obj = UIManager.Instance.FunctionPool.Spawn(gridObject.transform, true);
                 uiElement = obj.GetComponent<UIFunctionField>();
                 uiElement.AssignElement(element);
             }
 
             if (element.Type == ElementType.Value)
             {
-                var obj = UIManager.Instance.ValuePool.Spawn(gridObject.transform, true);
+                UIPoolee obj = UIManager.Instance.ValuePool.Spawn(gridObject.transform, true);
                 uiElement = obj.GetComponent<UIValueField>();
                 uiElement.AssignElement(element);
             }
 
             if (element.Type == ElementType.Toggle)
             {
-                var obj = UIManager.Instance.TogglePool.Spawn(gridObject.transform, true);
+                UIPoolee obj = UIManager.Instance.TogglePool.Spawn(gridObject.transform, true);
                 uiElement = obj.GetComponent<UIToggleField>();
                 uiElement.AssignElement(element);
             }

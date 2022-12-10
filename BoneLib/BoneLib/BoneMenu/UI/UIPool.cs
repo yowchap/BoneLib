@@ -50,8 +50,8 @@ namespace BoneLib.BoneMenu.UI
 
             for (int i = 0; i < byElements; i++)
             {
-                var prefab = CreatePrefab(_prefab);
-                var poolee = prefab.AddComponent<UIPoolee>();
+                GameObject prefab = CreatePrefab(_prefab);
+                UIPoolee poolee = prefab.AddComponent<UIPoolee>();
 
                 poolee.SetParent(this);
                 prefab.SetActive(false);
@@ -63,7 +63,7 @@ namespace BoneLib.BoneMenu.UI
 
         public UIPoolee Spawn(Transform parent, bool startActive = false)
         {
-            var selected = GetInactive();
+            UIPoolee selected = GetInactive();
 
             if (selected == null)
             {
@@ -85,7 +85,7 @@ namespace BoneLib.BoneMenu.UI
 
         public UIPoolee Spawn(Transform parent, int orderInHierarchy, bool startActive = false)
         {
-            var selected = GetInactive();
+            UIPoolee selected = GetInactive();
 
             if (selected == null)
             {
@@ -105,7 +105,7 @@ namespace BoneLib.BoneMenu.UI
 
         private GameObject CreatePrefab(GameObject prefab)
         {
-            var _object = GameObject.Instantiate(prefab, transform);
+            GameObject _object = GameObject.Instantiate(prefab, transform);
             _object.SetActive(true);
             return _object;
         }

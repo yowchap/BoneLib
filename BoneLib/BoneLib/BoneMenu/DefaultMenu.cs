@@ -25,11 +25,11 @@ namespace BoneLib.BoneMenu
 
         public static void CreateDefaultElements()
         {
-            var mainCategory = MenuManager.CreateCategory("BoneLib", Color.white);
+            Elements.MenuCategory mainCategory = MenuManager.CreateCategory("BoneLib", Color.white);
 
-            var ammo = mainCategory.CreateSubPanel("Ammo Settings", Color.yellow);
-            var itemSpawning = mainCategory.CreateSubPanel("Item Spawning", Color.white);
-            var funstuff = mainCategory.CreateSubPanel("Fun Stuff", "#e600ff");
+            Elements.SubPanelElement ammo = mainCategory.CreateSubPanel("Ammo Settings", Color.yellow);
+            Elements.SubPanelElement itemSpawning = mainCategory.CreateSubPanel("Item Spawning", Color.white);
+            Elements.SubPanelElement funstuff = mainCategory.CreateSubPanel("Fun Stuff", "#e600ff");
 
             ammo.CreateFunctionElement("Add Light Ammo", Color.white, () => AmmoInventory.AddCartridge(LightAmmo, lightAmmoValue));
             ammo.CreateFunctionElement("Add Medium Ammo", Color.white, () => AmmoInventory.AddCartridge(MediumAmmo, mediumAmmoValue));
@@ -50,7 +50,7 @@ namespace BoneLib.BoneMenu
 
         internal static void SpawnUtilityGun()
         {
-            var head = Player.playerHead.transform;
+            Transform head = Player.playerHead.transform;
 
             string barcode = "c1534c5a-5747-42a2-bd08-ab3b47616467";
             SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
@@ -66,7 +66,7 @@ namespace BoneLib.BoneMenu
 
         internal static void SpawnNimbusGun()
         {
-            var head = Player.playerHead.transform;
+            Transform head = Player.playerHead.transform;
 
             string barcode = "c1534c5a-6b38-438a-a324-d7e147616467";
             SpawnableCrateReference reference = new SpawnableCrateReference(barcode);

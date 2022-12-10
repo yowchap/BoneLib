@@ -1,4 +1,5 @@
-﻿using SLZ.AI;
+﻿using PuppetMasta;
+using SLZ.AI;
 using SLZ.Combat;
 using SLZ.Props.Weapons;
 using System;
@@ -20,7 +21,7 @@ namespace BoneLib
 
         public static void DealDamage(this AIBrain brain, float damage)
         {
-            var health = brain?.behaviour?.health;
+            SubBehaviourHealth health = brain?.behaviour?.health;
             if (health != null)
             {
                 health.TakeDamage(1, new Attack()
