@@ -43,7 +43,7 @@
     </Reference>
     <Reference Include="Assembly-CSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\References\MelonLoader\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
       <HintPath>..\..\References\MelonLoader\Managed\Assembly-CSharp-firstpass.dll</HintPath>
@@ -132,7 +132,7 @@
     </Reference>
     <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\UnityEngine.UIModule.dll</HintPath>
+      <HintPath>..\..\References\MelonLoader\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -185,7 +185,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>ECHO Copying BoneLib.dll to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
+    <PostBuildEvent>ECHO Copying BoneLib.dll and BoneLib.xml to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
 COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
 COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"</PostBuildEvent>
   </PropertyGroup>
