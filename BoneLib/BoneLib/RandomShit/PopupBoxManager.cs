@@ -66,6 +66,34 @@ namespace BoneLib.RandomShit
             "The Fog is Coming"
         };
 
+        internal static List<string> androidAdMessages { get; private set; } = new List<string>()
+        {
+            "'Anything is possible with Lava Gang!' but apparently not supporting Quest",
+            "SMH. not everone has a pec... Port this to quest.",
+            "F*ck you. Quest owners are so supportive and yet motherfrickers like you just ignore a large number of users.",
+            "Is therea Qest version?",
+            "Upload this for Quest. Build it with the Quest Sdk and uploadpl ease",
+            "gib qust suport",
+            "waitin gfor the quest version!",
+            "I was trying to install this to my qujest 2 but it wasn't. Why?",
+            "Will you please work on porting it to quest 2 because I don't have a pc",
+            "can u pls port this to quest? :) this would go great on it ^-^",
+            "hi I was wondering if you would be able to add this to Quest? thanks.",
+            "I was the Quest 2 but then the Mod was not the download when i clic kthe cdownload mod.",
+            "can U add it on quest 2?",
+            "can you make android copy please, thanks.",
+            "can you port this to Quest?",
+            "OMG the Pack for Quest button is RIGHT THERE, its NOT that hard to CLICK it and UPLOAD IT.",
+            "Does this work on Quest 2?",
+            "can you make it compatible withquest?",
+            "do questr version? pls.",
+            "can u port this to quest 2 pls",
+            "port 2 quedt?",
+            "can I mod this Into my Quest?",
+            "omfg can you please not make mods that are PC only? not everyone can afford one.",
+            "There are no QEst but I have. Why are you?",
+        };
+
         private static GameObject basePopup;
 
         // private const string API_ALL_DOGS = "https://dog.ceo/api/breeds/image/random"; different format
@@ -74,7 +102,15 @@ namespace BoneLib.RandomShit
         private const string API_CAT = "http://shibe.online/api/cats";
         private const string API_BIRD = "http://shibe.online/api/birds";
 
-        public static GameObject CreateNewPopupBox() => CreateNewPopupBox(adMessages[Random.Range(0, adMessages.Count)]);
+        public static GameObject CreateNewPopupBox()
+        {
+            string adText = adMessages[Random.Range(0, adMessages.Count)];
+            if (HelperMethods.IsAndroid() && Random.Range(1, 11) != 5)
+                adText = $"\"{androidAdMessages[Random.Range(0, androidAdMessages.Count)]}\" -fordkiller2014 (you.)";
+
+            return CreateNewPopupBox(adText);
+        }
+
         public static GameObject CreateNewPopupBox(string adText)
         {
             if (basePopup == null)
@@ -190,7 +226,6 @@ namespace BoneLib.RandomShit
                     {
                         ModConsole.Error("Exception whilst invoking image popup callback with null to signify error.", LoggingMode.NORMAL);
                         ModConsole.Msg($"Initial API web request failed, status = {urlReq.result}", LoggingMode.DEBUG);
-
                     }
                     yield break;
             }
@@ -257,6 +292,7 @@ namespace BoneLib.RandomShit
         internal static void CreateBaseAd()
         {
             #region Resources
+
             AudioClip[] clips = Resources.FindObjectsOfTypeAll<AudioClip>();
             List<AudioClip> sounds = new List<AudioClip>();
             foreach (AudioClip clip in clips)
@@ -279,9 +315,11 @@ namespace BoneLib.RandomShit
                 else if (p.name == "BoxFaceGrip")
                     faceGrip = p;
             }
+
             #endregion
 
             #region Base object
+
             basePopup = new GameObject($"Ad Base");
             basePopup.SetActive(false);
 
@@ -311,9 +349,11 @@ namespace BoneLib.RandomShit
 
             InteractableHost host = basePopup.AddComponent<InteractableHost>();
             host.HasRigidbody = true;
+
             #endregion
 
             #region Mesh object
+
             GameObject mesh = GameObject.CreatePrimitive(PrimitiveType.Cube);
             mesh.name = "Mesh";
             mesh.transform.parent = basePopup.transform;
@@ -321,9 +361,11 @@ namespace BoneLib.RandomShit
             mesh.transform.localScale = new Vector3(2f, 1f, 0.02f);
             mesh.GetComponent<MeshRenderer>().material.shader = Shader.Find("Universal Render Pipeline/Lit (PBR Workflow)");
             mesh.GetComponent<MeshRenderer>().material.color = new Color(0.1509434f, 0.1509434f, 0.1509434f);
+
             #endregion
 
             #region Grip object
+
             GameObject grip = new GameObject("Grip");
             grip.transform.parent = basePopup.transform;
             grip.layer = LayerMask.NameToLayer("Interactable");
@@ -374,9 +416,11 @@ namespace BoneLib.RandomShit
             boxGrip.enabledFaces = (BoxGrip.Faces)(-1);
 
             boxGrip._boxCollider = col;
+
             #endregion
 
             #region Destructable object
+
             ObjectDestructable destructable = basePopup.AddComponent<ObjectDestructable>();
             destructable.damageFromImpact = true;
             //destructable.blasterType = StressLevelZero.Pool.PoolSpawner.BlasterType.Sparks; // TODO: destruction effects
@@ -392,9 +436,11 @@ namespace BoneLib.RandomShit
             destructable.thrImpact = 3;
             destructable.feetDamageMult = 0.1f;
             destructable._impactSfx = sfx;
+
             #endregion
 
             #region Text object
+
             GameObject text = new GameObject("Text");
             text.transform.parent = basePopup.transform;
 
@@ -408,6 +454,7 @@ namespace BoneLib.RandomShit
             RectTransform rectTransform = text.GetComponent<RectTransform>();
             rectTransform.sizeDelta = new Vector2(2, 1);
             rectTransform.localPosition = new Vector3(0, 0, -0.015f);
+
             #endregion
         }
     }
