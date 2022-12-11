@@ -183,10 +183,16 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\bonemenu.pack" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\bonemenu.android.pack" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>ECHO Copying BoneLib.dll and BoneLib.xml to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
 COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"</PostBuildEvent>
+COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"
+
+rem ECHO Pushing BoneLib.dll to "/sdcard/Android/data/com.StressLevelZero.BONELAB/files/Mods"
+rem adb push "$(TargetPath)" /sdcard/Android/data/com.StressLevelZero.BONELAB/files/Mods</PostBuildEvent>
   </PropertyGroup>
 </Project>
