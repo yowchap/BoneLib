@@ -21,7 +21,7 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(MenuElement element)
         {
             this.element = element;
-            element.OnUpdateVisuals += OnUpdateVisuals;
+            element.OnUpdateVisuals = OnUpdateVisuals;
 
             if (NameText != null)
             {
