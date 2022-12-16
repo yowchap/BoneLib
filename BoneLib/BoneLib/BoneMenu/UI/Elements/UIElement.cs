@@ -21,6 +21,7 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(MenuElement element)
         {
             this.element = element;
+            element.OnUpdateVisuals += OnUpdateVisuals;
 
             if (NameText != null)
             {
@@ -59,6 +60,20 @@ namespace BoneLib.BoneMenu.UI
             }
 
             ValueText.text = value;
+        }
+
+        private void OnUpdateVisuals()
+        {
+            if (NameText != null)
+            {
+                NameText.text = element.Name;
+                NameText.color = element.Color;
+            }
+
+            if (ValueText != null)
+            {
+                ValueText.text = element.DisplayValue;
+            }
         }
     }
 }
