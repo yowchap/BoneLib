@@ -22,6 +22,12 @@ namespace BoneLib.BoneMenu.Elements
             return _value;
         }
 
+        public void SetValue(T value) 
+        {
+            _value = value;
+            OnUpdateVisuals.InvokeActionSafe();
+        }
+
         protected virtual void OnChangedValue()
         {
             SafeActions.InvokeActionSafe(_action, _value);
