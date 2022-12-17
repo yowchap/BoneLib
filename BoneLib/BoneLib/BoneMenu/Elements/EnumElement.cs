@@ -12,6 +12,13 @@ namespace BoneLib.BoneMenu.Elements
             this._action = action;
             _value = startValue;
         }
+        
+        public EnumElement(string name, Color color, Action<Enum> action = null) : base(name, color, action)
+        {
+            Name = name;
+            Color = color;
+            this._action = action;
+        }
 
         public override ElementType Type => ElementType.Value;
         public override string DisplayValue => _value.ToString();
