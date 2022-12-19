@@ -27,6 +27,8 @@ namespace BoneLib.BoneMenu
         {
             Elements.MenuCategory mainCategory = MenuManager.CreateCategory("BoneLib", Color.white);
 
+            Elements.FunctionElement test = mainCategory.CreateFunctionElement("Test", Color.white, () => MelonLoader.MelonLogger.Msg("test"), "Are you sure?");
+
             Elements.SubPanelElement ammo = mainCategory.CreateSubPanel("Ammo Settings", Color.yellow);
             Elements.SubPanelElement itemSpawning = mainCategory.CreateSubPanel("Item Spawning", Color.white);
             Elements.SubPanelElement funstuff = mainCategory.CreateSubPanel("Fun Stuff", "#e600ff");
