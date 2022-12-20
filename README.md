@@ -53,6 +53,9 @@ OfflineMode = true
 
 ## Changelogs (BoneLib)
 
+#### v2.1.1:
+- Fixed BoneMenu confirmation buttons
+
 #### v2.1.0:
 - Added starting value parameter to enum element methods
 - Float elements are displayed rounded
