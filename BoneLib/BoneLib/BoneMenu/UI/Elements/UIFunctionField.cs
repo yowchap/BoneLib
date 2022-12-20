@@ -35,11 +35,15 @@ namespace BoneLib.BoneMenu.UI
             {
                 FunctionElement functionElement = (FunctionElement)element;
                 confirmerText.text = functionElement.ConfirmText;
-                functionElement.OnSelectElement();
 
                 if (functionElement.Confirmer)
                 {
                     confirmerButton.gameObject.SetActive(true);
+                    confirmerText.gameObject.SetActive(true);
+                }
+                else
+                {
+                    functionElement.OnSelectElement();
                 }
             };
 
