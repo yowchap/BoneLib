@@ -19,6 +19,8 @@ namespace BoneLib
         /// <summary>
         /// Checks if the user is running MelonLoader on Android
         /// </summary>
-        public static bool IsAndroid() => MelonUtils.CurrentPlatform == (MelonPlatformAttribute.CompatiblePlatforms)3;
+        public static bool IsAndroid() => isAndroid;
+
+        private static readonly bool isAndroid = MelonUtils.CurrentPlatform == (MelonPlatformAttribute.CompatiblePlatforms)3;
     }
 }
