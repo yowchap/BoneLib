@@ -74,28 +74,21 @@ namespace BoneLib.BoneMenu.UI
                 return Spawn(parent, startActive);
             }
 
-            MelonCoroutines.Start(AttemptParent(selected, parent));
+            if (HelperMethods.IsAndroid())
+                MelonCoroutines.Start(AttemptParent(selected, parent));
+            else
+            {
+                selected.transform.SetParent(parent);
+                selected.transform.localPosition = Vector3.zero;
+                selected.transform.rotation = parent.rotation;
+            }
+
             selected.gameObject.SetActive(startActive);
 
             _active.Add(selected);
             _inactive.Remove(selected);
 
             return selected;
-        }
-
-        private System.Collections.IEnumerator AttemptParent(UIPoolee selected, Transform parent, bool setPosRot = true)
-        {
-            while (selected.transform.parent != parent)
-            {
-                selected.transform.SetParent(parent);
-
-                if (setPosRot)
-                {
-                    selected.transform.localPosition = Vector3.zero;
-                    selected.transform.rotation = parent.rotation;
-                }
-                yield return null;
-            }
         }
 
         public UIPoolee Spawn(Transform parent, int orderInHierarchy, bool startActive = false)
@@ -108,7 +101,11 @@ namespace BoneLib.BoneMenu.UI
                 return Spawn(parent, startActive);
             }
 
-            MelonCoroutines.Start(AttemptParent(selected, parent, false));
+            if (HelperMethods.IsAndroid())
+                MelonCoroutines.Start(AttemptParent(selected, parent, false));
+            else
+                selected.transform.SetParent(parent);
+
             selected.transform.SetSiblingIndex(orderInHierarchy);
             selected.gameObject.SetActive(startActive);
 
@@ -128,6 +125,27 @@ namespace BoneLib.BoneMenu.UI
         private UIPoolee GetInactive()
         {
             return _inactive.FirstOrDefault();
+        }
+
+        private System.Collections.IEnumerator AttemptParent(UIPoolee selected, Transform parent, bool setPosRot = true)
+        {
+            int run = 0;
+            bool parentSet = false;
+            while (!parentSet)
+            {
+                run++;
+                selected.transform.SetParent(parent);
+                parentSet = selected.transform.parent == parent;
+
+                if (setPosRot && parentSet)
+                {
+                    selected.transform.localPosition = Vector3.zero;
+                    selected.transform.rotation = parent.rotation;
+                }
+
+                if (run >= 10)
+                    yield return null;
+            }
         }
     }
 }
