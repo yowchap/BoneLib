@@ -67,7 +67,9 @@ namespace BoneLib.BoneMenu.UI
                 AssignUIElement(element);
             }
 
-            for (int i = 0; i < subPanel.Elements.Count - 1; i++)
+            int emptyCount = HelperMethods.IsAndroid() ? subPanel.Elements.Count * 35 : subPanel.Elements.Count;
+
+            for (int i = 0; i < emptyCount - 1; i++)
             {
                 UIPoolee empty = UIManager.Instance.EmptyPool.Spawn(UIManager.Instance.MainPage.ElementGrid, transform.GetSiblingIndex() + 1, true);
                 emptyObjects?.Add(empty.gameObject);
