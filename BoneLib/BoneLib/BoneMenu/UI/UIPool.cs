@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MelonLoader;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -73,16 +74,28 @@ namespace BoneLib.BoneMenu.UI
                 return Spawn(parent, startActive);
             }
 
-            selected.transform.SetParent(parent);
+            MelonCoroutines.Start(AttemptParent(selected, parent));
             selected.gameObject.SetActive(startActive);
-
-            selected.transform.localPosition = Vector3.zero;
-            selected.transform.rotation = parent.rotation;
 
             _active.Add(selected);
             _inactive.Remove(selected);
 
             return selected;
+        }
+
+        private System.Collections.IEnumerator AttemptParent(UIPoolee selected, Transform parent, bool setPosRot = true)
+        {
+            while (selected.transform.parent != parent)
+            {
+                selected.transform.SetParent(parent);
+
+                if (setPosRot)
+                {
+                    selected.transform.localPosition = Vector3.zero;
+                    selected.transform.rotation = parent.rotation;
+                }
+                yield return null;
+            }
         }
 
         public UIPoolee Spawn(Transform parent, int orderInHierarchy, bool startActive = false)
@@ -95,7 +108,7 @@ namespace BoneLib.BoneMenu.UI
                 return Spawn(parent, startActive);
             }
 
-            selected.transform.SetParent(parent);
+            MelonCoroutines.Start(AttemptParent(selected, parent, false));
             selected.transform.SetSiblingIndex(orderInHierarchy);
             selected.gameObject.SetActive(startActive);
 
