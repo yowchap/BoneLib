@@ -47,9 +47,19 @@ OfflineMode = true
 
 **Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added skip intro pref, added BoneMenu
 
+**Lakatrazz:** BoneMenu improvements
+
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v2.1.1:
+- Fixed BoneMenu confirmation buttons
+
+#### v2.1.0:
+- Added starting value parameter to enum element methods
+- Float elements are displayed rounded
+- Menu elements can now be updated with the menu open
 
 #### v2.0.1:
 - Fixed startup crash

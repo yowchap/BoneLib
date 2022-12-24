@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 
 namespace BoneLib.BoneMenu.Elements
 {
@@ -16,14 +18,18 @@ namespace BoneLib.BoneMenu.Elements
         public virtual ElementType Type => ElementType.Default;
         public virtual string DisplayValue => "Default";
 
+        internal Action OnUpdateVisuals;
+
         public void SetName(string name)
         {
             Name = name;
+            OnUpdateVisuals.InvokeActionSafe();
         }
 
         public void SetColor(Color color)
         {
             Color = color;
+            OnUpdateVisuals.InvokeActionSafe();
         }
 
         public virtual void OnSelectElement() { }
