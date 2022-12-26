@@ -1,4 +1,5 @@
 ﻿using BoneLib.BoneMenu.UI;
+using MelonLoader;
 using SLZ.Rig;
 using SLZ.UI;
 using System;
@@ -49,7 +50,9 @@ namespace BoneLib.BoneMenu
             {
                 Assembly assembly = Assembly.GetExecutingAssembly();
 
-                using (Stream resourceStream = assembly.GetManifestResourceStream("BoneLib.Resources.bonemenu.pack"))
+                string fileName = HelperMethods.IsAndroid() ? "bonemenu.android.pack" : "bonemenu.pack";
+
+                using (Stream resourceStream = assembly.GetManifestResourceStream("BoneLib.Resources." + fileName))
                 {
                     using (MemoryStream memoryStream = new MemoryStream())
                     {

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using MelonLoader;
+using System.Text.RegularExpressions;
 
 namespace BoneLib
 {
@@ -14,5 +15,12 @@ namespace BoneLib
             name = name.Replace("(Clone)", "");
             return name.Trim();
         }
+
+        /// <summary>
+        /// Checks if the user is running MelonLoader on Android
+        /// </summary>
+        public static bool IsAndroid() => isAndroid;
+
+        private static readonly bool isAndroid = MelonUtils.CurrentPlatform == (MelonPlatformAttribute.CompatiblePlatforms)3;
     }
 }
