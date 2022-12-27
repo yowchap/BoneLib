@@ -126,7 +126,7 @@ namespace BoneLib.BoneMenu.UI
         {
             return _inactive.FirstOrDefault();
         }
-
+        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
         private System.Collections.IEnumerator AttemptParent(UIPoolee selected, Transform parent, bool setPosRot = true)
         {
             int run = 0;

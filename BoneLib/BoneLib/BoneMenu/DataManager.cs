@@ -1,5 +1,5 @@
 ﻿using BoneLib.BoneMenu.UI;
-using MelonLoader;
+using SLZ.Props;
 using SLZ.Rig;
 using SLZ.UI;
 using System;
@@ -30,6 +30,8 @@ namespace BoneLib.BoneMenu
                     {
                         GameObject go = asset.Cast<GameObject>();
                         go.hideFlags = HideFlags.DontUnloadUnusedAsset;
+                        go.AddComponent<ButtonHoverClick>();
+                        go.AddComponent<GlassHandler>();
                         _bundleObjects.Add(go);
                     }
                 }
