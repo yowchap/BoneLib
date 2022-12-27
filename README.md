@@ -49,9 +49,17 @@ OfflineMode = true
 
 **Lakatrazz:** BoneMenu improvements
 
+**Trev:** LemonLoader support
+
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v2.2.0:
+- Added LemonLoader support for quest modding
+- Added `IsAndroid` bool to HelperMethods
+- Added sound and haptics to BoneMenu
+- Bug fixes
 
 #### v2.1.1:
 - Fixed BoneMenu confirmation buttons
