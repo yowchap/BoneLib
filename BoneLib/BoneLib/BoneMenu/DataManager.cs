@@ -1,12 +1,18 @@
 ﻿using BoneLib.BoneMenu.UI;
-using MelonLoader;
+<<<<<<< Updated upstream
+using SLZ.Props;
 using SLZ.Rig;
 using SLZ.UI;
+=======
+using MelonLoader;
+using Il2CppSLZ.Rig;
+using Il2CppSLZ.UI;
+>>>>>>> Stashed changes
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using UnhollowerBaseLib;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,13 +1,13 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Il2CppCysharp.Threading.Tasks;
 using Il2CppSystem;
-using SLZ;
-using SLZ.AI;
-using SLZ.Marrow.Data;
-using SLZ.Marrow.Pool;
-using SLZ.Props;
-using SLZ.Utilities;
-using SLZ.Zones;
-using UnhollowerBaseLib;
+using Il2CppSLZ;
+using Il2CppSLZ.AI;
+using Il2CppSLZ.Marrow.Data;
+using Il2CppSLZ.Marrow.Pool;
+using Il2CppSLZ.Props;
+using Il2CppSLZ.Utilities;
+using Il2CppSLZ.Zones;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
 using UnityEngine.Audio;
 

@@ -1,5 +1,5 @@
 ﻿using BoneLib.BoneMenu.Elements;
-using SLZ.UI;
+using Il2CppSLZ.UI;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIPage(IntPtr ptr) : base(ptr) { }
 
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [Il2CppInterop.Runtime.Attributes.HideFromIl2Cpp]
         public List<UIElement> Elements { get; private set; } = new List<UIElement>();
         public Transform ElementGrid { get; private set; }
 
@@ -120,7 +120,7 @@ namespace BoneLib.BoneMenu.UI
 
             Elements.Clear();
         }
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [Il2CppInterop.Runtime.Attributes.HideFromIl2Cpp]
         private void AssignUIElement(MenuElement element)
         {
             UIElement uiElement = elementTypes[element.Type].Spawn(ElementGrid.transform, true).GetComponent<UIElement>();
