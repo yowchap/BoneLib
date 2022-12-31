@@ -1,13 +1,7 @@
 ﻿using BoneLib.BoneMenu.UI;
-<<<<<<< Updated upstream
-using SLZ.Props;
-using SLZ.Rig;
-using SLZ.UI;
-=======
 using MelonLoader;
 using Il2CppSLZ.Rig;
 using Il2CppSLZ.UI;
->>>>>>> Stashed changes
 using System;
 using System.Collections.Generic;
 using System.IO;
