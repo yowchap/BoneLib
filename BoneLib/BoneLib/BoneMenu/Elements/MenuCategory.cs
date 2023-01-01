@@ -31,8 +31,10 @@ namespace BoneLib.BoneMenu.Elements
         /// <returns>A new category.</returns>
         public MenuCategory CreateCategory(string name, Color color)
         {
-            if (Elements.Find((item) => item.Name == name) is MenuCategory existingCategory)
-                return existingCategory;
+            if (Elements.Exists((item) => item.Name == name))
+            {
+                return Elements.Find((item) => item.Name == name) as MenuCategory;
+            }
 
             MenuCategory category = new MenuCategory(name, color);
             category.SetParent(this);

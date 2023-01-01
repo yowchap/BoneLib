@@ -155,7 +155,7 @@ namespace BoneLib.BoneMenu
             {
                 Action optionButtonAction = () =>
                 {
-                    panelView.PAGESELECT(11);
+                    panelView.PAGESELECT(9);
                     MenuManager.SelectCategory(MenuManager.RootCategory);
                 };
 
@@ -167,10 +167,12 @@ namespace BoneLib.BoneMenu
 
             private static void InjectPage()
             {
-                Il2CppReferenceArray<GameObject> refArray = new Il2CppReferenceArray<GameObject>(12);
-                for (int i = 0; i <= 10; i++)
+                Il2CppReferenceArray<GameObject> refArray = new Il2CppReferenceArray<GameObject>(10);
+
+                for (int i = 0; i <= 8; i++)
                     refArray[i] = panelView.pages[i];
-                refArray[11] = UIManager.Instance.MainPage.gameObject;
+
+                refArray[9] = UIManager.Instance.MainPage.gameObject;
 
                 panelView.pages = refArray;
             }
