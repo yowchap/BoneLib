@@ -3,9 +3,9 @@ using BoneLib.BoneMenu.Elements;
 using BoneLib.MonoBehaviours;
 using BoneLib.RandomShit;
 using MelonLoader;
+using SLZ.Bonelab;
+using UnhollowerRuntimeLib;
 using UnityEngine;
-using Il2CppInterop.Runtime.Injection;
-using Il2CppSLZ.Bonelab;
 
 namespace BoneLib
 {
@@ -14,7 +14,7 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "Gnonme"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "2.1.1"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "2.2.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 

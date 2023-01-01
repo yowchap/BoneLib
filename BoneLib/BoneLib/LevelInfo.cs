@@ -1,4 +1,4 @@
-﻿using Il2CppSLZ.Marrow.Warehouse;
+﻿using SLZ.Marrow.Warehouse;
 
 namespace BoneLib
 {

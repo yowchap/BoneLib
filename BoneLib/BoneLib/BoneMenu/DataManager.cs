@@ -1,12 +1,12 @@
 ﻿using BoneLib.BoneMenu.UI;
-using MelonLoader;
-using Il2CppSLZ.Rig;
-using Il2CppSLZ.UI;
+using SLZ.Props;
+using SLZ.Rig;
+using SLZ.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using UnhollowerBaseLib;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -30,6 +30,8 @@ namespace BoneLib.BoneMenu
                     {
                         GameObject go = asset.Cast<GameObject>();
                         go.hideFlags = HideFlags.DontUnloadUnusedAsset;
+                        go.AddComponent<ButtonHoverClick>();
+                        go.AddComponent<GlassHandler>();
                         _bundleObjects.Add(go);
                     }
                 }
@@ -155,7 +157,7 @@ namespace BoneLib.BoneMenu
             {
                 Action optionButtonAction = () =>
                 {
-                    panelView.PAGESELECT(9);
+                    panelView.PAGESELECT(11);
                     MenuManager.SelectCategory(MenuManager.RootCategory);
                 };
 
@@ -167,12 +169,10 @@ namespace BoneLib.BoneMenu
 
             private static void InjectPage()
             {
-                Il2CppReferenceArray<GameObject> refArray = new Il2CppReferenceArray<GameObject>(10);
-
-                for (int i = 0; i <= 8; i++)
+                Il2CppReferenceArray<GameObject> refArray = new Il2CppReferenceArray<GameObject>(12);
+                for (int i = 0; i <= 10; i++)
                     refArray[i] = panelView.pages[i];
-
-                refArray[9] = UIManager.Instance.MainPage.gameObject;
+                refArray[11] = UIManager.Instance.MainPage.gameObject;
 
                 panelView.pages = refArray;
             }

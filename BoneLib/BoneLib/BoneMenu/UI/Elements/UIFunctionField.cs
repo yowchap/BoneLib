@@ -1,6 +1,6 @@
 ﻿using BoneLib.BoneMenu.Elements;
 using System;
-using Il2CppTMPro;
+using TMPro;
 using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI

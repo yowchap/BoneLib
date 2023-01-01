@@ -1,9 +1,7 @@
 ﻿using HarmonyLib;
 using System;
 using System.Runtime.InteropServices;
-using Il2CppInterop.Runtime;
-using Il2CppInterop.Runtime.InteropTypes;
-using System.Threading;
+using UnhollowerBaseLib;
 
 namespace BoneLib.Nullables
 {
@@ -72,7 +70,9 @@ namespace BoneLib.Nullables
         {
             IntPtr obj = IL2CPP.il2cpp_object_new(classPtr);
 
-            uint gcHandle = IL2CPP.il2cpp_gchandle_new(obj, false);
+            uint gcHandle = RuntimeSpecificsStore.ShouldUseWeakRefs(classPtr)
+                ? IL2CPP.il2cpp_gchandle_new_weakref(obj, false)
+                : IL2CPP.il2cpp_gchandle_new(obj, false);
             AccessTools.Field(typeof(Il2CppObjectBase), "myGcHandle").SetValue(this, gcHandle);
 
             if (nullable.HasValue)
@@ -102,7 +102,9 @@ namespace BoneLib.Nullables
 
             *(byte*)(dataPtr + hasValueOffset) = 1;
 
-            uint gcHandle = IL2CPP.il2cpp_gchandle_new(obj, false);
+            uint gcHandle = RuntimeSpecificsStore.ShouldUseWeakRefs(classPtr)
+                ? IL2CPP.il2cpp_gchandle_new_weakref(obj, false)
+                : IL2CPP.il2cpp_gchandle_new(obj, false);
 
             AccessTools.Field(typeof(Il2CppObjectBase), "myGcHandle").SetValue(this, gcHandle);
         }

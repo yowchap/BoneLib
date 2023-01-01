@@ -1,13 +1,13 @@
 ﻿using HarmonyLib;
 using MelonLoader;
-using Il2CppPuppetMasta;
-using Il2CppSLZ.AI;
-using Il2CppSLZ.Interaction;
-using Il2CppSLZ.Marrow.SceneStreaming;
-using Il2CppSLZ.Marrow.Utilities;
-using Il2CppSLZ.Props.Weapons;
-using Il2CppSLZ.Rig;
-using Il2CppSLZ.VRMK;
+using PuppetMasta;
+using SLZ.AI;
+using SLZ.Interaction;
+using SLZ.Marrow.SceneStreaming;
+using SLZ.Marrow.Utilities;
+using SLZ.Props.Weapons;
+using SLZ.Rig;
+using SLZ.VRMK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,9 +91,9 @@ namespace BoneLib
             CreateHook(typeof(BehaviourBaseNav).GetMethod("KillStart", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCStart), AccessTools.all));
             CreateHook(typeof(BehaviourBaseNav).GetMethod("KillEnd", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCEnd), AccessTools.all));
 
-            Il2Cpp.Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
-            Il2Cpp.Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
-            Il2Cpp.Player_Health.add_OnPlayerDeath(OnPlayerDeath);
+            Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
+            Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
+            Player_Health.add_OnPlayerDeath(OnPlayerDeath);
 
             while (delayedHooks.Count > 0)
             {

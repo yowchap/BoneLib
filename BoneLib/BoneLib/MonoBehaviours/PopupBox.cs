@@ -1,5 +1,5 @@
 ﻿using System;
-using Il2CppTMPro;
+using TMPro;
 using UnityEngine;
 
 namespace BoneLib.MonoBehaviours

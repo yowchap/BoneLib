@@ -1,7 +1,7 @@
-﻿using Il2CppPuppetMasta;
-using Il2CppSLZ.AI;
-using Il2CppSLZ.Combat;
-using Il2CppSLZ.Props.Weapons;
+﻿using PuppetMasta;
+using SLZ.AI;
+using SLZ.Combat;
+using SLZ.Props.Weapons;
 using System;
 using System.Linq;
 using UnityEngine;
