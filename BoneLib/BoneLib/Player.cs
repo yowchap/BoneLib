@@ -13,6 +13,7 @@ namespace BoneLib
         public static RigManager rigManager { get; private set; }
         public static PhysicsRig physicsRig { get; private set; }
         public static ControllerRig controllerRig { get; private set; }
+        public static RemapRig remapRig { get; private set; }
         public static UIRig uiRig { get; private set; }
 
         public static Hand leftHand { get; private set; }
@@ -37,6 +38,7 @@ namespace BoneLib
             rigManager = manager;
             physicsRig = manager?.physicsRig;
             controllerRig = manager?.ControllerRig;
+            remapRig = manager?.remapHeptaRig;
             uiRig = manager?.uiRig;
 
             leftController = manager?.ControllerRig?.leftController;
@@ -102,8 +104,8 @@ namespace BoneLib
         /// </summary>
         public static void RotatePlayer(float degrees)
         {
-            if (controllerRig != null)
-                controllerRig.SetTwist(degrees);
+            if (remapRig != null)
+                remapRig.SetTwist(degrees);
         }
     }
 }
