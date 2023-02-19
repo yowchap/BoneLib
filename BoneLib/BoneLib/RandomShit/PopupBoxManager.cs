@@ -386,30 +386,22 @@ namespace BoneLib.RandomShit
             boxGrip.rotationLimit = 180;
             boxGrip.rotationPriorityBuffer = 20;
 
-            boxGrip.sandwitchSize = 0.12f;
+            boxGrip.sandwichSize = 0.12f;
             boxGrip.edgePadding = 0.1f;
             boxGrip.sandwichHandPose = sandwichGrip;
             boxGrip.canBeSandwichedGrabbed = true;
-            boxGrip.sandwhichMinBreakForce = float.PositiveInfinity;
-            boxGrip.sandwhichMaxBreakForce = float.PositiveInfinity;
 
             boxGrip.edgeHandPose = edgeGrip;
             boxGrip.edgeHandPoseRadius = 0.05f;
             boxGrip.canBeEdgeGrabbed = true;
-            boxGrip.edgeMinBreakForce = 1000;
-            boxGrip.edgeMaxBreakForce = 2000;
 
             boxGrip.cornerHandPose = cornerGrip;
             boxGrip.cornerHandPoseRadius = 0.05f;
             boxGrip.canBeCornerGrabbed = true;
-            boxGrip.cornerMinBreakForce = 800;
-            boxGrip.cornerMaxBreakForce = 1600;
 
             boxGrip.faceHandPose = faceGrip;
             boxGrip.faceHandPoseRadius = 1;
             boxGrip.canBeFaceGrabbed = true;
-            boxGrip.faceMinBreakForce = 400;
-            boxGrip.faceMaxBreakForce = 600;
 
             boxGrip.enabledCorners = (BoxGrip.Corners)(-1);
             boxGrip.enabledEdges = (BoxGrip.Edges)(-1);
