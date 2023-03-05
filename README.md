@@ -47,13 +47,16 @@ OfflineMode = true
 
 **Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added skip intro pref, added BoneMenu
 
-**Lakatrazz:** BoneMenu improvements
+**Lakatrazz:** BoneMenu improvements, fixed issues after game updates
 
 **Trev:** LemonLoader support
 
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v2.2.1:
+- Fixed compatibility with bonelab patch 3
 
 #### v2.2.0:
 - Added LemonLoader support for quest modding
