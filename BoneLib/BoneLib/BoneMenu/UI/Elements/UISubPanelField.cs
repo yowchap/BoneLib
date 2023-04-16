@@ -1,4 +1,5 @@
 ﻿using BoneLib.BoneMenu.Elements;
+using Il2CppInterop.Runtime.Attributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -95,7 +96,8 @@ namespace BoneLib.BoneMenu.UI
             Elements.Clear();
             emptyObjects.Clear();
         }
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+
+        [HideFromIl2Cpp]
         private void AssignUIElement(MenuElement element)
         {
             UIElement uiElement = null;

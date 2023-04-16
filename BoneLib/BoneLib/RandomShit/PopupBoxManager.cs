@@ -1,14 +1,14 @@
 ﻿using BoneLib.MonoBehaviours;
 using MelonLoader;
-using SLZ.Combat;
-using SLZ.Interaction;
-using SLZ.Marrow.Data;
-using SLZ.Props;
-using SLZ.SFX;
+using Il2CppSLZ.Combat;
+using Il2CppSLZ.Interaction;
+using Il2CppSLZ.Marrow.Data;
+using Il2CppSLZ.Props;
+using Il2CppSLZ.SFX;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
@@ -231,7 +231,7 @@ namespace BoneLib.RandomShit
             }
 
             string jsonUrls = urlReq.downloadHandler.text; // return value is something like ["https://cdn.shibe.online/shibes/8f0792fcac8df87a5d2953031a837a2939fda430.jpg"]
-            string imageUrl = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(jsonUrls)[0];
+            string imageUrl = Il2CppNewtonsoft.Json.JsonConvert.DeserializeObject<string[]>(jsonUrls)[0];
 
             UnityWebRequest imageReq = UnityWebRequest.Get(imageUrl);
             imageReq.BeginWebRequest();

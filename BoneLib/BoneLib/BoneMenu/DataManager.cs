@@ -1,14 +1,15 @@
 ﻿using BoneLib.BoneMenu.UI;
-using SLZ.Props;
-using SLZ.Rig;
-using SLZ.UI;
+using Il2CppSLZ.Props;
+using Il2CppSLZ.Rig;
+using Il2CppSLZ.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using UnhollowerBaseLib;
+using Il2CppInterop.Runtime.Injection;
 using UnityEngine;
 using UnityEngine.UI;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 namespace BoneLib.BoneMenu
 {
@@ -65,40 +66,6 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        public static class Player
-        {
-            internal static void FindReferences()
-            {
-                _rigManager = BoneLib.Player.rigManager.GetComponent<RigManager>();
-                _uiRig = _rigManager.uiRig;
-            }
-
-            public static RigManager RigManager
-            {
-                get
-                {
-                    if (_rigManager is null || _rigManager.WasCollected)
-                        return null;
-
-                    return _rigManager;
-                }
-            }
-
-            public static UIRig UIRig
-            {
-                get
-                {
-                    if (_rigManager is null || _rigManager.WasCollected)
-                        return null;
-
-                    return _uiRig;
-                }
-            }
-
-            internal static RigManager _rigManager;
-            internal static UIRig _uiRig;
-        }
-
         public static class UI
         {
             public static PreferencesPanelView panelView;
@@ -138,9 +105,7 @@ namespace BoneLib.BoneMenu
 
             public static void InitializeReferences()
             {
-                Player._rigManager = BoneLib.Player.rigManager.GetComponent<RigManager>();
-                Player._uiRig = Player.RigManager.uiRig;
-                panelView = Player.UIRig.popUpMenu.preferencesPanelView;
+                panelView = Player.uiRig.popUpMenu.preferencesPanelView;
                 optionsPanel = panelView.pages[panelView.defaultPage];
                 _optionsGrid = optionsPanel.transform.Find("grid_Options");
             }

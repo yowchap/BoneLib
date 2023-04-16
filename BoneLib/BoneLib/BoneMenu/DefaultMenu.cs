@@ -1,10 +1,10 @@
 ﻿using BoneLib.Nullables;
 using BoneLib.RandomShit;
-using SLZ.Data;
-using SLZ.Marrow.Data;
-using SLZ.Marrow.Pool;
-using SLZ.Marrow.Warehouse;
-using SLZ.Player;
+using Il2CppSLZ.Data;
+using Il2CppSLZ.Marrow.Data;
+using Il2CppSLZ.Marrow.Pool;
+using Il2CppSLZ.Marrow.Warehouse;
+using Il2CppSLZ.Player;
 using UnityEngine;
 
 namespace BoneLib.BoneMenu

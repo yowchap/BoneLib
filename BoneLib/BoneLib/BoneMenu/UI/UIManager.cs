@@ -1,4 +1,5 @@
 ﻿using BoneLib.BoneMenu.Elements;
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -64,7 +65,7 @@ namespace BoneLib.BoneMenu.UI
             MenuCategory.OnElementCreated -= OnElementAdded;
         }
 
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [HideFromIl2Cpp]
         public void OnCategoryUpdated(MenuCategory category)
         {
             if (category == null)
@@ -78,13 +79,13 @@ namespace BoneLib.BoneMenu.UI
             MainPage.gameObject.SetActive(true);
         }
 
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [HideFromIl2Cpp]
         public void OnElementAdded(MenuCategory category, MenuElement element)
         {
             OnCategoryUpdated(category);
         }
 
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [HideFromIl2Cpp]
         public void OnElementRemoved(MenuCategory category, MenuElement element)
         {
             OnCategoryUpdated(category);

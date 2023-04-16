@@ -3,9 +3,9 @@ using BoneLib.BoneMenu.Elements;
 using BoneLib.MonoBehaviours;
 using BoneLib.RandomShit;
 using MelonLoader;
-using SLZ.Bonelab;
-using UnhollowerRuntimeLib;
+using Il2CppSLZ.Bonelab;
 using UnityEngine;
+using Il2CppInterop.Runtime.Injection;
 
 namespace BoneLib
 {
@@ -46,7 +46,6 @@ namespace BoneLib
 
         private void OnLevelInitialized(LevelInfo info)
         {
-            DataManager.Player.FindReferences();
             PopupBoxManager.CreateBaseAd();
 
             if (info.title == "00 - Main Menu" || info.title == "15 - Void G114")
