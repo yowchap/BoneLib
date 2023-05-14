@@ -96,6 +96,7 @@ namespace BoneLib
                 controller.timerHold = 0;
                 controller.holdTime_Rest = 0;
                 controller.canClick = true;
+                controller.fadeVolume.gameObject.SetActive(false); // Set black fog volume to inactive to prevent it never fading out
             }
         }
     }
