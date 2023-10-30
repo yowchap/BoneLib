@@ -88,7 +88,9 @@
     <Reference Include="UnhollowerRuntimeLib">
       <HintPath>..\..\References\MelonLoader\Managed\UnhollowerRuntimeLib.dll</HintPath>
     </Reference>
-    <Reference Include="UniTask, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
+    <Reference Include="UniTask">
+      <HintPath>..\..\References\MelonLoader\Managed\UniTask.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.ResourceManager">
       <HintPath>..\..\References\MelonLoader\Managed\Unity.ResourceManager.dll</HintPath>
     </Reference>
