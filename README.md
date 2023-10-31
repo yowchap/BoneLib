@@ -51,9 +51,14 @@ OfflineMode = true
 
 **Trev:** LemonLoader support
 
+**CarrionAndOn:** SpawnCrate helper methods
+
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v2.2.2:
+- Added SpawnCrate helper methods
 
 #### v2.2.1:
 - Fixed compatibility with bonelab patch 3
