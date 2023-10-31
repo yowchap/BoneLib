@@ -1,10 +1,8 @@
-﻿using BoneLib.Nullables;
-using BoneLib.RandomShit;
+﻿using BoneLib.RandomShit;
 using SLZ.Data;
-using SLZ.Marrow.Data;
-using SLZ.Marrow.Pool;
 using SLZ.Marrow.Warehouse;
 using SLZ.Player;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -41,43 +39,45 @@ namespace BoneLib.BoneMenu
 
             itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, () => SpawnUtilityGun());
             itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, () => SpawnNimbusGun());
+            itemSpawning.CreateFunctionElement("Spawn Random Gun", Color.white, () => SpawnRandomGun());
 
             funstuff.CreateFunctionElement("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
             funstuff.CreateFunctionElement("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
             funstuff.CreateFunctionElement("Spawn Bird Ad", Color.white, () => PopupBoxManager.CreateNewBirdPopup());
             funstuff.CreateFunctionElement("Spawn Cat Ad", Color.white, () => PopupBoxManager.CreateNewCatPopup());
+            
         }
 
         internal static void SpawnUtilityGun()
         {
             Transform head = Player.playerHead.transform;
-
             string barcode = "c1534c5a-5747-42a2-bd08-ab3b47616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
-
-            Spawnable spawnable = new Spawnable()
-            {
-                crateRef = reference
-            };
-
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnNimbusGun()
         {
             Transform head = Player.playerHead.transform;
-
             string barcode = "c1534c5a-6b38-438a-a324-d7e147616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+        }
+        internal static void SpawnRandomGun()
+        {
+            Transform head = Player.playerHead.transform;
 
-            Spawnable spawnable = new Spawnable()
+            List<Barcode> barcodes = new List<Barcode>();
+            foreach (var val in AssetWarehouse.Instance.InventoryRegistry.Values)
             {
-                crateRef = reference
-            };
+                var crateRef = new SpawnableCrateReference(val.Barcode);
+                var crate = crateRef.Crate;
+                if (crate != null && crate.Tags.Contains("Gun"))
+                    barcodes.Add(val.Barcode);
+            }
 
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+            int index = Random.RandomRangeInt(0, barcodes.Count);
+            Barcode barcode = barcodes[index];
+
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
         }
     }
 }

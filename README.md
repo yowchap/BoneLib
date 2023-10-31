@@ -39,7 +39,7 @@ OfflineMode = true
 
 ## Credits
 
-**Gnonme / L4rs / Adidasaurus:** Main developers
+**Gnonme / L4rs / Adi:** Main developers
 
 **Parzival:** Added enum with all game layers, improved documentation, made some extension method parameters optional
 

@@ -48,6 +48,7 @@ namespace BoneLib
         {
             DataManager.Player.FindReferences();
             PopupBoxManager.CreateBaseAd();
+            Audio.GetAudioMixers();
 
             if (info.title == "00 - Main Menu" || info.title == "15 - Void G114")
                 SkipIntro();
