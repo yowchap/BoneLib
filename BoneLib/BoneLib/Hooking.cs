@@ -140,6 +140,7 @@ namespace BoneLib
                 // @Todo(Parzival): Some levels aren't done loading when RigManager.Awake is called!
                 // Ideally this should be invoked right before the loading screen dissapears, but this is
                 // the closest I can get it for now.
+                // You could use Player_Health.MakeVignette, that's almost always called when the RM is fully ready and the level's loaded.
                 SafeActions.InvokeActionSafe(OnLevelInitialized, new LevelInfo(SceneStreamer.Session.Level));
             }
         }
