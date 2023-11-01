@@ -51,33 +51,13 @@ namespace BoneLib.BoneMenu
         internal static void SpawnUtilityGun()
         {
             Transform head = Player.playerHead.transform;
-
-            string barcode = "c1534c5a-5747-42a2-bd08-ab3b47616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
-
-            Spawnable spawnable = new Spawnable()
-            {
-                crateRef = reference
-            };
-
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.Spawngun, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnNimbusGun()
         {
             Transform head = Player.playerHead.transform;
-
-            string barcode = "c1534c5a-6b38-438a-a324-d7e147616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
-
-            Spawnable spawnable = new Spawnable()
-            {
-                crateRef = reference
-            };
-
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.Nimbusgun, head.position + head.forward, default, Vector3.one, false, null);
         }
     }
 }
