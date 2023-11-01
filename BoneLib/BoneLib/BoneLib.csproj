@@ -10,6 +10,7 @@
     <RootNamespace>BoneLib</RootNamespace>
     <AssemblyName>BoneLib</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>10.0</LangVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -142,6 +143,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Audio.cs" />
     <Compile Include="BoneMenu\DataManager.cs" />
     <Compile Include="BoneMenu\DefaultMenu.cs" />
     <Compile Include="BoneMenu\Elements\BoolElement.cs" />
@@ -192,10 +194,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>ECHO Copying BoneLib.dll and BoneLib.xml to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"
-
-rem ECHO Pushing BoneLib.dll to "/sdcard/Android/data/com.StressLevelZero.BONELAB/files/Mods"
-rem adb push "$(TargetPath)" /sdcard/Android/data/com.StressLevelZero.BONELAB/files/Mods</PostBuildEvent>
+COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).dll"
+COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"</PostBuildEvent>
   </PropertyGroup>
 </Project>

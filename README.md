@@ -39,7 +39,7 @@ OfflineMode = true
 
 ## Credits
 
-**Gnonme / L4rs / Adidasaurus:** Main developers
+**Gnonme / L4rs / Adi:** Main developers
 
 **Parzival:** Added enum with all game layers, improved documentation, made some extension method parameters optional
 
@@ -51,9 +51,14 @@ OfflineMode = true
 
 **Trev:** LemonLoader support
 
+**CarrionAndOn:** SpawnCrate helper methods
+
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v2.2.2:
+- Added SpawnCrate helper methods
 
 #### v2.2.1:
 - Fixed compatibility with bonelab patch 3

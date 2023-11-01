@@ -64,6 +64,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>ECHO Copying BoneLibUpdater.dll to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Plugins"
-COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Plugins"</PostBuildEvent>
+COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Plugins\$(ProjectName).dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿using BoneLib.Nullables;
+﻿using System.Collections.Generic;
+using BoneLib.Nullables;
 using BoneLib.RandomShit;
 using SLZ.Data;
 using SLZ.Marrow.Data;
@@ -41,6 +42,7 @@ namespace BoneLib.BoneMenu
 
             itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, () => SpawnUtilityGun());
             itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, () => SpawnNimbusGun());
+            itemSpawning.CreateFunctionElement("Spawn Random Gun", Color.white, () => SpawnRandomGun());
 
             funstuff.CreateFunctionElement("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
             funstuff.CreateFunctionElement("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
@@ -58,6 +60,25 @@ namespace BoneLib.BoneMenu
         {
             Transform head = Player.playerHead.transform;
             HelperMethods.SpawnCrate(CommonBarcodes.Misc.Nimbusgun, head.position + head.forward, default, Vector3.one, false, null);
+        }
+        
+        internal static void SpawnRandomGun()
+        {
+            Transform head = Player.playerHead.transform;
+
+            List<Barcode> barcodes = new List<Barcode>();
+            foreach (var val in AssetWarehouse.Instance.InventoryRegistry.Values)
+            {
+                var crateRef = new SpawnableCrateReference(val.Barcode);
+                var crate = crateRef.Crate;
+                if (crate != null && crate.Tags.Contains("Gun"))
+                    barcodes.Add(val.Barcode);
+            }
+
+            int index = Random.RandomRangeInt(0, barcodes.Count);
+            Barcode barcode = barcodes[index];
+
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
         }
     }
 }

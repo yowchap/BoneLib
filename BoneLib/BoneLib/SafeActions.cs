@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace BoneLib
 {
@@ -16,8 +19,11 @@ namespace BoneLib
                 }
                 catch (Exception ex)
                 {
+                    string asm = invoker.GetMethodInfo().DeclaringType.Assembly.FullName;
+                    MelonMod mod = MelonMod.RegisteredMelons.FirstOrDefault(i => i.MelonAssembly.Assembly.FullName == asm);
+
                     ModConsole.Error("Exception while invoking hook callback!");
-                    ModConsole.Error(ex.ToString());
+                    mod.LoggerInstance.Error(ex.ToString());
                 }
             }
         }
@@ -34,8 +40,11 @@ namespace BoneLib
                 }
                 catch (Exception ex)
                 {
+                    string asm = invoker.GetMethodInfo().DeclaringType.Assembly.FullName;
+                    MelonMod mod = MelonMod.RegisteredMelons.FirstOrDefault(i => i.MelonAssembly.Assembly.FullName == asm);
+
                     ModConsole.Error("Exception while invoking hook callback!");
-                    ModConsole.Error(ex.ToString());
+                    mod.LoggerInstance.Error(ex.ToString());
                 }
             }
         }
@@ -52,8 +61,11 @@ namespace BoneLib
                 }
                 catch (Exception ex)
                 {
+                    string asm = invoker.GetMethodInfo().DeclaringType.Assembly.FullName;
+                    MelonMod mod = MelonMod.RegisteredMelons.FirstOrDefault(i => i.MelonAssembly.Assembly.FullName == asm);
+
                     ModConsole.Error("Exception while invoking hook callback!");
-                    ModConsole.Error(ex.ToString());
+                    mod.LoggerInstance.Error(ex.ToString());
                 }
             }
         }
