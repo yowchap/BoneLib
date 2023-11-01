@@ -4,6 +4,7 @@ using BoneLib.RandomShit;
 using SLZ.Data;
 using SLZ.Marrow.Data;
 using SLZ.Marrow.Pool;
+using SLZ.Marrow.SceneStreaming;
 using SLZ.Marrow.Warehouse;
 using SLZ.Player;
 using UnityEngine;
@@ -40,9 +41,12 @@ namespace BoneLib.BoneMenu
             ammo.CreateIntElement("Medium Ammo", "#ff9d1c", mediumAmmoValue, 100, 0, int.MaxValue, (value) => mediumAmmoValue = value);
             ammo.CreateIntElement("Heavy Ammo", "#ff2f1c", heavyAmmoValue, 100, 0, int.MaxValue, (value) => heavyAmmoValue = value);
 
-            itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, () => SpawnUtilityGun());
-            itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, () => SpawnNimbusGun());
-            itemSpawning.CreateFunctionElement("Spawn Random Gun", Color.white, () => SpawnRandomGun());
+            itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, SpawnUtilityGun);
+            itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, SpawnNimbusGun);
+            itemSpawning.CreateFunctionElement("Spawn Random Gun", Color.white, SpawnRandomGun);
+            itemSpawning.CreateFunctionElement("Spawn Random Melee", Color.white, SpawnRandomMelee);
+            itemSpawning.CreateFunctionElement("Spawn Random NPC", Color.white, SpawnRandomNPC);
+            itemSpawning.CreateFunctionElement("Load Random Level", Color.white, LoadRandomLevel);
 
             funstuff.CreateFunctionElement("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
             funstuff.CreateFunctionElement("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
@@ -66,19 +70,37 @@ namespace BoneLib.BoneMenu
         {
             Transform head = Player.playerHead.transform;
 
-            List<Barcode> barcodes = new List<Barcode>();
-            foreach (var val in AssetWarehouse.Instance.InventoryRegistry.Values)
-            {
-                var crateRef = new SpawnableCrateReference(val.Barcode);
-                var crate = crateRef.Crate;
-                if (crate != null && crate.Tags.Contains("Gun"))
-                    barcodes.Add(val.Barcode);
-            }
-
-            int index = Random.RandomRangeInt(0, barcodes.Count);
-            Barcode barcode = barcodes[index];
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Guns.All.Count);
+            string barcode = CommonBarcodes.Guns.All[index];
 
             HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+        }
+
+        internal static void SpawnRandomMelee()
+        {
+            Transform head = Player.playerHead.transform;
+            
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Melee.All.Count);
+            string barcode = CommonBarcodes.Melee.All[index];
+            
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+        }
+        
+        internal static void SpawnRandomNPC()
+        {
+            Transform player = Player.rigManager.artOutputRig.transform;
+            int index = Random.RandomRangeInt(0, CommonBarcodes.NPCs.All.Count);
+            string barcode = CommonBarcodes.NPCs.All[index];
+            
+            HelperMethods.SpawnCrate(barcode, player.position + player.forward, default, Vector3.one, false, null);
+        }
+
+        internal static void LoadRandomLevel()
+        {
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
+            string barcode = CommonBarcodes.Maps.All[index];
+            
+            SceneStreamer.Load(barcode, CommonBarcodes.Maps.LoadDefault);
         }
     }
 }

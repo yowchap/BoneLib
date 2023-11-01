@@ -1,4 +1,5 @@
-﻿using SLZ.Marrow.SceneStreaming;
+﻿using System.Collections.Generic;
+using SLZ.Marrow.SceneStreaming;
 
 namespace BoneLib
 {
@@ -12,6 +13,30 @@ namespace BoneLib
         /// </summary>
         public static class Avatars
         {
+            public static readonly List<string> All = new()
+            {
+                Heavy,
+                Fast,
+                Short,
+                Tall,
+                Strong,
+                Light,
+                Jimmy,
+                FordBW,
+                FordBL,
+                PeasantFemaleA,
+                PeasantFemaleB,
+                PeasantFemaleC,
+                PeasantMaleA,
+                PeasantMaleB,
+                PeasantMaleC,
+                Nullbody,
+                Skeleton,
+                SecurityGuard,
+                DuckSeasonDog,
+                PolyBlank,
+                PolyDebugger
+            };
             public const string Heavy = "fa534c5a83ee4ec6bd641fec424c4142.Avatar.Heavy";
             public const string Fast = "fa534c5a83ee4ec6bd641fec424c4142.Avatar.Fast";
             public const string Short = "fa534c5a83ee4ec6bd641fec424c4142.Avatar.CharFurv4GB";
@@ -40,6 +65,41 @@ namespace BoneLib
         /// </summary>
         public static class Maps
         {
+            public static readonly List<string> All = new()
+            {
+                MainMenu,
+                Descent,
+                BLHub,
+                LongRun,
+                MineDive,
+                BigAnomaly,
+                StreetPuncher,
+                SprintBridge,
+                MagmaGate,
+                Moonbase,
+                MonogonMotorway,
+                PillarClimb,
+                BigAnomaly2,
+                Ascent,
+                Home,
+                VoidG114,
+                Baseline,
+                Tuscany,
+                MuseumBasement,
+                HalfwayPark,
+                GunRange,
+                Holochamber,
+                BigBoneBowling,
+                Mirror,
+                NeonTrial,
+                DropPit,
+                TunnelTipper,
+                FantasyArena,
+                ContainerYard,
+                DungeonWarrior,
+                Rooftops,
+                NeonParkour
+            };
             // Story
             public const string MainMenu = "c2534c5a-80e1-4a29-93ca-f3254d656e75";
             public const string Descent = "c2534c5a-4197-4879-8cd3-4a695363656e";
@@ -88,6 +148,33 @@ namespace BoneLib
         /// </summary>
         public static class NPCs
         {
+            public static readonly List<string> All = new()
+            {
+                Crablet,
+                CrabletPlus,
+                Cultist,
+                EarlyExitZombie,
+                Ford,
+                FordVRJunkie,
+                Nullbody,
+                NullbodyAgent,
+                NullbodyCorrupted,
+                Nullrat,
+                OmniProjectorHazmat,
+                OmniTurret,
+                PeasantFemaleA,
+                PeasantFemaleB,
+                PeasantFemaleC,
+                PeasantMaleA,
+                PeasantMaleB,
+                PeasantMaleC,
+                PeasantNull,
+                SecurityGuard,
+                Skeleton,
+                SkeletonFireMage,
+                SkeletonSteel,
+                VoidTurret
+            };
             public const string Crablet = "c1534c5a-4583-48b5-ac3f-eb9543726162";
             public const string CrabletPlus = "c1534c5a-af28-46cb-84c1-012343726162";
             public const string Cultist = "SLZ.BONELAB.Content.Spawnable.NPCCultist";
@@ -119,6 +206,45 @@ namespace BoneLib
         /// </summary>
         public static class Guns
         {
+            public static readonly List<string> All = new()
+            {
+                M1911,
+                Eder22,
+                RedEder22,
+                eHGBlaster,
+                Gruber,
+                M9,
+                P350,
+                PT8Alaris,
+                Stapler,
+                AKM,
+                Garand,
+                M16ACOG,
+                M16Holosight,
+                M16IronSights,
+                M16LaserForegrip,
+                MK18HoloForegrip,
+                MK18Holosight,
+                MK18IronSights,
+                MK18LaserForegrip,
+                MK18Naked,
+                MK18Sabrelake,
+                FAB,
+                ShotgunWithHolosight,
+                M4,
+                DuckSeasonShotgun,
+                MP5,
+                MP5KFlashlight,
+                MP5KHolosight,
+                MP5KIronsights,
+                MP5KLaser,
+                MP5KSabrelake,
+                PDRC,
+                UMP,
+                UZI,
+                Vector
+            };
+
             // Pistols
             public const string M1911 = "c1534c5a-fcfc-4f43-8fb0-d29531393131";
             public const string Eder22 = "c1534c5a-2a4f-481f-8542-cc9545646572";
@@ -165,6 +291,47 @@ namespace BoneLib
         /// </summary>
         public static class Melee
         {
+            public static readonly List<string> All = new()
+            {
+                BarbedBat,
+                BaseballBat,
+                Baseball,
+                Baton,
+                Crowbar,
+                ElectricGuitar,
+                FryingPan,
+                GolfClub,
+                Hammer,
+                HandHammer,
+                LeadPipe,
+                MorningStar,
+                Shovel,
+                Sledgehammer,
+                SpikedClub,
+                TrashcanLid,
+                VikingShield,
+                Warhammer,
+                Wrench,
+                AxeDouble,
+                AxeFirefighter,
+                AxeHorror,
+                BastardSword,
+                ChefKnife,
+                Cleaver,
+                CombatKnife,
+                Dagger,
+                HalfSword,
+                Hatchet,
+                IceAxe,
+                Katana,
+                Katar,
+                Kunai,
+                Machete,
+                NorseAxe,
+                Pickaxe,
+                Spear,
+                SwordClaymore
+            };
             // Blunt
             public const string BarbedBat = "c1534c5a-e962-46dd-b1ef-f39542617262";
             public const string BaseballBat = "c1534c5a-6441-40aa-a070-909542617365";
@@ -212,6 +379,13 @@ namespace BoneLib
         /// </summary>
         public static class Misc
         {
+            public static readonly List<string> All = new()
+            {
+                GoKart,
+                Spawngun,
+                Nimbusgun,
+                Constrainer
+            };
             public const string GoKart = "fa534c5a83ee4ec6bd641fec424c4142.Spawnable.VehicleGokart";
             public const string Spawngun = "c1534c5a-5747-42a2-bd08-ab3b47616467";
             public const string Nimbusgun = "c1534c5a-6b38-438a-a324-d7e147616467";
