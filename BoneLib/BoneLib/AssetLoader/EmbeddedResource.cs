@@ -4,9 +4,8 @@ namespace BoneLib.AssetLoader;
 
 public class EmbeddedResource
 {
-    public static byte[] GetResourceBytes(string name)
+    public static byte[] GetResourceBytes(Assembly assembly, string name)
     {
-        var assembly = Assembly.GetExecutingAssembly();
         foreach (var resource in assembly.GetManifestResourceNames())
         {
             if (resource.Contains(name))
