@@ -57,6 +57,11 @@ OfflineMode = true
 
 ## Changelogs (BoneLib)
 
+#### v2.3.0:
+- Added Audio class with references to mixers
+- Added CommonBarcodes for easy item spawning
+- Improved error logging
+
 #### v2.2.2:
 - Added SpawnCrate helper methods
 
