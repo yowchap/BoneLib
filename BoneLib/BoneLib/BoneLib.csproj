@@ -143,6 +143,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssetLoader\EmbeddedBundle.cs" />
+    <Compile Include="AssetLoader\EmbeddedResource.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="BoneMenu\DataManager.cs" />
     <Compile Include="BoneMenu\DefaultMenu.cs" />
@@ -177,6 +179,7 @@
     <Compile Include="ModConsole.cs" />
     <Compile Include="ModPref.cs" />
     <Compile Include="MonoBehaviours\PopupBox.cs" />
+    <Compile Include="Notifications.cs" />
     <Compile Include="Nullables\NullableMethodExtensions.cs" />
     <Compile Include="Nullables\BoxedNullable.cs" />
     <Compile Include="Player.cs" />
@@ -190,6 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\bonemenu.android.pack" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\notifications.bundle" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\notifications.android.bundle" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

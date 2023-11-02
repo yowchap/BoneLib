@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using BoneLib.Nullables;
 using SLZ.Marrow.Data;
 using SLZ.Marrow.Pool;
+using SLZ.Marrow.SceneStreaming;
 using SLZ.Marrow.Warehouse;
 using UnityEngine;
 
@@ -66,6 +67,15 @@ namespace BoneLib
             };
             AssetSpawner.Register(spawnable);
             AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy,new BoxedNullable<int>(null), spawnAction);
+        }
+        
+        /// <summary>
+        /// Checks if the player is in a loading screen or not
+        /// </summary>
+        /// <returns>True if player is loading, false if not</returns>
+        public static bool IsLoading()
+        {
+            return SceneStreamer.Session.Status == StreamStatus.LOADING;
         }
     }
 }
