@@ -36,6 +36,7 @@ namespace BoneLib.Notifications;
                 Information = assetBundle.LoadPersistentAsset<Texture2D>("Assets/information.png");
                 Warning = assetBundle.LoadPersistentAsset<Texture2D>("Assets/warning.png");
                 Error = assetBundle.LoadPersistentAsset<Texture2D>("Assets/error.png");
+                Success = assetBundle.LoadPersistentAsset<Texture2D>("Assets/success.png");
             }
         }
     }
@@ -155,9 +156,14 @@ namespace BoneLib.Notifications;
         public float PopupLength = 2f;
 
         /// <summary>
-        /// The type of notification this is. Changes the customIcon.
+        /// The type of notification this is.
         /// </summary>
         public NotificationType Type = NotificationType.Information;
+        
+        /// <summary>
+        /// The customIcon to use. Only used if <see cref="Type"/> is <see cref="NotificationType.CustomIcon"/>.
+        /// </summary>
+        public Texture2D CustomIcon = null;
     }
 
     public static class Notifier
@@ -168,18 +174,14 @@ namespace BoneLib.Notifications;
         public static ulong NotificationNumber = 0;
 
         private static bool _hasEnabledTutorialRig = false;
-        
-        private static Texture2D _customIcon = null;
 
         
         /// <summary>
         /// Sends a notification to the player.
         /// </summary>
         /// <param name="notification">The notification</param>
-        /// <param name="customIcon">If you're using a custom icon, specify the texture here. The texture should be 336x336.</param>
-        public static void Send(Notification notification, Texture2D customIcon = null) {
+        public static void Send(Notification notification) {
             QueueNotification(notification);
-            _customIcon = customIcon;
         }
 
         private static void QueueNotification(Notification notification) { 
@@ -211,7 +213,7 @@ namespace BoneLib.Notifications;
                     NotificationType.Error => NotifAssets.Error,
                     NotificationType.Success => NotifAssets.Success,
                     NotificationType.Information => NotifAssets.Information,
-                    NotificationType.CustomIcon => _customIcon,
+                    NotificationType.CustomIcon => notification.CustomIcon,
                     _ => NotifAssets.Information
                 };
                 Sprite incomingSprite = Sprite.Create(incomingTexture, new Rect(0.0f, 0.0f, incomingTexture.width, incomingTexture.height), new Vector2(0.5f, 0.5f), 100.0f);
@@ -221,7 +223,6 @@ namespace BoneLib.Notifications;
                 headTitles.CUSTOMDISPLAY(incomingTitle, incomingSubTitle, incomingSprite, holdTime);
                 headTitles.sr_element.sprite = incomingSprite;
             }
-            _customIcon = null;
         }
 
         private static void EnableTutorialRig() {
