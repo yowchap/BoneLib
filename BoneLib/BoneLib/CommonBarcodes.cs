@@ -7,7 +7,7 @@ namespace BoneLib
     /// Holds common barcodes for BONELAB crates.
     /// </summary>
     public static class CommonBarcodes
-    {  
+    {
         /// <summary>
         /// All avatar barcodes
         /// </summary>
@@ -59,7 +59,7 @@ namespace BoneLib
             public const string PolyBlank = "c3534c5a-94b2-40a4-912a-24a8506f6c79";
             public const string PolyDebugger = "SLZ.BONELAB.NoBuild.Avatar.PolyDebugger";
         }
-        
+
         /// <summary>
         /// All map barcodes
         /// </summary>
@@ -142,7 +142,7 @@ namespace BoneLib
             public const string LoadDefault = "fa534c5a83ee4ec6bd641fec424c4142.Level.DefaultLoad";
             public const string LoadMod = "SLZ.BONELAB.CORE.Level.LevelModLevelLoad";
         }
-        
+
         /// <summary>
         /// All NPC barcodes
         /// </summary>
@@ -200,7 +200,7 @@ namespace BoneLib
             public const string SkeletonSteel = "c1534c5a-a750-44ca-9730-b487536b656c";
             public const string VoidTurret = "c1534c5a-290e-4d56-9b8e-ad95566f6964";
         }
-        
+
         /// <summary>
         /// All gun barcodes
         /// </summary>
@@ -230,7 +230,7 @@ namespace BoneLib
                 MK18Naked,
                 MK18Sabrelake,
                 FAB,
-                ShotgunWithHolosight,
+                M590A1,
                 M4,
                 DuckSeasonShotgun,
                 MP5,
@@ -270,7 +270,7 @@ namespace BoneLib
             public const string MK18Sabrelake = "c1534c5a-4b3e-4288-849c-ce955269666c";
             // Shotguns
             public const string FAB = "c1534c5a-2774-48db-84fd-778447756e46";
-            public const string ShotgunWithHolosight = "c1534c5a-7f05-402f-9320-609647756e35";
+            public const string M590A1 = "c1534c5a-7f05-402f-9320-609647756e35";
             public const string M4 = "c1534c5a-e0b5-4d4b-9df3-567147756e4d";
             public const string DuckSeasonShotgun = "c1534c5a-571f-43dc-8bc6-8e9553686f74";
             // SMGs
@@ -285,7 +285,7 @@ namespace BoneLib
             public const string UZI = "c1534c5a-8d03-42de-93c7-f595534d4755";
             public const string Vector = "c1534c5a-4c47-428d-b5a5-b05747756e56";
         }
-        
+
         /// <summary>
         /// All melee weapon barcodes
         /// </summary>
@@ -373,7 +373,7 @@ namespace BoneLib
             public const string Spear = "c1534c5a-a97f-4bff-b512-e44d53706561";
             public const string SwordClaymore = "c1534c5a-b59c-4790-9b09-499553776f72";
         }
-        
+
         /// <summary>
         /// Contains extra possibly useful barcodes that wouldn't get their own category.
         /// </summary>
@@ -382,14 +382,28 @@ namespace BoneLib
             public static readonly List<string> All = new()
             {
                 GoKart,
-                Spawngun,
-                Nimbusgun,
-                Constrainer
+                SpawnGun,
+                NimbusGun,
+                Constrainer,
+                BalloonGun,
+                DevManipulator,
+                GravityCup,
+                GravityPlate,
+                PowerPuncher,
+                BoardGun,
+                OmniWay,
             };
             public const string GoKart = "fa534c5a83ee4ec6bd641fec424c4142.Spawnable.VehicleGokart";
-            public const string Spawngun = "c1534c5a-5747-42a2-bd08-ab3b47616467";
-            public const string Nimbusgun = "c1534c5a-6b38-438a-a324-d7e147616467";
+            public const string OmniWay = "fa534c5a868247138f50c62e424c4144.Spawnable.OmniWay";
+            public const string SpawnGun = "c1534c5a-5747-42a2-bd08-ab3b47616467";
+            public const string NimbusGun = "c1534c5a-6b38-438a-a324-d7e147616467";
+            public const string BoardGun = "c1534c5a-e777-4d15-b0c1-3195426f6172";
+            public const string BalloonGun = "c1534c5a-e963-4a7c-8c7e-1195546f7942";
             public const string Constrainer = "c1534c5a-3813-49d6-a98c-f595436f6e73";
+            public const string DevManipulator = "c1534c5a-c6a8-45d0-aaa2-2c954465764d";
+            public const string GravityCup = "c1534c5a-87ce-436d-b00c-ef9547726176";
+            public const string GravityPlate = "c1534c5a-a1c3-437b-85ac-e09547726176";
+            public const string PowerPuncher = " c1534c5a-cebf-42cc-be3a-4595506f7765";
         }
     }
 }
