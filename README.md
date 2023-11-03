@@ -51,7 +51,7 @@ OfflineMode = true
 
 **Trev:** LemonLoader support
 
-**CarrionAndOn:** SpawnCrate helper methods, added a class with commonly used barcodes
+**CarrionAndOn:** SpawnCrate helper methods, added a class with commonly used barcodes, added a notification system, added helper methods for loading stuff from embedded resources
 
 <br>
 
