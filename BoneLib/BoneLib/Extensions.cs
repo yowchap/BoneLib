@@ -4,7 +4,6 @@ using SLZ.Combat;
 using SLZ.Props.Weapons;
 using System;
 using System.Linq;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace BoneLib

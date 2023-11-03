@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using BoneLib.BoneMenu;
+﻿using BoneLib.BoneMenu;
 using BoneLib.BoneMenu.Elements;
 using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
@@ -31,7 +30,7 @@ namespace BoneLib
             Hooking.InitHooks();
 
             MenuManager.SetRoot(new MenuCategory("BoneMenu", Color.white));
-            
+
             DefaultMenu.CreateDefaultElements();
 
             NotifAssets.SetupBundles();

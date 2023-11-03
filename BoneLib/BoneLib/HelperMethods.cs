@@ -73,9 +73,6 @@ namespace BoneLib
         /// Checks if the player is in a loading screen or not
         /// </summary>
         /// <returns>True if player is loading, false if not</returns>
-        public static bool IsLoading()
-        {
-            return SceneStreamer.Session.Status == StreamStatus.LOADING;
-        }
+        public static bool IsLoading() => SceneStreamer.Session.Status == StreamStatus.LOADING;
     }
 }

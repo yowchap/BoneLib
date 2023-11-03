@@ -1,24 +1,26 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
 
-namespace BoneLib.AssetLoader;
-
-public class EmbeddedResource
+namespace BoneLib.AssetLoader
 {
-    public static byte[] GetResourceBytes(Assembly assembly, string name)
+    public class EmbeddedResource
     {
-        foreach (var resource in assembly.GetManifestResourceNames())
+        public static byte[] GetResourceBytes(Assembly assembly, string name)
         {
-            if (resource.Contains(name))
+            foreach (string resource in assembly.GetManifestResourceNames())
             {
-                using (var resFilestream = assembly.GetManifestResourceStream(resource))
+                if (resource.Contains(name))
                 {
-                    if (resFilestream == null) return null;
-                    var ba = new byte[resFilestream.Length];
-                    resFilestream.Read(ba, 0, ba.Length);
-                    return ba;
+                    using (Stream resFilestream = assembly.GetManifestResourceStream(resource))
+                    {
+                        if (resFilestream == null) return null;
+                        byte[] byteArr = new byte[resFilestream.Length];
+                        resFilestream.Read(byteArr, 0, byteArr.Length);
+                        return byteArr;
+                    }
                 }
             }
+            return null;
         }
-        return null;
     }
 }

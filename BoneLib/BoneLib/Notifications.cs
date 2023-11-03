@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using BoneLib.AssetLoader;
+using SLZ.Bonelab;
+using SLZ.Rig;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using BoneLib.AssetLoader;
 using UnityEngine;
 
-namespace BoneLib.Notifications;
-    
+namespace BoneLib.Notifications
+{
     // most of this comes from Fusion, with permission to use it here
 
     public static class NotifAssets
@@ -19,32 +19,26 @@ namespace BoneLib.Notifications;
 
         public static void SetupBundles()
         {
-            var assembly = Assembly.GetExecutingAssembly();
+            Assembly assembly = Assembly.GetExecutingAssembly();
             const string androidPath = "BoneLib.Resources.notifications.android.bundle";
             const string windowsPath = "BoneLib.Resources.notifications.bundle";
-            if (HelperMethods.IsAndroid())
-            {
-                var assetBundle = EmbeddedBundle.LoadFromAssembly(assembly, androidPath);
-                Information = assetBundle.LoadPersistentAsset<Texture2D>("Assets/information.png");
-                Warning = assetBundle.LoadPersistentAsset<Texture2D>("Assets/warning.png");
-                Error = assetBundle.LoadPersistentAsset<Texture2D>("Assets/error.png");
-                Success = assetBundle.LoadPersistentAsset<Texture2D>("Assets/success.png");
-            }
-            else
-            {
-                var assetBundle = EmbeddedBundle.LoadFromAssembly(assembly, windowsPath);
-                Information = assetBundle.LoadPersistentAsset<Texture2D>("Assets/information.png");
-                Warning = assetBundle.LoadPersistentAsset<Texture2D>("Assets/warning.png");
-                Error = assetBundle.LoadPersistentAsset<Texture2D>("Assets/error.png");
-                Success = assetBundle.LoadPersistentAsset<Texture2D>("Assets/success.png");
-            }
+
+            string path = HelperMethods.IsAndroid() ? androidPath : windowsPath;
+            AssetBundle assetBundle = EmbeddedBundle.LoadFromAssembly(assembly, path);
+
+            Information = assetBundle.LoadPersistentAsset<Texture2D>("Assets/information.png");
+            Warning = assetBundle.LoadPersistentAsset<Texture2D>("Assets/warning.png");
+            Error = assetBundle.LoadPersistentAsset<Texture2D>("Assets/error.png");
+            Success = assetBundle.LoadPersistentAsset<Texture2D>("Assets/success.png");
+
         }
     }
 
     /// <summary>
     /// The basic types of notifications that can be sent.
     /// </summary>
-    public enum NotificationType {
+    public enum NotificationType
+    {
         /// <summary>
         /// Used to inform the user.
         /// </summary>
@@ -64,7 +58,7 @@ namespace BoneLib.Notifications;
         /// Used when the user or program performs a task and it suceeds.
         /// </summary>
         Success = 3,
-        
+
         /// <summary>
         /// Lets the user specify an customIcon
         /// </summary>
@@ -75,7 +69,8 @@ namespace BoneLib.Notifications;
     /// <summary>
     /// The class used to supply text in a notification.
     /// </summary>
-    public struct NotificationText {
+    public struct NotificationText
+    {
         /// <summary>
         /// The text.
         /// </summary>
@@ -93,9 +88,12 @@ namespace BoneLib.Notifications;
 
         public NotificationText(string text) : this(text, Color.white) { }
 
-        public NotificationText(string text, Color color, bool richText = false) {
-            if (!richText) {
-                text = text.RemoveRichText();
+        public NotificationText(string text, Color color, bool richText = false)
+        {
+            if (!richText)
+            {
+                Regex rich = new(@"<[^>]*>");
+                text = rich.Replace(text, string.Empty);
             }
 
             this.Text = text;
@@ -103,23 +101,7 @@ namespace BoneLib.Notifications;
             this.RichText = richText;
         }
 
-        public static implicit operator NotificationText(string text) {
-            return new NotificationText(text);
-        }
-    }
-
-    public static class Text
-    {
-        public static string RemoveRichText(this string str) {
-            Regex rich = new(@"<[^>]*>");
-            string plainText = str;
-
-            if (rich.IsMatch(plainText)) {
-                plainText = rich.Replace(plainText, string.Empty);
-            }
-
-            return plainText;
-        }
+        public static implicit operator NotificationText(string text) => new NotificationText(text);
     }
 
 
@@ -159,7 +141,7 @@ namespace BoneLib.Notifications;
         /// The type of notification this is.
         /// </summary>
         public NotificationType Type = NotificationType.Information;
-        
+
         /// <summary>
         /// The customIcon to use. Only used if <see cref="Type"/> is <see cref="NotificationType.CustomIcon"/>.
         /// </summary>
@@ -175,28 +157,32 @@ namespace BoneLib.Notifications;
 
         private static bool _hasEnabledTutorialRig = false;
 
-        
+
         /// <summary>
         /// Sends a notification to the player.
         /// </summary>
         /// <param name="notification">The notification</param>
-        public static void Send(Notification notification) {
+        public static void Send(Notification notification)
+        {
             QueueNotification(notification);
         }
 
-        private static void QueueNotification(Notification notification) { 
+        private static void QueueNotification(Notification notification)
+        {
             QueuedNotifications.Enqueue(notification);
         }
 
-        private static void DequeueNotification() {
-            var notification = QueuedNotifications.Dequeue();
+        private static void DequeueNotification()
+        {
+            Notification notification = QueuedNotifications.Dequeue();
 
             // Show to the player
-            var rm = Player.rigManager;
+            RigManager rm = Player.rigManager;
 
-            if (notification.IsPopup && rm != null) {
-                var tutorialRig = rm.tutorialRig;
-                var headTitles = tutorialRig.headTitles;
+            if (notification.IsPopup && rm != null)
+            {
+                TutorialRig tutorialRig = rm.tutorialRig;
+                HeadTitles headTitles = tutorialRig.headTitles;
 
                 EnableTutorialRig();
 
@@ -225,12 +211,14 @@ namespace BoneLib.Notifications;
             }
         }
 
-        private static void EnableTutorialRig() {
-            var rm = Player.rigManager;
+        private static void EnableTutorialRig()
+        {
+            RigManager rm = Player.rigManager;
 
-            if (rm != null) {
-                var tutorialRig = rm.tutorialRig;
-                var headTitles = tutorialRig.headTitles;
+            if (rm != null)
+            {
+                TutorialRig tutorialRig = rm.tutorialRig;
+                HeadTitles headTitles = tutorialRig.headTitles;
 
                 // Make sure the tutorial rig/head titles are enabled
                 tutorialRig.gameObject.SetActive(true);
@@ -238,12 +226,14 @@ namespace BoneLib.Notifications;
             }
         }
 
-        private static bool IsPlayingNotification() {
-            var rm = Player.rigManager;
+        private static bool IsPlayingNotification()
+        {
+            RigManager rm = Player.rigManager;
 
-            if (rm != null) {
-                var tutorialRig = rm.tutorialRig;
-                var headTitles = tutorialRig.headTitles;
+            if (rm != null)
+            {
+                TutorialRig tutorialRig = rm.tutorialRig;
+                HeadTitles headTitles = tutorialRig.headTitles;
 
                 return headTitles.headFollower.gameObject.activeInHierarchy;
             }
@@ -251,24 +241,29 @@ namespace BoneLib.Notifications;
             return false;
         }
 
-        
 
-        internal static void OnUpdate() {
+
+        internal static void OnUpdate()
+        {
             // Make sure we aren't loading so we can dequeue existing notifications
-            if (QueuedNotifications.Count > 0 && !HelperMethods.IsLoading() && Player.rigManager != null) {
+            if (QueuedNotifications.Count > 0 && !HelperMethods.IsLoading() && Player.rigManager != null)
+            {
                 // Enable the tutorial rig a frame before showing notifs
-                if (!_hasEnabledTutorialRig) {
+                if (!_hasEnabledTutorialRig)
+                {
                     EnableTutorialRig();
                     _hasEnabledTutorialRig = true;
                 }
-                else {
-                    // Dequeue notifications
-                    if (QueuedNotifications.Count > 0 && !IsPlayingNotification()) {
-                        DequeueNotification();
-                    }
+                // Dequeue notifications
+                else if (QueuedNotifications.Count > 0 && !IsPlayingNotification())
+                {
+                    DequeueNotification();
                 }
             }
             else
+            {
                 _hasEnabledTutorialRig = false;
+            }
         }
     }
+}
