@@ -143,8 +143,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssetLoader\EmbeddedBundle.cs" />
-    <Compile Include="AssetLoader\EmbeddedResource.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="BoneMenu\DataManager.cs" />
     <Compile Include="BoneMenu\DefaultMenu.cs" />

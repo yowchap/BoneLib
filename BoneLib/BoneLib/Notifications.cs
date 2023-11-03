@@ -1,5 +1,4 @@
-﻿using BoneLib.AssetLoader;
-using SLZ.Bonelab;
+﻿using SLZ.Bonelab;
 using SLZ.Rig;
 using System.Collections.Generic;
 using System.Reflection;
@@ -24,7 +23,7 @@ namespace BoneLib.Notifications
             const string windowsPath = "BoneLib.Resources.notifications.bundle";
 
             string path = HelperMethods.IsAndroid() ? androidPath : windowsPath;
-            AssetBundle assetBundle = EmbeddedBundle.LoadFromAssembly(assembly, path);
+            AssetBundle assetBundle = HelperMethods.LoadEmbeddedAssetBundle(assembly, path);
 
             Information = assetBundle.LoadPersistentAsset<Texture2D>("Assets/information.png");
             Warning = assetBundle.LoadPersistentAsset<Texture2D>("Assets/warning.png");

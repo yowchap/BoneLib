@@ -7,6 +7,9 @@ using SLZ.Marrow.Pool;
 using SLZ.Marrow.SceneStreaming;
 using SLZ.Marrow.Warehouse;
 using UnityEngine;
+using System.Linq;
+using System.Reflection;
+using System.IO;
 
 namespace BoneLib
 {
@@ -47,9 +50,9 @@ namespace BoneLib
                 crateRef = crateRef,
             };
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy,new BoxedNullable<int>(null), spawnAction);
+            AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy, new BoxedNullable<int>(null), spawnAction);
         }
-        
+
         /// <summary>
         /// Spawns a crate from a crate reference.
         /// </summary>
@@ -66,13 +69,74 @@ namespace BoneLib
                 crateRef = crateReference,
             };
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy,new BoxedNullable<int>(null), spawnAction);
+            AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy, new BoxedNullable<int>(null), spawnAction);
         }
-        
+
         /// <summary>
         /// Checks if the player is in a loading screen or not
         /// </summary>
         /// <returns>True if player is loading, false if not</returns>
         public static bool IsLoading() => SceneStreamer.Session.Status == StreamStatus.LOADING;
+
+        /// <summary>
+        /// Loads an embedded assetbundle
+        /// </summary>
+        public static AssetBundle LoadEmbeddedAssetBundle(Assembly assembly, string name)
+        {
+            string[] manifestResources = assembly.GetManifestResourceNames();
+            AssetBundle bundle = null;
+            if (manifestResources.Contains(name))
+            {
+                ModConsole.Msg($"Loading embedded resource data {name}...", LoggingMode.DEBUG);
+                using Stream str = assembly.GetManifestResourceStream(name);
+                using MemoryStream memoryStream = new MemoryStream();
+
+                str.CopyTo(memoryStream);
+                ModConsole.Msg("Done!", LoggingMode.DEBUG);
+                byte[] resource = memoryStream.ToArray();
+
+                ModConsole.Msg($"Loading assetBundle from data {name}, please be patient...", LoggingMode.DEBUG);
+                bundle = AssetBundle.LoadFromMemory(resource);
+                ModConsole.Msg("Done!", LoggingMode.DEBUG);
+            }
+            return bundle;
+        }
+
+        /// <summary>
+        /// Loads an asset from an assetbundle
+        /// </summary>
+        public static T LoadPersistentAsset<T>(this AssetBundle assetBundle, string name) where T : UnityEngine.Object
+        {
+            UnityEngine.Object asset = assetBundle.LoadAsset(name);
+
+            if (asset != null)
+            {
+                asset.hideFlags = HideFlags.DontUnloadUnusedAsset;
+                return asset.TryCast<T>();
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the raw bytes of an embedded resource
+        /// </summary>
+        public static byte[] GetResourceBytes(Assembly assembly, string name)
+        {
+            foreach (string resource in assembly.GetManifestResourceNames())
+            {
+                if (resource.Contains(name))
+                {
+                    using (Stream resFilestream = assembly.GetManifestResourceStream(resource))
+                    {
+                        if (resFilestream == null) return null;
+                        byte[] byteArr = new byte[resFilestream.Length];
+                        resFilestream.Read(byteArr, 0, byteArr.Length);
+                        return byteArr;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }
