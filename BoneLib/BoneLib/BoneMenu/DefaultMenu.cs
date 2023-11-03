@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BoneLib.Notifications;
 using BoneLib.Nullables;
 using BoneLib.RandomShit;
 using SLZ.Data;
@@ -52,6 +53,19 @@ namespace BoneLib.BoneMenu
             funstuff.CreateFunctionElement("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
             funstuff.CreateFunctionElement("Spawn Bird Ad", Color.white, () => PopupBoxManager.CreateNewBirdPopup());
             funstuff.CreateFunctionElement("Spawn Cat Ad", Color.white, () => PopupBoxManager.CreateNewCatPopup());
+            funstuff.CreateFunctionElement("Notification Test", Color.white, () =>
+            {
+                var notif = new Notification()
+                {
+                    Title = "Hello!",
+                    Message = "Fuck you!",
+                    Type = NotificationType.Error,
+                    IsPopup = true,
+                    ShowTitleOnPopup = true,
+                    PopupLength = 5f
+                };
+                Notifier.Send(notif);
+            });
         }
 
         internal static void SpawnUtilityGun()

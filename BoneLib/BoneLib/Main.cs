@@ -1,6 +1,8 @@
-﻿using BoneLib.BoneMenu;
+﻿using System.Reflection;
+using BoneLib.BoneMenu;
 using BoneLib.BoneMenu.Elements;
 using BoneLib.MonoBehaviours;
+using BoneLib.Notifications;
 using BoneLib.RandomShit;
 using MelonLoader;
 using SLZ.Bonelab;
@@ -32,6 +34,8 @@ namespace BoneLib
             
             DefaultMenu.CreateDefaultElements();
 
+            NotifAssets.SetupBundles();
+
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
 
@@ -42,6 +46,11 @@ namespace BoneLib
             //PopupBoxManager.StartCoroutines();
 
             ModConsole.Msg("BoneLib loaded");
+        }
+
+        public override void OnUpdate()
+        {
+            Notifier.OnUpdate();
         }
 
         private void OnLevelInitialized(LevelInfo info)
