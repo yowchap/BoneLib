@@ -57,13 +57,13 @@ namespace BoneLib.BoneMenu
         internal static void SpawnUtilityGun()
         {
             Transform head = Player.playerHead.transform;
-            HelperMethods.SpawnCrate(CommonBarcodes.Misc.Spawngun, head.position + head.forward, default, Vector3.one, false, null);
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.SpawnGun, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnNimbusGun()
         {
             Transform head = Player.playerHead.transform;
-            HelperMethods.SpawnCrate(CommonBarcodes.Misc.Nimbusgun, head.position + head.forward, default, Vector3.one, false, null);
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.NimbusGun, head.position + head.forward, default, Vector3.one, false, null);
         }
         
         internal static void SpawnRandomGun()
