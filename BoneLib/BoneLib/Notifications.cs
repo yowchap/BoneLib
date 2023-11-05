@@ -9,14 +9,14 @@ namespace BoneLib.Notifications
 {
     // most of this comes from Fusion, with permission to use it here
 
-    public static class NotifAssets
+    internal static class NotifAssets
     {
-        public static Texture2D Information;
-        public static Texture2D Warning;
-        public static Texture2D Error;
-        public static Texture2D Success;
+        internal static Texture2D Information;
+        internal static Texture2D Warning;
+        internal static Texture2D Error;
+        internal static Texture2D Success;
 
-        public static void SetupBundles()
+        internal static void SetupBundles()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
             const string androidPath = "BoneLib.Resources.notifications.android.bundle";
@@ -127,11 +127,6 @@ namespace BoneLib.Notifications
         public bool ShowTitleOnPopup = false;
 
         /// <summary>
-        /// Should this notification popup?
-        /// </summary>
-        public bool IsPopup = true;
-
-        /// <summary>
         /// How long the notification will be up.
         /// </summary>
         public float PopupLength = 2f;
@@ -149,13 +144,9 @@ namespace BoneLib.Notifications
 
     public static class Notifier
     {
-        public const float DefaultDuration = 2f;
-
         private static readonly Queue<Notification> QueuedNotifications = new();
-        public static ulong NotificationNumber = 0;
 
         private static bool _hasEnabledTutorialRig = false;
-
 
         /// <summary>
         /// Sends a notification to the player.
@@ -178,7 +169,7 @@ namespace BoneLib.Notifications
             // Show to the player
             RigManager rm = Player.rigManager;
 
-            if (notification.IsPopup && rm != null)
+            if (rm != null)
             {
                 TutorialRig tutorialRig = rm.tutorialRig;
                 HeadTitles headTitles = tutorialRig.headTitles;

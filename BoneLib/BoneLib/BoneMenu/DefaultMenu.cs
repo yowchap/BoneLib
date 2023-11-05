@@ -60,7 +60,6 @@ namespace BoneLib.BoneMenu
                     Title = "Hello!",
                     Message = "Fuck you!",
                     Type = NotificationType.Error,
-                    IsPopup = true,
                     ShowTitleOnPopup = true,
                     PopupLength = 5f
                 };
