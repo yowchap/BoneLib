@@ -138,5 +138,13 @@ namespace BoneLib
             }
             return null;
         }
+        
+        ///<summary>
+        /// Checks if an assembly is loaded from name
+        /// </summary>
+        public static bool CheckIfAssemblyLoaded(string name)
+        {
+            return AppDomain.CurrentDomain.GetAssemblies().Any(asm => asm.GetName().Name.ToLower().Contains(name.ToLower()));
+        }
     }
 }
