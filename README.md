@@ -57,6 +57,12 @@ OfflineMode = true
 
 ## Changelogs (BoneLib)
 
+#### v2.4.0:
+- Added notification system
+- Added asset bundle helpers
+- Added IsLoading helper method
+- Added CheckIfAssemblyLoaded helper method
+
 #### v2.3.0:
 - Added Audio class with references to mixers
 - Added CommonBarcodes for easy item spawning
