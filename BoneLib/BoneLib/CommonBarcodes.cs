@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SLZ.Marrow.SceneStreaming;
+// ReSharper disable MemberCanBePrivate.Global, it's a library, rider, these are supposed to be public.
 
 namespace BoneLib
 {
