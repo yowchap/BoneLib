@@ -42,7 +42,7 @@ namespace BoneLib
         /// <param name="scale">The scale of the spawned object</param>
         /// <param name="ignorePolicy">Ignore spawn policy or not</param>
         /// <param name="spawnAction">Code to run once the spawnable is placed</param>
-        public static void SpawnCrate(string barcode, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = true, Action<GameObject> spawnAction = null)
+        public static void SpawnCrate(string barcode, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = false, Action<GameObject> spawnAction = null)
         {
             var crateRef = new SpawnableCrateReference(barcode);
             var spawnable = new Spawnable()
