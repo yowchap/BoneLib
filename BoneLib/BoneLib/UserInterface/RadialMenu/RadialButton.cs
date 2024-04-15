@@ -14,7 +14,7 @@ namespace BoneLib.RadialMenu
         public PageItem PageItem { get; internal set; }
         public Sprite Icon { get; set; }
 
-        internal RadialButton(string text, Action action, PageItem.Directions direction, Sprite icon = null)
+        public RadialButton(string text, Action action, PageItem.Directions direction, Sprite icon = null)
         {
             PageItem pageItem = new(text, direction, action);
             PageItem = pageItem;
@@ -22,7 +22,7 @@ namespace BoneLib.RadialMenu
             Icon = icon;
         }
 
-        internal RadialButton(string text, Il2CppSystem.Action action, PageItem.Directions direction, Sprite icon = null) 
+        public RadialButton(string text, Il2CppSystem.Action action, PageItem.Directions direction, Sprite icon = null) 
         {
             PageItem pageItem = new(text, direction, action);
             PageItem = pageItem;
