@@ -2,6 +2,7 @@
 using BoneLib.BoneMenu.Elements;
 using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
+using BoneLib.RadialMenu;
 using BoneLib.RandomShit;
 using MelonLoader;
 using SLZ.Bonelab;
@@ -37,6 +38,8 @@ namespace BoneLib
 
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
+
+            CustomRadialMenu.InitializeRadialMenu();
 
             Hooking.OnLevelInitialized += OnLevelInitialized;
 

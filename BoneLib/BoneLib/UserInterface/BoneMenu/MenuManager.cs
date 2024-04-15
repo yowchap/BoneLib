@@ -14,7 +14,7 @@ namespace BoneLib.BoneMenu
         public static Action<MenuCategory> OnCategoryCreated;
         public static Action<MenuCategory> OnCategorySelected;
 
-        private static List<MenuCategory> _categories = new List<MenuCategory>();
+        private static readonly List<MenuCategory> _categories = new();
         private static MenuCategory _rootCategory = null;
         private static MenuCategory _activeCategory = null;
 

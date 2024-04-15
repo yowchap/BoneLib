@@ -22,7 +22,7 @@ namespace BoneLib.BoneMenu
                 _bundle = GetEmbeddedBundle();
                 _bundle.hideFlags = HideFlags.DontUnloadUnusedAsset;
 
-                Il2CppReferenceArray<UnityEngine.Object> assets = bundle.LoadAllAssets();
+                Il2CppReferenceArray<UnityEngine.Object> assets = Bundle.LoadAllAssets();
 
                 foreach (var asset in assets)
                 {
@@ -37,7 +37,7 @@ namespace BoneLib.BoneMenu
                 }
             }
 
-            public static AssetBundle bundle => _bundle;
+            public static AssetBundle Bundle => _bundle;
             public static IReadOnlyList<GameObject> BundleObjects { get => _bundleObjects.AsReadOnly(); }
 
             private static AssetBundle _bundle;
@@ -56,7 +56,7 @@ namespace BoneLib.BoneMenu
 
                 using (Stream resourceStream = assembly.GetManifestResourceStream("BoneLib.Resources." + fileName))
                 {
-                    using (MemoryStream memoryStream = new MemoryStream())
+                    using (MemoryStream memoryStream = new())
                     {
                         resourceStream.CopyTo(memoryStream);
                         return AssetBundle.LoadFromMemory(memoryStream.ToArray());
@@ -169,7 +169,7 @@ namespace BoneLib.BoneMenu
 
             private static void InjectPage()
             {
-                Il2CppReferenceArray<GameObject> refArray = new Il2CppReferenceArray<GameObject>(12);
+                Il2CppReferenceArray<GameObject> refArray = new(12);
                 for (int i = 0; i <= 10; i++)
                     refArray[i] = panelView.pages[i];
                 refArray[11] = UIManager.Instance.MainPage.gameObject;

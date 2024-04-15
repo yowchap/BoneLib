@@ -60,6 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\References\MelonLoader\MelonLoader.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\References\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
@@ -78,6 +81,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.7.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -144,29 +153,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Audio.cs" />
-    <Compile Include="BoneMenu\DataManager.cs" />
-    <Compile Include="BoneMenu\DefaultMenu.cs" />
-    <Compile Include="BoneMenu\Elements\BoolElement.cs" />
-    <Compile Include="BoneMenu\Elements\ElementType.cs" />
-    <Compile Include="BoneMenu\Elements\EnumElement.cs" />
-    <Compile Include="BoneMenu\Elements\FloatElement.cs" />
-    <Compile Include="BoneMenu\Elements\FunctionElement.cs" />
-    <Compile Include="BoneMenu\Elements\GenericElement.cs" />
-    <Compile Include="BoneMenu\Elements\IntElement.cs" />
-    <Compile Include="BoneMenu\Elements\MenuCategory.cs" />
-    <Compile Include="BoneMenu\Elements\MenuElement.cs" />
-    <Compile Include="BoneMenu\Elements\SubPanelElement.cs" />
-    <Compile Include="BoneMenu\MenuManager.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UICategoryField.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UIElement.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UIFunctionField.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UISubPanelField.cs" />
-    <Compile Include="BoneMenu\UI\UIManager.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UIPage.cs" />
-    <Compile Include="BoneMenu\UI\UIPool.cs" />
-    <Compile Include="BoneMenu\UI\UIPoolee.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UIToggleField.cs" />
-    <Compile Include="BoneMenu\UI\Elements\UIValueField.cs" />
+    <Compile Include="UserInterface\BoneMenu\DataManager.cs" />
+    <Compile Include="UserInterface\BoneMenu\DefaultMenu.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\BoolElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\ElementType.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\EnumElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\FloatElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\FunctionElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\GenericElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\IntElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\MenuCategory.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\MenuElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\Elements\SubPanelElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\MenuManager.cs" />
+    <Compile Include="UserInterface\RadialMenu\CustomRadialMenu.cs" />
+    <Compile Include="UserInterface\RadialMenu\RadialButton.cs" />
+    <Compile Include="UserInterface\RadialMenu\RadialCategory.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\Elements\UICategoryField.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\Elements\UIElement.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\Elements\UIFunctionField.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\Elements\UISubPanelField.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\UIManager.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\Elements\UIPage.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\UIPool.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\UIPoolee.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\Elements\UIToggleField.cs" />
+    <Compile Include="UserInterface\BoneMenu\UI\Elements\UIValueField.cs" />
     <Compile Include="CommonBarcodes.cs" />
     <Compile Include="GameLayers.cs" />
     <Compile Include="Extensions.cs" />
@@ -198,10 +210,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\notifications.android.bundle" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>ECHO Copying BoneLib.dll and BoneLib.xml to "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods"
-COPY "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).dll"
-COPY "$(TargetDir)$(ProjectName).xml" "C:\Program Files (x86)\Steam\steamapps\common\BONELAB\Mods\$(ProjectName).xml"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

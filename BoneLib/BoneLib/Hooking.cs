@@ -7,6 +7,7 @@ using SLZ.Marrow.SceneStreaming;
 using SLZ.Marrow.Utilities;
 using SLZ.Props.Weapons;
 using SLZ.Rig;
+using SLZ.UI;
 using SLZ.VRMK;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace BoneLib
     {
         private static HarmonyLib.Harmony baseHarmony;
 
-        private static Queue<DelayedHookData> delayedHooks = new Queue<DelayedHookData>();
+        private static readonly Queue<DelayedHookData> delayedHooks = new();
 
         // Marrow
         public static event Action OnMarrowGameStarted;
@@ -41,6 +42,11 @@ namespace BoneLib
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
+
+        public static event Action<PopUpMenuView> OnPopUpMenuOpenPreFix;
+        public static event Action<PopUpMenuView> OnPopUpMenuOpenPostFix;
+        public static event Action<PopUpMenuView> OnPopUpMenuClosedPreFix;
+        public static event Action<PopUpMenuView> OnPopUpMenuClosedPostFix;
 
         public static event Action<float> OnPlayerDamageRecieved;
         public static event Action<bool> OnPlayerDeathImminent;
@@ -72,6 +78,12 @@ namespace BoneLib
 
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
+
+            CreateHook(typeof(PopUpMenuView).GetMethod("Activate", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPopUpMenuOpenedPrefix), AccessTools.all), true);
+            CreateHook(typeof(PopUpMenuView).GetMethod("Activate", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPopUpMenuOpenedPostfix), AccessTools.all));
+
+            CreateHook(typeof(PopUpMenuView).GetMethod("Deactivate", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPopUpMenuClosedPrefix), AccessTools.all), true);
+            CreateHook(typeof(PopUpMenuView).GetMethod("Deactivate", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPopUpMenuClosedPostfix), AccessTools.all));
 
             CreateHook(typeof(Gun).GetMethod("OnFire", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePrefix), AccessTools.all), true);
             CreateHook(typeof(Gun).GetMethod("OnFire", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePostfix), AccessTools.all));
@@ -162,6 +174,12 @@ namespace BoneLib
 
         private static void OnAvatarSwitchPrefix(Avatar newAvatar) => SafeActions.InvokeActionSafe(OnSwitchAvatarPrefix, newAvatar);
         private static void OnAvatarSwitchPostfix(Avatar newAvatar) => SafeActions.InvokeActionSafe(OnSwitchAvatarPostfix, newAvatar);
+
+        private static void OnPopUpMenuOpenedPrefix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuOpenPreFix, __instance);
+        private static void OnPopUpMenuOpenedPostfix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuOpenPostFix, __instance);
+
+        private static void OnPopUpMenuClosedPrefix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuClosedPreFix, __instance);
+        private static void OnPopUpMenuClosedPostfix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuClosedPostFix, __instance);
 
         private static void OnFirePrefix(Gun __instance) => SafeActions.InvokeActionSafe(OnPreFireGun, __instance);
         private static void OnFirePostfix(Gun __instance) => SafeActions.InvokeActionSafe(OnPostFireGun, __instance);
