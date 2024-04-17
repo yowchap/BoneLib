@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using BoneLib.RadialMenu;
 
 namespace BoneLib.RadialMenu 
 {
@@ -27,12 +28,12 @@ namespace BoneLib.RadialMenu
             Name = name;
             Color = color;
 
-            var leftCycleItem = new RadialButton("<----", () => CustomRadialMenu.CycleLeft(), PageItem.Directions.SOUTHWEST);
-            var rightCycleItem = new RadialButton("---->", () => CustomRadialMenu.CycleRight(), PageItem.Directions.SOUTHEAST);
+            var leftCycleItem = new RadialButton("<----", () => RadialMenuManager.CycleLeft(), PageItem.Directions.SOUTHWEST);
+            var rightCycleItem = new RadialButton("---->", () => RadialMenuManager.CycleRight(), PageItem.Directions.SOUTHEAST);
             TryAddButton(leftCycleItem);
             TryAddButton(rightCycleItem);
 
-            CustomRadialMenu.AddRadialCategory(this);
+            RadialMenuManager.AddRadialCategory(this);
         }
 
         internal RadialCategory() { }
@@ -53,7 +54,7 @@ namespace BoneLib.RadialMenu
             Buttons.Add(button);
 
             if (Player.uiRig != null)
-                CustomRadialMenu.RefreshRadialCategory(CustomRadialMenu.ActiveCategory);
+                RadialMenuManager.RefreshRadialCategory(RadialMenuManager.ActiveCategory);
 
             return true;
         }
@@ -70,7 +71,7 @@ namespace BoneLib.RadialMenu
                 Buttons.Remove(button);
 
                 if (Player.uiRig != null)
-                    CustomRadialMenu.RefreshRadialCategory(CustomRadialMenu.ActiveCategory);
+                    RadialMenuManager.RefreshRadialCategory(RadialMenuManager.ActiveCategory);
 
                 return true;
             }

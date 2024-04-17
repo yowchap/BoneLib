@@ -32,6 +32,10 @@ namespace BoneLib
         /// </summary>
         public static event Action<LevelInfo> OnLevelLoading;
         /// <summary>
+        /// Called slightly after OnLevelIntialized (when Player_Health.MakeVignette is called) so all RigManager references should be fully ready.
+        /// </summary>
+        public static event Action<RigManager> OnPlayerFullyCreated;
+        /// <summary>
         /// Called when the current Level is fully initialized.
         /// </summary>
         public static event Action<LevelInfo> OnLevelInitialized;
@@ -69,7 +73,7 @@ namespace BoneLib
         public static event Action<BehaviourBaseNav> OnNPCKillStart;
         public static event Action<BehaviourBaseNav> OnNPCKillEnd;
 
-        private static bool currentLevelUnloaded = true;
+        private static bool hasPlayerLoaded = false;
 
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
         internal static void InitHooks()
@@ -94,6 +98,7 @@ namespace BoneLib
             CreateHook(typeof(Grip).GetMethod("OnAttachedToHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripAttachedPostfix), AccessTools.all));
             CreateHook(typeof(Grip).GetMethod("OnDetachedFromHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
 
+            CreateHook(typeof(Player_Health).GetMethod("MakeVignette", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnMakeVignette), AccessTools.all));
             CreateHook(typeof(RigManager).GetMethod("Awake", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerAwake), AccessTools.all));
             CreateHook(typeof(RigManager).GetMethod("OnDestroy", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroyed), AccessTools.all));
 
@@ -142,6 +147,13 @@ namespace BoneLib
             ModConsole.Msg($"New {(isPrefix ? "PREFIX" : "POSTFIX")} on {original.DeclaringType.Name}.{original.Name} to {hook.DeclaringType.Name}.{hook.Name}", LoggingMode.DEBUG);
         }
 
+        private static void OnMakeVignette(Player_Health __instance)
+        {
+            hasPlayerLoaded = true;
+
+            SafeActions.InvokeActionSafe(OnPlayerFullyCreated, Player.rigManager);
+        }
+
         private static void OnRigManagerAwake(RigManager __instance)
         {
             if (Player.handsExist)
@@ -159,27 +171,35 @@ namespace BoneLib
 
         private static void OnRigManagerDestroyed()
         {
-            currentLevelUnloaded = true;
+            hasPlayerLoaded = false;
+
             SafeActions.InvokeActionSafe(OnLevelUnloaded);
         }
 
-        internal static void OnBONELABLevelLoading()
+        private static void OnPopUpMenuOpenedPrefix(PopUpMenuView __instance)
         {
-            if (currentLevelUnloaded)
-            {
-                SafeActions.InvokeActionSafe(OnLevelLoading, new LevelInfo(SceneStreamer.Session.Level));
-                currentLevelUnloaded = false;
-            }
+            if (hasPlayerLoaded)
+                SafeActions.InvokeActionSafe(OnPopUpMenuOpenPreFix, __instance);
+        }
+        private static void OnPopUpMenuOpenedPostfix(PopUpMenuView __instance)
+        {
+            if (hasPlayerLoaded)
+                SafeActions.InvokeActionSafe(OnPopUpMenuOpenPostFix, __instance);
         }
 
         private static void OnAvatarSwitchPrefix(Avatar newAvatar) => SafeActions.InvokeActionSafe(OnSwitchAvatarPrefix, newAvatar);
         private static void OnAvatarSwitchPostfix(Avatar newAvatar) => SafeActions.InvokeActionSafe(OnSwitchAvatarPostfix, newAvatar);
 
-        private static void OnPopUpMenuOpenedPrefix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuOpenPreFix, __instance);
-        private static void OnPopUpMenuOpenedPostfix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuOpenPostFix, __instance);
-
-        private static void OnPopUpMenuClosedPrefix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuClosedPreFix, __instance);
-        private static void OnPopUpMenuClosedPostfix(PopUpMenuView __instance) => SafeActions.InvokeActionSafe(OnPopUpMenuClosedPostFix, __instance);
+        private static void OnPopUpMenuClosedPrefix(PopUpMenuView __instance)
+        {
+            if (hasPlayerLoaded)
+            SafeActions.InvokeActionSafe(OnPopUpMenuClosedPreFix, __instance);
+        }
+        private static void OnPopUpMenuClosedPostfix(PopUpMenuView __instance)
+        {
+            if (hasPlayerLoaded)
+                SafeActions.InvokeActionSafe(OnPopUpMenuClosedPostFix, __instance);
+        }
 
         private static void OnFirePrefix(Gun __instance) => SafeActions.InvokeActionSafe(OnPreFireGun, __instance);
         private static void OnFirePostfix(Gun __instance) => SafeActions.InvokeActionSafe(OnPostFireGun, __instance);

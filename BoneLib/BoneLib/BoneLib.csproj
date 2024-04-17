@@ -166,7 +166,7 @@
     <Compile Include="UserInterface\BoneMenu\Elements\MenuElement.cs" />
     <Compile Include="UserInterface\BoneMenu\Elements\SubPanelElement.cs" />
     <Compile Include="UserInterface\BoneMenu\MenuManager.cs" />
-    <Compile Include="UserInterface\RadialMenu\CustomRadialMenu.cs" />
+    <Compile Include="UserInterface\RadialMenu\RadialMenuManager.cs" />
     <Compile Include="UserInterface\RadialMenu\RadialButton.cs" />
     <Compile Include="UserInterface\RadialMenu\RadialCategory.cs" />
     <Compile Include="UserInterface\BoneMenu\UI\Elements\UICategoryField.cs" />

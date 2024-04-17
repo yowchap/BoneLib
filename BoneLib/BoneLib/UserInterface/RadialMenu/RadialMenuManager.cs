@@ -21,7 +21,7 @@ using TMPro;
 
 namespace BoneLib.RadialMenu
 {
-    public static class CustomRadialMenu
+    public static class RadialMenuManager
     {
         private static readonly List<RadialCategory> _categories = new();
 
@@ -29,7 +29,7 @@ namespace BoneLib.RadialMenu
 
         private static TextMeshProUGUI _popUpText;
 
-        private static readonly Sprite[] RadialMenuSprites = new Sprite[8];
+        public static readonly Sprite[] RadialMenuSprites = new Sprite[8];
         private static int _currentCategoryIndex = 0;
 
         private static RadialCategory _defaultCategory;
@@ -42,11 +42,11 @@ namespace BoneLib.RadialMenu
         private static RadialButton _addRemove;
         internal static void InitializeRadialMenu()
         {
-            Hooking.CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.MakeVignette), AccessTools.all), typeof(CustomRadialMenu).GetMethod(nameof(OnPlayerCreated), AccessTools.all));
-            Hooking.CreateHook(typeof(PopUpMenuView).GetMethod(nameof(PopUpMenuView.RemoveSpawnMenu), AccessTools.all), typeof(CustomRadialMenu).GetMethod(nameof(OnRemoveSpawnMenu), AccessTools.all));
-            Hooking.CreateHook(typeof(PopUpMenuView).GetMethod(nameof(PopUpMenuView.RemoveMagEjectMenu), AccessTools.all), typeof(CustomRadialMenu).GetMethod(nameof(OnRemoveMagEject), AccessTools.all));
+            Hooking.CreateHook(typeof(PopUpMenuView).GetMethod(nameof(PopUpMenuView.RemoveSpawnMenu), AccessTools.all), typeof(RadialMenuManager).GetMethod(nameof(OnRemoveSpawnMenu), AccessTools.all));
+            Hooking.CreateHook(typeof(PopUpMenuView).GetMethod(nameof(PopUpMenuView.RemoveMagEjectMenu), AccessTools.all), typeof(RadialMenuManager).GetMethod(nameof(OnRemoveMagEject), AccessTools.all));
 
             Hooking.OnLevelUnloaded += OnPlayerUnloaded;
+            Hooking.OnPlayerFullyCreated += OnPlayerCreated;
 
             Hooking.OnPopUpMenuOpenPostFix += OnMenuOpened;
             Hooking.OnPopUpMenuClosedPostFix += OnMenuClosed;
@@ -54,13 +54,16 @@ namespace BoneLib.RadialMenu
 
         private static void OnRemoveMagEject()
         {
+            // Update eject button
             if (_defaultCategory.Buttons.Any(x => x.PageItem.name == "Eject"))
             {
                 _defaultCategory.Buttons.Remove(_defaultCategory.Buttons.First(x => x.PageItem.name == "Eject"));
             }
         }
+
         private static void OnRemoveSpawnMenu()
         {
+            // Update utilities/spawn button
             if (_defaultCategory.Buttons.Any(x => x.PageItem.name == "Utilities"))
             {
                 _defaultCategory.Buttons.Remove(_defaultCategory.Buttons.First(x => x.PageItem.name == "Utilities"));
@@ -69,9 +72,6 @@ namespace BoneLib.RadialMenu
 
         private static void OnMenuClosed(PopUpMenuView menu)
         {
-            if (!_hasLoaded)
-                return;
-
             menu.radialPageView.m_HomePage.items.Clear();
 
             foreach (var button in _defaultCategory.Buttons)
@@ -81,9 +81,6 @@ namespace BoneLib.RadialMenu
         }
         private static void OnMenuOpened(PopUpMenuView menu)
         {
-            if (!_hasLoaded)
-                return;
-
             _currentCategoryIndex = 0;
 
             var rightCycleItem = new PageItem("---->", PageItem.Directions.SOUTHEAST, (Action)(() => CycleRight()));
@@ -135,8 +132,9 @@ namespace BoneLib.RadialMenu
         public static RadialCategory ActiveCategory { get => _categories[_currentCategoryIndex];}
         internal static void RefreshRadialCategory(RadialCategory category)
         {
-            // Remove the indicator for the cancel button
-            BoneLib.Player.uiRig.popUpMenu.radialPageView.cancelButton.gameObject.SetActive(false);
+            // Remove the indicator for the cancel button if text is empty
+            if (category.Name == "")
+                Player.uiRig.popUpMenu.radialPageView.cancelButton.gameObject.SetActive(false);
 
             // Set the text for the category
             _popUpText.SetText(category.Name);
@@ -171,7 +169,7 @@ namespace BoneLib.RadialMenu
             Player.uiRig.popUpMenu.radialPageView.Render(Player.uiRig.popUpMenu.radialPageView.m_HomePage);
         }
 
-        private static void OnPlayerCreated()
+        private static void OnPlayerCreated(RigManager rigManager)
         {
             _hasLoaded = true;
 
@@ -192,8 +190,6 @@ namespace BoneLib.RadialMenu
             for (int i = 0; i <= 7; i++)
             {
                 RadialMenuSprites[i] = Player.uiRig.popUpMenu.radialPageView.buttons[i].icon.GetComponent<Image>().sprite;
-
-                MelonLogger.Msg($"Sprite {i}: {RadialMenuSprites[i]}");
             }
 
             // Setup the text object
@@ -218,8 +214,6 @@ namespace BoneLib.RadialMenu
             RectTransform textRectTransform = textObject.GetComponent<RectTransform>();
             textRectTransform.anchoredPosition = new Vector2(0, 0); 
             textRectTransform.sizeDelta = new Vector2(150, 150); 
-
-            var canvas = Player.uiRig.popUpMenu.radialPageView.TextCanvas.GetComponent<Canvas>();
         }
 
         private static void OnPlayerUnloaded()

@@ -39,7 +39,7 @@ namespace BoneLib
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
 
-            CustomRadialMenu.InitializeRadialMenu();
+            RadialMenuManager.InitializeRadialMenu();
 
             Hooking.OnLevelInitialized += OnLevelInitialized;
 
