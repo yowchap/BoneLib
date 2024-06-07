@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-// ReSharper disable MemberCanBePrivate.Global, it's a library, rider, these are supposed to be public.
 
 namespace BoneLib
 {
