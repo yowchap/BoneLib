@@ -5,6 +5,7 @@ using SLZ.AI;
 using SLZ.Interaction;
 using SLZ.Marrow.SceneStreaming;
 using SLZ.Marrow.Utilities;
+using SLZ.Marrow.Warehouse;
 using SLZ.Props.Weapons;
 using SLZ.Rig;
 using SLZ.VRMK;
@@ -25,6 +26,7 @@ namespace BoneLib
 
         // Marrow
         public static event Action OnMarrowGameStarted;
+        public static event Action OnWarehouseReady;
 
         /// <summary>
         /// Called at the start of a loading screen.
@@ -66,9 +68,11 @@ namespace BoneLib
         private static bool currentLevelUnloaded = true;
 
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
+
         internal static void InitHooks()
         {
             MarrowGame.RegisterOnReadyAction(new Action(() => SafeActions.InvokeActionSafe(OnMarrowGameStarted)));
+            AssetWarehouse.OnReady(new Action(() => SafeActions.InvokeActionSafe(OnWarehouseReady)));
 
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
