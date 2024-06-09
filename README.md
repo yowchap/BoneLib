@@ -53,6 +53,8 @@ OfflineMode = true
 
 **SoulWithMae:** SpawnCrate helper methods, added a class with commonly used barcodes, added a notification system, added helper methods for loading stuff from embedded resources
 
+**WNP78:** Ported the mod to ML 0.6 and improved reference DLL handling
+
 <br>
 
 ## Changelogs (BoneLib)
