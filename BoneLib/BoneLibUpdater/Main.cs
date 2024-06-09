@@ -1,5 +1,5 @@
 ﻿using MelonLoader;
-using System;
+using MelonLoader.Utils;
 using System.IO;
 
 namespace BoneLibUpdater
@@ -19,8 +19,8 @@ namespace BoneLibUpdater
         private MelonPreferences_Entry<bool> offlineModePref;
         private bool isOffline => offlineModePref.Value;
 
-        public static readonly string boneLibAssemblyPath = Path.Combine(MelonHandler.ModsDirectory, "BoneLib.dll");
-        public static readonly string boneLibUpdaterAssemblyPath = Path.Combine(MelonHandler.PluginsDirectory, "BoneLibUpdater.dll");
+        public static readonly string boneLibAssemblyPath = Path.Combine(MelonEnvironment.ModsDirectory, "BoneLib.dll");
+        public static readonly string boneLibUpdaterAssemblyPath = Path.Combine(MelonEnvironment.PluginsDirectory, "BoneLibUpdater.dll");
 
         public static MelonLogger.Instance Logger { get; private set; }
 
