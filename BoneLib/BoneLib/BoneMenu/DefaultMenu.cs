@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using BoneLib.Notifications;
-using BoneLib.Nullables;
 using BoneLib.RandomShit;
-using SLZ.Data;
-using SLZ.Marrow.Data;
-using SLZ.Marrow.Pool;
-using SLZ.Marrow.SceneStreaming;
-using SLZ.Marrow.Warehouse;
-using SLZ.Player;
+using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Data;
+using Il2CppSLZ.Marrow.Data;
+using Il2CppSLZ.Marrow.Pool;
+using Il2CppSLZ.Marrow.SceneStreaming;
+using Il2CppSLZ.Marrow.Warehouse;
+using Il2CppSLZ.Player;
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -101,7 +101,7 @@ namespace BoneLib.BoneMenu
         
         internal static void SpawnRandomNPC()
         {
-            Transform player = Player.rigManager.artOutputRig.transform;
+            Transform player = Player.rigManager.physicsRig.artOutput.transform;
             int index = Random.RandomRangeInt(0, CommonBarcodes.NPCs.All.Count);
             string barcode = CommonBarcodes.NPCs.All[index];
             

@@ -4,9 +4,9 @@ using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;
 using MelonLoader;
-using SLZ.Bonelab;
-using UnhollowerRuntimeLib;
+using Il2CppSLZ.Bonelab;
 using UnityEngine;
+using Il2CppInterop.Runtime.Injection;
 
 namespace BoneLib
 {

@@ -10,11 +10,11 @@ namespace BoneLib.BoneMenu.UI
     {
         public UIPool(System.IntPtr ptr) : base(ptr) { }
 
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [Il2CppInterop.Runtime.Attributes.HideFromIl2Cpp]
         public List<UIPoolee> Pool { get => _pool; }
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [Il2CppInterop.Runtime.Attributes.HideFromIl2Cpp]
         public List<UIPoolee> Active { get => _active; }
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [Il2CppInterop.Runtime.Attributes.HideFromIl2Cpp]
         public List<UIPoolee> Inactive { get => _inactive; }
 
         public GameObject Prefab { get => _prefab; }
@@ -126,7 +126,7 @@ namespace BoneLib.BoneMenu.UI
         {
             return _inactive.FirstOrDefault();
         }
-        [UnhollowerBaseLib.Attributes.HideFromIl2Cpp]
+        [Il2CppInterop.Runtime.Attributes.HideFromIl2Cpp]
         private System.Collections.IEnumerator AttemptParent(UIPoolee selected, Transform parent, bool setPosRot = true)
         {
             int run = 0;

@@ -3,7 +3,8 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Web.Script.Serialization;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace UpdaterApp
 {
@@ -33,13 +34,12 @@ namespace UpdaterApp
                     {
                         // Deserialize the response into json
                         string fileContent = reader.ReadToEnd();
-                        JavaScriptSerializer jsonSerializer = new JavaScriptSerializer();
-                        dynamic releases = jsonSerializer.Deserialize<dynamic>(fileContent);
+                        JsonNode releases = JsonSerializer.Deserialize<JsonNode>(fileContent);
 
                         // Find the release info for the latest version
                         Version latestVersion = new Version(0, 0, 0);
-                        dynamic latestRelease = null;
-                        foreach (var release in releases)
+                        JsonNode latestRelease = null;
+                        foreach (var release in releases.AsArray())
                         {
                             Version version = new Version(((string)release["tag_name"]).Replace("v", ""));
                             if (version >= latestVersion)
@@ -57,11 +57,11 @@ namespace UpdaterApp
                             {
                                 Console.WriteLine("Downloading latest version...");
                                 bool downloadedMod = false;
-                                foreach (var asset in latestRelease["assets"])
+                                foreach (var asset in latestRelease["assets"].AsArray())
                                 {
-                                    if (asset["name"] == "BoneLib.dll")
+                                    if ((string)asset["name"] == "BoneLib.dll")
                                     {
-                                        string downloadUrl = asset["browser_download_url"];
+                                        string downloadUrl = (string)asset["browser_download_url"];
                                         using (HttpClient downloadClient = new HttpClient())
                                         {
                                             // Download the latest version of BoneLib.dll and save it to the mods folder
@@ -79,9 +79,9 @@ namespace UpdaterApp
                                             }
                                         }
                                     }
-                                    else if (asset["name"] == "BoneLib.xml")
+                                    else if ((string)asset["name"] == "BoneLib.xml")
                                     {
-                                        string downloadUrl = asset["browser_download_url"];
+                                        string downloadUrl = (string)asset["browser_download_url"];
                                         using (HttpClient downloadClient = new HttpClient())
                                         {
                                             // Download the latest version of BoneLib.xml and save it to the mods folder
@@ -112,11 +112,11 @@ namespace UpdaterApp
                         else
                         {
                             Console.WriteLine("Downloading latest version...");
-                            foreach (var asset in latestRelease["assets"])
+                            foreach (var asset in latestRelease["assets"].AsArray())
                             {
-                                if (asset["name"] == "BoneLibUpdater.dll")
+                                if ((string)asset["name"] == "BoneLibUpdater.dll")
                                 {
-                                    string downloadUrl = asset["browser_download_url"];
+                                    string downloadUrl = (string)asset["browser_download_url"];
                                     using (HttpClient downloadClient = new HttpClient())
                                     {
                                         // Download the latest version of BoneLibUpdater.dll and save it to the plugins folder

@@ -1,7 +1,7 @@
-﻿using PuppetMasta;
-using SLZ.AI;
-using SLZ.Combat;
-using SLZ.Props.Weapons;
+﻿using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Marrow.AI;
+using Il2CppSLZ.Marrow.Combat;
+using Il2CppSLZ.Marrow.PuppetMasta;
 using System;
 using System.Linq;
 using Random = UnityEngine.Random;
