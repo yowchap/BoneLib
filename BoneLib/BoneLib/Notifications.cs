@@ -1,5 +1,5 @@
-﻿using SLZ.Bonelab;
-using SLZ.Rig;
+﻿using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Rig;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -171,7 +171,7 @@ namespace BoneLib.Notifications
 
             if (rm != null)
             {
-                TutorialRig tutorialRig = rm.tutorialRig;
+                TutorialRig tutorialRig = TutorialRig.Instance;
                 HeadTitles headTitles = tutorialRig.headTitles;
 
                 EnableTutorialRig();
@@ -207,7 +207,7 @@ namespace BoneLib.Notifications
 
             if (rm != null)
             {
-                TutorialRig tutorialRig = rm.tutorialRig;
+                TutorialRig tutorialRig = TutorialRig.Instance;
                 HeadTitles headTitles = tutorialRig.headTitles;
 
                 // Make sure the tutorial rig/head titles are enabled
@@ -222,7 +222,7 @@ namespace BoneLib.Notifications
 
             if (rm != null)
             {
-                TutorialRig tutorialRig = rm.tutorialRig;
+                TutorialRig tutorialRig = TutorialRig.Instance;
                 HeadTitles headTitles = tutorialRig.headTitles;
 
                 return headTitles.headFollower.gameObject.activeInHierarchy;

@@ -1,11 +1,10 @@
 ﻿using System;
 using MelonLoader;
 using System.Text.RegularExpressions;
-using BoneLib.Nullables;
-using SLZ.Marrow.Data;
-using SLZ.Marrow.Pool;
-using SLZ.Marrow.SceneStreaming;
-using SLZ.Marrow.Warehouse;
+using Il2CppSLZ.Marrow.Data;
+using Il2CppSLZ.Marrow.Pool;
+using Il2CppSLZ.Marrow.SceneStreaming;
+using Il2CppSLZ.Marrow.Warehouse;
 using UnityEngine;
 using System.Linq;
 using System.Reflection;
@@ -50,7 +49,7 @@ namespace BoneLib
                 crateRef = crateRef,
             };
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy, new BoxedNullable<int>(null), spawnAction);
+            AssetSpawner.Spawn(spawnable, position, rotation, new(scale), ignorePolicy, null, spawnAction);
         }
 
         /// <summary>
@@ -69,7 +68,7 @@ namespace BoneLib
                 crateRef = crateReference,
             };
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, new BoxedNullable<Vector3>(scale), ignorePolicy, new BoxedNullable<int>(null), spawnAction);
+            AssetSpawner.Spawn(spawnable, position, rotation, new(scale), ignorePolicy, null, spawnAction);
         }
 
         /// <summary>

@@ -1,7 +1,7 @@
-﻿using SLZ.Interaction;
-using SLZ.Props.Weapons;
-using SLZ.Rig;
-using SLZ.VRMK;
+﻿using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Interaction;
+using Il2CppSLZ.Rig;
+using Il2CppSLZ.VRMK;
 using UnityEngine;
 
 namespace BoneLib
@@ -39,7 +39,7 @@ namespace BoneLib
             physicsRig = manager?.physicsRig;
             controllerRig = manager?.ControllerRig;
             remapRig = manager?.remapHeptaRig;
-            uiRig = manager?.uiRig;
+            uiRig = UIRig.Instance;
 
             leftController = manager?.ControllerRig?.leftController;
             rightController = manager?.ControllerRig?.rightController;

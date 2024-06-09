@@ -1,12 +1,11 @@
 ﻿using BoneLib.BoneMenu.UI;
-using SLZ.Props;
-using SLZ.Rig;
-using SLZ.UI;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Rig;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using UnhollowerBaseLib;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -70,7 +69,7 @@ namespace BoneLib.BoneMenu
             internal static void FindReferences()
             {
                 _rigManager = BoneLib.Player.rigManager.GetComponent<RigManager>();
-                _uiRig = _rigManager.uiRig;
+                _uiRig = BoneLib.Player.uiRig;
             }
 
             public static RigManager RigManager
@@ -138,8 +137,8 @@ namespace BoneLib.BoneMenu
 
             public static void InitializeReferences()
             {
-                Player._rigManager = BoneLib.Player.rigManager.GetComponent<RigManager>();
-                Player._uiRig = Player.RigManager.uiRig;
+                Player._rigManager = BoneLib.Player.rigManager;
+                Player._uiRig = Player.UIRig;
                 panelView = Player.UIRig.popUpMenu.preferencesPanelView;
                 optionsPanel = panelView.pages[panelView.defaultPage];
                 _optionsGrid = optionsPanel.transform.Find("grid_Options");

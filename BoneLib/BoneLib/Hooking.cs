@@ -1,20 +1,22 @@
 ﻿using HarmonyLib;
 using MelonLoader;
-using PuppetMasta;
-using SLZ.AI;
-using SLZ.Interaction;
-using SLZ.Marrow.SceneStreaming;
-using SLZ.Marrow.Utilities;
-using SLZ.Marrow.Warehouse;
-using SLZ.Props.Weapons;
-using SLZ.Rig;
-using SLZ.VRMK;
+using Il2CppPuppetMasta;
+using Il2CppSLZ.AI;
+using Il2CppSLZ.Interaction;
+using Il2CppSLZ.Marrow.SceneStreaming;
+using Il2CppSLZ.Marrow.Utilities;
+using Il2CppSLZ.Marrow.Warehouse;
+using Il2CppSLZ.Rig;
+using Il2CppSLZ.VRMK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Marrow.AI;
+using Il2CppSLZ.Marrow.PuppetMasta;
 
 namespace BoneLib
 {

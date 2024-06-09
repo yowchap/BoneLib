@@ -1,5 +1,5 @@
 ﻿using System;
-using TMPro;
+using Il2CppTMPro;
 using UnityEngine;
 
 namespace BoneLib.MonoBehaviours
@@ -8,7 +8,7 @@ namespace BoneLib.MonoBehaviours
     {
         public PopupBox(IntPtr intPtr) : base(intPtr) { }
 
-        private TextMeshPro tmpro;
+        private TextMeshPro Il2CppTMPro;
 
         private float timeToLerp = 5f;
         private float timeForNextColor = 0;
@@ -25,7 +25,7 @@ namespace BoneLib.MonoBehaviours
 
         private void Start()
         {
-            tmpro = gameObject.GetComponentInChildren<TextMeshPro>();
+            Il2CppTMPro = gameObject.GetComponentInChildren<TextMeshPro>();
             timeForNextColor = Time.time + timeToLerp;
         }
 
@@ -40,7 +40,7 @@ namespace BoneLib.MonoBehaviours
                 timeForNextColor = Time.time + timeToLerp;
             }
 
-            tmpro.color = Color.Lerp(colors[curColorIndex], colors[nextColorIndex], Mathf.InverseLerp(timeForNextColor - timeToLerp, timeForNextColor, Time.time)); // Random colors go brrrr
+            Il2CppTMPro.color = Color.Lerp(colors[curColorIndex], colors[nextColorIndex], Mathf.InverseLerp(timeForNextColor - timeToLerp, timeForNextColor, Time.time)); // Random colors go brrrr
         }
     }
 }
