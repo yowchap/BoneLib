@@ -43,13 +43,8 @@ namespace BoneLib
         /// <param name="spawnAction">Code to run once the spawnable is placed</param>
         public static void SpawnCrate(string barcode, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = false, Action<GameObject> spawnAction = null)
         {
-            var crateRef = new SpawnableCrateReference(barcode);
-            var spawnable = new Spawnable()
-            {
-                crateRef = crateRef,
-            };
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, new(scale), ignorePolicy, null, spawnAction);
+            SpawnableCrateReference crateRef = new SpawnableCrateReference(barcode);
+            SpawnCrate(crateRef,position,rotation,scale,ignorePolicy, spawnAction);
         }
 
         /// <summary>
@@ -63,12 +58,13 @@ namespace BoneLib
         /// <param name="spawnAction">Code to run once the spawnable is placed</param>
         public static void SpawnCrate(SpawnableCrateReference crateReference, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = false, Action<GameObject> spawnAction = null)
         {
-            var spawnable = new Spawnable()
+            Spawnable spawnable = new Spawnable()
             {
                 crateRef = crateReference,
             };
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, new(scale), ignorePolicy, null, spawnAction);
+            Pool pool = AssetSpawner._instance._barcodeToPool[crateReference.Barcode];
+            pool?.Spawn(position, rotation, new(scale), true);
         }
 
         /// <summary>
