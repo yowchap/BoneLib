@@ -1,7 +1,6 @@
 ﻿using BoneLib.BoneMenu.Elements;
-using Il2CppInterop.Runtime.Attributes;
-using System;
 using Il2CppTMPro;
+using System;
 using UnityEngine;
 
 namespace BoneLib.BoneMenu.UI
@@ -18,7 +17,7 @@ namespace BoneLib.BoneMenu.UI
 
         protected MenuElement element;
 
-        [HideFromIl2Cpp]
+        [Il2CppInterop.Runtime.Attributes.HideFromIl2Cpp]
         public void AssignElement(MenuElement element)
         {
             this.element = element;

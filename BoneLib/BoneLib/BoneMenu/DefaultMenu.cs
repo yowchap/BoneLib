@@ -1,8 +1,11 @@
-﻿using BoneLib.Nullables;
+﻿using System.Collections.Generic;
+using BoneLib.Notifications;
 using BoneLib.RandomShit;
+using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Data;
 using Il2CppSLZ.Marrow.Data;
 using Il2CppSLZ.Marrow.Pool;
+using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Warehouse;
 using Il2CppSLZ.Player;
 using UnityEngine;
@@ -39,45 +42,78 @@ namespace BoneLib.BoneMenu
             ammo.CreateIntElement("Medium Ammo", "#ff9d1c", mediumAmmoValue, 100, 0, int.MaxValue, (value) => mediumAmmoValue = value);
             ammo.CreateIntElement("Heavy Ammo", "#ff2f1c", heavyAmmoValue, 100, 0, int.MaxValue, (value) => heavyAmmoValue = value);
 
-            itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, () => SpawnUtilityGun());
-            itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, () => SpawnNimbusGun());
+            itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, SpawnUtilityGun);
+            itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, SpawnNimbusGun);
+            itemSpawning.CreateFunctionElement("Spawn Random Gun", Color.white, SpawnRandomGun);
+            itemSpawning.CreateFunctionElement("Spawn Random Melee", Color.white, SpawnRandomMelee);
+            itemSpawning.CreateFunctionElement("Spawn Random NPC", Color.white, SpawnRandomNPC);
+            itemSpawning.CreateFunctionElement("Load Random Level", Color.white, LoadRandomLevel);
 
             funstuff.CreateFunctionElement("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
             funstuff.CreateFunctionElement("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
             funstuff.CreateFunctionElement("Spawn Bird Ad", Color.white, () => PopupBoxManager.CreateNewBirdPopup());
             funstuff.CreateFunctionElement("Spawn Cat Ad", Color.white, () => PopupBoxManager.CreateNewCatPopup());
+            funstuff.CreateFunctionElement("Notification Test", Color.white, () =>
+            {
+                var notif = new Notification()
+                {
+                    Title = "Hello!",
+                    Message = "Fuck you!",
+                    Type = NotificationType.Error,
+                    ShowTitleOnPopup = true,
+                    PopupLength = 5f
+                };
+                Notifier.Send(notif);
+            });
         }
 
         internal static void SpawnUtilityGun()
         {
             Transform head = Player.playerHead.transform;
-
-            string barcode = "c1534c5a-5747-42a2-bd08-ab3b47616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
-
-            Spawnable spawnable = new Spawnable()
-            {
-                crateRef = reference
-            };
-
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.SpawnGun, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnNimbusGun()
         {
             Transform head = Player.playerHead.transform;
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.NimbusGun, head.position + head.forward, default, Vector3.one, false, null);
+        }
+        
+        internal static void SpawnRandomGun()
+        {
+            Transform head = Player.playerHead.transform;
 
-            string barcode = "c1534c5a-6b38-438a-a324-d7e147616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Guns.All.Count);
+            string barcode = CommonBarcodes.Guns.All[index];
 
-            Spawnable spawnable = new Spawnable()
-            {
-                crateRef = reference
-            };
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+        }
 
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+        internal static void SpawnRandomMelee()
+        {
+            Transform head = Player.playerHead.transform;
+            
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Melee.All.Count);
+            string barcode = CommonBarcodes.Melee.All[index];
+            
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+        }
+        
+        internal static void SpawnRandomNPC()
+        {
+            Transform player = Player.rigManager.physicsRig.artOutput.transform;
+            int index = Random.RandomRangeInt(0, CommonBarcodes.NPCs.All.Count);
+            string barcode = CommonBarcodes.NPCs.All[index];
+            
+            HelperMethods.SpawnCrate(barcode, player.position + player.forward, default, Vector3.one, false, null);
+        }
+
+        internal static void LoadRandomLevel()
+        {
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
+            string barcode = CommonBarcodes.Maps.All[index];
+            
+            SceneStreamer.Load(barcode, CommonBarcodes.Maps.LoadDefault);
         }
     }
 }

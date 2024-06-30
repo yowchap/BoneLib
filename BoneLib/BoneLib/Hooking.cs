@@ -1,12 +1,11 @@
 ﻿using HarmonyLib;
 using MelonLoader;
-using Il2Cpp;
 using Il2CppPuppetMasta;
 using Il2CppSLZ.AI;
 using Il2CppSLZ.Interaction;
 using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Utilities;
-using Il2CppSLZ.Props.Weapons;
+using Il2CppSLZ.Marrow.Warehouse;
 using Il2CppSLZ.Rig;
 using Il2CppSLZ.VRMK;
 using System;
@@ -15,6 +14,9 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Marrow.AI;
+using Il2CppSLZ.Marrow.PuppetMasta;
 
 namespace BoneLib
 {
@@ -26,6 +28,7 @@ namespace BoneLib
 
         // Marrow
         public static event Action OnMarrowGameStarted;
+        public static event Action OnWarehouseReady;
 
         /// <summary>
         /// Called at the start of a loading screen.
@@ -67,9 +70,11 @@ namespace BoneLib
         private static bool currentLevelUnloaded = true;
 
         internal static void SetHarmony(HarmonyLib.Harmony harmony) => Hooking.baseHarmony = harmony;
+
         internal static void InitHooks()
         {
             MarrowGame.RegisterOnReadyAction(new Action(() => SafeActions.InvokeActionSafe(OnMarrowGameStarted)));
+            AssetWarehouse.OnReady(new Action(() => SafeActions.InvokeActionSafe(OnWarehouseReady)));
 
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
             CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
@@ -141,6 +146,7 @@ namespace BoneLib
                 // @Todo(Parzival): Some levels aren't done loading when RigManager.Awake is called!
                 // Ideally this should be invoked right before the loading screen dissapears, but this is
                 // the closest I can get it for now.
+                // You could use Player_Health.MakeVignette, that's almost always called when the RM is fully ready and the level's loaded.
                 SafeActions.InvokeActionSafe(OnLevelInitialized, new LevelInfo(SceneStreamer.Session.Level));
             }
         }

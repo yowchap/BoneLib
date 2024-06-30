@@ -1,4 +1,4 @@
-﻿using MelonLoader;
+﻿using MelonLoader.Utils;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +9,7 @@ namespace BoneLibUpdater
 {
     internal static class Updater
     {
-        private static readonly string dataDir = Path.Combine(MelonUtils.UserDataDirectory, "BoneLibUpdater");
+        private static readonly string dataDir = Path.Combine(MelonEnvironment.UserDataDirectory, "BoneLibUpdater");
         private static readonly string updaterAppName = "updater.exe";
 
         private static bool pluginNeedsUpdating = false;

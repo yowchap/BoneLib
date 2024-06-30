@@ -24,6 +24,33 @@ namespace BoneLib.BoneMenu.Elements
         }
 
         /// <summary>
+        /// Removes an element from the category
+        /// </summary>
+        /// <returns>True if an element was removed</returns>
+        public bool RemoveElement(MenuElement element)
+        {
+            return Elements.Remove(element);
+        }
+
+        /// <summary>
+        /// Removes an element from the category
+        /// </summary>
+        /// <returns>True if an element was removed</returns>
+        public bool RemoveElement(string elementName)
+        {
+            bool removed = false;
+            foreach (MenuElement element in Elements)
+            {
+                if (element.Name == elementName)
+                {
+                    Elements.Remove(element);
+                    removed = true;
+                }
+            }
+            return removed;
+        }
+
+        /// <summary>
         /// Creates a category with a name and a color. 
         /// </summary>
         /// <param name="name">The name of the category.</param>

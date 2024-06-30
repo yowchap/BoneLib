@@ -1,6 +1,5 @@
 ﻿using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Interaction;
-using Il2CppSLZ.Props.Weapons;
 using Il2CppSLZ.Rig;
 using Il2CppSLZ.VRMK;
 using UnityEngine;
@@ -14,8 +13,8 @@ namespace BoneLib
         public static RigManager rigManager { get; private set; }
         public static PhysicsRig physicsRig { get; private set; }
         public static ControllerRig controllerRig { get; private set; }
+        public static RemapRig remapRig { get; private set; }
         public static UIRig uiRig { get; private set; }
-        public static TutorialRig tutorialRig { get; private set; }
 
         public static Hand leftHand { get; private set; }
         public static Hand rightHand { get; private set; }
@@ -39,8 +38,8 @@ namespace BoneLib
             rigManager = manager;
             physicsRig = manager?.physicsRig;
             controllerRig = manager?.ControllerRig;
-            uiRig = manager?.uiRig;
-            tutorialRig = manager?.tutorialRig;
+            remapRig = manager?.remapHeptaRig;
+            uiRig = UIRig.Instance;
 
             leftController = manager?.ControllerRig?.leftController;
             rightController = manager?.ControllerRig?.rightController;
@@ -98,43 +97,6 @@ namespace BoneLib
         /// </summary>
         public static GameObject GetObjectInHand(Hand hand) => hand?.m_CurrentAttachedGO;
 
-        public static void SendHandNotification(HandNotificationData notificationData)
-        {
-            tutorialRig.CUSTOMTUTORIAL(
-                notificationData.inputHighlightLeft,
-                notificationData.inputHighlightRight,
-                notificationData.leftHighlightLocation,
-                notificationData.rightHighlightLocation,
-                notificationData.hand,
-                notificationData.isRightHand,
-                notificationData.leftTutorialText,
-                notificationData.rightTutorialText,
-                notificationData.flashRate,
-                notificationData.holdTime,
-                notificationData.leftSpriteImage,
-                notificationData.rightSpriteImage,
-                notificationData.tutorialClip,
-                null);
-        }
-
-        public static void SendHeadNotification(HeadNotificationData notificationData)
-        {
-            tutorialRig.gameObject.SetActive(true);
-            tutorialRig.headTitles.gameObject.SetActive(true);
-
-            tutorialRig.headTitles.CUSTOMDISPLAY(
-                notificationData.title,
-                notificationData.subtitle,
-                notificationData.mainSprite,
-                notificationData.holdTime,
-                notificationData.clip,
-                notificationData.isAvatarLevel,
-                notificationData.spriteA,
-                notificationData.spriteB,
-                notificationData.spriteC,
-                notificationData.spriteD);
-        }
-
         /// <summary>
         /// Positive values: Clockwise rotation 
         /// <para/>
@@ -142,8 +104,8 @@ namespace BoneLib
         /// </summary>
         public static void RotatePlayer(float degrees)
         {
-            //if (rigManager.virtualHeptaRig != null)
-                //virtualHeptaRig.SetTwist(degrees);
+            if (remapRig != null)
+                remapRig.SetTwist(degrees);
         }
     }
 }

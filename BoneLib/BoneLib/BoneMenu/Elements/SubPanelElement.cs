@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 namespace BoneLib.BoneMenu.Elements
@@ -21,6 +20,33 @@ namespace BoneLib.BoneMenu.Elements
         public override void OnSelectElement()
         {
             SafeActions.InvokeActionSafe(onSelectAction);
+        }
+
+        /// <summary>
+        /// Removes an element from the category
+        /// </summary>
+        /// <returns>True if an element was removed</returns>
+        public bool RemoveElement(MenuElement element)
+        {
+            return Elements.Remove(element);
+        }
+
+        /// <summary>
+        /// Removes an element from the category
+        /// </summary>
+        /// <returns>True if an element was removed</returns>
+        public bool RemoveElement(string elementName)
+        {
+            bool removed = false;
+            foreach (MenuElement element in Elements)
+            {
+                if (element.Name == elementName)
+                {
+                    Elements.Remove(element);
+                    removed = true;
+                }
+            }
+            return removed;
         }
 
         /// <summary>

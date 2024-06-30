@@ -1,6 +1,7 @@
 ﻿using BoneLib.BoneMenu;
 using BoneLib.BoneMenu.Elements;
 using BoneLib.MonoBehaviours;
+using BoneLib.Notifications;
 using BoneLib.RandomShit;
 using MelonLoader;
 using Il2CppSLZ.Bonelab;
@@ -14,7 +15,7 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "Gnonme"; // Author of the Mod.  (Set as null if none)
         public const string Company = null; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "2.2.0"; // Version of the Mod.  (MUST BE SET)
+        public const string Version = "2.4.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = null; // Download Link for the Mod.  (Set as null if none)
     }
 
@@ -32,6 +33,8 @@ namespace BoneLib
 
             DefaultMenu.CreateDefaultElements();
 
+            NotifAssets.SetupBundles();
+
             DataManager.Bundles.Init();
             DataManager.UI.AddComponents();
 
@@ -44,9 +47,15 @@ namespace BoneLib
             ModConsole.Msg("BoneLib loaded");
         }
 
+        public override void OnUpdate()
+        {
+            Notifier.OnUpdate();
+        }
+
         private void OnLevelInitialized(LevelInfo info)
         {
             PopupBoxManager.CreateBaseAd();
+            Audio.GetAudioMixers();
 
             if (info.title == "00 - Main Menu" || info.title == "15 - Void G114")
                 SkipIntro();
@@ -95,6 +104,7 @@ namespace BoneLib
                 controller.timerHold = 0;
                 controller.holdTime_Rest = 0;
                 controller.canClick = true;
+                controller.fadeVolume.gameObject.SetActive(false); // Set black fog volume to inactive to prevent it never fading out
             }
         }
     }

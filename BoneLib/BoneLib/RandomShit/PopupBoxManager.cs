@@ -12,6 +12,8 @@ using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
+using Il2CppSLZ.Data;
+using Il2CppSLZ.VFX;
 
 namespace BoneLib.RandomShit
 {
@@ -120,17 +122,17 @@ namespace BoneLib.RandomShit
             }
 
             GameObject newPopup = GameObject.Instantiate(basePopup);
-            TextMeshPro tmpro = newPopup.GetComponentInChildren<TextMeshPro>();
+            TextMeshPro Il2CppTMPro = newPopup.GetComponentInChildren<TextMeshPro>();
 
-            tmpro.text = adText;
+            Il2CppTMPro.text = adText;
             newPopup.SetActive(true);
 
-            tmpro.enableAutoSizing = true;
-            tmpro.fontSizeMin = 0.5f;
-            tmpro.fontSizeMax = 4;
-            tmpro.alignment = TextAlignmentOptions.Center;
-            tmpro.enableWordWrapping = true;
-            tmpro.alignment = TextAlignmentOptions.Center; // For some reason this has to be set here as well ¯\_(ツ)_/¯
+            Il2CppTMPro.enableAutoSizing = true;
+            Il2CppTMPro.fontSizeMin = 0.5f;
+            Il2CppTMPro.fontSizeMax = 4;
+            Il2CppTMPro.alignment = TextAlignmentOptions.Center;
+            Il2CppTMPro.enableWordWrapping = true;
+            Il2CppTMPro.alignment = TextAlignmentOptions.Center; // For some reason this has to be set here as well ¯\_(ツ)_/¯
 
             if (adText == "haha you can't grab this one")
                 newPopup.GetComponentInChildren<BoxGrip>().enabled = false;
@@ -329,13 +331,13 @@ namespace BoneLib.RandomShit
             rb.angularDrag = 0.15f;
 
             ImpactProperties impactProperties = basePopup.AddComponent<ImpactProperties>();
-            impactProperties.material = ImpactPropertiesVariables.Material.PureMetal;
+            //impactProperties.material = ImpactPropertiesVariables.Material.PureMetal;
             impactProperties.modelType = ImpactPropertiesVariables.ModelType.Model;
             impactProperties.MainColor = Color.white;
             impactProperties.SecondaryColor = Color.white;
-            impactProperties.PenetrationResistance = 0.9f;
+            //impactProperties.PenetrationResistance = 0.9f;
             impactProperties.megaPascalModifier = 1;
-            impactProperties.FireResistance = 100;
+            //impactProperties.FireResistance = 100;
 
             ImpactSFX sfx = basePopup.AddComponent<ImpactSFX>();
             sfx.impactSoft = sounds.ToArray();
@@ -348,7 +350,7 @@ namespace BoneLib.RandomShit
             sfx.jointBreakVolume = 1;
 
             InteractableHost host = basePopup.AddComponent<InteractableHost>();
-            host.HasRigidbody = true;
+            //host.HasRigidbody = true;
 
             #endregion
 
@@ -413,7 +415,7 @@ namespace BoneLib.RandomShit
 
             #region Destructable object
 
-            ObjectDestructable destructable = basePopup.AddComponent<ObjectDestructable>();
+            ObjectDestructible destructable = basePopup.AddComponent<ObjectDestructible>();
             destructable.damageFromImpact = true;
             //destructable.blasterType = StressLevelZero.Pool.PoolSpawner.BlasterType.Sparks; // TODO: destruction effects
             destructable.blasterScale = Vector3.one * 3;
