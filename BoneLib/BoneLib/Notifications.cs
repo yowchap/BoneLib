@@ -167,7 +167,7 @@ namespace BoneLib.Notifications
             Notification notification = QueuedNotifications.Dequeue();
 
             // Show to the player
-            RigManager rm = Player.rigManager;
+            RigManager rm = Player.RigManager;
 
             if (rm != null)
             {
@@ -203,7 +203,7 @@ namespace BoneLib.Notifications
 
         private static void EnableTutorialRig()
         {
-            RigManager rm = Player.rigManager;
+            RigManager rm = Player.RigManager;
 
             if (rm != null)
             {
@@ -218,7 +218,7 @@ namespace BoneLib.Notifications
 
         private static bool IsPlayingNotification()
         {
-            RigManager rm = Player.rigManager;
+            RigManager rm = Player.RigManager;
 
             if (rm != null)
             {
@@ -236,7 +236,7 @@ namespace BoneLib.Notifications
         internal static void OnUpdate()
         {
             // Make sure we aren't loading so we can dequeue existing notifications
-            if (QueuedNotifications.Count > 0 && !HelperMethods.IsLoading() && Player.rigManager != null)
+            if (QueuedNotifications.Count > 0 && !HelperMethods.IsLoading() && Player.RigManager != null)
             {
                 // Enable the tutorial rig a frame before showing notifs
                 if (!_hasEnabledTutorialRig)

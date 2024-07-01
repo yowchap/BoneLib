@@ -1,60 +1,44 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace BoneLib.BoneMenu.Elements
+namespace BoneLib.BoneMenu
 {
-    public class IntElement : GenericElement<int>
+    [Serializable]
+    public class IntElement : Element
     {
-        public IntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> action = null) : base(name, color, action)
+        public IntElement(string name, Color color, int increment, int startValue, int minValue, int maxValue, Action<int> callback) : base(name, color)
         {
-            Name = name;
-            Color = color;
+            _elementName = name;
+            _elementColor = color;
+            _elementType = "Int";
+
             _value = startValue;
-            _increment = increment;
             _minValue = minValue;
             _maxValue = maxValue;
-            _action = action;
+            _increment = increment;
         }
 
-        public override ElementType Type => ElementType.Value;
-        public override string DisplayValue => _value.ToString();
+        public static Action<Element, int> OnValueChanged;
 
-        public int Value { get => _value; }
-        public int Increment { get => _increment; }
-        public int MinValue { get => _minValue; }
-        public int MaxValue { get => _maxValue; }
+        public int Value => _value;
 
-        private int _increment;
+        private int _value;
         private int _minValue;
         private int _maxValue;
+        private int _increment;
 
-        public override void OnSelectLeft()
+        public void Increment()
         {
-            _value += _increment;
-
-            if (_value >= _maxValue)
-            {
-                _value = _maxValue;
-            }
-
-            OnChangedValue();
+            // Clamped value between minValue and maxValue
+            _value = Mathf.Min(_maxValue, Mathf.Max(_minValue, _value + _increment));
+            OnValueChanged?.Invoke(this, _value);
         }
 
-        public override void OnSelectRight()
+        public void Decrement()
         {
-            _value -= _increment;
-
-            if (_value <= _minValue)
-            {
-                _value = _minValue;
-            }
-
-            OnChangedValue();
-        }
-
-        protected override void OnChangedValue()
-        {
-            base.OnChangedValue();
+            // Clamped value between minValue and maxValue
+            _value = Mathf.Max(_minValue, Mathf.Min(_maxValue, _value - _increment));
+            OnValueChanged?.Invoke(this, _value);
         }
     }
 }

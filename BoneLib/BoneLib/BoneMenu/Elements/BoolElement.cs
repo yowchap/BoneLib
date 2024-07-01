@@ -1,32 +1,31 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace BoneLib.BoneMenu.Elements
+namespace BoneLib.BoneMenu
 {
-    public class BoolElement : GenericElement<bool>
+    [Serializable]
+    public class BoolElement : Element
     {
-        public BoolElement(string name, Color color, bool value, Action<bool> action = null) : base(name, color, action)
+        public BoolElement(string name, Color color, bool startValue, Action<bool> callback) : base(name, color)
         {
-            Name = name;
-            Color = color;
-            _value = value;
-            this._action = action;
+            _elementName = name;
+            _elementColor = color;
+            _elementType = "Function";
+            _startValue = startValue;
+            _callback = callback;
+            _value = _startValue;
         }
-
-        public override ElementType Type => ElementType.Toggle;
-        public override string DisplayValue => _value ? "Enabled" : "Disabled";
 
         public bool Value => _value;
 
-        public override void OnSelectElement()
+        private bool _startValue;
+        private bool _value;
+        private Action<bool> _callback;
+
+        public override void OnElementSelected()
         {
             _value = !_value;
-            OnChangedValue();
-        }
-
-        protected override void OnChangedValue()
-        {
-            base.OnChangedValue();
+            _callback?.Invoke(_value);
         }
     }
 }

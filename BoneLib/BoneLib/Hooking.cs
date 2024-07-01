@@ -37,7 +37,7 @@ namespace BoneLib
         /// <summary>
         /// Called when the current Level is fully initialized.
         /// </summary>
-        public static event Action<LevelInfo> OnLevelInitialized;
+        public static event Action<LevelInfo> OnLevelLoaded;
         /// <summary>
         /// Called when the current Level unloads.
         /// </summary>
@@ -88,7 +88,6 @@ namespace BoneLib
             CreateHook(typeof(Grip).GetMethod("OnAttachedToHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripAttachedPostfix), AccessTools.all));
             CreateHook(typeof(Grip).GetMethod("OnDetachedFromHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
 
-            CreateHook(typeof(RigManager).GetMethod("Awake", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerAwake), AccessTools.all));
             CreateHook(typeof(RigManager).GetMethod("OnDestroy", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroyed), AccessTools.all));
 
             CreateHook(typeof(AIBrain).GetMethod("OnDeath", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
@@ -96,6 +95,8 @@ namespace BoneLib
 
             CreateHook(typeof(BehaviourBaseNav).GetMethod("KillStart", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCStart), AccessTools.all));
             CreateHook(typeof(BehaviourBaseNav).GetMethod("KillEnd", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCEnd), AccessTools.all));
+
+            CreateHook(typeof(PlayerMarker).GetMethod("OnPlayerSpawned", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerSpawned), AccessTools.all));
 
             Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
             Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
@@ -136,18 +137,33 @@ namespace BoneLib
             ModConsole.Msg($"New {(isPrefix ? "PREFIX" : "POSTFIX")} on {original.DeclaringType.Name}.{original.Name} to {hook.DeclaringType.Name}.{hook.Name}", LoggingMode.DEBUG);
         }
 
-        private static void OnRigManagerAwake(RigManager __instance)
-        {
-            if (Player.handsExist)
-                return;
+        // private static void OnRigManagerAwake(RigManager __instance)
+        // {
+        //     if (Player.HandsExist)
+        //         return;
 
-            if (Player.FindObjectReferences(__instance))
+        //     if (Player.FindObjectReferences(__instance))
+        //     {
+        //         // @Todo(Parzival): Some levels aren't done loading when RigManager.Awake is called!
+        //         // Ideally this should be invoked right before the loading screen dissapears, but this is
+        //         // the closest I can get it for now.
+        //         // You could use Player_Health.MakeVignette, that's almost always called when the RM is fully ready and the level's loaded.
+        //         SafeActions.InvokeActionSafe(OnLevelLoaded, new LevelInfo(SceneStreamer.Session.Level));
+        //     }
+        // }
+
+        private static void OnPlayerSpawned(GameObject go)
+        {
+            ModConsole.Msg("Player Spawned");
+
+            if (Player.HandsExist)
             {
-                // @Todo(Parzival): Some levels aren't done loading when RigManager.Awake is called!
-                // Ideally this should be invoked right before the loading screen dissapears, but this is
-                // the closest I can get it for now.
-                // You could use Player_Health.MakeVignette, that's almost always called when the RM is fully ready and the level's loaded.
-                SafeActions.InvokeActionSafe(OnLevelInitialized, new LevelInfo(SceneStreamer.Session.Level));
+                return;
+            }
+
+            if (Player.FindObjectReferences())
+            {
+                SafeActions.InvokeActionSafe(OnLevelLoaded, new LevelInfo(SceneStreamer.Session.Level));
             }
         }
 

@@ -140,8 +140,8 @@ namespace BoneLib.RandomShit
             newPopup.AddComponent<PopupBox>();
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
+            newPopup.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.Head.position);
 
             return newPopup;
         }
@@ -175,8 +175,8 @@ namespace BoneLib.RandomShit
             newPopup.SetActive(true);
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
+            newPopup.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.Head.position);
 
             return newPopup;
         }
@@ -233,7 +233,7 @@ namespace BoneLib.RandomShit
             }
 
             string jsonUrls = urlReq.downloadHandler.text; // return value is something like ["https://cdn.shibe.online/shibes/8f0792fcac8df87a5d2953031a837a2939fda430.jpg"]
-            string imageUrl = Il2CppNewtonsoft.Json.JsonConvert.DeserializeObject<string[]>(jsonUrls)[0];
+            string imageUrl = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(jsonUrls)[0];
 
             UnityWebRequest imageReq = UnityWebRequest.Get(imageUrl);
             imageReq.BeginWebRequest();
@@ -282,8 +282,8 @@ namespace BoneLib.RandomShit
                 yield return new WaitForSeconds(5f);
 
             GameObject newAd = CreateNewPopupBox();
-            newAd.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.playerHead.transform.position);
+            newAd.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.Head.position);
 
             MelonCoroutines.Start(CoSpawnAds());
         }
