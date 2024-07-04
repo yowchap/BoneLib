@@ -1,8 +1,6 @@
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace BoneLib.BoneMenu.UI
 {
+    [MelonLoader.RegisterTypeInIl2Cpp]
     public class SpaceKey : Key
     {
         public SpaceKey(System.IntPtr ptr) : base(ptr) { }

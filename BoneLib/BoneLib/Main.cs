@@ -45,6 +45,11 @@ namespace BoneLib
 
         public override void OnUpdate()
         {
+            if (Player.ControllerRig != null && !Player.ControllerRig.quickmenuEnabled)
+            {
+                Player.ControllerRig.quickmenuEnabled = true;
+            }
+
             Notifier.OnUpdate();
         }
 

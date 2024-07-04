@@ -30,7 +30,7 @@ namespace BoneLib.BoneMenu
 
             Page.Root = CreatePage("BoneMenu", maxElements: 10);
             Page.Root.SetLayout(LayoutType.Vertical);
-            // OpenPage(Page.Root);
+            OpenPage(Page.Root);
 
             _initialized = true;
         }
@@ -67,18 +67,14 @@ namespace BoneLib.BoneMenu
         {
             if (page.IsChild)
             {
-                Debug.Log("Page is child");
-                
                 if (page.Parent.GetNextPage() != null)
                 {
-                    Debug.Log("Available next page, going there");
                     OpenPage(page.Parent.NextPage());
                     return;
                 }
 
                 if (page.Parent.GetPreviousPage() != null)
                 {
-                    Debug.Log("Available previous page, going there");
                     OpenPage(page.Parent.PreviousPage());
                     return;
                 }

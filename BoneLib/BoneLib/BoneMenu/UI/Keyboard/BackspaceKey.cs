@@ -1,7 +1,6 @@
-using UnityEngine.UI;
-
 namespace BoneLib.BoneMenu.UI
 {
+    [MelonLoader.RegisterTypeInIl2Cpp]
     public class BackspaceKey : Key
     {
         public BackspaceKey(System.IntPtr ptr) : base(ptr) { }

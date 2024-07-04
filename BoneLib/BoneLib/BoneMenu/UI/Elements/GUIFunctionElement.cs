@@ -39,7 +39,6 @@ namespace BoneLib.BoneMenu.UI
         {
             if (_backingElement == null)
             {
-                print("Backing element is null");
                 return;
             }
 

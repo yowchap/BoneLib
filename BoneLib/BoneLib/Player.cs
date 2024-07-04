@@ -11,7 +11,7 @@ namespace BoneLib
         public static Avatar Avatar => RigManager.avatar;
         public static RigManager RigManager { get; private set; }
         public static PhysicsRig PhysicsRig { get; private set; }
-        public static ControllerRig ControllerRig { get; private set; }
+        public static OpenControllerRig ControllerRig { get; private set; }
         public static RemapRig RemapRig { get; private set; }
         public static UIRig UIRig { get; private set; }
 
@@ -37,7 +37,7 @@ namespace BoneLib
 
             RigManager = manager;
             PhysicsRig = RigManager.physicsRig;
-            ControllerRig = RigManager.ControllerRig;
+            ControllerRig = RigManager.ControllerRig.Cast<OpenControllerRig>();
             RemapRig = RigManager.remapHeptaRig;
             UIRig = UIRig.Instance;
 

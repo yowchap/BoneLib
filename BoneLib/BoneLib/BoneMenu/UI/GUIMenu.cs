@@ -1,3 +1,4 @@
+using Il2CppSLZ.Marrow.Utilities;
 using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,20 +34,8 @@ namespace BoneLib.BoneMenu.UI
 
         private void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(Instance.gameObject);
-            }
+            Instance = this;
 
-            DontDestroyOnLoad(Instance.gameObject);
-        }
-
-        private void Start()
-        {
             Transform contentTransform = transform.Find("Page/Content");
 
             _drawer = transform.Find("Pools").GetComponent<GUIElementDrawer>();
@@ -64,8 +53,11 @@ namespace BoneLib.BoneMenu.UI
             _incrementPageButton = contentTransform.Find("Footer/NextPage").GetComponent<Button>();
 
             _toParentButton = contentTransform.Find("Interaction/Return").GetComponent<Button>();
-            _guiDialog = transform.Find("Dialog").GetComponent<GUIDialog>();
-            _keyboard = transform.Find("KeyboardMain").GetComponent<Keyboard>();
+            // _guiDialog = transform.Find("Dialog").GetComponent<GUIDialog>();
+
+            _keyboard = transform.Find("Keyboard").GetComponent<Keyboard>();
+
+            _keyboard.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -74,7 +66,7 @@ namespace BoneLib.BoneMenu.UI
             Menu.OnPageUpdated += OnPageUpdated;
             Dialog.OnDialogCreated += OnDialogCreated;
 
-            _toParentButton.onClick.AddListener(new System.Action(() =>  { ToParentPage(); }));
+            _toParentButton.onClick.AddListener(new System.Action(() => { ToParentPage(); }));
             _decrementPageButton.onClick.AddListener(new System.Action(() => { Menu.PreviousPage(); }));
             _incrementPageButton.onClick.AddListener(new System.Action(() => { Menu.NextPage(); }));
         }
@@ -140,8 +132,6 @@ namespace BoneLib.BoneMenu.UI
 
             _drawer.Clear();
 
-            _toParentButton.gameObject.SetActive(page.Parent != null && page != Page.Root);
-
             if (page.Indexed && page.IsChild)
             {
                 Page parent = page.Parent;
@@ -187,6 +177,13 @@ namespace BoneLib.BoneMenu.UI
 
         private void ToParentPage()
         {
+            if (Menu.CurrentPage == Page.Root)
+            {
+                // Go back to default game page
+                MenuBootstrap.panelView.PAGESELECT(MenuBootstrap.panelView.defaultPage);
+                return;
+            }
+
             Menu.OpenParentPage();
         }
 

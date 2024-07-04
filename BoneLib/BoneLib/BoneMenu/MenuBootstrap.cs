@@ -73,6 +73,11 @@ namespace BoneLib.BoneMenu
             ModifyBaseUI();
         }
 
+        private static void ModifyG114UI()
+        {
+            
+        }
+
         private static void ModifyBaseUI()
         {
             System.Action optionButtonAction = () =>

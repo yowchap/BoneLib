@@ -1,6 +1,3 @@
-using UnityEngine;
-using UnityEngine.UI;
-
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp]

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using BoneLib.Notifications;
+﻿using BoneLib.Notifications;
 using BoneLib.RandomShit;
 using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Data;
 using Il2CppSLZ.Marrow.SceneStreaming;
 using UnityEngine;
-using UnityEngine.UIElements.UIR;
 
 namespace BoneLib.BoneMenu
 {
@@ -22,6 +20,7 @@ namespace BoneLib.BoneMenu
         private static int lightAmmoValue = 100;
         private static int mediumAmmoValue = 100;
         private static int heavyAmmoValue = 100;
+        private static string textValue = "";
 
         public static void CreateDefaultElements()
         {
@@ -56,12 +55,13 @@ namespace BoneLib.BoneMenu
             funStuffPage.CreateFunction("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
             funStuffPage.CreateFunction("Spawn Bird Ad", Color.white, () => PopupBoxManager.CreateNewBirdPopup());
             funStuffPage.CreateFunction("Spawn Cat Ad", Color.white, () => PopupBoxManager.CreateNewCatPopup());
+            funStuffPage.CreateString("Notification Text", Color.white, "None", (input) => textValue = input);
             funStuffPage.CreateFunction("Notification Test", Color.white, () =>
             {
                 var notif = new Notification()
                 {
                     Title = "Hello!",
-                    Message = "Fuck you!",
+                    Message = textValue,
                     Type = NotificationType.Error,
                     ShowTitleOnPopup = true,
                     PopupLength = 5f

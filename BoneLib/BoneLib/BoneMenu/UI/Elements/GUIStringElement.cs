@@ -20,10 +20,10 @@ namespace BoneLib.BoneMenu.UI
         private void Awake()
         {
             _nameText = transform.Find("Name").GetComponent<TextMeshProUGUI>();
-            _inputField = transform.Find("Button").GetComponent<TMP_InputField>();
+            _inputField = GetComponent<TMP_InputField>();
             _keyboardButton = transform.Find("ShowKeyboard").GetComponent<Button>();
 
-            _keyboardButton?.onClick.AddListener(new System.Action(() => OpenKeyboard()));
+            _keyboardButton.onClick.AddListener(new System.Action(() => OpenKeyboard()));
             _inputField.onSubmit.AddListener(new System.Action<string>((str) => OnInputFieldSubmit(str)));
         }
 

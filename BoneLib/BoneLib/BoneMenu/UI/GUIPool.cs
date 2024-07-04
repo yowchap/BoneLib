@@ -14,17 +14,12 @@ namespace BoneLib.BoneMenu.UI
 
         private GameObject _prefab;
 
-        private List<GameObject> _inactiveObjects;
-        private List<GameObject> _activeObjects;
-
-        private void Awake()
-        {
-            _inactiveObjects = new List<GameObject>();
-            _activeObjects = new List<GameObject>();
-        }
+        private List<GameObject> _inactiveObjects = new List<GameObject>();
+        private List<GameObject> _activeObjects = new List<GameObject>();
 
         public void Initialize()
         {
+            ModConsole.Msg(name);
             if (_prefab == null)
             {
                 return;
@@ -32,11 +27,16 @@ namespace BoneLib.BoneMenu.UI
 
             for (int i = 0; i < _size; i++)
             {
+                ModConsole.Msg("Instantiating");
                 GameObject clone = Instantiate(_prefab, transform);
+                ModConsole.Msg("Disabling clone");
                 clone.SetActive(false);
+                ModConsole.Msg("Adding poolee component");
                 GUIPoolee poolee = clone.AddComponent<GUIPoolee>();
                 poolee.SetParent(this);
+                ModConsole.Msg("Adding to inactive objects list");
                 _inactiveObjects.Add(clone);
+                ModConsole.Msg("Done!");
             }
         }
         
