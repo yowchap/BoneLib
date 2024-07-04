@@ -63,8 +63,7 @@ namespace BoneLib
                 crateRef = crateReference,
             };
             AssetSpawner.Register(spawnable);
-            Pool pool = AssetSpawner._instance._barcodeToPool[crateReference.Barcode];
-            pool?.Spawn(position, rotation, new(scale), true);
+            AssetSpawner.Spawn(spawnable, position, rotation, new(scale), ignorePolicy, new(0), spawnAction);
         }
 
         /// <summary>
