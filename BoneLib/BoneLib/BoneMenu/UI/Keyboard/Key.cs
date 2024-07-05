@@ -28,25 +28,42 @@ namespace BoneLib.BoneMenu.UI
             _keyButton.onClick.AddListener(new System.Action(() => { OnKeyPressed(); }));
             _keyboard.RegisterKey(this);
 
-            Value = Shifted ? KeyName.ToUpper() : KeyName.ToLower();
+            if (KeyName.Length < 3)
+            {
+                Value = $"{KeyName[0]}";
+                return;
+            }
+
+            if (KeyName[1] != ':')
+            {
+                Value = $"{KeyName[0]}";
+                return;
+            }
+
+            Value = Shifted ? $"{KeyName[2]}" : $"{KeyName[0]}";
+            _textRepresenter.text = Value;
         }    
 
         public virtual void OnKeyPressed()
         {
-            print("Key: " + KeyName + "\nValue: " + Value + "\nShifted: " + Shifted);
             _keyboard.InputField.text += Value;
         }
 
         public void Shift()
         {
-            Shifted = !Shifted;
-            Value = Shifted ? KeyName.ToUpper() : KeyName.ToLower();
-
-            // this key has a logo instead of a character
-            if (_textRepresenter != null)
+            if (KeyName.Length < 3)
             {
-                _textRepresenter.text = Value;
+                return;
             }
+
+            if (KeyName[1] != ':')
+            {
+                return;
+            }
+
+            Shifted = !Shifted;
+            Value = Shifted ? $"{KeyName[2]}" : $"{KeyName[0]}";
+            _textRepresenter.text = Value;
         }
     }
 }

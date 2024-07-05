@@ -77,9 +77,9 @@ namespace BoneLib.BoneMenu.UI
             Menu.OnPageUpdated -= OnPageUpdated;
             Dialog.OnDialogCreated -= OnDialogCreated;
 
-            _toParentButton.onClick.RemoveListener(new System.Action(() => { ToParentPage(); }));
-            _decrementPageButton.onClick.RemoveListener(new System.Action(() => { Menu.PreviousPage(); }));
-            _incrementPageButton.onClick.RemoveListener(new System.Action(() => { Menu.NextPage(); }));
+            _toParentButton.onClick.RemoveAllListeners();
+            _decrementPageButton.onClick.RemoveAllListeners();
+            _incrementPageButton.onClick.RemoveAllListeners();
         }
 
         public void OpenKeyboard()
@@ -129,6 +129,7 @@ namespace BoneLib.BoneMenu.UI
             }
 
             _background.SetNativeSize();
+            _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, page.BackgroundOpacity);
 
             _drawer.Clear();
 
@@ -177,9 +178,10 @@ namespace BoneLib.BoneMenu.UI
 
         private void ToParentPage()
         {
-            if (Menu.CurrentPage == Page.Root)
+            if (Menu.CurrentPage.Name == Page.Root.Name)
             {
                 // Go back to default game page
+                MenuBootstrap.ResetGameMenu();
                 MenuBootstrap.panelView.PAGESELECT(MenuBootstrap.panelView.defaultPage);
                 return;
             }

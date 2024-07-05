@@ -57,9 +57,12 @@ namespace BoneLib.BoneMenu
 
         public string Name => _name;
         public Color Color => _color;
+
         public Texture2D Logo { get; set; }
         public Texture2D Background { get; set; }
-        public Texture2D DefaultBackground { get; private set; } = Resources.Load<Texture2D>("sprite_blackGrid_blur");
+        public Texture2D DefaultBackground => MenuBootstrap.defaultBackgroundTexture;
+        public float BackgroundOpacity { get; set; }
+
         public LayoutType Layout { get; set; }
         public float ElementSpacing { get; set; } = 60;
 
@@ -131,8 +134,6 @@ namespace BoneLib.BoneMenu
             }
 
             _numElements = _elements.Count;
-
-            Debug.Log(_numElements);
 
             if (_numElements == 0)
             {
@@ -220,10 +221,28 @@ namespace BoneLib.BoneMenu
         {
             if (background == null)
             {
-                // TODO: Use default grid background
+                Background = DefaultBackground;
+                Menu.OnPageUpdated?.Invoke(this);
+                return;
             }
 
             Background = background;
+            Menu.OnPageUpdated?.Invoke(this);
+        }
+
+        public void SetBackgroundOpacity(float opacity)
+        {
+            if (opacity > 1)
+            {
+                opacity = 1;
+            }
+
+            if (opacity < 0)
+            {
+                opacity = 0;
+            }
+
+            BackgroundOpacity = opacity;
             Menu.OnPageUpdated?.Invoke(this);
         }
 

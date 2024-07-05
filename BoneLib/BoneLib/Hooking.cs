@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
 using MelonLoader;
-using Il2CppPuppetMasta;
-using Il2CppSLZ.AI;
 using Il2CppSLZ.Interaction;
 using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Utilities;

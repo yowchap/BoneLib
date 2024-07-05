@@ -20,6 +20,12 @@ namespace BoneLib.BoneMenu
         private string _value;
         private Action<string> _callback;
 
+        public override void OnElementSelected()
+        {
+            base.OnElementSelected();
+            _callback?.Invoke(_value);
+        }
+
         public void SetText(string text)
         {
             _value = text;

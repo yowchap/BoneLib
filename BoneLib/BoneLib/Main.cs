@@ -1,4 +1,5 @@
 ﻿using BoneLib.BoneMenu;
+using BoneLib.BoneMenu.Tests;
 using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;
@@ -26,13 +27,13 @@ namespace BoneLib
             Hooking.SetHarmony(HarmonyInstance);
             Hooking.InitHooks();
 
+            MenuBootstrap.InitializeBundles();
+
             Menu.Initialize();
 
             DefaultMenu.CreateDefaultElements();
 
             NotifAssets.SetupBundles();
-
-            MenuBootstrap.InitializeBundles();
 
             Hooking.OnLevelLoaded += OnLevelLoaded;
 
@@ -56,7 +57,6 @@ namespace BoneLib
         private void OnLevelLoaded(LevelInfo info)
         {
             PopupBoxManager.CreateBaseAd();
-            Audio.GetAudioMixers();
             MenuBootstrap.InitializeReferences();
         }
     }

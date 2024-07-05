@@ -42,6 +42,9 @@
     <Reference Include="Il2CppInterop.Runtime">
       <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\BONELAB\MelonLoader\Managed\System.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="UniTask">
       <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppUniTask.dll</HintPath>
     </Reference>

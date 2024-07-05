@@ -9,6 +9,7 @@ using UnityEngine;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using System.Collections.Generic;
 
 namespace BoneLib
 {
@@ -139,7 +140,20 @@ namespace BoneLib
         /// </summary>
         public static bool CheckIfAssemblyLoaded(string name)
         {
-            return AppDomain.CurrentDomain.GetAssemblies().Any(asm => asm.GetName().Name.ToLower().Contains(name.ToLower()));
+            HashSet<Assembly> query = new HashSet<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
+            bool found = false;
+
+            foreach (var queryAsm in query)
+            {
+                string asmName = queryAsm.GetName().Name;
+                if (asmName.ToLower() == name.ToLower())
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
         }
     }
 }

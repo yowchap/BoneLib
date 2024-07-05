@@ -37,10 +37,12 @@ namespace BoneLib.BoneMenu
         public static GameObject enumPrefab;
         public static GameObject stringPrefab;
         public static GameObject rootButtonPrefab;
+        public static Texture2D defaultBackgroundTexture;
 
         private static GameObject _optionButton;
         private static Transform _optionsGrid;
         private static Button _optionButtonComponent;
+        private static GameObject _menuBackground;
 
         public static void InitializeBundles()
         {
@@ -58,6 +60,7 @@ namespace BoneLib.BoneMenu
             stringPrefab = HelperMethods.LoadPersistentAsset<GameObject>(Bundle, "StringElement");
             boolPrefab = HelperMethods.LoadPersistentAsset<GameObject>(Bundle, "BoolElement");
             rootButtonPrefab = HelperMethods.LoadPersistentAsset<GameObject>(Bundle, "MenuButton");
+            defaultBackgroundTexture = HelperMethods.LoadPersistentAsset<Texture2D>(Bundle, "sprite_blackGrid_blur");
         }
 
         public static void InitializeReferences()
@@ -68,14 +71,15 @@ namespace BoneLib.BoneMenu
             page.transform.localRotation = Quaternion.identity;
             optionsPanel = panelView.pages[panelView.defaultPage];
             _optionsGrid = optionsPanel.transform.Find("grid_Options");
+            _menuBackground = panelView.transform.Find("image_bgFade").gameObject;
 
             _optionButton = SetupElement(rootButtonPrefab, OptionsGrid, true);
             ModifyBaseUI();
         }
 
-        private static void ModifyG114UI()
+        public static void ResetGameMenu()
         {
-            
+            _menuBackground.SetActive(true);
         }
 
         private static void ModifyBaseUI()
@@ -83,6 +87,7 @@ namespace BoneLib.BoneMenu
             System.Action optionButtonAction = () =>
             {
                 panelView.PAGESELECT(11);
+                _menuBackground.SetActive(false);
                 Menu.OpenPage(Page.Root);
             };
 
