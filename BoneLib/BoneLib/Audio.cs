@@ -21,7 +21,53 @@ namespace BoneLib
         public static AudioMixerGroup SoftInteraction => Audio3dManager.softInteraction;
         public static AudioMixerGroup UI => Audio3dManager.ui;
 
-        public static void PlayOneShot(AudioClip clip, Vector3 position, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f) => Audio3dManager.PlayAtPoint(clip, position, mixerGroup, volume, pitch);
-        public static void SpawnAudioPlayer(Vector3 position = default, System.Action<GameObject> callback = null) => Audio3dManager.SpawnAudioPlayer(position, callback);
+        public static void Play2DOneShot(AudioClip clip, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f)
+        {
+            Audio3dManager.Play2dOneShot(
+                clip, 
+                mixerGroup, 
+                new Il2CppSystem.Nullable<float>(volume), 
+                new Il2CppSystem.Nullable<float>(pitch));
+        }
+
+        public static void Play2DOneShot(AudioClip[] clips, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f)
+        {
+            Audio3dManager.Play2dOneShot(
+                clips,
+                mixerGroup,
+                new Il2CppSystem.Nullable<float>(volume),
+                new Il2CppSystem.Nullable<float>(pitch));
+        }
+
+        public static void PlayAtPoint(AudioClip clip, Vector3 position, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f, float spatialBlend = 1f)
+        {
+            Audio3dManager.PlayAtPoint(
+                clip,
+                position,
+                mixerGroup,
+                volume,
+                pitch,
+                new Il2CppSystem.Nullable<float>(0f),
+                new Il2CppSystem.Nullable<float>(0f),
+                new Il2CppSystem.Nullable<float>(spatialBlend));
+        }
+
+        public static void PlayAtPoint(AudioClip[] clips, Vector3 position, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f, float spatialBlend = 1f)
+        {
+            Audio3dManager.PlayAtPoint(
+                clips,
+                position,
+                mixerGroup,
+                volume,
+                pitch,
+                new Il2CppSystem.Nullable<float>(0f),
+                new Il2CppSystem.Nullable<float>(0f),
+                new Il2CppSystem.Nullable<float>(spatialBlend));
+        }
+
+        public static void SpawnAudioPlayer(Vector3 position = default, System.Action<GameObject> callback = null)
+        {
+            Audio3dManager.SpawnAudioPlayer(position, callback);
+        }
     }
 }

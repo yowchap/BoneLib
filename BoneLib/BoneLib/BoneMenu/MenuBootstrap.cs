@@ -8,6 +8,7 @@ using Il2CppSLZ.Bonelab;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using System.Reflection;
 using BoneLib.BoneMenu.UI;
+using Harmony;
 
 namespace BoneLib.BoneMenu
 {

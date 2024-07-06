@@ -53,6 +53,19 @@ namespace BoneLib.BoneMenu
 
         public static Page Root;
 
+        public Page this[string name]
+        {
+            get
+            {
+                if (ChildPages.ContainsKey(name))
+                {
+                    return ChildPages[name];
+                }
+
+                return this;
+            }
+        }
+
         public Page Parent;
 
         public string Name => _name;
@@ -68,6 +81,7 @@ namespace BoneLib.BoneMenu
 
         public IReadOnlyList<Element> Elements => _elements.AsReadOnly();
         public IReadOnlyList<SubPage> SubPages => _subPages.AsReadOnly();
+        public Dictionary<string, Page> ChildPages = new Dictionary<string, Page>();
         public int ElementCount => _numElements;
         public int CurrentSubPage => _subPageIndex;
 
@@ -250,6 +264,24 @@ namespace BoneLib.BoneMenu
         {
             Layout = layoutType;
             Menu.OnPageUpdated?.Invoke(this);
+        }
+
+        public Page CreatePage()
+        {
+            return CreatePage(this.Name, this.Color);
+        }
+
+        public Page CreatePage(string name, Color color)
+        {
+            if (ChildPages.ContainsKey(name))
+            {
+                return ChildPages[name];
+            }
+
+            Page page = new Page(parent: this, name, color);
+            ChildPages.Add(name, page);
+            Menu.OnPageCreated?.Invoke(this);
+            return page;
         }
 
         public FunctionElement CreateFunction(string name, Color color, Action callback)

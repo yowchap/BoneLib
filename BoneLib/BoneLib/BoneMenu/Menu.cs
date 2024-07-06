@@ -28,7 +28,7 @@ namespace BoneLib.BoneMenu
 
             PageDirectory = new Dictionary<string, Page>();
 
-            Page.Root = CreatePage("BoneMenu", maxElements: 10);
+            Page.Root = new Page("BoneMenu", maxElements: 10);
             Page.Root.SetLayout(LayoutType.Vertical);
             OpenPage(Page.Root);
 

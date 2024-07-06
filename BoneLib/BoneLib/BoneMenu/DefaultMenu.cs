@@ -24,13 +24,13 @@ namespace BoneLib.BoneMenu
 
         public static void CreateDefaultElements()
         {
-            Page mainPage = Menu.CreatePage("BoneLib", Color.white);
+            Page mainPage = Page.Root.CreatePage("BoneLib", Color.white);
 
             Page.Root.CreatePageLink(mainPage);
 
-            Page ammoPage = Menu.CreatePage(parent: mainPage, "Ammo Settings", Color.yellow);
-            Page itemSpawningPage = Menu.CreatePage(parent: mainPage, "Item Spawning", Color.white);
-            Page funStuffPage = Menu.CreatePage(parent: mainPage, "Fun Stuff");
+            Page ammoPage = mainPage.CreatePage("Ammo Settings", Color.yellow);
+            Page itemSpawningPage = mainPage.CreatePage("Item Spawning", Color.white);
+            Page funStuffPage = mainPage.CreatePage("Fun Stuff", Color.white);
 
             mainPage.CreatePageLink(ammoPage);
             mainPage.CreatePageLink(itemSpawningPage);
