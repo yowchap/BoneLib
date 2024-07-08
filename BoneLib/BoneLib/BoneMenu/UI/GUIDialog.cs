@@ -14,30 +14,30 @@ namespace BoneLib.BoneMenu.UI
         private TextMeshProUGUI _titleText;
         private TextMeshProUGUI _descriptionText;
 
-        private Button _confirmButton;
-        private Button _cancelButton;
-        private Button _closeButton;
+        private Button _acceptButton;
+        private Button _denyButton;
 
         private void Awake()
         {
             _titleText = transform.Find("Header/Title").GetComponent<TextMeshProUGUI>();
             _descriptionText = transform.Find("Container/Description").GetComponent<TextMeshProUGUI>();
+
+            _acceptButton = transform.Find("Container/ButtonGroup/Option1").GetComponent<Button>();
+            _denyButton = transform.Find("Container/ButtonGroup/Option2").GetComponent<Button>();
+
+            gameObject.SetActive(false);
         }
 
         private void OnEnable()
         {
-            _confirmButton?.onClick.AddListener(new System.Action(() => _dialog.OnConfirmPressed()));
-            _cancelButton?.onClick.AddListener(new System.Action(() => _dialog.OnDeclinePressed()));
-            _closeButton?.onClick.AddListener(new System.Action(() => gameObject.SetActive(false)));
-
-            Draw();
+            _acceptButton?.onClick.AddListener(new System.Action(() => _dialog.OnConfirmPressed()));
+            _denyButton?.onClick.AddListener(new System.Action(() => _dialog.OnDeclinePressed()));
         }
 
         private void OnDisable()
         {
-            _confirmButton?.onClick.RemoveListener(new System.Action(() => _dialog.OnConfirmPressed()));
-            _cancelButton?.onClick.RemoveListener(new System.Action(() => _dialog.OnDeclinePressed()));
-            _closeButton?.onClick.RemoveListener(new System.Action(() => gameObject.SetActive(false)));
+            _acceptButton?.onClick.RemoveAllListeners();
+            _denyButton?.onClick.RemoveAllListeners();
         }
 
         public void AssignDialog(Dialog dialog)
@@ -51,6 +51,9 @@ namespace BoneLib.BoneMenu.UI
             _descriptionText.text = _dialog.DialogDescription;
 
             gameObject.SetActive(true);
+
+            _acceptButton.gameObject.SetActive(_dialog.DialogOptions.HasFlag(Dialog.Options.YesOption));
+            _denyButton.gameObject.SetActive(_dialog.DialogOptions.HasFlag(Dialog.Options.NoOption));
         }
     }
 }

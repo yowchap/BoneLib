@@ -16,6 +16,7 @@ namespace BoneLib.BoneMenu
     {
         public static AssetBundle Bundle { get; private set; }
 
+        public static GameObject background;
         public static PreferencesPanelView panelView;
         public static GameObject optionsPanel;
 
@@ -72,7 +73,7 @@ namespace BoneLib.BoneMenu
             page.transform.localRotation = Quaternion.identity;
             optionsPanel = panelView.pages[panelView.defaultPage];
             _optionsGrid = optionsPanel.transform.Find("grid_Options");
-            _menuBackground = panelView.transform.Find("image_bgFade").gameObject;
+            background = panelView.transform.Find("image_bgFade").gameObject;
 
             _optionButton = SetupElement(rootButtonPrefab, OptionsGrid, true);
             ModifyBaseUI();
@@ -80,7 +81,7 @@ namespace BoneLib.BoneMenu
 
         public static void ResetGameMenu()
         {
-            _menuBackground.SetActive(true);
+            background.SetActive(true);
         }
 
         private static void ModifyBaseUI()
@@ -88,7 +89,7 @@ namespace BoneLib.BoneMenu
             System.Action optionButtonAction = () =>
             {
                 panelView.PAGESELECT(11);
-                _menuBackground.SetActive(false);
+                background.SetActive(false);
                 Menu.OpenPage(Page.Root);
             };
 

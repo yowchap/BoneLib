@@ -27,16 +27,11 @@ namespace BoneLib.BoneMenu.UI
 
             for (int i = 0; i < _size; i++)
             {
-                ModConsole.Msg("Instantiating");
                 GameObject clone = Instantiate(_prefab, transform);
-                ModConsole.Msg("Disabling clone");
                 clone.SetActive(false);
-                ModConsole.Msg("Adding poolee component");
                 GUIPoolee poolee = clone.AddComponent<GUIPoolee>();
                 poolee.SetParent(this);
-                ModConsole.Msg("Adding to inactive objects list");
                 _inactiveObjects.Add(clone);
-                ModConsole.Msg("Done!");
             }
         }
         

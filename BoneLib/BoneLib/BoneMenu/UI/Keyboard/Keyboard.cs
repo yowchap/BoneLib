@@ -19,6 +19,7 @@ namespace BoneLib.BoneMenu.UI
         private List<Key> _keys;
         private Button _closeButton;
         private Button _pasteButton;
+        private Button _clearButton;
 
         private void Awake()
         {
@@ -26,8 +27,11 @@ namespace BoneLib.BoneMenu.UI
             _inputField = transform.GetChild(0).GetChild(1).GetComponent<TMP_InputField>();
             _closeButton = transform.GetChild(0).Find("Close").GetComponent<Button>();
             _pasteButton = transform.GetChild(0).Find("Paste").GetComponent<Button>();
+            _clearButton = transform.GetChild(0).Find("Clear").GetComponent<Button>();
+
             _closeButton.onClick.AddListener(new Action(() => { gameObject.SetActive(false); }));
             _pasteButton.onClick.AddListener(new Action(() => { _inputField.text += System.Windows.Forms.Clipboard.GetText(); }));
+            _clearButton.onClick.AddListener(new Action(() => { _inputField.text = string.Empty; }));
         }
 
         public void RegisterKey(Key key)

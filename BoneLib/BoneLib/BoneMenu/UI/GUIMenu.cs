@@ -53,7 +53,7 @@ namespace BoneLib.BoneMenu.UI
             _incrementPageButton = contentTransform.Find("Footer/NextPage").GetComponent<Button>();
 
             _toParentButton = contentTransform.Find("Interaction/Return").GetComponent<Button>();
-            // _guiDialog = transform.Find("Dialog").GetComponent<GUIDialog>();
+            _guiDialog = transform.Find("Dialog").GetComponent<GUIDialog>();
 
             _keyboard = transform.Find("Keyboard").GetComponent<Keyboard>();
 
@@ -107,7 +107,6 @@ namespace BoneLib.BoneMenu.UI
             _headerText.text = page.Name;
             _headerLogo.texture = page.Logo;
             _headerText.color = page.Color;
-            _background.texture = page.DefaultBackground;
 
             if (_headerLogo.texture != null)
             {
@@ -118,22 +117,15 @@ namespace BoneLib.BoneMenu.UI
 
                 _headerFitter.aspectRatio = width / height;
             }
-            
-            if (page.Parent != null && page.Background == page.DefaultBackground)
-            {
-                _background.texture = page.Parent.Background;
-            }
-            else
-            {
-                _background.texture = page.Background;
-            }
+
+            _background.texture = page.Background;
 
             _background.SetNativeSize();
             _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, page.BackgroundOpacity);
 
             _drawer.Clear();
 
-            if (page.Indexed && page.IsChild)
+            if (page.Indexed && page.IsIndexedChild)
             {
                 Page parent = page.Parent;
 

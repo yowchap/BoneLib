@@ -63,9 +63,14 @@ namespace BoneLib.BoneMenu
             return page;
         }
 
+        /// <summary>
+        /// "Destroys" a page. If this page is selected, it will try to go to its parent
+        /// when it gets destroyed.
+        /// </summary>
+        /// <param name="page"></param>
         public static void DestroyPage(Page page)
         {
-            if (page.IsChild)
+            if (page.IsIndexedChild)
             {
                 if (page.Parent.GetNextPage() != null)
                 {
@@ -111,9 +116,12 @@ namespace BoneLib.BoneMenu
             OnPageOpened?.Invoke(CurrentPage);
         }
 
+        /// <summary>
+        /// Navigates to the previous child page.
+        /// </summary>
         public static void PreviousPage()
         {
-            if (!CurrentPage.IsChild)
+            if (!CurrentPage.IsIndexedChild)
             {
                 return;
             }
@@ -129,9 +137,12 @@ namespace BoneLib.BoneMenu
             OpenPage(previousPage);
         }
 
+        /// <summary>
+        /// Navigates to the next child page.
+        /// </summary>
         public static void NextPage()
         {
-            if (CurrentPage.IsChild)
+            if (CurrentPage.IsIndexedChild)
             {
                 OpenPage(CurrentPage.Parent.NextPage());
             }
@@ -140,10 +151,10 @@ namespace BoneLib.BoneMenu
                 OpenPage(CurrentPage.NextPage());
             }
         }
-
+        
         public static void OpenParentPage()
         {
-            if (CurrentPage.IsChild)
+            if (CurrentPage.IsIndexedChild)
             {
                 OpenPage(CurrentPage.Parent.Parent);
                 return;
@@ -154,7 +165,16 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        public static void DisplayDialog(string title, string message, Texture2D icon, Dialog.Options options = Dialog.Options.YesOption | Dialog.Options.NoOption)
+        /// <summary>
+        /// Displays a dialog that can be used to inform the user. 
+        /// Useful for when a destructive action is about to be done, 
+        /// or can serve as an extra information window.
+        /// </summary>
+        /// <param name="title">The title of the dialog.</param>
+        /// <param name="message">The message that will be displayed to the user.</param>
+        /// <param name="icon">The icon that will sit alongside the title. Optional.</param>
+        /// <param name="options">The buttons that will be displayed for input.</param>
+        public static void DisplayDialog(string title, string message, Texture2D icon = null, Dialog.Options options = Dialog.Options.YesOption | Dialog.Options.NoOption)
         {
             Dialog dialog = new Dialog(title, message, icon, options);
             ActiveDialog = dialog;

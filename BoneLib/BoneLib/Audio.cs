@@ -21,6 +21,13 @@ namespace BoneLib
         public static AudioMixerGroup SoftInteraction => Audio3dManager.softInteraction;
         public static AudioMixerGroup UI => Audio3dManager.ui;
 
+        /// <summary>
+        /// Plays an audio clip with no spatial blend. Will be heard everywhere.
+        /// </summary>
+        /// <param name="clip"></param>
+        /// <param name="mixerGroup"></param>
+        /// <param name="volume"></param>
+        /// <param name="pitch"></param>
         public static void Play2DOneShot(AudioClip clip, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f)
         {
             Audio3dManager.Play2dOneShot(
@@ -30,6 +37,13 @@ namespace BoneLib
                 new Il2CppSystem.Nullable<float>(pitch));
         }
 
+        /// <summary>
+        /// Plays random audio clips from a list with no spatial blend. Will be heard everywhere.
+        /// </summary>
+        /// <param name="clips"></param>
+        /// <param name="mixerGroup"></param>
+        /// <param name="volume"></param>
+        /// <param name="pitch"></param>
         public static void Play2DOneShot(AudioClip[] clips, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f)
         {
             Audio3dManager.Play2dOneShot(
@@ -39,6 +53,15 @@ namespace BoneLib
                 new Il2CppSystem.Nullable<float>(pitch));
         }
 
+        /// <summary>
+        /// Plays an audio clip at a point in the world.
+        /// </summary>
+        /// <param name="clip"></param>
+        /// <param name="position"></param>
+        /// <param name="mixerGroup"></param>
+        /// <param name="volume"></param>
+        /// <param name="pitch"></param>
+        /// <param name="spatialBlend"></param>
         public static void PlayAtPoint(AudioClip clip, Vector3 position, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f, float spatialBlend = 1f)
         {
             Audio3dManager.PlayAtPoint(
@@ -52,6 +75,15 @@ namespace BoneLib
                 new Il2CppSystem.Nullable<float>(spatialBlend));
         }
 
+        /// <summary>
+        /// Plays a random audio clip selected from a list at a point in the world.
+        /// </summary>
+        /// <param name="clips"></param>
+        /// <param name="position"></param>
+        /// <param name="mixerGroup"></param>
+        /// <param name="volume"></param>
+        /// <param name="pitch"></param>
+        /// <param name="spatialBlend"></param>
         public static void PlayAtPoint(AudioClip[] clips, Vector3 position, AudioMixerGroup mixerGroup, float volume = 1f, float pitch = 1f, float spatialBlend = 1f)
         {
             Audio3dManager.PlayAtPoint(
@@ -65,6 +97,11 @@ namespace BoneLib
                 new Il2CppSystem.Nullable<float>(spatialBlend));
         }
 
+        /// <summary>
+        /// Spawns a Marrow managed audio player at a position.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="callback"></param>
         public static void SpawnAudioPlayer(Vector3 position = default, System.Action<GameObject> callback = null)
         {
             Audio3dManager.SpawnAudioPlayer(position, callback);

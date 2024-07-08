@@ -68,6 +68,11 @@ namespace BoneLib.BoneMenu
                 };
                 Notifier.Send(notif);
             });
+
+            funStuffPage.CreateFunction("Make Dialog", Color.white, () =>
+            {
+                Menu.DisplayDialog("Test", "This is a test message. Don't worry about it.", null, Dialog.Options.YesOption | Dialog.Options.NoOption);
+            });
         }
 
         internal static void SpawnUtilityGun()

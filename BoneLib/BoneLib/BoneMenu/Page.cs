@@ -19,7 +19,7 @@ namespace BoneLib.BoneMenu
             _color = Color.white;
             _maxElements = maxElements;
             
-            SetBackground(DefaultBackground);
+            SetBackground(null);
         }
 
         public Page(Page parent, string name, int maxElements = 0)
@@ -29,7 +29,7 @@ namespace BoneLib.BoneMenu
             _color = Color.white;
             _maxElements = maxElements;
 
-            SetBackground(DefaultBackground);
+            SetBackground(null);
         }
 
         public Page(string name, Color color, int maxElements = 0)
@@ -38,7 +38,7 @@ namespace BoneLib.BoneMenu
             _color = color;
             _maxElements = maxElements;
 
-            SetBackground(DefaultBackground);
+            SetBackground(null);
         }
 
         public Page(Page parent, string name, Color color, int maxElements = 0)
@@ -48,7 +48,7 @@ namespace BoneLib.BoneMenu
             _color = color;
             _maxElements = maxElements;
 
-            SetBackground(DefaultBackground);
+            SetBackground(null);
         }
 
         public static Page Root;
@@ -74,7 +74,7 @@ namespace BoneLib.BoneMenu
         public Texture2D Logo { get; set; }
         public Texture2D Background { get; set; }
         public Texture2D DefaultBackground => MenuBootstrap.defaultBackgroundTexture;
-        public float BackgroundOpacity { get; set; }
+        public float BackgroundOpacity { get; set; } = 0.85f;
 
         public LayoutType Layout { get; set; }
         public float ElementSpacing { get; set; } = 60;
@@ -85,7 +85,7 @@ namespace BoneLib.BoneMenu
         public int ElementCount => _numElements;
         public int CurrentSubPage => _subPageIndex;
 
-        public bool IsChild { get; private set; }
+        public bool IsIndexedChild { get; private set; }
         public bool Filled => _numElements == _maxElements;
         public bool Indexed => _maxElements != 0;
 
@@ -100,6 +100,11 @@ namespace BoneLib.BoneMenu
 
         private int _subPageIndex = -1;
 
+        /// <summary>
+        /// Adds an element to the page.
+        /// If the page is full, and it has max elements set, it will make a new page and add the element there.
+        /// </summary>
+        /// <param name="element">The element to add.</param>
         public void Add(Element element)
         {
             if (Indexed)
@@ -130,6 +135,10 @@ namespace BoneLib.BoneMenu
             }
         }
 
+        /// <summary>
+        /// Removes an element from the page.
+        /// </summary>
+        /// <param name="element">The element to remove.</param>
         public void Remove(Element element)
         {
             _elements.Remove(element);
@@ -137,6 +146,11 @@ namespace BoneLib.BoneMenu
             Menu.OnPageUpdated?.Invoke(this);
         }
 
+        /// <summary>
+        /// Removes multiple elements from the page.
+        /// If the page contains no elements, the page gets destroyed.
+        /// </summary>
+        /// <param name="elements">The group of elements to remove.</param>
         public void Remove(Element[] elements)
         {
             HashSet<Element> query = _elements.ToHashSet();
@@ -158,8 +172,15 @@ namespace BoneLib.BoneMenu
             Menu.OnPageUpdated?.Invoke(this);
         }
 
+        /// <summary>
+        /// Removes all elements from the page.
+        /// </summary>
         public void RemoveAll() => Remove(_elements.ToArray());
 
+        /// <summary>
+        /// Looks at the previous indexed page.
+        /// </summary>
+        /// <returns>The previous indexed page.</returns>
         public Page GetPreviousPage()
         {
             if (_subPageIndex == 0)
@@ -176,6 +197,10 @@ namespace BoneLib.BoneMenu
             }
         }
 
+        /// <summary>
+        /// Looks at the next indexed page.
+        /// </summary>
+        /// <returns>The next indexed page.</returns>
         public Page GetNextPage()
         {
             if (_subPageIndex + 1 >= _subPages.Count - 1)
@@ -192,6 +217,10 @@ namespace BoneLib.BoneMenu
             }
         }
 
+        /// <summary>
+        /// Goes to the next indexed page.
+        /// </summary>
+        /// <returns></returns>
         public Page NextPage()
         {
             if (_subPageIndex >= _subPages.Count - 1)
@@ -205,7 +234,11 @@ namespace BoneLib.BoneMenu
 
             return _subPages[_subPageIndex];
         }
-
+        
+        /// <summary>
+        /// Goes to the previous indexed page.
+        /// </summary>
+        /// <returns></returns>
         public Page PreviousPage()
         {
             if (_subPageIndex == -1)
@@ -225,12 +258,21 @@ namespace BoneLib.BoneMenu
             return _subPages[_subPageIndex];
         }
 
+        /// <summary>
+        /// Sets the logo that will be displayed on the page's header.
+        /// </summary>
+        /// <param name="logo"></param>
         public void SetLogo(Texture2D logo)
         {
             Logo = logo;
             Menu.OnPageUpdated?.Invoke(this);
         }
 
+        /// <summary>
+        /// Sets the background. Ideally you should use a square texture,
+        /// but you can use any aspect ratio image of your choice.
+        /// </summary>
+        /// <param name="background"></param>
         public void SetBackground(Texture2D background)
         {
             if (background == null)
@@ -244,6 +286,10 @@ namespace BoneLib.BoneMenu
             Menu.OnPageUpdated?.Invoke(this);
         }
 
+        /// <summary>
+        /// Sets the background opacity, or how much the background is transparent/see-through.
+        /// </summary>
+        /// <param name="opacity"></param>
         public void SetBackgroundOpacity(float opacity)
         {
             if (opacity > 1)
@@ -260,25 +306,42 @@ namespace BoneLib.BoneMenu
             Menu.OnPageUpdated?.Invoke(this);
         }
 
+        /// <summary>
+        /// Sets the layout of the page.
+        /// This will affect the layout group of the page, and how elements are ordered.
+        /// </summary>
+        /// <param name="layoutType"></param>
         public void SetLayout(LayoutType layoutType)
         {
             Layout = layoutType;
             Menu.OnPageUpdated?.Invoke(this);
         }
 
+        /// <summary>
+        /// Creates a page that inherits its name and color from its parent.
+        /// </summary>
+        /// <returns></returns>
         public Page CreatePage()
         {
             return CreatePage(this.Name, this.Color);
         }
 
-        public Page CreatePage(string name, Color color)
+        /// <summary>
+        /// Creates a child page with its properties inherited.
+        /// If the child page already exists, it will return that existing page.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="color"></param>
+        /// <param name="maxElements"></param>
+        /// <returns></returns>
+        public Page CreatePage(string name, Color color, int maxElements = 0)
         {
             if (ChildPages.ContainsKey(name))
             {
                 return ChildPages[name];
             }
 
-            Page page = new Page(parent: this, name, color);
+            Page page = new Page(parent: this, name, color, maxElements);
             ChildPages.Add(name, page);
             Menu.OnPageCreated?.Invoke(this);
             return page;
@@ -326,6 +389,12 @@ namespace BoneLib.BoneMenu
             return element;
         }
 
+        /// <summary>
+        /// Creates a function element that, when pressed, takes you to a page.
+        /// Can be linked to any page.
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
         public FunctionElement CreatePageLink(Page page)
         {
             return CreateFunction(page.Name, page.Color, () => { Menu.OpenPage(page); });
@@ -354,7 +423,7 @@ namespace BoneLib.BoneMenu
             subPage._color = _color;
             subPage._maxElements = _maxElements;
             subPage.Parent = this;
-            subPage.IsChild = true;
+            subPage.IsIndexedChild = true;
             _subPages.Add(subPage);
             return subPage;
         }
