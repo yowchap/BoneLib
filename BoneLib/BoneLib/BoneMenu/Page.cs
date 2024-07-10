@@ -424,6 +424,7 @@ namespace BoneLib.BoneMenu
             subPage._maxElements = _maxElements;
             subPage.Parent = this;
             subPage.IsIndexedChild = true;
+            subPage.Background = Background;
             _subPages.Add(subPage);
             return subPage;
         }

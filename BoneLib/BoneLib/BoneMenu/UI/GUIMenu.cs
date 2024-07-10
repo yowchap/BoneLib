@@ -80,6 +80,9 @@ namespace BoneLib.BoneMenu.UI
             _toParentButton.onClick.RemoveAllListeners();
             _decrementPageButton.onClick.RemoveAllListeners();
             _incrementPageButton.onClick.RemoveAllListeners();
+
+            // Restore the background, just in case if we click off
+            MenuBootstrap.background.SetActive(true);
         }
 
         public void OpenKeyboard()

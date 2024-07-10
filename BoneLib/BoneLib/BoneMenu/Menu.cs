@@ -1,3 +1,4 @@
+using BoneLib.BoneMenu.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -156,8 +157,8 @@ namespace BoneLib.BoneMenu
         {
             if (CurrentPage.IsIndexedChild)
             {
+                // Go to our parents parent
                 OpenPage(CurrentPage.Parent.Parent);
-                return;
             }
             else
             {
