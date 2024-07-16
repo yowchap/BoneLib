@@ -58,6 +58,8 @@ namespace BoneLib.BoneMenu.UI
             }
 
             _nameText.text = _backingElement.ElementName;
+            _nameText.color = _backingElement.ElementColor;
+
             _logo.texture = _backingElement.Logo;
 
             _nameText.gameObject.SetActive(_logo.texture == null);

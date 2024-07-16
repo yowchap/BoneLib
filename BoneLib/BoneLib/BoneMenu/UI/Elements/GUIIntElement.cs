@@ -42,6 +42,8 @@ namespace BoneLib.BoneMenu.UI
             base.Draw();
 
             _nameText.text = _backingElement.ElementName;
+            _nameText.color = _backingElement.ElementColor;
+
             _valueText.text = _backingElement.Value.ToString();
         }
 

@@ -38,6 +38,8 @@ namespace BoneLib.BoneMenu.UI
             base.Draw();
 
             _nameText.text = _backingElement.ElementName;
+            _nameText.color = _backingElement.ElementColor;
+
             _inputField.text = _backingElement.Value;
         }
 
