@@ -61,7 +61,7 @@ namespace BoneLib.BoneMenu.UI
                 throw new NullReferenceException("Connected element is not connected, or is null!");
             }
 
-            _connectedElement.SetText(_inputField.text);
+            _connectedElement.Value = _inputField.text;
             _connectedElement.OnElementSelected();
             _connectedGUIElement.Draw();
         }

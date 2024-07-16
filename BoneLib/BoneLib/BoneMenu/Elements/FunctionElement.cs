@@ -26,6 +26,7 @@ namespace BoneLib.BoneMenu
         public void SetLogo(Texture2D logo)
         {
             _logo = logo;
+            OnElementChanged?.Invoke();
         }
     }
 }

@@ -68,8 +68,30 @@ namespace BoneLib.BoneMenu
 
         public Page Parent;
 
-        public string Name => _name;
-        public Color Color => _color;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                Menu.OnPageOpened?.Invoke(this);
+            }
+        }
+        public Color Color 
+        {
+            get
+            {
+                return _color;
+            }
+            set
+            {
+                _color = value;
+                Menu.OnPageOpened?.Invoke(this);
+            }
+        }
 
         public Texture2D Logo { get; set; }
         public Texture2D Background { get; set; }

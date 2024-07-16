@@ -30,6 +30,7 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(StringElement element)
         {
             _backingElement = element;
+            element.OnElementChanged += Draw;
         }
 
         public override void Draw()
@@ -43,7 +44,7 @@ namespace BoneLib.BoneMenu.UI
         private void OnInputFieldSubmit(string input)
         {
             _inputField.text = input;
-            _backingElement.SetText(input);
+            _backingElement.Value = input;
             Draw();
         }
 

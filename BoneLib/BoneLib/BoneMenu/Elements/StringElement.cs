@@ -14,7 +14,18 @@ namespace BoneLib.BoneMenu
             _callback = callback;
         }
         
-        public string Value => _value;
+        public string Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnElementChanged?.Invoke();
+            }
+        }
 
         private string _startValue;
         private string _value;
@@ -24,11 +35,6 @@ namespace BoneLib.BoneMenu
         {
             base.OnElementSelected();
             _callback?.Invoke(_value);
-        }
-
-        public void SetText(string text)
-        {
-            _value = text;
         }
     }
 }

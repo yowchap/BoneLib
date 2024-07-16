@@ -33,6 +33,7 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(FloatElement element)
         {
             _backingElement = element;
+            element.OnElementChanged += Draw;
         }
 
         public override void Draw()

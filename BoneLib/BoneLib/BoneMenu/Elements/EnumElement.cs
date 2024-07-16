@@ -11,7 +11,18 @@ namespace BoneLib.BoneMenu
             _value = _internalValues.GetValue(0) as Enum;
         }
 
-        public Enum Value => _value;
+        public Enum Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnElementChanged?.Invoke();
+            }
+        }
 
         private Enum _value;
         private Array _internalValues;

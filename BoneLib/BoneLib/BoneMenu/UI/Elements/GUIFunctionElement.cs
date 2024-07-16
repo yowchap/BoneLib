@@ -33,6 +33,7 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(FunctionElement element)
         {
             _backingElement = element;
+            element.OnElementChanged += Draw;
         }
 
         public override void OnPressed()
