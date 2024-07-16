@@ -36,6 +36,14 @@ namespace BoneLib.BoneMenu.UI
             element.OnElementChanged += Draw;
         }
 
+        private void OnDestroy()
+        {
+            if (_backingElement != null)
+            {
+                _backingElement.OnElementChanged -= Draw;
+            }
+        }
+
         public override void OnPressed()
         {
             if (_backingElement == null)

@@ -355,8 +355,9 @@ namespace BoneLib.BoneMenu
         /// <param name="name"></param>
         /// <param name="color"></param>
         /// <param name="maxElements"></param>
+        /// <param name="createLink"></param>
         /// <returns></returns>
-        public Page CreatePage(string name, Color color, int maxElements = 0)
+        public Page CreatePage(string name, Color color, int maxElements = 0, bool createLink = true)
         {
             if (ChildPages.ContainsKey(name))
             {
@@ -366,6 +367,12 @@ namespace BoneLib.BoneMenu
             Page page = new Page(parent: this, name, color, maxElements);
             ChildPages.Add(name, page);
             Menu.OnPageCreated?.Invoke(this);
+
+            if (createLink)
+            {
+                CreatePageLink(page);
+            }
+
             return page;
         }
 
