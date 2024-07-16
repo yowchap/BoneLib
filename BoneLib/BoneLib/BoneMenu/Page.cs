@@ -163,6 +163,11 @@ namespace BoneLib.BoneMenu
         /// <param name="element">The element to remove.</param>
         public void Remove(Element element)
         {
+            if (element is PageLinkElement link)
+            {
+                Menu.DestroyPage(link.LinkedPage);
+            }
+
             _elements.Remove(element);
             _numElements--;
             Menu.OnPageUpdated?.Invoke(this);
@@ -180,6 +185,11 @@ namespace BoneLib.BoneMenu
 
             foreach (Element queryElement in query)
             {
+                if (queryElement is PageLinkElement link)
+                {
+                    Menu.DestroyPage(link.LinkedPage);
+                }
+
                 _elements.Remove(queryElement);
             }
 

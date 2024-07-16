@@ -17,6 +17,7 @@ namespace BoneLib.BoneMenu
         public void AssignPage(Page page)
         {
             _linkedPage = page;
+
             Menu.OnPageUpdated += OnPageUpdated;
         }
 
@@ -27,6 +28,7 @@ namespace BoneLib.BoneMenu
             if (_linkedPage != null)
             {
                 Menu.OnPageUpdated -= OnPageUpdated;
+
                 _linkedPage = null;
             }
         }

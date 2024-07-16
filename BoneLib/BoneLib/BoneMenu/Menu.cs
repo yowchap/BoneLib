@@ -85,6 +85,14 @@ namespace BoneLib.BoneMenu
                     return;
                 }
             }
+
+            OnPageRemoved?.Invoke(page);
+            PageDirectory?.Remove(page.Name);
+
+            if (page.Parent.ChildPages.ContainsKey(page.Name))
+            {
+                page.Parent.ChildPages.Remove(page.Name);
+            }
         }
 
         public static void OpenPage(string pageName)
