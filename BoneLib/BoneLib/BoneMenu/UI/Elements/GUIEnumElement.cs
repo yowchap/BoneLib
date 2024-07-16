@@ -29,20 +29,26 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(EnumElement element)
         {
             _backingElement = element;
-            element.OnElementChanged += Draw;
+            element.OnElementChanged += Refresh;
         }
 
         private void OnDestroy()
         {
             if (_backingElement != null)
             {
-                _backingElement.OnElementChanged -= Draw;
+                _backingElement.OnElementChanged -= Refresh;
             }
         }
 
         public override void Draw()
         {
             base.Draw();
+
+            Refresh();
+        }
+
+        public void Refresh()
+        {
             _nameText.text = _backingElement.ElementName;
             _nameText.color = _backingElement.ElementColor;
 

@@ -30,14 +30,14 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(StringElement element)
         {
             _backingElement = element;
-            element.OnElementChanged += Draw;
+            element.OnElementChanged += Refresh;
         }
 
         private void OnDestroy()
         {
             if (_backingElement != null)
             {
-                _backingElement.OnElementChanged -= Draw;
+                _backingElement.OnElementChanged -= Refresh;
             }
         }
 
@@ -45,6 +45,11 @@ namespace BoneLib.BoneMenu.UI
         {
             base.Draw();
 
+            Refresh();
+        }
+
+        public void Refresh()
+        {
             _nameText.text = _backingElement.ElementName;
             _nameText.color = _backingElement.ElementColor;
 

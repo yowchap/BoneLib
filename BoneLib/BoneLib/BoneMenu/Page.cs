@@ -426,7 +426,12 @@ namespace BoneLib.BoneMenu
         /// <returns></returns>
         public FunctionElement CreatePageLink(Page page)
         {
-            return CreateFunction(page.Name, page.Color, () => { Menu.OpenPage(page); });
+            var element = new PageLinkElement(page.Name, page.Color, () => { Menu.OpenPage(page); });
+            Add(element);
+
+            element.AssignPage(page);
+
+            return element;
         }
 
         private SubPage FindAvailable()
