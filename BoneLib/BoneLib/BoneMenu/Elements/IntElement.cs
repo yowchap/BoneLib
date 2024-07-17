@@ -20,7 +20,18 @@ namespace BoneLib.BoneMenu
 
         public static Action<Element, int> OnValueChanged;
 
-        public int Value => _value;
+        public int Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnElementChanged?.Invoke();
+            }
+        }
 
         private int _value;
         private int _minValue;

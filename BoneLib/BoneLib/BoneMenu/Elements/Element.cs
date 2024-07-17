@@ -13,12 +13,47 @@ namespace BoneLib.BoneMenu
             _elementType = "Base";
         }
         
-        public string ElementName => _elementName;
-        public Color ElementColor => _elementColor;
+        public string ElementName
+        {
+            get
+            {
+                return _elementName;
+            }
+            set
+            {
+                _elementName = value;
+                OnElementChanged?.Invoke();
+            }
+        }
+        public Color ElementColor 
+        {
+            get
+            {
+                return _elementColor;
+            }
+            set
+            {
+                _elementColor = value;
+                OnElementChanged?.Invoke();
+            }
+        }
         public string ElementType => _elementType;
-        public string ElementTooltip => _elementTooltip;
+        public string ElementTooltip 
+        {
+            get
+            {
+                return _elementTooltip;
+            }
+            set
+            {
+                _elementTooltip = value;
+                OnElementChanged?.Invoke();
+            }
+        }
         public bool HasTooltip => !string.IsNullOrEmpty(_elementTooltip);
         public ElementProperties Properties { get; private set; }
+
+        public Action OnElementChanged;
 
         protected string _elementName;
         protected Color _elementColor;

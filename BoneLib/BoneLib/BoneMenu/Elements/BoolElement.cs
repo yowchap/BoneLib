@@ -16,7 +16,18 @@ namespace BoneLib.BoneMenu
             _value = _startValue;
         }
 
-        public bool Value => _value;
+        public bool Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnElementChanged?.Invoke();
+            }
+        }
 
         private bool _startValue;
         private bool _value;

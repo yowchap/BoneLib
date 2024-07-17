@@ -33,6 +33,15 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(FunctionElement element)
         {
             _backingElement = element;
+            element.OnElementChanged += Refresh;
+        }
+
+        private void OnDestroy()
+        {
+            if (_backingElement != null)
+            {
+                _backingElement.OnElementChanged -= Refresh;
+            }
         }
 
         public override void OnPressed()
@@ -49,14 +58,21 @@ namespace BoneLib.BoneMenu.UI
         {
             base.Draw();
 
+            Refresh();
+        }
+
+        public void Refresh()
+        {
             _backline.SetActive(!_backingElement.Properties.HasFlag(ElementProperties.NoBorder));
-            
+
             if (_nameText == null)
             {
                 return;
             }
 
             _nameText.text = _backingElement.ElementName;
+            _nameText.color = _backingElement.ElementColor;
+
             _logo.texture = _backingElement.Logo;
 
             _nameText.gameObject.SetActive(_logo.texture == null);

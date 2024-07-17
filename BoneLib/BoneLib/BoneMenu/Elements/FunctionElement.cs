@@ -13,7 +13,18 @@ namespace BoneLib.BoneMenu
             _callback = callback;
         }
 
-        public Texture2D Logo => _logo;
+        public Texture2D Logo 
+        {
+            get
+            {
+                return _logo;
+            }
+            set
+            {
+                _logo = value;
+                OnElementChanged?.Invoke();
+            }
+        }
 
         private Texture2D _logo;
         private Action _callback;
@@ -21,11 +32,6 @@ namespace BoneLib.BoneMenu
         public override void OnElementSelected()
         {
             _callback?.Invoke();
-        }
-
-        public void SetLogo(Texture2D logo)
-        {
-            _logo = logo;
         }
     }
 }

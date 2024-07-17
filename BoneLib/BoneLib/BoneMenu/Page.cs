@@ -68,8 +68,30 @@ namespace BoneLib.BoneMenu
 
         public Page Parent;
 
-        public string Name => _name;
-        public Color Color => _color;
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                _name = value;
+                Menu.OnPageOpened?.Invoke(this);
+            }
+        }
+        public Color Color 
+        {
+            get
+            {
+                return _color;
+            }
+            set
+            {
+                _color = value;
+                Menu.OnPageOpened?.Invoke(this);
+            }
+        }
 
         public Texture2D Logo { get; set; }
         public Texture2D Background { get; set; }
@@ -141,6 +163,11 @@ namespace BoneLib.BoneMenu
         /// <param name="element">The element to remove.</param>
         public void Remove(Element element)
         {
+            if (element is PageLinkElement link)
+            {
+                Menu.DestroyPage(link.LinkedPage);
+            }
+
             _elements.Remove(element);
             _numElements--;
             Menu.OnPageUpdated?.Invoke(this);
@@ -158,6 +185,11 @@ namespace BoneLib.BoneMenu
 
             foreach (Element queryElement in query)
             {
+                if (queryElement is PageLinkElement link)
+                {
+                    Menu.DestroyPage(link.LinkedPage);
+                }
+
                 _elements.Remove(queryElement);
             }
 
@@ -333,8 +365,9 @@ namespace BoneLib.BoneMenu
         /// <param name="name"></param>
         /// <param name="color"></param>
         /// <param name="maxElements"></param>
+        /// <param name="createLink"></param>
         /// <returns></returns>
-        public Page CreatePage(string name, Color color, int maxElements = 0)
+        public Page CreatePage(string name, Color color, int maxElements = 0, bool createLink = true)
         {
             if (ChildPages.ContainsKey(name))
             {
@@ -344,6 +377,12 @@ namespace BoneLib.BoneMenu
             Page page = new Page(parent: this, name, color, maxElements);
             ChildPages.Add(name, page);
             Menu.OnPageCreated?.Invoke(this);
+
+            if (createLink)
+            {
+                CreatePageLink(page);
+            }
+
             return page;
         }
 
@@ -397,7 +436,12 @@ namespace BoneLib.BoneMenu
         /// <returns></returns>
         public FunctionElement CreatePageLink(Page page)
         {
-            return CreateFunction(page.Name, page.Color, () => { Menu.OpenPage(page); });
+            var element = new PageLinkElement(page.Name, page.Color, () => { Menu.OpenPage(page); });
+            Add(element);
+
+            element.AssignPage(page);
+
+            return element;
         }
 
         private SubPage FindAvailable()

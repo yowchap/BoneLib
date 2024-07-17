@@ -30,20 +30,36 @@ namespace BoneLib.BoneMenu.UI
         public void AssignElement(StringElement element)
         {
             _backingElement = element;
+            element.OnElementChanged += Refresh;
+        }
+
+        private void OnDestroy()
+        {
+            if (_backingElement != null)
+            {
+                _backingElement.OnElementChanged -= Refresh;
+            }
         }
 
         public override void Draw()
         {
             base.Draw();
 
+            Refresh();
+        }
+
+        public void Refresh()
+        {
             _nameText.text = _backingElement.ElementName;
+            _nameText.color = _backingElement.ElementColor;
+
             _inputField.text = _backingElement.Value;
         }
 
         private void OnInputFieldSubmit(string input)
         {
             _inputField.text = input;
-            _backingElement.SetText(input);
+            _backingElement.Value = input;
             Draw();
         }
 

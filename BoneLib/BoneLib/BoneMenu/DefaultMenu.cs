@@ -26,15 +26,9 @@ namespace BoneLib.BoneMenu
         {
             Page mainPage = Page.Root.CreatePage("BoneLib", Color.white);
 
-            Page.Root.CreatePageLink(mainPage);
-
             Page ammoPage = mainPage.CreatePage("Ammo Settings", Color.yellow);
             Page itemSpawningPage = mainPage.CreatePage("Item Spawning", Color.white);
             Page funStuffPage = mainPage.CreatePage("Fun Stuff", Color.white);
-
-            mainPage.CreatePageLink(ammoPage);
-            mainPage.CreatePageLink(itemSpawningPage);
-            mainPage.CreatePageLink(funStuffPage);
 
             ammoPage.CreateFunction("Add Light Ammo", Color.white, () => AmmoInventory.AddCartridge(LightAmmo, lightAmmoValue));
             ammoPage.CreateFunction("Add Medium Ammo", Color.white, () => AmmoInventory.AddCartridge(MediumAmmo, mediumAmmoValue));
