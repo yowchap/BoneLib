@@ -35,6 +35,7 @@ namespace BoneLib
             NotifAssets.SetupBundles();
 
             Hooking.OnLevelLoaded += OnLevelLoaded;
+            Hooking.OnUIRigCreated += OnUIRigCreated;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -56,6 +57,10 @@ namespace BoneLib
         private void OnLevelLoaded(LevelInfo info)
         {
             PopupBoxManager.CreateBaseAd();
+        }
+
+        private void OnUIRigCreated()
+        {
             MenuBootstrap.InitializeReferences();
         }
     }

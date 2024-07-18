@@ -72,7 +72,7 @@ namespace BoneLib
             };
 
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, nullableScale, ignorePolicy, groupId, spawnAction, despawnAction);
+            AssetSpawner.Spawn(spawnable, position, rotation, nullableScale, null, ignorePolicy, groupId, spawnAction, despawnAction);
         }
 
         /// <summary>

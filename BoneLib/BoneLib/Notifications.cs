@@ -1,8 +1,10 @@
 ﻿using Il2CppSLZ.Bonelab;
-using Il2CppSLZ.Rig;
+using Il2CppSLZ.Marrow;
+
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.RegularExpressions;
+
 using UnityEngine;
 
 namespace BoneLib.Notifications

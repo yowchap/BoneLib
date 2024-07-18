@@ -1,20 +1,23 @@
 ﻿using HarmonyLib;
 using MelonLoader;
-using Il2CppSLZ.Interaction;
+
 using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Utilities;
 using Il2CppSLZ.Marrow.Warehouse;
-using Il2CppSLZ.Rig;
 using Il2CppSLZ.VRMK;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
 using UnityEngine;
-using Il2CppSLZ.Bonelab;
+
 using Il2CppSLZ.Marrow.AI;
 using Il2CppSLZ.Marrow.PuppetMasta;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Bonelab;
 
 namespace BoneLib
 {
@@ -40,6 +43,10 @@ namespace BoneLib
         /// Called when the current Level unloads.
         /// </summary>
         public static event Action OnLevelUnloaded;
+        /// <summary>
+        /// Called when the UIRig has been created.
+        /// </summary>
+        public static event Action OnUIRigCreated;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
@@ -74,27 +81,29 @@ namespace BoneLib
             MarrowGame.RegisterOnReadyAction(new Action(() => SafeActions.InvokeActionSafe(OnMarrowGameStarted)));
             AssetWarehouse.OnReady(new Action(() => SafeActions.InvokeActionSafe(OnWarehouseReady)));
 
-            CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
-            CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
+            CreateHook(typeof(RigManager).GetMethod(nameof(RigManager.SwitchAvatar), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
+            CreateHook(typeof(RigManager).GetMethod(nameof(RigManager.SwitchAvatar), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
 
-            CreateHook(typeof(Gun).GetMethod("OnFire", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePrefix), AccessTools.all), true);
-            CreateHook(typeof(Gun).GetMethod("OnFire", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePostfix), AccessTools.all));
+            CreateHook(typeof(Gun).GetMethod(nameof(Gun.OnFire), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePrefix), AccessTools.all), true);
+            CreateHook(typeof(Gun).GetMethod(nameof(Gun.OnFire), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePostfix), AccessTools.all));
 
-            CreateHook(typeof(Hand).GetMethod("AttachObject", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAttachObjectPostfix), AccessTools.all));
-            CreateHook(typeof(Hand).GetMethod("DetachObject", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnDetachObjectPostfix), AccessTools.all));
+            CreateHook(typeof(Hand).GetMethod(nameof(Hand.AttachObject), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAttachObjectPostfix), AccessTools.all));
+            CreateHook(typeof(Hand).GetMethod(nameof(Hand.DetachObject), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnDetachObjectPostfix), AccessTools.all));
 
-            CreateHook(typeof(Grip).GetMethod("OnAttachedToHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripAttachedPostfix), AccessTools.all));
-            CreateHook(typeof(Grip).GetMethod("OnDetachedFromHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
+            CreateHook(typeof(Grip).GetMethod(nameof(Grip.OnAttachedToHand), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripAttachedPostfix), AccessTools.all));
+            CreateHook(typeof(Grip).GetMethod(nameof(Grip.OnDetachedFromHand), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
 
-            CreateHook(typeof(RigManager).GetMethod("OnDestroy", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroyed), AccessTools.all));
+            CreateHook(typeof(RigManager).GetMethod(nameof(RigManager.OnDestroy), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroyed), AccessTools.all));
 
-            CreateHook(typeof(AIBrain).GetMethod("OnDeath", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
-            CreateHook(typeof(AIBrain).GetMethod("OnResurrection", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCResurrected), AccessTools.all));
+            CreateHook(typeof(UIRig).GetMethod(nameof(UIRig.Awake), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnUIRigAwake), AccessTools.all));
 
-            CreateHook(typeof(BehaviourBaseNav).GetMethod("KillStart", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCStart), AccessTools.all));
-            CreateHook(typeof(BehaviourBaseNav).GetMethod("KillEnd", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCEnd), AccessTools.all));
+            CreateHook(typeof(AIBrain).GetMethod(nameof(AIBrain.OnDeath), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
+            CreateHook(typeof(AIBrain).GetMethod(nameof(AIBrain.OnResurrection), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCResurrected), AccessTools.all));
 
-            CreateHook(typeof(PlayerMarker).GetMethod("OnPlayerSpawned", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerSpawned), AccessTools.all));
+            CreateHook(typeof(BehaviourBaseNav).GetMethod(nameof(BehaviourBaseNav.KillStart), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCStart), AccessTools.all));
+            CreateHook(typeof(BehaviourBaseNav).GetMethod(nameof(BehaviourBaseNav.KillEnd), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCEnd), AccessTools.all));
+
+            CreateHook(typeof(PlayerMarker).GetMethod(nameof(PlayerMarker.OnPlayerSpawned), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerSpawned), AccessTools.all));
 
             Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
             Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
@@ -169,6 +178,14 @@ namespace BoneLib
         {
             currentLevelUnloaded = true;
             SafeActions.InvokeActionSafe(OnLevelUnloaded);
+        }
+
+        private static void OnUIRigAwake()
+        {
+            if (Player.FindUIRigReferences())
+            {
+                SafeActions.InvokeActionSafe(OnUIRigCreated);
+            }
         }
 
         internal static void OnBONELABLevelLoading()

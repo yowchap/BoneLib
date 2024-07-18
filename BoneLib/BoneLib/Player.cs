@@ -1,6 +1,5 @@
 ﻿using Il2CppSLZ.Bonelab;
-using Il2CppSLZ.Interaction;
-using Il2CppSLZ.Rig;
+using Il2CppSLZ.Marrow;
 using Il2CppSLZ.VRMK;
 using UnityEngine;
 
@@ -39,7 +38,6 @@ namespace BoneLib
             PhysicsRig = RigManager.physicsRig;
             ControllerRig = RigManager.ControllerRig.Cast<OpenControllerRig>();
             RemapRig = RigManager.remapHeptaRig;
-            UIRig = UIRig.Instance;
 
             LeftController = RigManager.ControllerRig?.leftController;
             RightController = RigManager.ControllerRig?.rightController;
@@ -52,6 +50,13 @@ namespace BoneLib
             ModConsole.Msg("Found player object references", LoggingMode.DEBUG);
 
             return ControllersExist && HandsExist && ControllerRig != null;
+        }
+
+        internal static bool FindUIRigReferences()
+        {
+            UIRig = UIRig.Instance;
+
+            return UIRig != null;
         }
 
         /// <summary>
