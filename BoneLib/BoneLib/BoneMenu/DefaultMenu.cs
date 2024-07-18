@@ -1,8 +1,10 @@
 ﻿using BoneLib.Notifications;
 using BoneLib.RandomShit;
-using Il2CppSLZ.Bonelab;
-using Il2CppSLZ.Data;
+
+using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.SceneStreaming;
+using Il2CppSLZ.Marrow.Warehouse;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -115,7 +117,7 @@ namespace BoneLib.BoneMenu
             int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
             string barcode = CommonBarcodes.Maps.All[index];
             
-            SceneStreamer.Load(barcode, CommonBarcodes.Maps.LoadDefault);
+            SceneStreamer.Load(new Barcode(barcode), new Barcode(CommonBarcodes.Maps.LoadDefault));
         }
     }
 }
