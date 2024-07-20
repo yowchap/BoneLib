@@ -63,6 +63,11 @@ namespace BoneLib.BoneMenu.UI
 
         public void Refresh()
         {
+            if (_backline == null)
+            {
+                return;
+            }
+
             _backline.SetActive(!_backingElement.Properties.HasFlag(ElementProperties.NoBorder));
 
             if (_nameText == null)
