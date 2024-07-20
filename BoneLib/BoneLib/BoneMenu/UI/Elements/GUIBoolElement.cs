@@ -49,6 +49,11 @@ namespace BoneLib.BoneMenu.UI
 
         public void Refresh()
         {
+            if (_nameText == null)
+            {
+                return;
+            }
+
             _nameText.text = _backingElement.ElementName;
             _nameText.color = _backingElement.ElementColor;
 
