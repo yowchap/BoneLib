@@ -393,16 +393,16 @@ namespace BoneLib.BoneMenu
             return element;
         }
 
-        public IntElement CreateInt(string name, Color color, int increment, int startingValue, int minValue, int maxValue, Action<int> callback)
+        public IntElement CreateInt(string name, Color color, int startingValue, int increment, int minValue, int maxValue, Action<int> callback)
         {
-            var element = new IntElement(name, color, increment, startingValue, minValue, maxValue, callback);
+            var element = new IntElement(name, color, startingValue, increment, minValue, maxValue, callback);
             Add(element);
             return element;
         }
 
-        public FloatElement CreateFloat(string name, Color color, float increment, float startingValue, float minValue, float maxValue, Action<float> callback)
+        public FloatElement CreateFloat(string name, Color color, float startingValue, float increment, float minValue, float maxValue, Action<float> callback)
         {
-            var element = new FloatElement(name, color, increment, startingValue, minValue, maxValue, callback);
+            var element = new FloatElement(name, color, startingValue, increment, minValue, maxValue, callback);
             Add(element);
             return element;
         }
@@ -416,7 +416,7 @@ namespace BoneLib.BoneMenu
 
         public EnumElement CreateEnum(string name, Color color, Enum value, Action<Enum> callback)
         {
-            var element = new EnumElement(name, color, value);
+            var element = new EnumElement(name, color, value, callback);
             Add(element);
             return element;
         }

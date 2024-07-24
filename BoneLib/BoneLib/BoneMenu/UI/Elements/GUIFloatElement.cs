@@ -1,10 +1,10 @@
 using Il2CppTMPro;
-using UnityEngine;
+using System.Globalization;
 using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIFloatElement : GUIElement
     {
         public GUIFloatElement(System.IntPtr ptr) : base(ptr) { }
@@ -61,7 +61,7 @@ namespace BoneLib.BoneMenu.UI
             _nameText.text = _backingElement.ElementName;
             _nameText.color = _backingElement.ElementColor;
 
-            _valueText.text = _backingElement.Value.ToString();
+            _valueText.text = _backingElement.Value.ToString("0.####", CultureInfo.InvariantCulture);
         }
 
         public void OnIncrement()
@@ -76,4 +76,4 @@ namespace BoneLib.BoneMenu.UI
             Draw();
         }
     }
-}   
+}

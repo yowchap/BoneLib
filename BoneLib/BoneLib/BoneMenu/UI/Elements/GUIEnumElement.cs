@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIEnumElement : GUIElement
     {
         public GUIEnumElement(System.IntPtr ptr) : base(ptr) { }

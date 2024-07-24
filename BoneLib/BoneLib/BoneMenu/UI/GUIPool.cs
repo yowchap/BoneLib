@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIPool : MonoBehaviour
     {
         public GUIPool(System.IntPtr ptr) : base(ptr) { }

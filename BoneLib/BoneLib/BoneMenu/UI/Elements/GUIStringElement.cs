@@ -4,7 +4,7 @@ using Il2CppTMPro;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIStringElement : GUIElement
     {
         public GUIStringElement(System.IntPtr ptr) : base(ptr) { }
