@@ -6,7 +6,7 @@ namespace BoneLib.BoneMenu
     [System.Serializable]
     public class StringElement : Element
     {
-        public StringElement(string name, Color color, string startValue, Action<string> callback) : base(name, color)
+        public StringElement(string name, Color color, string startValue, Action<string> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
