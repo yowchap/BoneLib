@@ -6,7 +6,7 @@ namespace BoneLib.BoneMenu
     [Serializable]
     public class FloatElement : Element
     {
-        public FloatElement(string name, Color color, float increment, float startValue, float minValue, float maxValue, Action<float> callback) : base(name, color)
+        public FloatElement(string name, Color color, float increment, float startValue, float minValue, float maxValue, Action<float> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
@@ -16,6 +16,7 @@ namespace BoneLib.BoneMenu
             _minValue = minValue;
             _maxValue = maxValue;
             _increment = increment;
+            _callback = callback;
         }
 
         public static Action<Element, float> OnValueChanged;
@@ -37,12 +38,14 @@ namespace BoneLib.BoneMenu
         private float _minValue;
         private float _maxValue;
         private float _increment;
+        private Action<float> _callback;
 
         public void Increment()
         {
             // Clamped value between minValue and maxValue
             _value = Mathf.Min(_maxValue, Mathf.Max(_minValue, _value + _increment));
             OnValueChanged?.Invoke(this, _value);
+            _callback?.Invoke(_value);
         }
 
         public void Decrement()
@@ -50,6 +53,7 @@ namespace BoneLib.BoneMenu
             // Clamped value between minValue and maxValue
             _value = Mathf.Max(_minValue, Mathf.Min(_maxValue, _value - _increment));
             OnValueChanged?.Invoke(this, _value);
+            _callback?.Invoke(_value);
         }
     }
 }

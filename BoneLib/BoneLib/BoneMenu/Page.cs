@@ -416,7 +416,7 @@ namespace BoneLib.BoneMenu
 
         public EnumElement CreateEnum(string name, Color color, Enum value, Action<Enum> callback)
         {
-            var element = new EnumElement(name, color, value);
+            var element = new EnumElement(name, color, value, callback);
             Add(element);
             return element;
         }

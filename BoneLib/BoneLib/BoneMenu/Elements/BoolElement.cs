@@ -6,7 +6,7 @@ namespace BoneLib.BoneMenu
     [Serializable]
     public class BoolElement : Element
     {
-        public BoolElement(string name, Color color, bool startValue, Action<bool> callback) : base(name, color)
+        public BoolElement(string name, Color color, bool startValue, Action<bool> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;

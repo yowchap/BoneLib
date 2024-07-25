@@ -6,7 +6,7 @@ namespace BoneLib.BoneMenu
     [Serializable]
     public class IntElement : Element
     {
-        public IntElement(string name, Color color, int increment, int startValue, int minValue, int maxValue, Action<int> callback) : base(name, color)
+        public IntElement(string name, Color color, int increment, int startValue, int minValue, int maxValue, Action<int> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
@@ -16,6 +16,7 @@ namespace BoneLib.BoneMenu
             _minValue = minValue;
             _maxValue = maxValue;
             _increment = increment;
+            _callback = callback;
         }
 
         public static Action<Element, int> OnValueChanged;
@@ -37,12 +38,14 @@ namespace BoneLib.BoneMenu
         private int _minValue;
         private int _maxValue;
         private int _increment;
+        private Action<int> _callback;
 
         public void Increment()
         {
             // Clamped value between minValue and maxValue
             _value = Mathf.Min(_maxValue, Mathf.Max(_minValue, _value + _increment));
             OnValueChanged?.Invoke(this, _value);
+            _callback?.Invoke(_value);
         }
 
         public void Decrement()
@@ -50,6 +53,7 @@ namespace BoneLib.BoneMenu
             // Clamped value between minValue and maxValue
             _value = Mathf.Max(_minValue, Mathf.Min(_maxValue, _value - _increment));
             OnValueChanged?.Invoke(this, _value);
+            _callback?.Invoke(_value);
         }
     }
 }
