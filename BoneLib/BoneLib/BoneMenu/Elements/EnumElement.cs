@@ -8,8 +8,18 @@ namespace BoneLib.BoneMenu
         public EnumElement(string name, Color color, Enum value, Action<Enum> callback) : base(name, color)
         {
             _internalValues = Enum.GetValues(value.GetType());
-            _value = _internalValues.GetValue(0) as Enum;
+            _value = value;
             _callback = callback;
+            int i = 0;
+            foreach (object obj in _internalValues)
+            {
+                if ((obj as Enum).ToString() == _value.ToString()) // There has to be a better way to do this
+                {
+                    _index = i + 1;
+                    break;
+                }
+                i++;
+            }
         }
 
         public Enum Value
