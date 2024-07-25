@@ -1,4 +1,4 @@
-﻿using BoneLib.BoneMenu;
+using BoneLib.BoneMenu;
 using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;
@@ -10,8 +10,8 @@ namespace BoneLib
     public static class BuildInfo
     {
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
-        public const string Author = "Gnonme, L4rs, Adi, Parzival, extraes, adamdev, Lakatrazz, trevtv, Mabel (SoulWithMae), WNP78"; // Author of the Mod.  (Set as null if none)
-        public const string Company = "BoneLib Team"; // Company that made the Mod.  (Set as null if none)
+        public const string Author = "The BONELAB Modding Community"; // Author of the Mod.  (Set as null if none)
+        public const string Company = "The BONELAB Modding Community"; // Company that made the Mod.  (Set as null if none)
         public const string Version = "3.0.0"; // Version of the Mod.  (MUST BE SET)
         public const string DownloadLink = "https://thunderstore.io/c/bonelab/p/gnonme/BoneLib"; // Download Link for the Mod.  (Set as null if none)
     }
