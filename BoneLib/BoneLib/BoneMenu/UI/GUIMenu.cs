@@ -1,4 +1,4 @@
-using Il2CppSLZ.Marrow.Utilities;
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -94,7 +94,7 @@ namespace BoneLib.BoneMenu.UI
         {
             _keyboard.ConnectElement(guiElement);
         }
-
+        [HideFromIl2Cpp]
         private void OnPageOpened(Page page)
         {
             if (Menu.CurrentPage != page)
@@ -153,7 +153,7 @@ namespace BoneLib.BoneMenu.UI
 
             _drawer.OnPageUpdated(page);
         }
-
+        [HideFromIl2Cpp]
         private void OnPageUpdated(Page page)
         {
             if (Menu.CurrentPage != page)
@@ -164,7 +164,7 @@ namespace BoneLib.BoneMenu.UI
             _drawer.Clear();
             _drawer.OnPageUpdated(page);
         }
-
+        [HideFromIl2Cpp]
         private void OnDialogCreated(Dialog dialog)
         {
             _guiDialog.AssignDialog(dialog);
@@ -183,7 +183,7 @@ namespace BoneLib.BoneMenu.UI
 
             Menu.OpenParentPage();
         }
-
+        [HideFromIl2Cpp]
         private void SetLayout(Page page)
         {
             float spacing = page.ElementSpacing;

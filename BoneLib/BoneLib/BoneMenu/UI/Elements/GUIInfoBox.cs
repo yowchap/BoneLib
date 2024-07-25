@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace BoneLib.BoneMenu.UI
         {
             gameObject.SetActive(!gameObject.activeInHierarchy);
         }
-
+        [HideFromIl2Cpp]
         public void AssignElement(Element element)
         {
             _element = element;

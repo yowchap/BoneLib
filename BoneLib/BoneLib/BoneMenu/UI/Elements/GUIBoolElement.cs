@@ -1,6 +1,6 @@
-using UnityEngine;
 using UnityEngine.UI;
 using Il2CppTMPro;
+using Il2CppInterop.Runtime.Attributes;
 
 namespace BoneLib.BoneMenu.UI
 {
@@ -8,7 +8,7 @@ namespace BoneLib.BoneMenu.UI
     public class GUIBoolElement : GUIElement
     {
         public GUIBoolElement(System.IntPtr ptr) : base(ptr) { }
-
+        [HideFromIl2Cpp]
         public BoolElement BackingElement => _backingElement;
 
         private TextMeshProUGUI _nameText;
@@ -25,7 +25,7 @@ namespace BoneLib.BoneMenu.UI
 
             _button.onClick.AddListener(new System.Action(() => OnPressed()));
         }
-
+        [HideFromIl2Cpp]
         public void AssignElement(BoolElement element)
         {
             _backingElement = element;

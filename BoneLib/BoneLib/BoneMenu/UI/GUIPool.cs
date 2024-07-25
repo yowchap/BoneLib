@@ -1,4 +1,4 @@
-using System.Collections;
+using Il2CppInterop.Runtime.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -84,7 +84,7 @@ namespace BoneLib.BoneMenu.UI
                 _inactiveObjects.Add(clone);
             }
         }
-
+        [HideFromIl2Cpp]
         private GameObject GetFirst(List<GameObject> list)
         {
             GameObject found = null;

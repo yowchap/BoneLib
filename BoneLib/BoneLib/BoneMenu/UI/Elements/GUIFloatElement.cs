@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
 using System.Globalization;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ namespace BoneLib.BoneMenu.UI
     public class GUIFloatElement : GUIElement
     {
         public GUIFloatElement(System.IntPtr ptr) : base(ptr) { }
-
+        [HideFromIl2Cpp]
         public FloatElement BackingElement => _backingElement;
 
         private Button _decrement;
@@ -29,7 +30,7 @@ namespace BoneLib.BoneMenu.UI
             _decrement.onClick.AddListener(new System.Action(() => OnDecrement()));
             _increment.onClick.AddListener(new System.Action(() => OnIncrement()));
         }
-
+        [HideFromIl2Cpp]
         public void AssignElement(FloatElement element)
         {
             _backingElement = element;

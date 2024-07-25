@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -104,11 +105,11 @@ namespace BoneLib.BoneMenu
         public IReadOnlyList<Element> Elements => _elements.AsReadOnly();
         public IReadOnlyList<SubPage> SubPages => _subPages.AsReadOnly();
         public Dictionary<string, Page> ChildPages = new Dictionary<string, Page>();
-        public int ElementCount => _numElements;
+        public int ElementCount => _elements.Count;
         public int CurrentSubPage => _subPageIndex;
 
         public bool IsIndexedChild { get; private set; }
-        public bool Filled => _numElements == _maxElements;
+        public bool Filled => ElementCount == _maxElements;
         public bool Indexed => _maxElements != 0;
 
         private string dbg_ParentName;
@@ -117,7 +118,6 @@ namespace BoneLib.BoneMenu
         private List<Element> _elements = new List<Element>();
         private List<SubPage> _subPages = new List<SubPage>();
 
-        private int _numElements;
         private int _maxElements;
 
         private int _subPageIndex = -1;
@@ -134,7 +134,6 @@ namespace BoneLib.BoneMenu
                 if (!Filled)
                 {
                     _elements.Add(element);
-                    _numElements++;
                     Menu.OnPageUpdated?.Invoke(this);
                     return;
                 }
@@ -152,7 +151,6 @@ namespace BoneLib.BoneMenu
             else
             {
                 _elements.Add(element);
-                _numElements++;
                 Menu.OnPageUpdated?.Invoke(this);
             }
         }
@@ -169,7 +167,6 @@ namespace BoneLib.BoneMenu
             }
 
             _elements.Remove(element);
-            _numElements--;
             Menu.OnPageUpdated?.Invoke(this);
         }
 
@@ -193,9 +190,7 @@ namespace BoneLib.BoneMenu
                 _elements.Remove(queryElement);
             }
 
-            _numElements = _elements.Count;
-
-            if (_numElements == 0)
+            if (ElementCount == 0)
             {
                 Parent._subPages.Remove(this as SubPage);
                 Menu.DestroyPage(this);
@@ -343,6 +338,7 @@ namespace BoneLib.BoneMenu
         /// This will affect the layout group of the page, and how elements are ordered.
         /// </summary>
         /// <param name="layoutType"></param>
+        [HideFromIl2Cpp]
         public void SetLayout(LayoutType layoutType)
         {
             Layout = layoutType;
