@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
     public class FloatElement : Element
     {
         public FloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> callback = null) : base(name, color)
@@ -38,6 +37,7 @@ namespace BoneLib.BoneMenu
         private float _minValue;
         private float _maxValue;
         private float _increment;
+        private Action<float> _callback;
 
         public void Increment()
         {

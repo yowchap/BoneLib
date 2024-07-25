@@ -38,6 +38,7 @@ namespace BoneLib.BoneMenu
         private Enum _value;
         private Array _internalValues;
         private int _index = 1;
+        private Action<Enum> _callback;
 
         public void GetNext()
         {

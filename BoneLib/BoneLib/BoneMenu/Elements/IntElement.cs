@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
     public class IntElement : Element
     {
         public IntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> callback) : base(name, color)
@@ -38,6 +37,7 @@ namespace BoneLib.BoneMenu
         private int _minValue;
         private int _maxValue;
         private int _increment;
+        private Action<int> _callback;
 
         public void Increment()
         {
