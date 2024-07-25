@@ -29,7 +29,7 @@ namespace BoneLib.BoneMenu.UI
             _pasteButton = transform.GetChild(0).Find("Paste").GetComponent<Button>();
             _clearButton = transform.GetChild(0).Find("Clear").GetComponent<Button>();
 
-            _closeButton.onClick.AddListener(new Action(() => { gameObject.SetActive(false); }));
+            _closeButton.onClick.AddListener(new Action(() => { GUIMenu.Instance.CloseKeyboard(); }));
             _pasteButton.onClick.AddListener(new Action(() => { _inputField.text += System.Windows.Forms.Clipboard.GetText(); }));
             _clearButton.onClick.AddListener(new Action(() => { _inputField.text = string.Empty; }));
         }

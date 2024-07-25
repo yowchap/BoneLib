@@ -88,12 +88,24 @@ namespace BoneLib.BoneMenu.UI
         public void OpenKeyboard()
         {
             _keyboard.gameObject.SetActive(true);
+
+            // Might be hacky, but this just disables
+            // elements behind the keyboard so we don't click them by accident
+            ActiveView.gameObject.SetActive(false);
+        }
+
+        public void CloseKeyboard()
+        {
+            _keyboard.gameObject.SetActive(false);
+            // Turns the layout object back on again
+            ActiveView.gameObject.SetActive(true);
         }
 
         public void ConnectElementToKeyboard(GUIStringElement guiElement)
         {
             _keyboard.ConnectElement(guiElement);
         }
+
         [HideFromIl2Cpp]
         private void OnPageOpened(Page page)
         {
@@ -153,6 +165,7 @@ namespace BoneLib.BoneMenu.UI
 
             _drawer.OnPageUpdated(page);
         }
+
         [HideFromIl2Cpp]
         private void OnPageUpdated(Page page)
         {
@@ -164,6 +177,7 @@ namespace BoneLib.BoneMenu.UI
             _drawer.Clear();
             _drawer.OnPageUpdated(page);
         }
+
         [HideFromIl2Cpp]
         private void OnDialogCreated(Dialog dialog)
         {
@@ -183,6 +197,7 @@ namespace BoneLib.BoneMenu.UI
 
             Menu.OpenParentPage();
         }
+
         [HideFromIl2Cpp]
         private void SetLayout(Page page)
         {

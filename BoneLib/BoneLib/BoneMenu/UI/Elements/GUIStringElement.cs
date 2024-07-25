@@ -26,6 +26,7 @@ namespace BoneLib.BoneMenu.UI
             _keyboardButton.onClick.AddListener(new System.Action(() => OpenKeyboard()));
             _inputField.onSubmit.AddListener(new System.Action<string>((str) => OnInputFieldSubmit(str)));
         }
+
         [HideFromIl2Cpp]
         public void AssignElement(StringElement element)
         {

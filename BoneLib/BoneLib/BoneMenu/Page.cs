@@ -99,7 +99,7 @@ namespace BoneLib.BoneMenu
         public Texture2D DefaultBackground => MenuBootstrap.defaultBackgroundTexture;
         public float BackgroundOpacity { get; set; } = 0.85f;
 
-        public LayoutType Layout { get; set; }
+        public LayoutType Layout { get; set; } = LayoutType.Default;
         public float ElementSpacing { get; set; } = 60;
 
         public IReadOnlyList<Element> Elements => _elements.AsReadOnly();

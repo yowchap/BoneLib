@@ -161,8 +161,6 @@ namespace BoneLib
 
         private static void OnPlayerSpawned(GameObject go)
         {
-            ModConsole.Msg("Player Spawned");
-
             if (Player.HandsExist)
             {
                 return;

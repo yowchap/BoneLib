@@ -19,7 +19,6 @@ namespace BoneLib.BoneMenu.UI
 
         public void Initialize()
         {
-            ModConsole.Msg(name);
             if (_prefab == null)
             {
                 return;
