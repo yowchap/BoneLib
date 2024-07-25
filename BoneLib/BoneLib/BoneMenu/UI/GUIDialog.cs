@@ -1,10 +1,11 @@
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIDialog : MonoBehaviour
     {
         public GUIDialog(System.IntPtr ptr) : base(ptr) { }
@@ -39,7 +40,7 @@ namespace BoneLib.BoneMenu.UI
             _acceptButton?.onClick.RemoveAllListeners();
             _denyButton?.onClick.RemoveAllListeners();
         }
-
+        [HideFromIl2Cpp]
         public void AssignDialog(Dialog dialog)
         {
             _dialog = dialog;

@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
+using Il2CppInterop.Runtime.Attributes;
 using UnityEngine;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIElementDrawer: MonoBehaviour
     {
         public GUIElementDrawer(System.IntPtr ptr) : base(ptr) { }
@@ -41,7 +40,7 @@ namespace BoneLib.BoneMenu.UI
             _enumPool.Initialize();
             _stringPool.Initialize();
         }
-
+        [HideFromIl2Cpp]
         public void OnPageUpdated(Page page)
         {
             foreach (var element in page.Elements)
@@ -59,7 +58,7 @@ namespace BoneLib.BoneMenu.UI
             _enumPool?.ReturnAll();
             _stringPool?.ReturnAll();
         }
-
+        [HideFromIl2Cpp]
         public void OnElementAdded(Element element)
         {
             if (element is FunctionElement functionElement)

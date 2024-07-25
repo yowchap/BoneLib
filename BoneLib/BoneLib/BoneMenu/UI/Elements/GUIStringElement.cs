@@ -1,14 +1,14 @@
-using UnityEngine;
 using UnityEngine.UI;
 using Il2CppTMPro;
+using Il2CppInterop.Runtime.Attributes;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIStringElement : GUIElement
     {
         public GUIStringElement(System.IntPtr ptr) : base(ptr) { }
-
+        [HideFromIl2Cpp]
         public StringElement BackingElement => _backingElement;
 
         private TMP_InputField _inputField;
@@ -26,7 +26,7 @@ namespace BoneLib.BoneMenu.UI
             _keyboardButton.onClick.AddListener(new System.Action(() => OpenKeyboard()));
             _inputField.onSubmit.AddListener(new System.Action<string>((str) => OnInputFieldSubmit(str)));
         }
-
+        [HideFromIl2Cpp]
         public void AssignElement(StringElement element)
         {
             _backingElement = element;

@@ -1,14 +1,14 @@
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIIntElement : GUIElement
     {
         public GUIIntElement(System.IntPtr ptr) : base(ptr) { }
-
+        [HideFromIl2Cpp]
         public IntElement BackingElement => _backingElement;
 
         private Button _decrement;
@@ -30,7 +30,7 @@ namespace BoneLib.BoneMenu.UI
             _decrement.onClick.AddListener(new System.Action(() => OnDecrement()));
             _increment.onClick.AddListener(new System.Action(() => OnIncrement()));
         }
-
+        [HideFromIl2Cpp]
         public void AssignElement(IntElement element)
         {
             _backingElement = element;

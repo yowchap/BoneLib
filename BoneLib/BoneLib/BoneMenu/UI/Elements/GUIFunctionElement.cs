@@ -1,14 +1,15 @@
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIFunctionElement : GUIElement
     {
         public GUIFunctionElement(System.IntPtr ptr) : base(ptr) { }
-
+        [HideFromIl2Cpp]
         public FunctionElement BackingElement => _backingElement;
 
         private Button _button;
@@ -29,7 +30,7 @@ namespace BoneLib.BoneMenu.UI
             _fitter = GetComponentInChildren<AspectRatioFitter>(true);
             _button.onClick.AddListener(new System.Action(() => OnPressed()));
         }
-
+        [HideFromIl2Cpp]
         public void AssignElement(FunctionElement element)
         {
             _backingElement = element;

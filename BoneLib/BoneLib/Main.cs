@@ -1,4 +1,4 @@
-﻿using BoneLib.BoneMenu;
+using BoneLib.BoneMenu;
 using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;

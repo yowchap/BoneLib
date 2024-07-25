@@ -1,14 +1,15 @@
+using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
-using UnityEngine;
+using System.Globalization;
 using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public class GUIFloatElement : GUIElement
     {
         public GUIFloatElement(System.IntPtr ptr) : base(ptr) { }
-
+        [HideFromIl2Cpp]
         public FloatElement BackingElement => _backingElement;
 
         private Button _decrement;
@@ -29,7 +30,7 @@ namespace BoneLib.BoneMenu.UI
             _decrement.onClick.AddListener(new System.Action(() => OnDecrement()));
             _increment.onClick.AddListener(new System.Action(() => OnIncrement()));
         }
-
+        [HideFromIl2Cpp]
         public void AssignElement(FloatElement element)
         {
             _backingElement = element;
@@ -61,7 +62,7 @@ namespace BoneLib.BoneMenu.UI
             _nameText.text = _backingElement.ElementName;
             _nameText.color = _backingElement.ElementColor;
 
-            _valueText.text = _backingElement.Value.ToString();
+            _valueText.text = _backingElement.Value.ToString("0.####", CultureInfo.InvariantCulture);
         }
 
         public void OnIncrement()
@@ -76,4 +77,4 @@ namespace BoneLib.BoneMenu.UI
             Draw();
         }
     }
-}   
+}

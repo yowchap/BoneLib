@@ -1,3 +1,4 @@
+using Il2CppInterop.Runtime.Attributes;
 using System;
 using UnityEngine;
 
@@ -32,7 +33,7 @@ namespace BoneLib.BoneMenu
                 _linkedPage = null;
             }
         }
-
+        [HideFromIl2Cpp]
         private void OnPageUpdated(Page page)
         {
             if (page != _linkedPage)

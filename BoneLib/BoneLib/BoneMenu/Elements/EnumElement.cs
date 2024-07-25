@@ -5,11 +5,21 @@ namespace BoneLib.BoneMenu
 {
     public class EnumElement : Element
     {
-        public EnumElement(string name, Color color, Enum value, Action<Enum> callback = null) : base(name, color)
+        public EnumElement(string name, Color color, Enum value, Action<Enum> callback) : base(name, color)
         {
             _internalValues = Enum.GetValues(value.GetType());
-            _value = _internalValues.GetValue(0) as Enum;
+            _value = value;
             _callback = callback;
+            int i = 0;
+            foreach (object obj in _internalValues)
+            {
+                if ((obj as Enum).ToString() == _value.ToString()) // There has to be a better way to do this
+                {
+                    _index = i + 1;
+                    break;
+                }
+                i++;
+            }
         }
 
         public Enum Value
@@ -24,7 +34,7 @@ namespace BoneLib.BoneMenu
                 OnElementChanged?.Invoke();
             }
         }
-
+        private Action<Enum> _callback;
         private Enum _value;
         private Array _internalValues;
         private int _index = 1;
@@ -34,7 +44,7 @@ namespace BoneLib.BoneMenu
         {
             _index %= _internalValues.Length;
             _value = _internalValues.GetValue(_index++) as Enum;
-            _callback?.Invoke(_value);
+            _callback?.InvokeActionSafe(_value);
         }
     }
 }

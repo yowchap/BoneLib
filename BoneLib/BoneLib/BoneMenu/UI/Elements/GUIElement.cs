@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace BoneLib.BoneMenu.UI
 {
-    [MelonLoader.RegisterTypeInIl2Cpp]
+    [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public abstract class GUIElement : MonoBehaviour
     {   
         public GUIElement(System.IntPtr ptr) : base(ptr) { }

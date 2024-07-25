@@ -36,22 +36,22 @@ namespace BoneLib.BoneMenu
             _initialized = true;
         }
 
-        public static Page CreatePage(string name, int maxElements = 0)
+        public static Page CreatePage(string name, int maxElements = 0, bool createLink = true)
         {
-            return CreatePage(Page.Root, name, Color.white, maxElements);
+            return CreatePage(Page.Root, name, Color.white, maxElements, createLink);
         }
 
-        public static Page CreatePage(Page parent, string name, int maxElements = 0)
+        public static Page CreatePage(Page parent, string name, int maxElements = 0, bool createLink = true)
         {
-            return CreatePage(parent, name, Color.white, maxElements);
+            return CreatePage(parent, name, Color.white, maxElements, createLink);
         }
 
-        public static Page CreatePage(string name, Color color, int maxElements = 0)
+        public static Page CreatePage(string name, Color color, int maxElements = 0, bool createLink = true)
         {
-            return CreatePage(Page.Root, name, color, maxElements);
+            return CreatePage(Page.Root, name, color, maxElements, createLink);
         }
 
-        public static Page CreatePage(Page parent, string name, Color color, int maxElements = 0)
+        public static Page CreatePage(Page parent, string name, Color color, int maxElements = 0, bool createLink = true)
         {
             if (PageDirectory.ContainsKey(name))
             {
@@ -61,6 +61,12 @@ namespace BoneLib.BoneMenu
             Page page = new Page(parent, name, color, maxElements);
             OnPageCreated?.Invoke(page);
             PageDirectory?.Add(page.Name, page);
+
+            if (createLink)
+            {
+                parent.CreatePageLink(page);
+            }
+
             return page;
         }
 
