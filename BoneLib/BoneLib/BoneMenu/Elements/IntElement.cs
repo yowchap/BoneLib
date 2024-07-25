@@ -17,7 +17,6 @@ namespace BoneLib.BoneMenu
             _increment = increment;
             _callback = callback;
         }
-        private Action<int> _callback;
         public static Action<Element, int> OnValueChanged;
 
         public int Value
@@ -37,6 +36,7 @@ namespace BoneLib.BoneMenu
         private int _minValue;
         private int _maxValue;
         private int _increment;
+
         private Action<int> _callback;
 
         public void Increment()

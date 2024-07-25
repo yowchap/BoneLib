@@ -17,7 +17,6 @@ namespace BoneLib.BoneMenu
             _increment = increment;
             _callback = callback;
         }
-        private Action<float> _callback;
         public static Action<Element, float> OnValueChanged;
 
         public float Value
@@ -33,11 +32,12 @@ namespace BoneLib.BoneMenu
             }
         }
 
+        private Action<float> _callback;
+
         private float _value;
         private float _minValue;
         private float _maxValue;
         private float _increment;
-        private Action<float> _callback;
 
         public void Increment()
         {

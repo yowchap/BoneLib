@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -10,16 +11,8 @@ namespace BoneLib.BoneMenu
             _internalValues = Enum.GetValues(value.GetType());
             _value = value;
             _callback = callback;
-            int i = 0;
-            foreach (object obj in _internalValues)
-            {
-                if ((obj as Enum).ToString() == _value.ToString()) // There has to be a better way to do this
-                {
-                    _index = i + 1;
-                    break;
-                }
-                i++;
-            }
+            var vals = Enum.GetValues(_internalValues.GetType());
+            _index = Array.IndexOf(vals, vals.OfType<Enum>().First(v => v.Equals(value))) + 1;
         }
 
         public Enum Value
@@ -38,7 +31,6 @@ namespace BoneLib.BoneMenu
         private Enum _value;
         private Array _internalValues;
         private int _index = 1;
-        private Action<Enum> _callback;
 
         public void GetNext()
         {
