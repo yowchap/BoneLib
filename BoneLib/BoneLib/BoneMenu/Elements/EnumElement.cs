@@ -11,7 +11,7 @@ namespace BoneLib.BoneMenu
             _internalValues = Enum.GetValues(value.GetType());
             _value = value;
             _callback = callback;
-            var vals = Enum.GetValues(_internalValues.GetType());
+            var vals = Enum.GetValues(value.GetType());
             _index = Array.IndexOf(vals, vals.OfType<Enum>().First(v => v.Equals(value))) + 1;
         }
 
