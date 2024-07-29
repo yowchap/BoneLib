@@ -1,4 +1,4 @@
-﻿using SLZ.Marrow.Warehouse;
+﻿using Il2CppSLZ.Marrow.Warehouse;
 
 namespace BoneLib
 {
@@ -14,7 +14,7 @@ namespace BoneLib
         public LevelInfo(LevelCrateReference levelReference)
         {
             this.title = levelReference.Crate.Title;
-            this.barcode = levelReference.Barcode;
+            this.barcode = levelReference.Barcode.ID;
             this.levelReference = levelReference;
         }
 

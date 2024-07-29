@@ -1,58 +1,42 @@
-﻿using System;
+using System;
+using System.Linq;
 using UnityEngine;
 
-namespace BoneLib.BoneMenu.Elements
+namespace BoneLib.BoneMenu
 {
-    public class EnumElement<Enum> : GenericElement<Enum>
+    public class EnumElement : Element
     {
-        public EnumElement(string name, Color color, Enum startValue, Action<Enum> action = null) : base(name, color, action)
+        public EnumElement(string name, Color color, Enum value, Action<Enum> callback) : base(name, color)
         {
-            Name = name;
-            Color = color;
-            this._action = action;
-            _value = startValue;
-        }
-        
-        public EnumElement(string name, Color color, Action<Enum> action = null) : base(name, color, action)
-        {
-            Name = name;
-            Color = color;
-            this._action = action;
+            _internalValues = Enum.GetValues(value.GetType());
+            _value = value;
+            _callback = callback;
+            var vals = Enum.GetValues(value.GetType());
+            _index = Array.IndexOf(vals, vals.OfType<Enum>().First(v => v.Equals(value))) + 1;
         }
 
-        public override ElementType Type => ElementType.Value;
-        public override string DisplayValue => _value.ToString();
-
-        public override void OnSelectLeft()
+        public Enum Value
         {
-            _value = GetNextValue();
-            OnChangedValue();
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnElementChanged?.Invoke();
+            }
         }
+        private Action<Enum> _callback;
+        private Enum _value;
+        private Array _internalValues;
+        private int _index = 1;
 
-        public override void OnSelectRight()
+        public void GetNext()
         {
-            _value = GetPreviousValue();
-            OnChangedValue();
-        }
-
-        // from MTINM.BoneMenu
-        private Enum GetNextValue()
-        {
-            Array values = System.Enum.GetValues(_value.GetType());
-            int nextIndex = Array.IndexOf(values, _value) + 1;
-            return nextIndex == values.Length ? (Enum)values.GetValue(0) : (Enum)values.GetValue(nextIndex);
-        }
-
-        private Enum GetPreviousValue()
-        {
-            Array values = System.Enum.GetValues(_value.GetType());
-            int previousIndex = Array.IndexOf(values, _value) - 1;
-            return previousIndex > -1 ? (Enum)values.GetValue(previousIndex) : (Enum)values.GetValue(values.Length - 1);
-        }
-
-        protected override void OnChangedValue()
-        {
-            base.OnChangedValue();
+            _index %= _internalValues.Length;
+            _value = _internalValues.GetValue(_index++) as Enum;
+            _callback?.InvokeActionSafe(_value);
         }
     }
 }

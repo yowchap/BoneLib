@@ -1,52 +1,37 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace BoneLib.BoneMenu.Elements
+namespace BoneLib.BoneMenu
 {
-    public class FunctionElement : MenuElement
+    [Serializable]
+    public class FunctionElement : Element
     {
-        public FunctionElement(string name, Color color, Action action) : base(name, color)
+        public FunctionElement(string name, Color color, Action callback) : base(name, color)
         {
-            Name = name;
-            Color = color;
-            Action = action;
-            _confirmer = false;
+            _elementName = name;
+            _elementColor = color;
+            _callback = callback;
         }
 
-        public FunctionElement(string name, Color color, Action action, string confirmText = "") : base(name, color)
+        public Texture2D Logo 
         {
-            Name = name;
-            Color = color;
-            Action = action;
-            _confirmText = confirmText;
-            _confirmer = true;
-        }
-
-        public string ConfirmText { get => _confirmText; }
-
-        public override ElementType Type => ElementType.Function;
-
-        public Action Action { get; private set; }
-        public bool Confirmer { get => _confirmer; }
-
-        private string _confirmText;
-        private bool _confirmer;
-
-        public override void OnSelectElement()
-        {
-            if (_confirmer)
+            get
             {
-                OnSelectConfirm();
+                return _logo;
             }
-            else
+            set
             {
-                Action?.Invoke();
+                _logo = value;
+                OnElementChanged?.Invoke();
             }
         }
 
-        public void OnSelectConfirm()
+        private Texture2D _logo;
+        private Action _callback;
+
+        public override void OnElementSelected()
         {
-            Action?.Invoke();
+            _callback?.Invoke();
         }
     }
 }

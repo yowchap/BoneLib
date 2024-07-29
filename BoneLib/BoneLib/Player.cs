@@ -1,55 +1,62 @@
-﻿using SLZ.Interaction;
-using SLZ.Props.Weapons;
-using SLZ.Rig;
-using SLZ.VRMK;
+﻿using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.VRMK;
 using UnityEngine;
 
 namespace BoneLib
 {
     public static class Player
     {
-        private static readonly string playerHeadPath = "[PhysicsRig]/Head"; // The path to the head relative to the rig manager
+        public static Avatar Avatar => RigManager.avatar;
+        public static RigManager RigManager { get; private set; }
+        public static PhysicsRig PhysicsRig { get; private set; }
+        public static OpenControllerRig ControllerRig { get; private set; }
+        public static RemapRig RemapRig { get; private set; }
+        public static UIRig UIRig { get; private set; }
 
-        public static RigManager rigManager { get; private set; }
-        public static PhysicsRig physicsRig { get; private set; }
-        public static ControllerRig controllerRig { get; private set; }
-        public static UIRig uiRig { get; private set; }
+        public static Hand LeftHand { get; private set; }
+        public static Hand RightHand { get; private set; }
+        public static bool HandsExist => LeftHand != null && RightHand != null;
 
-        public static Hand leftHand { get; private set; }
-        public static Hand rightHand { get; private set; }
-        public static bool handsExist => leftHand != null && rightHand != null;
+        public static BaseController LeftController { get; private set; }
+        public static BaseController RightController { get; private set; }
+        public static bool ControllersExist => LeftController != null && RightController != null;
 
-        public static BaseController leftController { get; private set; }
-        public static BaseController rightController { get; private set; }
-        public static bool controllersExist => leftController != null && rightController != null;
-
-        public static Transform playerHead { get; private set; }
+        public static Transform Head { get; private set; }
+        public static Transform Chest { get; private set; }
 
         internal static bool FindObjectReferences(RigManager manager = null)
         {
-            ModConsole.Msg("Finding player object references", LoggingMode.DEBUG);
+            ModConsole.Msg("Finding player object references");
 
-            if (controllersExist && handsExist && controllerRig != null)
-                return false;
             if (manager == null)
+            {
                 manager = GameObject.FindObjectOfType<RigManager>();
+            }
 
-            rigManager = manager;
-            physicsRig = manager?.physicsRig;
-            controllerRig = manager?.ControllerRig;
-            uiRig = manager?.uiRig;
+            RigManager = manager;
+            PhysicsRig = RigManager.physicsRig;
+            ControllerRig = RigManager.ControllerRig.Cast<OpenControllerRig>();
+            RemapRig = RigManager.remapHeptaRig;
 
-            leftController = manager?.ControllerRig?.leftController;
-            rightController = manager?.ControllerRig?.rightController;
+            LeftController = RigManager.ControllerRig?.leftController;
+            RightController = RigManager.ControllerRig?.rightController;
 
-            leftHand = manager?.physicsRig?.leftHand;
-            rightHand = manager?.physicsRig?.rightHand;
+            LeftHand = PhysicsRig.leftHand;
+            RightHand = PhysicsRig.rightHand;
 
-            playerHead = rigManager.transform.Find(playerHeadPath);
+            Head = PhysicsRig.m_head;
 
             ModConsole.Msg("Found player object references", LoggingMode.DEBUG);
 
-            return controllersExist && handsExist && controllerRig != null;
+            return ControllersExist && HandsExist && ControllerRig != null;
+        }
+
+        internal static bool FindUIRigReferences()
+        {
+            UIRig = UIRig.Instance;
+
+            return UIRig != null;
         }
 
         /// <summary>
@@ -57,15 +64,13 @@ namespace BoneLib
         /// </summary>
         public static PhysicsRig GetPhysicsRig()
         {
-            if (physicsRig == null)
-                physicsRig = GameObject.FindObjectOfType<PhysicsRig>();
-            return physicsRig;
-        }
+            if (PhysicsRig == null)
+            {
+                PhysicsRig = GameObject.FindObjectOfType<PhysicsRig>();
+            }
 
-        /// <summary>
-        /// Returns the Player's current <see cref="Avatar"/>.
-        /// </summary>
-        public static Avatar GetCurrentAvatar() => rigManager.avatar;
+            return PhysicsRig;
+        }
 
         /// <summary>
         /// Generic method for getting any component on the object the Player is holding.
@@ -81,15 +86,14 @@ namespace BoneLib
                 {
                     value = heldObject.GetComponentInParent<T>();
                     if (!value)
+                    {
                         value = heldObject.GetComponentInChildren<T>();
+                    }
                 }
             }
             return value;
         }
-
-        // Figured I'd include this since getting a gun is probably the most common use of GetComponentInHand
-        public static Gun GetGunInHand(Hand hand) => GetComponentInHand<Gun>(hand);
-
+        
         /// <summary>
         /// Returns the object <paramref name="hand"/> is holding or null if <paramref name="hand"/> is null.
         /// </summary>
@@ -102,8 +106,12 @@ namespace BoneLib
         /// </summary>
         public static void RotatePlayer(float degrees)
         {
-            if (controllerRig != null)
-                controllerRig.SetTwist(degrees);
+            if (RemapRig == null)
+            {
+                return;
+            }
+
+            RemapRig.SetTwist(degrees);
         }
     }
 }

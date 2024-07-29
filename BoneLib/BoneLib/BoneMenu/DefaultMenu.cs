@@ -1,10 +1,10 @@
-﻿using BoneLib.Nullables;
+﻿using BoneLib.Notifications;
 using BoneLib.RandomShit;
-using SLZ.Data;
-using SLZ.Marrow.Data;
-using SLZ.Marrow.Pool;
-using SLZ.Marrow.Warehouse;
-using SLZ.Player;
+
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Marrow.SceneStreaming;
+using Il2CppSLZ.Marrow.Warehouse;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -22,62 +22,102 @@ namespace BoneLib.BoneMenu
         private static int lightAmmoValue = 100;
         private static int mediumAmmoValue = 100;
         private static int heavyAmmoValue = 100;
+        private static string textValue = "";
 
         public static void CreateDefaultElements()
         {
-            Elements.MenuCategory mainCategory = MenuManager.CreateCategory("BoneLib", Color.white);
+            Page mainPage = Page.Root.CreatePage("BoneLib", Color.white);
 
-            Elements.SubPanelElement ammo = mainCategory.CreateSubPanel("Ammo Settings", Color.yellow);
-            Elements.SubPanelElement itemSpawning = mainCategory.CreateSubPanel("Item Spawning", Color.white);
-            Elements.SubPanelElement funstuff = mainCategory.CreateSubPanel("Fun Stuff", "#e600ff");
+            Page ammoPage = mainPage.CreatePage("Ammo Settings", Color.yellow);
+            Page itemSpawningPage = mainPage.CreatePage("Item Spawning", Color.white);
+            Page funStuffPage = mainPage.CreatePage("Fun Stuff", Color.white);
 
-            ammo.CreateFunctionElement("Add Light Ammo", Color.white, () => AmmoInventory.AddCartridge(LightAmmo, lightAmmoValue));
-            ammo.CreateFunctionElement("Add Medium Ammo", Color.white, () => AmmoInventory.AddCartridge(MediumAmmo, mediumAmmoValue));
-            ammo.CreateFunctionElement("Add Heavy Ammo", Color.white, () => AmmoInventory.AddCartridge(HeavyAmmo, heavyAmmoValue));
+            ammoPage.CreateFunction("Add Light Ammo", Color.white, () => AmmoInventory.AddCartridge(LightAmmo, lightAmmoValue));
+            ammoPage.CreateFunction("Add Medium Ammo", Color.white, () => AmmoInventory.AddCartridge(MediumAmmo, mediumAmmoValue));
+            ammoPage.CreateFunction("Add Heavy Ammo", Color.white, () => AmmoInventory.AddCartridge(HeavyAmmo, heavyAmmoValue));
 
-            ammo.CreateIntElement("Light Ammo", "#ffe11c", lightAmmoValue, 100, 0, int.MaxValue, (value) => lightAmmoValue = value);
-            ammo.CreateIntElement("Medium Ammo", "#ff9d1c", mediumAmmoValue, 100, 0, int.MaxValue, (value) => mediumAmmoValue = value);
-            ammo.CreateIntElement("Heavy Ammo", "#ff2f1c", heavyAmmoValue, 100, 0, int.MaxValue, (value) => heavyAmmoValue = value);
+            ammoPage.CreateInt("Light Ammo", Color.white, lightAmmoValue, 100, 0, int.MaxValue, (value) => lightAmmoValue = value);
+            ammoPage.CreateInt("Medium Ammo", Color.white, mediumAmmoValue, 100, 0, int.MaxValue, (value) => mediumAmmoValue = value);
+            ammoPage.CreateInt("Heavy Ammo", Color.white, heavyAmmoValue, 100, 0, int.MaxValue, (value) => heavyAmmoValue = value);
 
-            itemSpawning.CreateFunctionElement("Spawn Utility Gun", Color.white, () => SpawnUtilityGun());
-            itemSpawning.CreateFunctionElement("Spawn Nimbus Gun", Color.white, () => SpawnNimbusGun());
+            itemSpawningPage.CreateFunction("Spawn Utility Gun", Color.white, SpawnUtilityGun);
+            itemSpawningPage.CreateFunction("Spawn Nimbus Gun", Color.white, SpawnNimbusGun);
+            itemSpawningPage.CreateFunction("Spawn Random Gun", Color.white, SpawnRandomGun);
+            itemSpawningPage.CreateFunction("Spawn Random Melee", Color.white, SpawnRandomMelee);
+            itemSpawningPage.CreateFunction("Spawn Random NPC", Color.white, SpawnRandomNPC);
+            itemSpawningPage.CreateFunction("Load Random Level", Color.white, LoadRandomLevel);
 
-            funstuff.CreateFunctionElement("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
-            funstuff.CreateFunctionElement("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
-            funstuff.CreateFunctionElement("Spawn Bird Ad", Color.white, () => PopupBoxManager.CreateNewBirdPopup());
-            funstuff.CreateFunctionElement("Spawn Cat Ad", Color.white, () => PopupBoxManager.CreateNewCatPopup());
+            funStuffPage.CreateFunction("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
+            funStuffPage.CreateFunction("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
+            funStuffPage.CreateFunction("Spawn Bird Ad", Color.white, () => PopupBoxManager.CreateNewBirdPopup());
+            funStuffPage.CreateFunction("Spawn Cat Ad", Color.white, () => PopupBoxManager.CreateNewCatPopup());
+            funStuffPage.CreateString("Notification Text", Color.white, "None", (input) => textValue = input);
+            funStuffPage.CreateFunction("Notification Test", Color.white, () =>
+            {
+                var notif = new Notification()
+                {
+                    Title = "Hello!",
+                    Message = textValue,
+                    Type = NotificationType.Error,
+                    ShowTitleOnPopup = true,
+                    PopupLength = 5f
+                };
+                Notifier.Send(notif);
+            });
+
+            funStuffPage.CreateFunction("Make Dialog", Color.white, () =>
+            {
+                Menu.DisplayDialog("Test", "This is a test message. Don't worry about it.", null, Dialog.Options.YesOption | Dialog.Options.NoOption);
+            });
         }
 
         internal static void SpawnUtilityGun()
         {
-            Transform head = Player.playerHead.transform;
-
-            string barcode = "c1534c5a-5747-42a2-bd08-ab3b47616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
-
-            Spawnable spawnable = new Spawnable()
-            {
-                crateRef = reference
-            };
-
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+            Transform head = Player.Head;
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.SpawnGun, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnNimbusGun()
         {
-            Transform head = Player.playerHead.transform;
+            Transform head = Player.Head;
+            HelperMethods.SpawnCrate(CommonBarcodes.Misc.NimbusGun, head.position + head.forward, default, Vector3.one, false, null);
+        }
+        
+        internal static void SpawnRandomGun()
+        {
+            Transform head = Player.Head;
 
-            string barcode = "c1534c5a-6b38-438a-a324-d7e147616467";
-            SpawnableCrateReference reference = new SpawnableCrateReference(barcode);
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Guns.All.Count);
+            string barcode = CommonBarcodes.Guns.All[index];
 
-            Spawnable spawnable = new Spawnable()
-            {
-                crateRef = reference
-            };
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+        }
 
-            AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, head.position + head.forward, default, new BoxedNullable<Vector3>(Vector3.one), false, new BoxedNullable<int>(null), null, null);
+        internal static void SpawnRandomMelee()
+        {
+            Transform head = Player.Head;
+            
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Melee.All.Count);
+            string barcode = CommonBarcodes.Melee.All[index];
+            
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+        }
+        
+        internal static void SpawnRandomNPC()
+        {
+            Transform player = Player.PhysicsRig.artOutput.transform;
+            int index = Random.RandomRangeInt(0, CommonBarcodes.NPCs.All.Count);
+            string barcode = CommonBarcodes.NPCs.All[index];
+            
+            HelperMethods.SpawnCrate(barcode, player.position + player.forward, default, Vector3.one, false, null);
+        }
+
+        internal static void LoadRandomLevel()
+        {
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
+            string barcode = CommonBarcodes.Maps.All[index];
+            
+            SceneStreamer.Load(new Barcode(barcode), new Barcode(CommonBarcodes.Maps.LoadDefault));
         }
     }
 }

@@ -39,7 +39,7 @@ OfflineMode = true
 
 ## Credits
 
-**Gnonme / L4rs / Adidasaurus:** Main developers
+**Gnonme / L4rs / Adi:** Main developers
 
 **Parzival:** Added enum with all game layers, improved documentation, made some extension method parameters optional
 
@@ -47,13 +47,34 @@ OfflineMode = true
 
 **Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added skip intro pref, added BoneMenu
 
-**Lakatrazz:** BoneMenu improvements
+**Lakatrazz:** BoneMenu improvements, fixed issues after game updates
 
 **Trev:** LemonLoader support
+
+**SoulWithMae:** SpawnCrate helper methods, added a class with commonly used barcodes, added a notification system, added helper methods for loading stuff from embedded resources
+
+**WNP78:** Ported the mod to ML 0.6 and improved reference DLL handling
 
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v2.4.0:
+- Added notification system
+- Added asset bundle helpers
+- Added IsLoading helper method
+- Added CheckIfAssemblyLoaded helper method
+
+#### v2.3.0:
+- Added Audio class with references to mixers
+- Added CommonBarcodes for easy item spawning
+- Improved error logging
+
+#### v2.2.2:
+- Added SpawnCrate helper methods
+
+#### v2.2.1:
+- Fixed compatibility with bonelab patch 3
 
 #### v2.2.0:
 - Added LemonLoader support for quest modding

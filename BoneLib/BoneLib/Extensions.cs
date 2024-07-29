@@ -1,10 +1,10 @@
-﻿using PuppetMasta;
-using SLZ.AI;
-using SLZ.Combat;
-using SLZ.Props.Weapons;
+﻿using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Marrow.AI;
+using Il2CppSLZ.Marrow.Combat;
+using Il2CppSLZ.Marrow.PuppetMasta;
+
 using System;
 using System.Linq;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace BoneLib

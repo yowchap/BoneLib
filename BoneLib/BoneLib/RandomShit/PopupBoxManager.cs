@@ -1,17 +1,15 @@
 ﻿using BoneLib.MonoBehaviours;
 using MelonLoader;
-using SLZ.Combat;
-using SLZ.Interaction;
-using SLZ.Marrow.Data;
-using SLZ.Props;
-using SLZ.SFX;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
+
+using Il2CppSLZ.Marrow;
 
 namespace BoneLib.RandomShit
 {
@@ -120,17 +118,17 @@ namespace BoneLib.RandomShit
             }
 
             GameObject newPopup = GameObject.Instantiate(basePopup);
-            TextMeshPro tmpro = newPopup.GetComponentInChildren<TextMeshPro>();
+            TextMeshPro Il2CppTMPro = newPopup.GetComponentInChildren<TextMeshPro>();
 
-            tmpro.text = adText;
+            Il2CppTMPro.text = adText;
             newPopup.SetActive(true);
 
-            tmpro.enableAutoSizing = true;
-            tmpro.fontSizeMin = 0.5f;
-            tmpro.fontSizeMax = 4;
-            tmpro.alignment = TextAlignmentOptions.Center;
-            tmpro.enableWordWrapping = true;
-            tmpro.alignment = TextAlignmentOptions.Center; // For some reason this has to be set here as well ¯\_(ツ)_/¯
+            Il2CppTMPro.enableAutoSizing = true;
+            Il2CppTMPro.fontSizeMin = 0.5f;
+            Il2CppTMPro.fontSizeMax = 4;
+            Il2CppTMPro.alignment = TextAlignmentOptions.Center;
+            Il2CppTMPro.enableWordWrapping = true;
+            Il2CppTMPro.alignment = TextAlignmentOptions.Center; // For some reason this has to be set here as well ¯\_(ツ)_/¯
 
             if (adText == "haha you can't grab this one")
                 newPopup.GetComponentInChildren<BoxGrip>().enabled = false;
@@ -138,8 +136,8 @@ namespace BoneLib.RandomShit
             newPopup.AddComponent<PopupBox>();
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
+            newPopup.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.Head.position);
 
             return newPopup;
         }
@@ -173,8 +171,8 @@ namespace BoneLib.RandomShit
             newPopup.SetActive(true);
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
+            newPopup.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.Head.position);
 
             return newPopup;
         }
@@ -280,8 +278,8 @@ namespace BoneLib.RandomShit
                 yield return new WaitForSeconds(5f);
 
             GameObject newAd = CreateNewPopupBox();
-            newAd.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.playerHead.transform.position);
+            newAd.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.Head.position);
 
             MelonCoroutines.Start(CoSpawnAds());
         }
@@ -329,13 +327,11 @@ namespace BoneLib.RandomShit
             rb.angularDrag = 0.15f;
 
             ImpactProperties impactProperties = basePopup.AddComponent<ImpactProperties>();
-            impactProperties.material = ImpactPropertiesVariables.Material.PureMetal;
-            impactProperties.modelType = ImpactPropertiesVariables.ModelType.Model;
-            impactProperties.MainColor = Color.white;
-            impactProperties.SecondaryColor = Color.white;
-            impactProperties.PenetrationResistance = 0.9f;
+            //impactProperties.material = ImpactPropertiesVariables.Material.PureMetal;
+            impactProperties.decalType = ImpactProperties.DecalType.Collider;
+            //impactProperties.PenetrationResistance = 0.9f;
             impactProperties.megaPascalModifier = 1;
-            impactProperties.FireResistance = 100;
+            //impactProperties.FireResistance = 100;
 
             ImpactSFX sfx = basePopup.AddComponent<ImpactSFX>();
             sfx.impactSoft = sounds.ToArray();
@@ -348,7 +344,7 @@ namespace BoneLib.RandomShit
             sfx.jointBreakVolume = 1;
 
             InteractableHost host = basePopup.AddComponent<InteractableHost>();
-            host.HasRigidbody = true;
+            //host.HasRigidbody = true;
 
             #endregion
 
@@ -386,30 +382,22 @@ namespace BoneLib.RandomShit
             boxGrip.rotationLimit = 180;
             boxGrip.rotationPriorityBuffer = 20;
 
-            boxGrip.sandwitchSize = 0.12f;
+            boxGrip.sandwichSize = 0.12f;
             boxGrip.edgePadding = 0.1f;
             boxGrip.sandwichHandPose = sandwichGrip;
             boxGrip.canBeSandwichedGrabbed = true;
-            boxGrip.sandwhichMinBreakForce = float.PositiveInfinity;
-            boxGrip.sandwhichMaxBreakForce = float.PositiveInfinity;
 
             boxGrip.edgeHandPose = edgeGrip;
             boxGrip.edgeHandPoseRadius = 0.05f;
             boxGrip.canBeEdgeGrabbed = true;
-            boxGrip.edgeMinBreakForce = 1000;
-            boxGrip.edgeMaxBreakForce = 2000;
 
             boxGrip.cornerHandPose = cornerGrip;
             boxGrip.cornerHandPoseRadius = 0.05f;
             boxGrip.canBeCornerGrabbed = true;
-            boxGrip.cornerMinBreakForce = 800;
-            boxGrip.cornerMaxBreakForce = 1600;
 
             boxGrip.faceHandPose = faceGrip;
             boxGrip.faceHandPoseRadius = 1;
             boxGrip.canBeFaceGrabbed = true;
-            boxGrip.faceMinBreakForce = 400;
-            boxGrip.faceMaxBreakForce = 600;
 
             boxGrip.enabledCorners = (BoxGrip.Corners)(-1);
             boxGrip.enabledEdges = (BoxGrip.Edges)(-1);
@@ -421,7 +409,7 @@ namespace BoneLib.RandomShit
 
             #region Destructable object
 
-            ObjectDestructable destructable = basePopup.AddComponent<ObjectDestructable>();
+            ObjectDestructible destructable = basePopup.AddComponent<ObjectDestructible>();
             destructable.damageFromImpact = true;
             //destructable.blasterType = StressLevelZero.Pool.PoolSpawner.BlasterType.Sparks; // TODO: destruction effects
             destructable.blasterScale = Vector3.one * 3;
