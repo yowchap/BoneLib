@@ -43,7 +43,6 @@ namespace BoneLib.BoneMenu.UI
         public override void Draw()
         {
             base.Draw();
-
             Refresh();
         }
 
@@ -63,7 +62,7 @@ namespace BoneLib.BoneMenu.UI
         public override void OnPressed()
         {
             _backingElement.GetNext();
-            Draw();
+            Refresh();
         }
     }
 }

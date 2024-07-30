@@ -58,7 +58,6 @@ namespace BoneLib.BoneMenu.UI
         public override void Draw()
         {
             base.Draw();
-
             Refresh();
         }
 

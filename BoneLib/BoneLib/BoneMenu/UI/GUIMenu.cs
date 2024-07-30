@@ -163,8 +163,6 @@ namespace BoneLib.BoneMenu.UI
             _background.SetNativeSize();
             _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, page.BackgroundOpacity);
 
-            _drawer.Clear();
-
             if (page.Indexed && page.IsIndexedChild)
             {
                 Page parent = page.Parent;
@@ -187,6 +185,8 @@ namespace BoneLib.BoneMenu.UI
                 _incrementPageButton.gameObject.SetActive(false);
                 _pageIndexText.gameObject.SetActive(false);
             }
+
+            _drawer.Clear();
 
             _drawer.OnPageUpdated(page);
         }

@@ -68,13 +68,13 @@ namespace BoneLib.BoneMenu.UI
         public void OnIncrement()
         {
             _backingElement.Increment();
-            Draw();
+            Refresh();
         }
 
         public void OnDecrement()
         {
             _backingElement.Decrement();
-            Draw();
+            Refresh();
         }
     }
 }

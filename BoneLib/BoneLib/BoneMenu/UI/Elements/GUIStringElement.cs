@@ -66,7 +66,7 @@ namespace BoneLib.BoneMenu.UI
         {
             _inputField.text = input;
             _backingElement.Value = input;
-            Draw();
+            Refresh();
         }
 
         private void OpenKeyboard()

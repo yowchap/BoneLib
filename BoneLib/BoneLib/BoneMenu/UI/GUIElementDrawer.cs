@@ -51,12 +51,12 @@ namespace BoneLib.BoneMenu.UI
 
         public void Clear()
         {
-            _functionPool?.ReturnAll();
-            _intPool?.ReturnAll();
-            _floatPool?.ReturnAll();
-            _boolPool?.ReturnAll();
-            _enumPool?.ReturnAll();
-            _stringPool?.ReturnAll();
+            _functionPool.ReturnAll();
+            _intPool.ReturnAll();
+            _floatPool.ReturnAll();
+            _boolPool.ReturnAll();
+            _enumPool.ReturnAll();
+            _stringPool.ReturnAll();
         }
         [HideFromIl2Cpp]
         public void OnElementAdded(Element element)
