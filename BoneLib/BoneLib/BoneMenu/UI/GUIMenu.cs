@@ -101,6 +101,7 @@ namespace BoneLib.BoneMenu.UI
             // Might be hacky, but this just disables
             // elements behind the keyboard so we don't click them by accident
             ActiveView.gameObject.SetActive(false);
+            _toParentButton.gameObject.SetActive(false);
         }
 
         public void CloseKeyboard()
@@ -108,6 +109,7 @@ namespace BoneLib.BoneMenu.UI
             _keyboard.gameObject.SetActive(false);
             // Turns the layout object back on again
             ActiveView.gameObject.SetActive(true);
+            _toParentButton.gameObject.SetActive(true);
         }
 
         public void ScrollUp()
