@@ -188,12 +188,13 @@ namespace BoneLib.BoneMenu
         /// <param name="title">The title of the dialog.</param>
         /// <param name="message">The message that will be displayed to the user.</param>
         /// <param name="icon">The icon that will sit alongside the title. Optional.</param>
-        /// <param name="options">The buttons that will be displayed for input.</param>
-        public static void DisplayDialog(string title, string message, Texture2D icon = null, Dialog.Options options = Dialog.Options.YesOption | Dialog.Options.NoOption)
+        /// <param name="confirmAction">The code that will run when the "Yes" button is pressed.</param>
+        /// <param name="denyAction">The code that will run when the "No" button is pressed.</param>
+        public static void DisplayDialog(string title, string message, Texture2D icon = null, Action confirmAction = null, Action denyAction = null)
         {
-            Dialog dialog = new Dialog(title, message, icon, options);
+            Dialog dialog = new Dialog(title, message, icon, confirmAction, denyAction);
             ActiveDialog = dialog;
-            Dialog.OnDialogCreated?.Invoke(ActiveDialog);
+            Dialog.OnDialogOpened?.Invoke(ActiveDialog);
         }
     }
 }

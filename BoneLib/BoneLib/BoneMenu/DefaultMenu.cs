@@ -67,7 +67,13 @@ namespace BoneLib.BoneMenu
 
             funStuffPage.CreateFunction("Make Dialog", Color.white, () =>
             {
-                Menu.DisplayDialog("Test", "This is a test message. Don't worry about it.", null, Dialog.Options.YesOption | Dialog.Options.NoOption);
+                Menu.DisplayDialog(
+                    "Test", 
+                    "This is a test message. Don't worry about it.", 
+                    null, 
+                    () => { 
+                        ModConsole.Msg("Hello from the Dialog confirm option!"); 
+                    }); 
             });
         }
 

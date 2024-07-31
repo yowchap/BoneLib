@@ -1,3 +1,4 @@
+using Il2CppCysharp.Threading.Tasks;
 using Il2CppInterop.Runtime.Attributes;
 using Il2CppTMPro;
 using UnityEngine;
@@ -56,6 +57,7 @@ namespace BoneLib.BoneMenu.UI
 
             _toParentButton = contentTransform.Find("Interaction/Return").GetComponent<Button>();
             _guiDialog = transform.Find("Dialog").GetComponent<GUIDialog>();
+            _guiDialog.gameObject.SetActive(true);
 
             _keyboard = transform.Find("Keyboard").GetComponent<Keyboard>();
 
@@ -68,7 +70,8 @@ namespace BoneLib.BoneMenu.UI
         {
             Menu.OnPageOpened += OnPageOpened;
             Menu.OnPageUpdated += OnPageUpdated;
-            Dialog.OnDialogCreated += OnDialogCreated;
+            Dialog.OnDialogOpened += OnDialogOpened;
+            Dialog.OnDialogClosed += OnDialogClosed;
 
             _scrollUpButton.onClick.AddListener(new System.Action(() => { ScrollUp(); }));
             _scrollDownButton.onClick.AddListener(new System.Action(() => { ScrollDown(); }));
@@ -82,7 +85,8 @@ namespace BoneLib.BoneMenu.UI
         {
             Menu.OnPageOpened -= OnPageOpened;
             Menu.OnPageUpdated -= OnPageUpdated;
-            Dialog.OnDialogCreated -= OnDialogCreated;
+            Dialog.OnDialogOpened -= OnDialogOpened;
+            Dialog.OnDialogClosed -= OnDialogClosed;
 
             _toParentButton.onClick.RemoveAllListeners();
             _scrollUpButton.onClick.RemoveAllListeners();
@@ -100,7 +104,7 @@ namespace BoneLib.BoneMenu.UI
 
             // Might be hacky, but this just disables
             // elements behind the keyboard so we don't click them by accident
-            ActiveView.gameObject.SetActive(false);
+            ShowView(true);
             _toParentButton.gameObject.SetActive(false);
         }
 
@@ -108,8 +112,13 @@ namespace BoneLib.BoneMenu.UI
         {
             _keyboard.gameObject.SetActive(false);
             // Turns the layout object back on again
-            ActiveView.gameObject.SetActive(true);
+            ShowView(false);
             _toParentButton.gameObject.SetActive(true);
+        }
+
+        public void ShowView(bool show = true)
+        {
+            ActiveView.gameObject.SetActive(show);
         }
 
         public void ScrollUp()
@@ -204,10 +213,22 @@ namespace BoneLib.BoneMenu.UI
         }
 
         [HideFromIl2Cpp]
-        private void OnDialogCreated(Dialog dialog)
+        private void OnDialogOpened(Dialog dialog)
         {
             _guiDialog.AssignDialog(dialog);
             _guiDialog.Draw();
+
+            // anything behind the dialog will be selectable
+            // just disable both the view and the keyboard
+            _keyboard.gameObject.SetActive(false);
+            ActiveView.gameObject.SetActive(false);
+        }
+
+        [HideFromIl2Cpp]
+        private void OnDialogClosed(Dialog dialog)
+        {
+            _guiDialog.gameObject.SetActive(false);
+            ActiveView.gameObject.SetActive(true);
         }
 
         private void ToParentPage()
