@@ -45,7 +45,7 @@ OfflineMode = true
 
 **Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing, added InvokeActionSafe methods, added animal image popup methods
 
-**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added skip intro pref, added BoneMenu
+**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added BoneMenu
 
 **Lakatrazz:** BoneMenu improvements, fixed issues after game updates
 
@@ -58,6 +58,11 @@ OfflineMode = true
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v3.0.0:
+- Complete overhaul of BoneMenu which features dialogs, string elements, and more
+- Audio class now wraps around the Marrow audio methods, and mixers are exposed
+- Hooks for when the player spawner spawns the player
 
 #### v2.4.0:
 - Added notification system
