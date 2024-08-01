@@ -1,10 +1,6 @@
 ﻿using BoneLib.MonoBehaviours;
 using MelonLoader;
-using Il2CppSLZ.Combat;
-using Il2CppSLZ.Interaction;
-using Il2CppSLZ.Marrow.Data;
-using Il2CppSLZ.Props;
-using Il2CppSLZ.SFX;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +8,8 @@ using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using Random = UnityEngine.Random;
-using Il2CppSLZ.Data;
-using Il2CppSLZ.VFX;
+
+using Il2CppSLZ.Marrow;
 
 namespace BoneLib.RandomShit
 {
@@ -140,8 +136,8 @@ namespace BoneLib.RandomShit
             newPopup.AddComponent<PopupBox>();
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
+            newPopup.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.Head.position);
 
             return newPopup;
         }
@@ -175,8 +171,8 @@ namespace BoneLib.RandomShit
             newPopup.SetActive(true);
 
             // Place the popup in front of the player
-            newPopup.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.playerHead.transform.position);
+            newPopup.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newPopup.transform.rotation = Quaternion.LookRotation(newPopup.transform.position - Player.Head.position);
 
             return newPopup;
         }
@@ -282,8 +278,8 @@ namespace BoneLib.RandomShit
                 yield return new WaitForSeconds(5f);
 
             GameObject newAd = CreateNewPopupBox();
-            newAd.transform.position = Player.playerHead.transform.position + Player.playerHead.transform.forward * 2;
-            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.playerHead.transform.position);
+            newAd.transform.position = Player.Head.position + Player.Head.forward * 2;
+            newAd.transform.rotation = Quaternion.LookRotation(newAd.transform.position - Player.Head.position);
 
             MelonCoroutines.Start(CoSpawnAds());
         }
@@ -332,9 +328,7 @@ namespace BoneLib.RandomShit
 
             ImpactProperties impactProperties = basePopup.AddComponent<ImpactProperties>();
             //impactProperties.material = ImpactPropertiesVariables.Material.PureMetal;
-            impactProperties.modelType = ImpactPropertiesVariables.ModelType.Model;
-            impactProperties.MainColor = Color.white;
-            impactProperties.SecondaryColor = Color.white;
+            impactProperties.decalType = ImpactProperties.DecalType.Collider;
             //impactProperties.PenetrationResistance = 0.9f;
             impactProperties.megaPascalModifier = 1;
             //impactProperties.FireResistance = 100;

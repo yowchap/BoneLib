@@ -1,60 +1,58 @@
-﻿using System;
+using System;
 using UnityEngine;
 
-namespace BoneLib.BoneMenu.Elements
+namespace BoneLib.BoneMenu
 {
-    public class FloatElement : GenericElement<float>
+    public class FloatElement : Element
     {
-        public FloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> action = null) : base(name, color, action)
+        public FloatElement(string name, Color color, float startValue, float increment, float minValue, float maxValue, Action<float> callback = null) : base(name, color)
         {
-            Name = name;
-            Color = color;
+            _elementName = name;
+            _elementColor = color;
+            _elementType = "Float";
+
             _value = startValue;
-            _increment = increment;
             _minValue = minValue;
             _maxValue = maxValue;
-            this._action = action;
+            _increment = increment;
+            _callback = callback;
+        }
+        public static Action<Element, float> OnValueChanged;
+
+        public float Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnElementChanged?.Invoke();
+            }
         }
 
-        public override ElementType Type => ElementType.Value;
-        public override string DisplayValue => _value.ToString("0.####");
+        private Action<float> _callback;
 
-        public float Value { get => _value; }
-        public float Increment { get => _increment; }
-        public float MinValue { get => _minValue; }
-        public float MaxValue { get => _maxValue; }
-
-        private float _increment;
+        private float _value;
         private float _minValue;
         private float _maxValue;
+        private float _increment;
 
-        public override void OnSelectLeft()
+        public void Increment()
         {
-            _value += _increment;
-
-            if (_value >= _maxValue)
-            {
-                _value = _maxValue;
-            }
-
-            OnChangedValue();
+            // Clamped value between minValue and maxValue
+            _value = Mathf.Min(_maxValue, Mathf.Max(_minValue, _value + _increment));
+            OnValueChanged?.Invoke(this, _value);
+            _callback?.InvokeActionSafe(_value);
         }
 
-        public override void OnSelectRight()
+        public void Decrement()
         {
-            _value -= _increment;
-
-            if (_value <= _minValue)
-            {
-                _value = _minValue;
-            }
-
-            OnChangedValue();
-        }
-
-        protected override void OnChangedValue()
-        {
-            base.OnChangedValue();
+            // Clamped value between minValue and maxValue
+            _value = Mathf.Max(_minValue, Mathf.Min(_maxValue, _value - _increment));
+            OnValueChanged?.Invoke(this, _value);
+            _callback?.InvokeActionSafe(_value);
         }
     }
 }

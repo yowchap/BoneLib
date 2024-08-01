@@ -3,20 +3,18 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
-    public class BoolElement : Element
+    [System.Serializable]
+    public class StringElement : Element
     {
-        public BoolElement(string name, Color color, bool startValue, Action<bool> callback = null) : base(name, color)
+        public StringElement(string name, Color color, string startValue, Action<string> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
-            _elementType = "Function";
             _startValue = startValue;
             _callback = callback;
-            _value = _startValue;
         }
-
-        public bool Value
+        
+        public string Value
         {
             get
             {
@@ -29,13 +27,13 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        private bool _startValue;
-        private bool _value;
-        private Action<bool> _callback;
+        private string _startValue;
+        private string _value;
+        private Action<string> _callback;
 
         public override void OnElementSelected()
         {
-            _value = !_value;
+            base.OnElementSelected();
             _callback?.Invoke(_value);
         }
     }

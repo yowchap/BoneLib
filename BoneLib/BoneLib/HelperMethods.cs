@@ -9,6 +9,7 @@ using UnityEngine;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using System.Collections.Generic;
 
 namespace BoneLib
 {
@@ -38,13 +39,12 @@ namespace BoneLib
         /// <param name="barcode">The barcode of the crate</param>
         /// <param name="position">The position to spawn the crate at</param>
         /// <param name="rotation">The rotation of the spawned object</param>
-        /// <param name="scale">The scale of the spawned object</param>
         /// <param name="ignorePolicy">Ignore spawn policy or not</param>
         /// <param name="spawnAction">Code to run once the spawnable is placed</param>
-        public static void SpawnCrate(string barcode, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = false, Action<GameObject> spawnAction = null)
+        public static void SpawnCrate(string barcode, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = false, Action<GameObject> spawnAction = null, Action<GameObject> despawnAction = null)
         {
-            SpawnableCrateReference crateRef = new SpawnableCrateReference(barcode);
-            SpawnCrate(crateRef,position,rotation,scale,ignorePolicy, spawnAction);
+            SpawnableCrateReference crateReference = new SpawnableCrateReference(barcode);
+            SpawnCrate(crateReference, position, rotation, scale, ignorePolicy, spawnAction, despawnAction);
         }
 
         /// <summary>
@@ -53,17 +53,26 @@ namespace BoneLib
         /// <param name="crateReference">The crate reference to spawn</param>
         /// <param name="position">The position to spawn the crate at</param>
         /// <param name="rotation">The rotation of the spawned object</param>
-        /// <param name="scale">The scale of the spawned object</param>
         /// <param name="ignorePolicy">Ignore spawn policy or not</param>
         /// <param name="spawnAction">Code to run once the spawnable is placed</param>
-        public static void SpawnCrate(SpawnableCrateReference crateReference, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = false, Action<GameObject> spawnAction = null)
+        public static void SpawnCrate(SpawnableCrateReference crateReference, Vector3 position, Quaternion rotation = default, Vector3 scale = default, bool ignorePolicy = false, Action<GameObject> spawnAction = null, Action<GameObject> despawnAction = null)
         {
             Spawnable spawnable = new Spawnable()
             {
-                crateRef = crateReference,
+                crateRef = crateReference
             };
+
+            var nullableScale = new Il2CppSystem.Nullable<Vector3>
+            {
+                value = scale
+            };
+            var groupId = new Il2CppSystem.Nullable<int>
+            {
+                value = 0
+            };
+
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, new(scale), ignorePolicy, new(0), spawnAction);
+            AssetSpawner.Spawn(spawnable, position, rotation, nullableScale, null, ignorePolicy, groupId, spawnAction, despawnAction);
         }
 
         /// <summary>
@@ -132,13 +141,26 @@ namespace BoneLib
             }
             return null;
         }
-        
+
         ///<summary>
         /// Checks if an assembly is loaded from name
         /// </summary>
         public static bool CheckIfAssemblyLoaded(string name)
         {
-            return AppDomain.CurrentDomain.GetAssemblies().Any(asm => asm.GetName().Name.ToLower().Contains(name.ToLower()));
+            HashSet<Assembly> query = new HashSet<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
+            bool found = false;
+
+            foreach (var queryAsm in query)
+            {
+                string asmName = queryAsm.GetName().Name;
+                if (asmName.ToLower() == name.ToLower())
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            return found;
         }
     }
 }

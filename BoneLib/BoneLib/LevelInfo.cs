@@ -14,7 +14,7 @@ namespace BoneLib
         public LevelInfo(LevelCrateReference levelReference)
         {
             this.title = levelReference.Crate.Title;
-            this.barcode = levelReference.Barcode;
+            this.barcode = levelReference.Barcode.ID;
             this.levelReference = levelReference;
         }
 

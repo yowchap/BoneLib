@@ -1,22 +1,23 @@
 ﻿using HarmonyLib;
 using MelonLoader;
-using Il2CppPuppetMasta;
-using Il2CppSLZ.AI;
-using Il2CppSLZ.Interaction;
+
 using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Utilities;
 using Il2CppSLZ.Marrow.Warehouse;
-using Il2CppSLZ.Rig;
 using Il2CppSLZ.VRMK;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
 using UnityEngine;
-using Il2CppSLZ.Bonelab;
+
 using Il2CppSLZ.Marrow.AI;
 using Il2CppSLZ.Marrow.PuppetMasta;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Bonelab;
 
 namespace BoneLib
 {
@@ -37,11 +38,15 @@ namespace BoneLib
         /// <summary>
         /// Called when the current Level is fully initialized.
         /// </summary>
-        public static event Action<LevelInfo> OnLevelInitialized;
+        public static event Action<LevelInfo> OnLevelLoaded;
         /// <summary>
         /// Called when the current Level unloads.
         /// </summary>
         public static event Action OnLevelUnloaded;
+        /// <summary>
+        /// Called when the UIRig has been created.
+        /// </summary>
+        public static event Action OnUIRigCreated;
 
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
@@ -76,26 +81,29 @@ namespace BoneLib
             MarrowGame.RegisterOnReadyAction(new Action(() => SafeActions.InvokeActionSafe(OnMarrowGameStarted)));
             AssetWarehouse.OnReady(new Action(() => SafeActions.InvokeActionSafe(OnWarehouseReady)));
 
-            CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
-            CreateHook(typeof(RigManager).GetMethod("SwitchAvatar", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
+            CreateHook(typeof(RigManager).GetMethod(nameof(RigManager.SwitchAvatar), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPrefix), AccessTools.all), true);
+            CreateHook(typeof(RigManager).GetMethod(nameof(RigManager.SwitchAvatar), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAvatarSwitchPostfix), AccessTools.all));
 
-            CreateHook(typeof(Gun).GetMethod("OnFire", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePrefix), AccessTools.all), true);
-            CreateHook(typeof(Gun).GetMethod("OnFire", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePostfix), AccessTools.all));
+            CreateHook(typeof(Gun).GetMethod(nameof(Gun.OnFire), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePrefix), AccessTools.all), true);
+            CreateHook(typeof(Gun).GetMethod(nameof(Gun.OnFire), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnFirePostfix), AccessTools.all));
 
-            CreateHook(typeof(Hand).GetMethod("AttachObject", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAttachObjectPostfix), AccessTools.all));
-            CreateHook(typeof(Hand).GetMethod("DetachObject", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnDetachObjectPostfix), AccessTools.all));
+            CreateHook(typeof(Hand).GetMethod(nameof(Hand.AttachObject), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAttachObjectPostfix), AccessTools.all));
+            CreateHook(typeof(Hand).GetMethod(nameof(Hand.DetachObject), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnDetachObjectPostfix), AccessTools.all));
 
-            CreateHook(typeof(Grip).GetMethod("OnAttachedToHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripAttachedPostfix), AccessTools.all));
-            CreateHook(typeof(Grip).GetMethod("OnDetachedFromHand", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
+            CreateHook(typeof(Grip).GetMethod(nameof(Grip.OnAttachedToHand), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripAttachedPostfix), AccessTools.all));
+            CreateHook(typeof(Grip).GetMethod(nameof(Grip.OnDetachedFromHand), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnGripDetachedPostfix), AccessTools.all));
 
-            CreateHook(typeof(RigManager).GetMethod("Awake", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerAwake), AccessTools.all));
-            CreateHook(typeof(RigManager).GetMethod("OnDestroy", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroyed), AccessTools.all));
+            CreateHook(typeof(RigManager).GetMethod(nameof(RigManager.OnDestroy), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnRigManagerDestroyed), AccessTools.all));
 
-            CreateHook(typeof(AIBrain).GetMethod("OnDeath", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
-            CreateHook(typeof(AIBrain).GetMethod("OnResurrection", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCResurrected), AccessTools.all));
+            CreateHook(typeof(UIRig).GetMethod(nameof(UIRig.Awake), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnUIRigAwake), AccessTools.all));
 
-            CreateHook(typeof(BehaviourBaseNav).GetMethod("KillStart", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCStart), AccessTools.all));
-            CreateHook(typeof(BehaviourBaseNav).GetMethod("KillEnd", AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCEnd), AccessTools.all));
+            CreateHook(typeof(AIBrain).GetMethod(nameof(AIBrain.OnDeath), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCDie), AccessTools.all));
+            CreateHook(typeof(AIBrain).GetMethod(nameof(AIBrain.OnResurrection), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnBrainNPCResurrected), AccessTools.all));
+
+            CreateHook(typeof(BehaviourBaseNav).GetMethod(nameof(BehaviourBaseNav.KillStart), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCStart), AccessTools.all));
+            CreateHook(typeof(BehaviourBaseNav).GetMethod(nameof(BehaviourBaseNav.KillEnd), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnKillNPCEnd), AccessTools.all));
+
+            CreateHook(typeof(PlayerMarker).GetMethod(nameof(PlayerMarker.OnPlayerSpawned), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerSpawned), AccessTools.all));
 
             Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
             Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
@@ -136,18 +144,31 @@ namespace BoneLib
             ModConsole.Msg($"New {(isPrefix ? "PREFIX" : "POSTFIX")} on {original.DeclaringType.Name}.{original.Name} to {hook.DeclaringType.Name}.{hook.Name}", LoggingMode.DEBUG);
         }
 
-        private static void OnRigManagerAwake(RigManager __instance)
-        {
-            if (Player.handsExist)
-                return;
+        // private static void OnRigManagerAwake(RigManager __instance)
+        // {
+        //     if (Player.HandsExist)
+        //         return;
 
-            if (Player.FindObjectReferences(__instance))
+        //     if (Player.FindObjectReferences(__instance))
+        //     {
+        //         // @Todo(Parzival): Some levels aren't done loading when RigManager.Awake is called!
+        //         // Ideally this should be invoked right before the loading screen dissapears, but this is
+        //         // the closest I can get it for now.
+        //         // You could use Player_Health.MakeVignette, that's almost always called when the RM is fully ready and the level's loaded.
+        //         SafeActions.InvokeActionSafe(OnLevelLoaded, new LevelInfo(SceneStreamer.Session.Level));
+        //     }
+        // }
+
+        private static void OnPlayerSpawned(GameObject go)
+        {
+            if (Player.HandsExist)
             {
-                // @Todo(Parzival): Some levels aren't done loading when RigManager.Awake is called!
-                // Ideally this should be invoked right before the loading screen dissapears, but this is
-                // the closest I can get it for now.
-                // You could use Player_Health.MakeVignette, that's almost always called when the RM is fully ready and the level's loaded.
-                SafeActions.InvokeActionSafe(OnLevelInitialized, new LevelInfo(SceneStreamer.Session.Level));
+                return;
+            }
+
+            if (Player.FindObjectReferences())
+            {
+                SafeActions.InvokeActionSafe(OnLevelLoaded, new LevelInfo(SceneStreamer.Session.Level));
             }
         }
 
@@ -155,6 +176,14 @@ namespace BoneLib
         {
             currentLevelUnloaded = true;
             SafeActions.InvokeActionSafe(OnLevelUnloaded);
+        }
+
+        private static void OnUIRigAwake()
+        {
+            if (Player.FindUIRigReferences())
+            {
+                SafeActions.InvokeActionSafe(OnUIRigCreated);
+            }
         }
 
         internal static void OnBONELABLevelLoading()
