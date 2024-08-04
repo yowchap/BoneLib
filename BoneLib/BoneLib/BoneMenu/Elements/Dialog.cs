@@ -1,10 +1,10 @@
 using System;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
-    public class Dialog
+    public sealed class Dialog
     {
         public Dialog(string title, string description, Texture2D icon, Action confirmAction = null, Action denyAction = null)
         {
@@ -16,13 +16,13 @@ namespace BoneLib.BoneMenu
             _denyAction = denyAction;
         }
 
-        public static Action<Dialog> OnDialogOpened;
-        public static Action<Dialog> OnDialogClosed;
+        public static event Action<Dialog> OnDialogOpened;
+        public static event Action<Dialog> OnDialogClosed;
 
-        public static Texture2D ErrorIcon;
-        public static Texture2D WarningIcon;
-        public static Texture2D InfoIcon;
-        public static Texture2D QuestionIcon;
+        public static Texture2D ErrorIcon { get; internal set; }
+        public static Texture2D WarningIcon { get; internal set; }
+        public static Texture2D InfoIcon { get; internal set; }
+        public static Texture2D QuestionIcon { get; internal set; }
 
         public string DialogTitle => _dialogTitle;
         public string DialogDescription => _dialogDescription;
@@ -45,6 +45,16 @@ namespace BoneLib.BoneMenu
         public void OnDeclinePressed()
         {
             _denyAction.InvokeActionSafe();
+        }
+
+        internal void Internal_OnDialogOpened()
+        {
+            OnDialogOpened.InvokeActionSafe(this);
+        }
+
+        internal void Internal_OnDialogClosed()
+        {
+            OnDialogClosed.InvokeActionSafe(this);
         }
     }
 }

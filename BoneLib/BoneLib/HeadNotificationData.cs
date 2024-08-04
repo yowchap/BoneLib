@@ -2,7 +2,7 @@
 
 namespace BoneLib
 {
-    public struct HeadNotificationData
+    public class HeadNotificationData
     {
         public string title;
         public string subtitle;

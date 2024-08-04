@@ -1,24 +1,35 @@
-using BoneLib.BoneMenu.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
     public static class Menu
     {
-        public static Action<Page> OnPageCreated;
-        public static Action<Page> OnPageOpened;
-        public static Action<Page> OnPageUpdated;
-        public static Action<Page> OnPageRemoved;
+        public static event Action<Page> OnPageCreated;
+        public static event Action<Page> OnPageOpened;
+        public static event Action<Page> OnPageUpdated;
+        public static event Action<Page> OnPageRemoved;
 
-        public static Page CurrentPage;
+        public static Page CurrentPage
+        {
+            get
+            {
+                return _currentPage;
+            }
+            set
+            {
+                _currentPage = value;
+                OpenPage(_currentPage);
+            }
+        }
+
         public static Dialog ActiveDialog { get; private set; }
-        public static Dictionary<string, Page> PageDirectory;
+        public static Dictionary<string, Page> PageDirectory = new Dictionary<string, Page>();
 
         private static bool _initialized = false;
+        private static Page _currentPage;
 
         public static void Initialize()
         {
@@ -27,47 +38,10 @@ namespace BoneLib.BoneMenu
                 return;
             }
 
-            PageDirectory = new Dictionary<string, Page>();
-
             Page.Root = new Page("BoneMenu", maxElements: 10);
-            Page.Root.SetLayout(LayoutType.Vertical);
             OpenPage(Page.Root);
 
             _initialized = true;
-        }
-
-        public static Page CreatePage(string name, int maxElements = 0, bool createLink = true)
-        {
-            return CreatePage(Page.Root, name, Color.white, maxElements, createLink);
-        }
-
-        public static Page CreatePage(Page parent, string name, int maxElements = 0, bool createLink = true)
-        {
-            return CreatePage(parent, name, Color.white, maxElements, createLink);
-        }
-
-        public static Page CreatePage(string name, Color color, int maxElements = 0, bool createLink = true)
-        {
-            return CreatePage(Page.Root, name, color, maxElements, createLink);
-        }
-
-        public static Page CreatePage(Page parent, string name, Color color, int maxElements = 0, bool createLink = true)
-        {
-            if (PageDirectory.ContainsKey(name))
-            {
-                return PageDirectory[name];
-            }
-
-            Page page = new Page(parent, name, color, maxElements);
-            OnPageCreated?.Invoke(page);
-            PageDirectory?.Add(page.Name, page);
-
-            if (createLink)
-            {
-                parent.CreatePageLink(page);
-            }
-
-            return page;
         }
 
         /// <summary>
@@ -92,8 +66,8 @@ namespace BoneLib.BoneMenu
                 }
             }
 
-            OnPageRemoved?.Invoke(page);
-            PageDirectory?.Remove(page.Name);
+            Internal_OnPageRemoved(page);
+            PageDirectory.Remove(page.Name);
 
             if (page.Parent.ChildPages.ContainsKey(page.Name))
             {
@@ -103,13 +77,13 @@ namespace BoneLib.BoneMenu
 
         public static void OpenPage(string pageName)
         {
-            if (!PageDirectory.ContainsKey(pageName))
+            if (!PageDirectory.TryGetValue(pageName, out Page page))
             {
                 OpenPage(Page.Root);
                 throw new KeyNotFoundException("Page does not exist!");
             }
 
-            OpenPage(PageDirectory[pageName]);
+            OpenPage(page);
         }
 
         public static void OpenPage(Page page)
@@ -121,14 +95,14 @@ namespace BoneLib.BoneMenu
 
             if (page.SubPages.Count > 0 && page.CurrentSubPage != -1)
             {
-                CurrentPage = page.SubPages[page.CurrentSubPage];
+                _currentPage = page.SubPages[page.CurrentSubPage];
             }
             else
             {
-                CurrentPage = page;
+                _currentPage = page;
             }
             
-            OnPageOpened?.Invoke(CurrentPage);
+            Internal_OnPageOpened(_currentPage);
         }
 
         /// <summary>
@@ -194,7 +168,27 @@ namespace BoneLib.BoneMenu
         {
             Dialog dialog = new Dialog(title, message, icon, confirmAction, denyAction);
             ActiveDialog = dialog;
-            Dialog.OnDialogOpened?.Invoke(ActiveDialog);
+            dialog.Internal_OnDialogOpened();
+        }
+
+        internal static void Internal_OnPageCreated(Page page)
+        {
+            OnPageCreated.InvokeActionSafe(page);
+        }
+
+        internal static void Internal_OnPageOpened(Page page)
+        {
+            OnPageOpened.InvokeActionSafe(page);
+        }
+
+        internal static void Internal_OnPageUpdated(Page page)
+        {
+            OnPageUpdated.InvokeActionSafe(page);
+        }
+
+        internal static void Internal_OnPageRemoved(Page page)
+        {
+            OnPageRemoved.InvokeActionSafe(page);
         }
     }
 }

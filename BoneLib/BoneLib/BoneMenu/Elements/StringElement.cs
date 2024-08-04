@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [System.Serializable]
-    public class StringElement : Element
+    public sealed class StringElement : Element
     {
         public StringElement(string name, Color color, string startValue, Action<string> callback = null) : base(name, color)
         {
@@ -23,7 +22,7 @@ namespace BoneLib.BoneMenu
             set
             {
                 _value = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
 
@@ -34,7 +33,7 @@ namespace BoneLib.BoneMenu
         public override void OnElementSelected()
         {
             base.OnElementSelected();
-            _callback?.Invoke(_value);
+            _callback.InvokeActionSafe(_value);
         }
     }
 }

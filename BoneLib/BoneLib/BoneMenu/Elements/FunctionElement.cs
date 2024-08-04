@@ -1,9 +1,9 @@
 using System;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
     public class FunctionElement : Element
     {
         public FunctionElement(string name, Color color, Action callback) : base(name, color)
@@ -22,7 +22,7 @@ namespace BoneLib.BoneMenu
             set
             {
                 _logo = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
 
@@ -31,7 +31,7 @@ namespace BoneLib.BoneMenu
 
         public override void OnElementSelected()
         {
-            _callback?.Invoke();
+            _callback.InvokeActionSafe();
         }
     }
 }

@@ -1,7 +1,7 @@
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class EnterKey : Key
+    public sealed class EnterKey : Key
     {
         public EnterKey(System.IntPtr ptr) : base(ptr) { }
 

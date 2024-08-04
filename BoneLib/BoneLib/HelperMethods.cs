@@ -62,17 +62,8 @@ namespace BoneLib
                 crateRef = crateReference
             };
 
-            var nullableScale = new Il2CppSystem.Nullable<Vector3>
-            {
-                value = scale
-            };
-            var groupId = new Il2CppSystem.Nullable<int>
-            {
-                value = 0
-            };
-
             AssetSpawner.Register(spawnable);
-            AssetSpawner.Spawn(spawnable, position, rotation, nullableScale, null, ignorePolicy, groupId, spawnAction, despawnAction);
+            AssetSpawner.Spawn(spawnable, position, rotation, new Il2CppSystem.Nullable<Vector3>(scale), null, ignorePolicy, new Il2CppSystem.Nullable<int>(), spawnAction, despawnAction);
         }
 
         /// <summary>
@@ -147,20 +138,18 @@ namespace BoneLib
         /// </summary>
         public static bool CheckIfAssemblyLoaded(string name)
         {
-            HashSet<Assembly> query = new HashSet<Assembly>(AppDomain.CurrentDomain.GetAssemblies());
-            bool found = false;
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-            foreach (var queryAsm in query)
+            for (int i = 0; i < assemblies.Length; i++)
             {
-                string asmName = queryAsm.GetName().Name;
+                string asmName = assemblies[i].GetName().Name;
                 if (asmName.ToLower() == name.ToLower())
                 {
-                    found = true;
-                    break;
+                    return true;
                 }
             }
 
-            return found;
+            return false;
         }
     }
 }

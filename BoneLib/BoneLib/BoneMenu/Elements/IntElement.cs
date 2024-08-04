@@ -3,13 +3,12 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    public class IntElement : Element
+    public sealed class IntElement : Element
     {
         public IntElement(string name, Color color, int startValue, int increment, int minValue, int maxValue, Action<int> callback) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
-            _elementType = "Int";
 
             _value = startValue;
             _minValue = minValue;
@@ -17,7 +16,8 @@ namespace BoneLib.BoneMenu
             _increment = increment;
             _callback = callback;
         }
-        public static Action<Element, int> OnValueChanged;
+
+        public static event Action<Element, int> OnValueChanged;
 
         public int Value
         {
@@ -28,7 +28,7 @@ namespace BoneLib.BoneMenu
             set
             {
                 _value = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
 
@@ -42,17 +42,17 @@ namespace BoneLib.BoneMenu
         public void Increment()
         {
             // Clamped value between minValue and maxValue
-            _value = Mathf.Min(_maxValue, Mathf.Max(_minValue, _value + _increment));
-            OnValueChanged?.Invoke(this, _value);
-            _callback?.InvokeActionSafe(_value);
+            _value = Mathf.Clamp(_value + _increment, _minValue, _maxValue);
+            OnValueChanged.InvokeActionSafe(this, _value);
+            _callback.InvokeActionSafe(_value);
         }
 
         public void Decrement()
         {
             // Clamped value between minValue and maxValue
-            _value = Mathf.Max(_minValue, Mathf.Min(_maxValue, _value - _increment));
-            OnValueChanged?.Invoke(this, _value);
-            _callback?.InvokeActionSafe(_value);
+            _value = Mathf.Clamp(_value - _increment, _minValue, _maxValue);
+            OnValueChanged.InvokeActionSafe(this, _value);
+            _callback.InvokeActionSafe(_value);
         }
     }
 }

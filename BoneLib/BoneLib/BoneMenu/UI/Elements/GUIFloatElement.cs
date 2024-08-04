@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class GUIFloatElement : GUIElement
+    public sealed class GUIFloatElement : GUIElement
     {
         public GUIFloatElement(System.IntPtr ptr) : base(ptr) { }
         [HideFromIl2Cpp]

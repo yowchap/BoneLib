@@ -1,10 +1,10 @@
 namespace BoneLib.BoneMenu
 {
     [System.Flags]
-    public enum ElementProperties : byte
+    public enum ElementProperties
     {
-        Default,
-        NoBorder,
-        Password
+        Default = 0,
+        NoBorder = 1 << 0,
+        Passwor = 1 << 1
     }
 }

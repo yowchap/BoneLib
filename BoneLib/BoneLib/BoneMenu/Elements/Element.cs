@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
     public class Element
     {
         public Element(string name, Color color)
         {
             _elementName = name;
             _elementColor = color;
-            _elementType = "Base";
         }
         
         public string ElementName
@@ -22,9 +20,10 @@ namespace BoneLib.BoneMenu
             set
             {
                 _elementName = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
+
         public Color ElementColor 
         {
             get
@@ -34,10 +33,10 @@ namespace BoneLib.BoneMenu
             set
             {
                 _elementColor = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
-        public string ElementType => _elementType;
+
         public string ElementTooltip 
         {
             get
@@ -47,9 +46,10 @@ namespace BoneLib.BoneMenu
             set
             {
                 _elementTooltip = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
+
         public bool HasTooltip => !string.IsNullOrEmpty(_elementTooltip);
         public ElementProperties Properties { get; private set; }
 
@@ -57,13 +57,7 @@ namespace BoneLib.BoneMenu
 
         protected string _elementName;
         protected Color _elementColor;
-        protected string _elementType;
         protected string _elementTooltip;
-
-        public void SetProperty(ElementProperties properties)
-        {
-            Properties = properties;
-        }
 
         public virtual void OnElementAdded() { }
         public virtual void OnElementHover() { }
@@ -72,9 +66,16 @@ namespace BoneLib.BoneMenu
         public virtual void OnElementPressed() { }
         public virtual void OnElementRemoved() { }
 
+        public void SetProperty(ElementProperties properties)
+        {
+            Properties = properties;
+            OnElementChanged.InvokeActionSafe();
+        }
+
         public void SetTooltip(string tooltip)
         {
             _elementTooltip = tooltip;
+            OnElementChanged.InvokeActionSafe();
         }
     }
 }

@@ -1,7 +1,7 @@
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class BackspaceKey : Key
+    public sealed class BackspaceKey : Key
     {
         public BackspaceKey(System.IntPtr ptr) : base(ptr) { }
 

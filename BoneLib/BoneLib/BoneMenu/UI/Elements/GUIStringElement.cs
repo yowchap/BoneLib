@@ -5,7 +5,7 @@ using Il2CppInterop.Runtime.Attributes;
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class GUIStringElement : GUIElement
+    public sealed class GUIStringElement : GUIElement
     {
         public GUIStringElement(System.IntPtr ptr) : base(ptr) { }
         [HideFromIl2Cpp]

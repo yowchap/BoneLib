@@ -1,23 +1,33 @@
-using Il2CppInterop.Runtime.Attributes;
 using System;
+
+using Il2CppInterop.Runtime.Attributes;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
-    public class PageLinkElement : FunctionElement
+    public sealed class PageLinkElement : FunctionElement
     {
-        public PageLinkElement(string name, Color color, Action callback) : base(name, color, callback)
+        public PageLinkElement(string name, Color color, Action callback) : base(name, color, callback) { }
+
+        public Page LinkedPage
         {
+            get
+            {
+                return _linkedPage;
+            }
+            private set
+            {
+                _linkedPage = value;
+                OnElementChanged.InvokeActionSafe();
+            }
         }
 
         private Page _linkedPage;
 
-        public Page LinkedPage => _linkedPage;
-
         public void AssignPage(Page page)
         {
-            _linkedPage = page;
+            LinkedPage = page;
 
             Menu.OnPageUpdated += OnPageUpdated;
         }
@@ -30,13 +40,14 @@ namespace BoneLib.BoneMenu
             {
                 Menu.OnPageUpdated -= OnPageUpdated;
 
-                _linkedPage = null;
+                LinkedPage = null;
             }
         }
+
         [HideFromIl2Cpp]
         private void OnPageUpdated(Page page)
         {
-            if (page != _linkedPage)
+            if (page != LinkedPage)
             {
                 return;
             }
