@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
-    public class BoolElement : Element
+    public sealed class BoolElement : Element
     {
         public BoolElement(string name, Color color, bool startValue, Action<bool> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
-            _elementType = "Function";
             _startValue = startValue;
             _callback = callback;
             _value = _startValue;
@@ -25,7 +23,7 @@ namespace BoneLib.BoneMenu
             set
             {
                 _value = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
 
@@ -36,7 +34,7 @@ namespace BoneLib.BoneMenu
         public override void OnElementSelected()
         {
             _value = !_value;
-            _callback?.Invoke(_value);
+            _callback.InvokeActionSafe(_value);
         }
     }
 }

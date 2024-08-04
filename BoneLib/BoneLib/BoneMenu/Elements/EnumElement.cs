@@ -1,10 +1,11 @@
 using System;
 using System.Linq;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    public class EnumElement : Element
+    public sealed class EnumElement : Element
     {
         public EnumElement(string name, Color color, Enum value, Action<Enum> callback) : base(name, color)
         {
@@ -24,7 +25,7 @@ namespace BoneLib.BoneMenu
             set
             {
                 _value = value;
-                OnElementChanged?.Invoke();
+                OnElementChanged.InvokeActionSafe();
             }
         }
         private Action<Enum> _callback;
@@ -36,7 +37,7 @@ namespace BoneLib.BoneMenu
         {
             _index %= _internalValues.Length;
             _value = _internalValues.GetValue(_index++) as Enum;
-            _callback?.InvokeActionSafe(_value);
+            _callback.InvokeActionSafe(_value);
         }
     }
 }

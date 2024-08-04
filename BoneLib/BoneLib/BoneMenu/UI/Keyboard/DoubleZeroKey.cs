@@ -1,7 +1,7 @@
 ﻿namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class DoubleZeroKey : Key
+    public sealed class DoubleZeroKey : Key
     {
         public DoubleZeroKey(System.IntPtr ptr) : base(ptr) { }
 

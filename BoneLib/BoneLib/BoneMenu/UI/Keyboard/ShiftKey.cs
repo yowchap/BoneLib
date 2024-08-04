@@ -1,7 +1,7 @@
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class ShiftKey : Key
+    public sealed class ShiftKey : Key
     {
         public ShiftKey(System.IntPtr ptr) : base(ptr) { }
 

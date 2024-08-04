@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class GUIMenu : MonoBehaviour
+    public sealed class GUIMenu : MonoBehaviour
     {
         public GUIMenu(System.IntPtr ptr) : base(ptr) { }
 
@@ -73,12 +73,12 @@ namespace BoneLib.BoneMenu.UI
             Dialog.OnDialogOpened += OnDialogOpened;
             Dialog.OnDialogClosed += OnDialogClosed;
 
-            _scrollUpButton.onClick.AddListener(new System.Action(() => { ScrollUp(); }));
-            _scrollDownButton.onClick.AddListener(new System.Action(() => { ScrollDown(); }));
+            _scrollUpButton.onClick.AddListener(new System.Action(ScrollUp));
+            _scrollDownButton.onClick.AddListener(new System.Action(ScrollDown));
 
-            _toParentButton.onClick.AddListener(new System.Action(() => { ToParentPage(); }));
-            _decrementPageButton.onClick.AddListener(new System.Action(() => { Menu.PreviousPage(); }));
-            _incrementPageButton.onClick.AddListener(new System.Action(() => { Menu.NextPage(); }));
+            _toParentButton.onClick.AddListener(new System.Action(ToParentPage));
+            _decrementPageButton.onClick.AddListener(new System.Action(Menu.PreviousPage));
+            _incrementPageButton.onClick.AddListener(new System.Action(Menu.NextPage));
         }
 
         private void OnDisable()
@@ -149,7 +149,14 @@ namespace BoneLib.BoneMenu.UI
             }
 
             SetLayout(page);
+            DrawHeader(page);
+            DrawBackground(page);
+            DrawFooter(page);
+            DrawElements(page);
+        }
 
+        private void DrawHeader(Page page)
+        {
             _headerText.gameObject.SetActive(page.Logo == null);
             _headerLogo.gameObject.SetActive(page.Logo != null);
 
@@ -160,18 +167,23 @@ namespace BoneLib.BoneMenu.UI
             if (_headerLogo.texture != null)
             {
                 _headerLogo.SetNativeSize();
-                
+
                 float width = _headerLogo.texture.width;
                 float height = _headerLogo.texture.height;
 
                 _headerFitter.aspectRatio = width / height;
             }
+        }
 
+        private void DrawBackground(Page page)
+        {
             _background.texture = page.Background;
-
             _background.SetNativeSize();
             _background.color = new Color(_background.color.r, _background.color.g, _background.color.b, page.BackgroundOpacity);
+        }
 
+        private void DrawFooter(Page page)
+        {
             if (page.Indexed && page.IsIndexedChild)
             {
                 Page parent = page.Parent;
@@ -194,9 +206,11 @@ namespace BoneLib.BoneMenu.UI
                 _incrementPageButton.gameObject.SetActive(false);
                 _pageIndexText.gameObject.SetActive(false);
             }
+        }
 
+        private void DrawElements(Page page)
+        {
             _drawer.Clear();
-
             _drawer.OnPageUpdated(page);
         }
 
@@ -248,17 +262,10 @@ namespace BoneLib.BoneMenu.UI
         [HideFromIl2Cpp]
         private void SetLayout(Page page)
         {
-            _contentSizeFitter.enabled = page.ElementCount >= 10;
-
-            if (!_contentSizeFitter.enabled)
-            {
-                return;
-            }
-
             int elements = page.ElementCount;
             float spacing = page.ElementSpacing;
             _verticalLayoutGroup.spacing = spacing;
-            ActiveView.transform.position = Vector3.down * elements * spacing;
+            // ActiveView.transform.position = Vector3.down * elements * spacing;
         }
     }
 }

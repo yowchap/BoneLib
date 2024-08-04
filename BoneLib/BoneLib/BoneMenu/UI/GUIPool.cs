@@ -6,7 +6,7 @@ using UnityEngine;
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class GUIPool : MonoBehaviour
+    public sealed class GUIPool : MonoBehaviour
     {
         public GUIPool(System.IntPtr ptr) : base(ptr) { }
 
@@ -58,10 +58,29 @@ namespace BoneLib.BoneMenu.UI
 
         public void ReturnAll()
         {
-            _activeObjects
-            .Select((obj) => obj.GetComponent<GUIPoolee>())
-            .ToList()
-            .ForEach((element) => element.Return());
+            List<GUIPoolee> poolees = new List<GUIPoolee>();
+
+            for (int i = 0; i < _activeObjects.Count; i++)
+            {
+                GameObject activeObject = _activeObjects[i];
+
+                if (!activeObject.TryGetComponent(out GUIPoolee poolee))
+                {
+                    continue;
+                }
+
+                poolees.Add(poolee);
+            }
+
+            if (poolees.Count == 0)
+            {
+                return;
+            }
+
+            foreach (GUIPoolee poolee in poolees)
+            {
+                poolee.Return();
+            }
         }
 
         public void OnReturn(GUIPoolee poolee)
@@ -83,6 +102,7 @@ namespace BoneLib.BoneMenu.UI
                 _inactiveObjects.Add(clone);
             }
         }
+
         [HideFromIl2Cpp]
         private GameObject GetFirst(List<GameObject> list)
         {

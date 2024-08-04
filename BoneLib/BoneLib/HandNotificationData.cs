@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BoneLib
 {
-    public struct HandNotificationData
+    public class HandNotificationData
     {
         public TutorialRig.InputHighlight inputHighlightLeft;
         public TutorialRig.InputHighlight inputHighlightRight;

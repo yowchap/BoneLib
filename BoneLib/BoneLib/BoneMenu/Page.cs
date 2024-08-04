@@ -1,17 +1,16 @@
-using Il2CppInterop.Runtime.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
-    [Serializable]
     public class Page
     {
         public Page()
         {
-
+            _color = Color.white;
         }
 
         public Page(string name, int maxElements = 0)
@@ -20,7 +19,7 @@ namespace BoneLib.BoneMenu
             _color = Color.white;
             _maxElements = maxElements;
             
-            SetBackground(null);
+            Background = null;
         }
 
         public Page(Page parent, string name, int maxElements = 0)
@@ -30,7 +29,7 @@ namespace BoneLib.BoneMenu
             _color = Color.white;
             _maxElements = maxElements;
 
-            SetBackground(null);
+            Background = null;
         }
 
         public Page(string name, Color color, int maxElements = 0)
@@ -39,7 +38,7 @@ namespace BoneLib.BoneMenu
             _color = color;
             _maxElements = maxElements;
 
-            SetBackground(null);
+            Background = null;
         }
 
         public Page(Page parent, string name, Color color, int maxElements = 0)
@@ -49,18 +48,18 @@ namespace BoneLib.BoneMenu
             _color = color;
             _maxElements = maxElements;
 
-            SetBackground(null);
+            Background = null;
         }
 
-        public static Page Root;
+        public static Page Root { get; internal set; }
 
         public Page this[string name]
         {
             get
             {
-                if (ChildPages.ContainsKey(name))
+                if (ChildPages.TryGetValue(name, out Page page))
                 {
-                    return ChildPages[name];
+                    return page;
                 }
 
                 return this;
@@ -78,9 +77,10 @@ namespace BoneLib.BoneMenu
             set
             {
                 _name = value;
-                Menu.OnPageOpened?.Invoke(this);
+                Menu.Internal_OnPageUpdated(this);
             }
         }
+
         public Color Color 
         {
             get
@@ -90,17 +90,70 @@ namespace BoneLib.BoneMenu
             set
             {
                 _color = value;
-                Menu.OnPageOpened?.Invoke(this);
+                Menu.Internal_OnPageUpdated(this);
             }
         }
 
-        public Texture2D Logo { get; set; }
-        public Texture2D Background { get; set; }
-        public Texture2D DefaultBackground => MenuBootstrap.defaultBackgroundTexture;
-        public float BackgroundOpacity { get; set; } = 0.85f;
+        public Texture2D Logo
+        {
+            get
+            {
+                return _logo;
+            }
+            set
+            {
+                _logo = value;
+                Menu.Internal_OnPageUpdated(this);
+            }
+        }
 
-        public LayoutType Layout { get; set; } = LayoutType.Default;
-        public float ElementSpacing { get; set; } = 60;
+        public Texture2D Background
+        {
+            get
+            {
+                return _background;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _background = DefaultBackground;
+                    Menu.Internal_OnPageUpdated(this);
+                    return;
+                }
+
+                _background = value;
+                Menu.Internal_OnPageUpdated(this);
+            }
+        }
+
+        public float BackgroundOpacity
+        {
+            get
+            {
+                return _backgroundOpacity;
+            }
+            set
+            {
+                _backgroundOpacity = Mathf.Clamp01(value);
+                Menu.Internal_OnPageUpdated(this);
+            }
+        }
+
+        public float ElementSpacing
+        {
+            get
+            {
+                return _elementSpacing;
+            }
+            set
+            {
+                _elementSpacing = value;
+                Menu.Internal_OnPageUpdated(this);
+            }
+        }
+
+        public Texture2D DefaultBackground => MenuBootstrap.defaultBackgroundTexture;
 
         public IReadOnlyList<Element> Elements => _elements.AsReadOnly();
         public IReadOnlyList<SubPage> SubPages => _subPages.AsReadOnly();
@@ -112,9 +165,14 @@ namespace BoneLib.BoneMenu
         public bool Filled => ElementCount == _maxElements;
         public bool Indexed => _maxElements != 0;
 
-        private string dbg_ParentName;
         private string _name;
         private Color _color;
+
+        private Texture2D _logo;
+        private Texture2D _background;
+        private float _backgroundOpacity = 0.85f;
+        private float _elementSpacing = 60f;
+
         private List<Element> _elements = new List<Element>();
         private List<SubPage> _subPages = new List<SubPage>();
 
@@ -134,7 +192,7 @@ namespace BoneLib.BoneMenu
                 if (!Filled)
                 {
                     _elements.Add(element);
-                    Menu.OnPageUpdated?.Invoke(this);
+                    Menu.Internal_OnPageUpdated(this);
                     return;
                 }
 
@@ -151,7 +209,7 @@ namespace BoneLib.BoneMenu
             else
             {
                 _elements.Add(element);
-                Menu.OnPageUpdated?.Invoke(this);
+                Menu.Internal_OnPageUpdated(this);
             }
         }
 
@@ -167,7 +225,8 @@ namespace BoneLib.BoneMenu
             }
 
             _elements.Remove(element);
-            Menu.OnPageUpdated?.Invoke(this);
+            ModConsole.Msg("Remove Element");
+            Menu.Internal_OnPageUpdated(this);
         }
 
         /// <summary>
@@ -196,7 +255,7 @@ namespace BoneLib.BoneMenu
                 Menu.DestroyPage(this);
             }
 
-            Menu.OnPageUpdated?.Invoke(this);
+            Menu.Internal_OnPageUpdated(this);
         }
 
         /// <summary>
@@ -286,66 +345,6 @@ namespace BoneLib.BoneMenu
         }
 
         /// <summary>
-        /// Sets the logo that will be displayed on the page's header.
-        /// </summary>
-        /// <param name="logo"></param>
-        public void SetLogo(Texture2D logo)
-        {
-            Logo = logo;
-            Menu.OnPageUpdated?.Invoke(this);
-        }
-
-        /// <summary>
-        /// Sets the background. Ideally you should use a square texture,
-        /// but you can use any aspect ratio image of your choice.
-        /// </summary>
-        /// <param name="background"></param>
-        public void SetBackground(Texture2D background)
-        {
-            if (background == null)
-            {
-                Background = DefaultBackground;
-                Menu.OnPageUpdated?.Invoke(this);
-                return;
-            }
-
-            Background = background;
-            Menu.OnPageUpdated?.Invoke(this);
-        }
-
-        /// <summary>
-        /// Sets the background opacity, or how much the background is transparent/see-through.
-        /// </summary>
-        /// <param name="opacity"></param>
-        public void SetBackgroundOpacity(float opacity)
-        {
-            if (opacity > 1)
-            {
-                opacity = 1;
-            }
-
-            if (opacity < 0)
-            {
-                opacity = 0;
-            }
-
-            BackgroundOpacity = opacity;
-            Menu.OnPageUpdated?.Invoke(this);
-        }
-
-        /// <summary>
-        /// Sets the layout of the page.
-        /// This will affect the layout group of the page, and how elements are ordered.
-        /// </summary>
-        /// <param name="layoutType"></param>
-        [HideFromIl2Cpp]
-        public void SetLayout(LayoutType layoutType)
-        {
-            Layout = layoutType;
-            Menu.OnPageUpdated?.Invoke(this);
-        }
-
-        /// <summary>
         /// Creates a page that inherits its name and color from its parent.
         /// </summary>
         /// <returns></returns>
@@ -365,14 +364,14 @@ namespace BoneLib.BoneMenu
         /// <returns></returns>
         public Page CreatePage(string name, Color color, int maxElements = 0, bool createLink = true)
         {
-            if (ChildPages.ContainsKey(name))
+            if (ChildPages.TryGetValue(name, out Page page))
             {
-                return ChildPages[name];
+                return page;
             }
 
-            Page page = new Page(parent: this, name, color, maxElements);
+            page = new Page(parent: this, name, color, maxElements);
             ChildPages.Add(name, page);
-            Menu.OnPageCreated?.Invoke(this);
+            Menu.Internal_OnPageUpdated(this);
 
             if (createLink)
             {

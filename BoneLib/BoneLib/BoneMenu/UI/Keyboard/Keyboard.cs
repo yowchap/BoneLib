@@ -7,7 +7,7 @@ using UnityEngine.UI;
 namespace BoneLib.BoneMenu.UI
 {
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
-    public class Keyboard : MonoBehaviour
+    public sealed class Keyboard : MonoBehaviour
     {
         public Keyboard(IntPtr ptr) : base(ptr) { }
 
