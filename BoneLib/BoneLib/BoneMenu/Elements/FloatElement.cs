@@ -42,16 +42,18 @@ namespace BoneLib.BoneMenu
 
         public void Increment()
         {
-            // Clamped value between minValue and maxValue
-            _value = Mathf.Clamp(_value + _increment, _minValue, _maxValue);
+            _value += _increment;
+            _value = Mathf.Clamp(_value, _minValue, _maxValue);
+
             OnValueChanged.InvokeActionSafe(this, _value);
             _callback.InvokeActionSafe(_value);
         }
 
         public void Decrement()
         {
-            // Clamped value between minValue and maxValue
-            _value = Mathf.Clamp(_value - _increment, _maxValue, _minValue);
+            _value -= _increment;
+            _value = Mathf.Clamp(_value, _minValue, _maxValue);
+
             OnValueChanged.InvokeActionSafe(this, _value);
             _callback.InvokeActionSafe(_value);
         }
