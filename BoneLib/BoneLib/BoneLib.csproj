@@ -18,9 +18,6 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Assembly-CSharp-firstpass.dll</HintPath>
-    </Reference>
     <Reference Include="Il2Cppmscorlib">
       <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2Cppmscorlib.dll</HintPath>
     </Reference>
@@ -31,7 +28,7 @@
       <HintPath>$(BONELAB_DIR)\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>$(BONELAB_DIR)\MelonLoader\Managed\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Il2CppSLZ.Algorithms">
       <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Algorithms.dll</HintPath>
@@ -49,7 +46,7 @@
       <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms">
-      <HintPath>$(BONELAB_DIR)\MelonLoader\Managed\System.Windows.Forms.dll</HintPath>
+      <HintPath>$(BONELAB_DIR)\MelonLoader\Dependencies\Mono\System.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="UniTask">
       <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppUniTask.dll</HintPath>

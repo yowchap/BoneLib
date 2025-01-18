@@ -37,6 +37,11 @@ OfflineMode = true
 
 <br>
 
+## Development Setup
+The VS project uses the system environment variable `BONELAB_DIR` for referencing assemblies and build output paths. Make sure you have this set on your computer to your BONELAB install location (where the .exe is, no trailing slash) for VS to be able to find the files. If this doesn't work right away, try deleting the `.vs` folder for this project and restarting VS.
+
+<br>
+
 ## Credits
 
 **Gnonme / Lvna / Adi / Adamdev:** Main developers
@@ -63,6 +68,11 @@ OfflineMode = true
 - Complete overhaul of BoneMenu which features dialogs, string elements, and more
 - Audio class now wraps around the Marrow audio methods, and mixers are exposed
 - Hooks for when the player spawner spawns the player
+
+#### v2.5.0:
+- Added `OnWarehouseReady` hook
+- Ported to work with ML 0.6+
+- Improved DLL reference handling
 
 #### v2.4.0:
 - Added notification system
