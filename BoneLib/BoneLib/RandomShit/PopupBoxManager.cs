@@ -231,7 +231,7 @@ namespace BoneLib.RandomShit
             }
 
             string jsonUrls = urlReq.downloadHandler.text; // return value is something like ["https://cdn.shibe.online/shibes/8f0792fcac8df87a5d2953031a837a2939fda430.jpg"]
-            // Unfortunately the response is not ["link"] anymore, because the domain got sent into ww3 hell and of the other numbers. Both of the new endpoints use JSON and the "message" parameter to link to the message
+            // Unfortunately the response is not ["link"] anymore, because the domain got sent into ww3 hell and of the other numbers. Both of the new endpoints use JSON and the "message" parameter to link to the image
             string imageUrl = string.Empty;
             try
             {
