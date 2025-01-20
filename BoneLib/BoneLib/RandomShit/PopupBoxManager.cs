@@ -96,9 +96,10 @@ namespace BoneLib.RandomShit
 
         // private const string API_ALL_DOGS = "https://dog.ceo/api/breeds/image/random"; different format
         // may be able to use https://random.dog/woof.json too, but also diff format
-        private const string API_SHIBE = "http://shibe.online/api/shibes";
-        private const string API_CAT = "http://shibe.online/api/cats";
-        private const string API_BIRD = "http://shibe.online/api/birds";
+        private const string API_SHIBE = "https://dog.ceo/api/breed/shiba/images/random";
+
+        private const string API_CAT = "https://api.sefinek.net/api/v2/random/animal/cat";
+        private const string API_BIRD = "https://api.sefinek.net/api/v2/random/animal/bird";
 
         public static GameObject CreateNewPopupBox()
         {
@@ -215,6 +216,7 @@ namespace BoneLib.RandomShit
             {
                 case UnityWebRequest.Result.Success:
                     break;
+
                 default:
                     try
                     {
@@ -229,7 +231,28 @@ namespace BoneLib.RandomShit
             }
 
             string jsonUrls = urlReq.downloadHandler.text; // return value is something like ["https://cdn.shibe.online/shibes/8f0792fcac8df87a5d2953031a837a2939fda430.jpg"]
-            string imageUrl = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(jsonUrls)[0];
+            // Unfortunately the response is not ["link"] anymore, because the domain got sent into ww3 hell and of the other numbers. Both of the new endpoints use JSON and the "message" parameter to link to the message
+            string imageUrl = string.Empty;
+            try
+            {
+                var deserialized = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonUrls);
+
+                if (!deserialized.ContainsKey("message"))
+                    throw new KeyNotFoundException("Could not find 'message' property in returned JSON");
+                imageUrl = deserialized["message"] as string; // Expecting this to be a string
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    callback?.Invoke(null);
+                }
+                finally
+                {
+                    ModConsole.Error("Exception whilst invoking image popup callback with null to signify error.", LoggingMode.NORMAL);
+                    ModConsole.Msg($"Failed to deserialize the response JSON, exception:\n{ex}", LoggingMode.DEBUG);
+                }
+            }
 
             UnityWebRequest imageReq = UnityWebRequest.Get(imageUrl);
             imageReq.BeginWebRequest();
@@ -244,6 +267,7 @@ namespace BoneLib.RandomShit
             {
                 case UnityWebRequest.Result.Success:
                     break;
+
                 default:
                     try
                     {
@@ -314,7 +338,7 @@ namespace BoneLib.RandomShit
                     faceGrip = p;
             }
 
-            #endregion
+            #endregion Resources
 
             #region Base object
 
@@ -346,7 +370,7 @@ namespace BoneLib.RandomShit
             InteractableHost host = basePopup.AddComponent<InteractableHost>();
             //host.HasRigidbody = true;
 
-            #endregion
+            #endregion Base object
 
             #region Mesh object
 
@@ -358,7 +382,7 @@ namespace BoneLib.RandomShit
             mesh.GetComponent<MeshRenderer>().material.shader = Shader.Find("Universal Render Pipeline/Lit (PBR Workflow)");
             mesh.GetComponent<MeshRenderer>().material.color = new Color(0.1509434f, 0.1509434f, 0.1509434f);
 
-            #endregion
+            #endregion Mesh object
 
             #region Grip object
 
@@ -405,7 +429,7 @@ namespace BoneLib.RandomShit
 
             boxGrip._boxCollider = col;
 
-            #endregion
+            #endregion Grip object
 
             #region Destructable object
 
@@ -425,7 +449,7 @@ namespace BoneLib.RandomShit
             destructable.feetDamageMult = 0.1f;
             destructable._impactSfx = sfx;
 
-            #endregion
+            #endregion Destructable object
 
             #region Text object
 
@@ -443,7 +467,7 @@ namespace BoneLib.RandomShit
             rectTransform.sizeDelta = new Vector2(2, 1);
             rectTransform.localPosition = new Vector3(0, 0, -0.015f);
 
-            #endregion
+            #endregion Text object
         }
     }
 }
