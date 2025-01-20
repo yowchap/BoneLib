@@ -18,7 +18,7 @@ namespace BoneLib.BoneMenu
             _name = name;
             _color = Color.white;
             _maxElements = maxElements;
-            
+
             Background = null;
         }
 
@@ -81,7 +81,7 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        public Color Color 
+        public Color Color
         {
             get
             {
@@ -225,7 +225,7 @@ namespace BoneLib.BoneMenu
             }
 
             _elements.Remove(element);
-            ModConsole.Msg("Remove Element");
+            ModConsole.Msg("Remove Element", LoggingMode.DEBUG);
             Menu.Internal_OnPageUpdated(this);
         }
 
@@ -320,7 +320,7 @@ namespace BoneLib.BoneMenu
 
             return _subPages[_subPageIndex];
         }
-        
+
         /// <summary>
         /// Goes to the previous indexed page.
         /// </summary>
