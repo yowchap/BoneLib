@@ -391,6 +391,8 @@ namespace BoneLib
                 PowerPuncher,
                 BoardGun,
                 OmniWay,
+                LoadFade,
+                LoadFadeFast,
             };
             public const string GoKart = "fa534c5a83ee4ec6bd641fec424c4142.Spawnable.VehicleGokart";
             public const string OmniWay = "fa534c5a868247138f50c62e424c4144.Spawnable.OmniWay";
@@ -403,6 +405,8 @@ namespace BoneLib
             public const string GravityCup = "c1534c5a-87ce-436d-b00c-ef9547726176";
             public const string GravityPlate = "c1534c5a-a1c3-437b-85ac-e09547726176";
             public const string PowerPuncher = " c1534c5a-cebf-42cc-be3a-4595506f7765";
+            public const string LoadFade = "none.barcode.empty"; // Input later
+            public const string LoadFadeFast = "none.barcode.empty"; // Input later
         }
     }
 }

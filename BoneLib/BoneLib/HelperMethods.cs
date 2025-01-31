@@ -67,6 +67,89 @@ namespace BoneLib
         }
 
         /// <summary>
+        /// Loads a level from a crate reference
+        /// </summary>
+        /// <param name="level">The crate reference to load</param>
+        public static void LoadLevel(LevelCrateReference level)
+        {
+            LoadLevel(level.Barcode.ID, CommonBarcodes.Maps.LoadDefault);
+        }
+
+        /// <summary>
+        /// Loads a level from a barcode
+        /// </summary>
+        /// <param name="barcode">The barcode of the level</param>
+        public static void LoadLevel(string barcode)
+        {
+            LoadLevel(barcode, CommonBarcodes.Maps.LoadDefault);
+        }
+
+        /// <summary>
+        /// Loads a level from a crate reference
+        /// </summary>
+        /// <param name="level">The crate reference to load</param>
+        /// <param name="loadLevel">The crate reference for the loading scene</param>
+        public static void LoadLevel(LevelCrateReference level, LevelCrateReference loadLevel)
+        {
+            LoadLevel(level.Barcode.ID, loadLevel.Barcode.ID);
+        }
+
+        /// <summary>
+        /// Loads a level from a barcode
+        /// </summary>
+        /// <param name="levelBarcode">The barcode of the level</param>
+        /// <param name="loadLevelBarcode">The barcode of the loading scene</param>
+        public static void LoadLevel(string levelBarcode, string loadLevelBarcode)
+        {
+            SceneStreamer.Load(new Barcode(levelBarcode), new Barcode(loadLevelBarcode));
+        }
+
+        /// <summary>
+        /// Loads a level from a crate reference with load fade
+        /// </summary>
+        /// <param name="level">The crate reference to load</param>
+        public static void FadeLoadLevel(LevelCrateReference level)
+        {
+            FadeLoadLevel(level.Barcode.ID, CommonBarcodes.Maps.LoadDefault);
+        }
+
+        /// <summary>
+        /// Loads a level from a barcode with load fade
+        /// </summary>
+        /// <param name="barcode">The barcode of the level</param>
+        public static void FadeLoadLevel(string barcode)
+        {
+            FadeLoadLevel(barcode, CommonBarcodes.Maps.LoadDefault);
+        }
+
+        /// <summary>
+        /// Loads a level from a crate reference with load fade
+        /// </summary>
+        /// <param name="level">The crate reference to load</param>
+        /// <param name="loadLevel">The crate reference for the loading scene</param>
+        public static void FadeLoadLevel(LevelCrateReference level, LevelCrateReference loadLevel)
+        {
+            FadeLoadLevel(level.Barcode.ID, loadLevel.Barcode.ID);
+        }
+
+        /// <summary>
+        /// Loads a level from a barcode with load fade
+        /// </summary>
+        /// <param name="levelBarcode">The barcode of the level</param>
+        /// <param name="loadLevelBarcode">The barcode of the loading scene</param>
+        public static void FadeLoadLevel(string levelBarcode, string loadLevelBarcode)
+        {
+            MelonCoroutines.Start(FadeIntoLevel(new Barcode(levelBarcode), new Barcode(loadLevelBarcode)));
+        }
+
+        private static IEnumerator FadeIntoLevel(Barcode level, Barcode loadScene)
+        {
+            SpawnCrate(CommonBarcodes.Misc.LoadFade, Vector3.zero);
+            yield return new WaitForSeconds(2);
+            SceneStreamer.Load(level, loadScene);
+        }
+
+        /// <summary>
         /// Checks if the player is in a loading screen or not
         /// </summary>
         /// <returns>True if player is loading, false if not</returns>
