@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -13,8 +14,8 @@ namespace BoneLib.BoneMenu
             _value = startValue;
             _minValue = minValue;
             _maxValue = maxValue;
-            _increment = increment;
-            _callback = callback;
+            IncrementValue = increment;
+            Callback = callback;
         }
 
         public static event Action<Element, int> OnValueChanged;
@@ -32,29 +33,57 @@ namespace BoneLib.BoneMenu
             }
         }
 
+        public int MinValue
+        {
+            get
+            {
+                return _minValue;
+            }
+            set
+            {
+                _minValue = value;
+                _value = Mathf.Clamp(_value, _minValue, _maxValue);
+                OnElementChanged.InvokeActionSafe();
+            }
+        }
+
+        public int MaxValue
+        {
+            get
+            {
+                return _maxValue;
+            }
+            set
+            {
+                _maxValue = value;
+                _value = Mathf.Clamp(_value, _minValue, _maxValue);
+                OnElementChanged.InvokeActionSafe();
+            }
+        }
+
         private int _value;
         private int _minValue;
         private int _maxValue;
-        private int _increment;
+        public int IncrementValue { get; set; }
 
-        private Action<int> _callback;
+        public Action<int> Callback { get; set; }
 
         public void Increment()
         {
-            _value += _increment;
+            _value += IncrementValue;
             _value = Mathf.Clamp(_value, _minValue, _maxValue);
 
             OnValueChanged.InvokeActionSafe(this, _value);
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
 
         public void Decrement()
         {
-            _value -= _increment;
+            _value -= IncrementValue;
             _value = Mathf.Clamp(_value, _minValue, _maxValue);
 
             OnValueChanged.InvokeActionSafe(this, _value);
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
     }
 }
