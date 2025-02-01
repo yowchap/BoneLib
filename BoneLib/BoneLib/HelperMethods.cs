@@ -151,7 +151,7 @@ namespace BoneLib
             if(fadeFast)
             {
                 SpawnCrate(CommonBarcodes.Misc.LoadFadeFast, Vector3.zero);
-                yield return new WaitForSeconds(1); // Need to ensure timing is correct, might be 0.5
+                yield return new WaitForSeconds(0.5f);
             }
             else
             {
