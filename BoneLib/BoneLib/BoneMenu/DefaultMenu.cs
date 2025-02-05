@@ -1,6 +1,7 @@
 ﻿using BoneLib.Notifications;
 using BoneLib.RandomShit;
 
+using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Warehouse;
@@ -46,6 +47,7 @@ namespace BoneLib.BoneMenu
             itemSpawningPage.CreateFunction("Spawn Random Melee", Color.white, SpawnRandomMelee);
             itemSpawningPage.CreateFunction("Spawn Random NPC", Color.white, SpawnRandomNPC);
             itemSpawningPage.CreateFunction("Load Random Level", Color.white, LoadRandomLevel);
+            itemSpawningPage.CreateFunction("Change Into Random Avatar", Color.white, ChangeIntoRandomAvatar);
 
             funStuffPage.CreateFunction("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
             funStuffPage.CreateFunction("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
@@ -68,12 +70,13 @@ namespace BoneLib.BoneMenu
             funStuffPage.CreateFunction("Make Dialog", Color.white, () =>
             {
                 Menu.DisplayDialog(
-                    "Test", 
-                    "This is a test message. Don't worry about it.", 
-                    null, 
-                    () => { 
-                        ModConsole.Msg("Hello from the Dialog confirm option!"); 
-                    }); 
+                    "Test",
+                    "This is a test message. Don't worry about it.",
+                    null,
+                    () =>
+                    {
+                        ModConsole.Msg("Hello from the Dialog confirm option!");
+                    });
             });
         }
 
@@ -88,42 +91,84 @@ namespace BoneLib.BoneMenu
             Transform head = Player.Head;
             HelperMethods.SpawnCrate(CommonBarcodes.Misc.NimbusGun, head.position + head.forward, default, Vector3.one, false, null);
         }
-        
+
         internal static void SpawnRandomGun()
         {
             Transform head = Player.Head;
 
-            int index = Random.RandomRangeInt(0, CommonBarcodes.Guns.All.Count);
-            string barcode = CommonBarcodes.Guns.All[index];
+            if (!AssetWarehouse.ready)
+                return;
 
-            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+            var guns = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
+            Barcode Gun = null;
+            while (Gun == null)
+            {
+                var selected = guns[Random.RandomRangeInt(0, guns.Count)];
+                if (selected?.Tags.Contains("Gun") == true)
+                    Gun = selected.Barcode;
+            }
+
+            HelperMethods.SpawnCrate(Gun.ID, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnRandomMelee()
         {
             Transform head = Player.Head;
-            
-            int index = Random.RandomRangeInt(0, CommonBarcodes.Melee.All.Count);
-            string barcode = CommonBarcodes.Melee.All[index];
-            
-            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
+
+            if (!AssetWarehouse.ready)
+                return;
+
+            var melees = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
+            Barcode Melee = null;
+            while (Melee == null)
+            {
+                var selected = melees[Random.RandomRangeInt(0, melees.Count)];
+                if (selected?.Tags.Contains("Melee") == true)
+                    Melee = selected.Barcode;
+            }
+
+            HelperMethods.SpawnCrate(Melee.ID, head.position + head.forward, default, Vector3.one, false, null);
         }
-        
+
         internal static void SpawnRandomNPC()
         {
             Transform player = Player.PhysicsRig.artOutput.transform;
-            int index = Random.RandomRangeInt(0, CommonBarcodes.NPCs.All.Count);
-            string barcode = CommonBarcodes.NPCs.All[index];
-            
-            HelperMethods.SpawnCrate(barcode, player.position + player.forward, default, Vector3.one, false, null);
+
+            if (!AssetWarehouse.ready)
+                return;
+
+            var NPCs = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
+            Barcode NPC = null;
+            while (NPC == null)
+            {
+                var selected = NPCs[Random.RandomRangeInt(0, NPCs.Count)];
+                if (selected?.Tags.Contains("NPC") == true)
+                    NPC = selected.Barcode;
+            }
+
+            HelperMethods.SpawnCrate(NPC.ID, player.position + player.forward, default, Vector3.one, false, null);
         }
 
         internal static void LoadRandomLevel()
         {
-            int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
-            string barcode = CommonBarcodes.Maps.All[index];
-            
-            SceneStreamer.Load(new Barcode(barcode), new Barcode(CommonBarcodes.Maps.LoadDefault));
+            if (!AssetWarehouse.ready)
+                return;
+
+            var levels = AssetWarehouse.Instance.GetCrates<LevelCrate>();
+            var level = levels[Random.RandomRangeInt(0, levels.Count)];
+
+            SceneStreamer.Load(level.Barcode, new Barcode(CommonBarcodes.Maps.LoadDefault));
+        }
+
+        internal static void ChangeIntoRandomAvatar()
+        {
+            if (!AssetWarehouse.ready)
+                return;
+
+            var avatars = AssetWarehouse.Instance.GetCrates<AvatarCrate>();
+            var avatar = avatars[Random.RandomRangeInt(0, avatars.Count)];
+
+            Player.RigManager.SwapAvatarCrate(avatar.Barcode, true);
         }
     }
 }
