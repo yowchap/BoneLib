@@ -108,7 +108,7 @@ namespace BoneLib
         /// Loads a level from a crate reference with load fade
         /// </summary>
         /// <param name="level">The crate reference to load</param>
-        /// <param name="fadeFast">When true, loads with a faster fade</param>
+        /// <param name="fastFade">When true, loads with a faster fade</param>
         public static void FadeLoadLevel(LevelCrateReference level, bool fastFade = false)
         {
             FadeLoadLevel(level.Barcode.ID, CommonBarcodes.Maps.LoadDefault, fastFade);
@@ -118,7 +118,7 @@ namespace BoneLib
         /// Loads a level from a barcode with load fade
         /// </summary>
         /// <param name="barcode">The barcode of the level</param>
-        /// <param name="fadeFast">When true, loads with a faster fade</param>
+        /// <param name="fastFade">When true, loads with a faster fade</param>
         public static void FadeLoadLevel(string barcode, bool fastFade = false)
         {
             FadeLoadLevel(barcode, CommonBarcodes.Maps.LoadDefault, fastFade);
@@ -129,7 +129,7 @@ namespace BoneLib
         /// </summary>
         /// <param name="level">The crate reference to load</param>
         /// <param name="loadLevel">The crate reference for the loading scene</param>
-        /// <param name="fadeFast">When true, loads with a faster fade</param>
+        /// <param name="fastFade">When true, loads with a faster fade</param>
         public static void FadeLoadLevel(LevelCrateReference level, LevelCrateReference loadLevel, bool fastFade = false)
         {
             FadeLoadLevel(level.Barcode.ID, loadLevel.Barcode.ID, fastFade);
@@ -140,15 +140,15 @@ namespace BoneLib
         /// </summary>
         /// <param name="levelBarcode">The barcode of the level</param>
         /// <param name="loadLevelBarcode">The barcode of the loading scene</param>
-        /// <param name="fadeFast">When true, loads with a faster fade</param>
+        /// <param name="fastFade">When true, loads with a faster fade</param>
         public static void FadeLoadLevel(string levelBarcode, string loadLevelBarcode, bool fastFade = false)
         {
-            MelonCoroutines.Start(FadeIntoLevel(new Barcode(levelBarcode), new Barcode(loadLevelBarcode), fastFade));
+            MelonCoroutines.Start(FadeIntoLevel(levelBarcode, loadLevelBarcode, fastFade));
         }
 
-        private static IEnumerator FadeIntoLevel(Barcode level, Barcode loadScene, bool fastFade = false)
+        private static System.Collections.IEnumerator FadeIntoLevel(string levelBarcode, string loadSceneBarcode, bool fastFade = false)
         {
-            if(fadeFast)
+            if(fastFade)
             {
                 SpawnCrate(CommonBarcodes.Misc.LoadFadeFast, Vector3.zero);
                 yield return new WaitForSeconds(0.5f);
@@ -158,7 +158,7 @@ namespace BoneLib
                 SpawnCrate(CommonBarcodes.Misc.LoadFade, Vector3.zero);
                 yield return new WaitForSeconds(2);
             }
-            LoadLevel(level, loadScene);
+            LoadLevel(levelBarcode, loadSceneBarcode);
         }
 
         /// <summary>
