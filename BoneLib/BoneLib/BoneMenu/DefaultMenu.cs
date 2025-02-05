@@ -123,7 +123,7 @@ namespace BoneLib.BoneMenu
             int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
             string barcode = CommonBarcodes.Maps.All[index];
             
-            SceneStreamer.Load(new Barcode(barcode), new Barcode(CommonBarcodes.Maps.LoadDefault));
+            HelperMethods.FadeLoadLevel(barcode);
         }
     }
 }

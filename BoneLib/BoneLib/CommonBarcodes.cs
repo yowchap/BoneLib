@@ -403,6 +403,8 @@ namespace BoneLib
             public const string GravityCup = "c1534c5a-87ce-436d-b00c-ef9547726176";
             public const string GravityPlate = "c1534c5a-a1c3-437b-85ac-e09547726176";
             public const string PowerPuncher = " c1534c5a-cebf-42cc-be3a-4595506f7765";
+            public const string LoadFade = "c1534c5a-dac0-44a1-b656-6c235646584c";
+            public const string LoadFadeFast = "c1534c5a-84f0-4d2b-b4d7-64405646584c";
         }
     }
 }
