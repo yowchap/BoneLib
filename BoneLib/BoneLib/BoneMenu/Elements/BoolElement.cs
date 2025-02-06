@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -10,7 +11,7 @@ namespace BoneLib.BoneMenu
             _elementName = name;
             _elementColor = color;
             _startValue = startValue;
-            _callback = callback;
+            Callback = callback;
             _value = _startValue;
         }
 
@@ -29,12 +30,12 @@ namespace BoneLib.BoneMenu
 
         private bool _startValue;
         private bool _value;
-        private Action<bool> _callback;
+        public Action<bool> Callback { get; set; }
 
         public override void OnElementSelected()
         {
             _value = !_value;
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
     }
 }

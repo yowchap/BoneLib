@@ -11,7 +11,7 @@ namespace BoneLib.BoneMenu
         {
             _internalValues = Enum.GetValues(value.GetType());
             _value = value;
-            _callback = callback;
+            Callback = callback;
             var vals = Enum.GetValues(value.GetType());
             _index = Array.IndexOf(vals, vals.OfType<Enum>().First(v => v.Equals(value))) + 1;
         }
@@ -28,7 +28,8 @@ namespace BoneLib.BoneMenu
                 OnElementChanged.InvokeActionSafe();
             }
         }
-        private Action<Enum> _callback;
+
+        public Action<Enum> Callback { get; set; }
         private Enum _value;
         private Array _internalValues;
         private int _index = 1;
@@ -37,7 +38,7 @@ namespace BoneLib.BoneMenu
         {
             _index %= _internalValues.Length;
             _value = _internalValues.GetValue(_index++) as Enum;
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
     }
 }

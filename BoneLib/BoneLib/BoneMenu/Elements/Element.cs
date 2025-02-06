@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -10,7 +11,7 @@ namespace BoneLib.BoneMenu
             _elementName = name;
             _elementColor = color;
         }
-        
+
         public string ElementName
         {
             get
@@ -24,7 +25,7 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        public Color ElementColor 
+        public Color ElementColor
         {
             get
             {
@@ -37,7 +38,7 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        public string ElementTooltip 
+        public string ElementTooltip
         {
             get
             {
@@ -50,7 +51,9 @@ namespace BoneLib.BoneMenu
             }
         }
 
+        [System.Obsolete("ToolTips were planned to be added, but never finished and they do not do anything")]
         public bool HasTooltip => !string.IsNullOrEmpty(_elementTooltip);
+
         public ElementProperties Properties { get; private set; }
 
         public Action OnElementChanged;
@@ -59,12 +62,29 @@ namespace BoneLib.BoneMenu
         protected Color _elementColor;
         protected string _elementTooltip;
 
-        public virtual void OnElementAdded() { }
-        public virtual void OnElementHover() { }
-        public virtual void OnElementSelected() { }
-        public virtual void OnElementDeselected() { }
-        public virtual void OnElementPressed() { }
-        public virtual void OnElementRemoved() { }
+        public virtual void OnElementAdded()
+        {
+        }
+
+        public virtual void OnElementHover()
+        {
+        }
+
+        public virtual void OnElementSelected()
+        {
+        }
+
+        public virtual void OnElementDeselected()
+        {
+        }
+
+        public virtual void OnElementPressed()
+        {
+        }
+
+        public virtual void OnElementRemoved()
+        {
+        }
 
         public void SetProperty(ElementProperties properties)
         {
@@ -72,6 +92,7 @@ namespace BoneLib.BoneMenu
             OnElementChanged.InvokeActionSafe();
         }
 
+        [System.Obsolete("ToolTips were planned to be added, but never finished and they do not do anything")]
         public void SetTooltip(string tooltip)
         {
             _elementTooltip = tooltip;

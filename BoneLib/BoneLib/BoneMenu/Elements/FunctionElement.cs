@@ -10,10 +10,10 @@ namespace BoneLib.BoneMenu
         {
             _elementName = name;
             _elementColor = color;
-            _callback = callback;
+            Callback = callback;
         }
 
-        public Texture2D Logo 
+        public Texture2D Logo
         {
             get
             {
@@ -27,11 +27,11 @@ namespace BoneLib.BoneMenu
         }
 
         private Texture2D _logo;
-        private Action _callback;
+        public Action Callback { get; set; }
 
         public override void OnElementSelected()
         {
-            _callback.InvokeActionSafe();
+            Callback.InvokeActionSafe();
         }
     }
 }
