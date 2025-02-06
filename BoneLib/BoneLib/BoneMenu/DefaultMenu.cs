@@ -8,6 +8,8 @@ using Il2CppSLZ.Marrow.Warehouse;
 
 using UnityEngine;
 
+using static BoneLib.CommonBarcodes;
+
 namespace BoneLib.BoneMenu
 {
     internal static class DefaultMenu
@@ -100,6 +102,7 @@ namespace BoneLib.BoneMenu
                 return;
 
             var guns = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
+            guns.RemoveAll((Il2CppSystem.Predicate<SpawnableCrate>)(x => x.Redacted));
             Barcode Gun = null;
             while (Gun == null)
             {
@@ -119,6 +122,7 @@ namespace BoneLib.BoneMenu
                 return;
 
             var melees = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
+            melees.RemoveAll((Il2CppSystem.Predicate<SpawnableCrate>)(x => x.Redacted));
             Barcode Melee = null;
             while (Melee == null)
             {
@@ -138,6 +142,7 @@ namespace BoneLib.BoneMenu
                 return;
 
             var NPCs = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
+            NPCs.RemoveAll((Il2CppSystem.Predicate<SpawnableCrate>)(x => x.Redacted));
             Barcode NPC = null;
             while (NPC == null)
             {
@@ -155,6 +160,7 @@ namespace BoneLib.BoneMenu
                 return;
 
             var levels = AssetWarehouse.Instance.GetCrates<LevelCrate>();
+            levels.RemoveAll((Il2CppSystem.Predicate<LevelCrate>)(x => x.Redacted));
             var level = levels[Random.RandomRangeInt(0, levels.Count)];
 
             SceneStreamer.Load(level.Barcode, new Barcode(CommonBarcodes.Maps.LoadDefault));
@@ -166,6 +172,7 @@ namespace BoneLib.BoneMenu
                 return;
 
             var avatars = AssetWarehouse.Instance.GetCrates<AvatarCrate>();
+            avatars.RemoveAll((Il2CppSystem.Predicate<AvatarCrate>)(x => x.Redacted));
             var avatar = avatars[Random.RandomRangeInt(0, avatars.Count)];
 
             Player.RigManager.SwapAvatarCrate(avatar.Barcode, true);
