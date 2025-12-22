@@ -1,0 +1,435 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BoneLib</name>
+    </assembly>
+    <members>
+        <member name="M:BoneLib.Audio.Play2DOneShot(UnityEngine.AudioClip,UnityEngine.Audio.AudioMixerGroup,System.Single,System.Single)">
+            <summary>
+            Plays an audio clip with no spatial blend. Will be heard everywhere.
+            </summary>
+            <param name="clip"></param>
+            <param name="mixerGroup"></param>
+            <param name="volume"></param>
+            <param name="pitch"></param>
+        </member>
+        <member name="M:BoneLib.Audio.Play2DOneShot(UnityEngine.AudioClip[],UnityEngine.Audio.AudioMixerGroup,System.Single,System.Single)">
+            <summary>
+            Plays random audio clips from a list with no spatial blend. Will be heard everywhere.
+            </summary>
+            <param name="clips"></param>
+            <param name="mixerGroup"></param>
+            <param name="volume"></param>
+            <param name="pitch"></param>
+        </member>
+        <member name="M:BoneLib.Audio.PlayAtPoint(UnityEngine.AudioClip,UnityEngine.Vector3,UnityEngine.Audio.AudioMixerGroup,System.Single,System.Single,System.Single)">
+            <summary>
+            Plays an audio clip at a point in the world.
+            </summary>
+            <param name="clip"></param>
+            <param name="position"></param>
+            <param name="mixerGroup"></param>
+            <param name="volume"></param>
+            <param name="pitch"></param>
+            <param name="spatialBlend"></param>
+        </member>
+        <member name="M:BoneLib.Audio.PlayAtPoint(UnityEngine.AudioClip[],UnityEngine.Vector3,UnityEngine.Audio.AudioMixerGroup,System.Single,System.Single,System.Single)">
+            <summary>
+            Plays a random audio clip selected from a list at a point in the world.
+            </summary>
+            <param name="clips"></param>
+            <param name="position"></param>
+            <param name="mixerGroup"></param>
+            <param name="volume"></param>
+            <param name="pitch"></param>
+            <param name="spatialBlend"></param>
+        </member>
+        <member name="M:BoneLib.Audio.SpawnAudioPlayer(UnityEngine.Vector3,System.Action{UnityEngine.GameObject})">
+            <summary>
+            Spawns a Marrow managed audio player at a position.
+            </summary>
+            <param name="position"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Menu.DestroyPage(BoneLib.BoneMenu.Page)">
+            <summary>
+            "Destroys" a page. If this page is selected, it will try to go to its parent
+            when it gets destroyed.
+            </summary>
+            <param name="page"></param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Menu.PreviousPage">
+            <summary>
+            Navigates to the previous child page.
+            </summary>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Menu.NextPage">
+            <summary>
+            Navigates to the next child page.
+            </summary>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Menu.DisplayDialog(System.String,System.String,UnityEngine.Texture2D,System.Action,System.Action)">
+            <summary>
+            Displays a dialog that can be used to inform the user.
+            Useful for when a destructive action is about to be done,
+            or can serve as an extra information window.
+            </summary>
+            <param name="title">The title of the dialog.</param>
+            <param name="message">The message that will be displayed to the user.</param>
+            <param name="icon">The icon that will sit alongside the title. Optional.</param>
+            <param name="confirmAction">The code that will run when the "Yes" button is pressed.</param>
+            <param name="denyAction">The code that will run when the "No" button is pressed.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.Add(BoneLib.BoneMenu.Element)">
+            <summary>
+            Adds an element to the page.
+            If the page is full, and it has max elements set, it will make a new page and add the element there.
+            </summary>
+            <param name="element">The element to add.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.Remove(BoneLib.BoneMenu.Element)">
+            <summary>
+            Removes an element from the page.
+            </summary>
+            <param name="element">The element to remove.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.Remove(BoneLib.BoneMenu.Element[])">
+            <summary>
+            Removes multiple elements from the page.
+            If the page contains no elements, the page gets destroyed.
+            </summary>
+            <param name="elements">The group of elements to remove.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.RemoveAll">
+            <summary>
+            Removes all elements from the page.
+            </summary>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.RemovePage(BoneLib.BoneMenu.Page)">
+            <summary>
+            Removes a child page.
+            </summary>
+            <param name="page">The page to remove.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.RemovePages(BoneLib.BoneMenu.Page[])">
+            <summary>
+            Removes a list of child pages.
+            </summary>
+            <param name="pages">The page to remove.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.GetPreviousPage">
+            <summary>
+            Looks at the previous indexed page.
+            </summary>
+            <returns>The previous indexed page.</returns>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.GetNextPage">
+            <summary>
+            Looks at the next indexed page.
+            </summary>
+            <returns>The next indexed page.</returns>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.NextPage">
+            <summary>
+            Goes to the next indexed page.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.PreviousPage">
+            <summary>
+            Goes to the previous indexed page.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.CreatePage">
+            <summary>
+            Creates a page that inherits its name and color from its parent.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.CreatePage(System.String,UnityEngine.Color,System.Int32,System.Boolean)">
+            <summary>
+            Creates a child page with its properties inherited.
+            If the child page already exists, it will return that existing page.
+            </summary>
+            <param name="name"></param>
+            <param name="color"></param>
+            <param name="maxElements"></param>
+            <param name="createLink"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.CreatePageLink(BoneLib.BoneMenu.Page)">
+            <summary>
+            Creates a function element that, when pressed, takes you to a page.
+            Can be linked to any page.
+            </summary>
+            <param name="page"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BoneLib.CommonBarcodes">
+            <summary>
+            Holds common barcodes for BONELAB crates.
+            </summary>
+        </member>
+        <member name="T:BoneLib.CommonBarcodes.Avatars">
+            <summary>
+            All avatar barcodes
+            </summary>
+        </member>
+        <member name="T:BoneLib.CommonBarcodes.Maps">
+            <summary>
+            All map barcodes
+            </summary>
+        </member>
+        <member name="T:BoneLib.CommonBarcodes.NPCs">
+            <summary>
+            All NPC barcodes
+            </summary>
+        </member>
+        <member name="T:BoneLib.CommonBarcodes.Guns">
+            <summary>
+            All gun barcodes
+            </summary>
+        </member>
+        <member name="T:BoneLib.CommonBarcodes.Melee">
+            <summary>
+            All melee weapon barcodes
+            </summary>
+        </member>
+        <member name="T:BoneLib.CommonBarcodes.Misc">
+            <summary>
+            Contains extra possibly useful barcodes that wouldn't get their own category.
+            </summary>
+        </member>
+        <member name="M:BoneLib.Extensions.SetRpm(Il2CppSLZ.Marrow.Gun,System.Single)">
+            <summary>
+            Set rounds-per-minute.
+            </summary>
+        </member>
+        <member name="T:BoneLib.GameLayers">
+            <summary>
+            <see cref="T:UnityEngine.LayerMask"/> values for BoneLab.
+            </summary>
+            <remarks>
+            Can be used with <see href="https://en.wikipedia.org/wiki/Mask_(computing)">bitwise</see> 
+            <see href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators">operators</see>.
+            </remarks>
+        </member>
+        <member name="M:BoneLib.HelperMethods.GetCleanObjectName(System.String)">
+            <summary>
+            Removes things like [2] and (Clone)
+            </summary>
+        </member>
+        <member name="M:BoneLib.HelperMethods.IsAndroid">
+            <summary>
+            Checks if the user is running MelonLoader on Android
+            </summary>
+        </member>
+        <member name="M:BoneLib.HelperMethods.SpawnCrate(System.String,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Vector3,System.Boolean,System.Action{UnityEngine.GameObject},System.Action{UnityEngine.GameObject})">
+            <summary>
+            Spawns a crate from barcode.
+            </summary>
+            <param name="barcode">The barcode of the crate</param>
+            <param name="position">The position to spawn the crate at</param>
+            <param name="rotation">The rotation of the spawned object</param>
+            <param name="ignorePolicy">Ignore spawn policy or not</param>
+            <param name="spawnAction">Code to run once the spawnable is placed</param>
+        </member>
+        <member name="M:BoneLib.HelperMethods.SpawnCrate(Il2CppSLZ.Marrow.Warehouse.SpawnableCrateReference,UnityEngine.Vector3,UnityEngine.Quaternion,UnityEngine.Vector3,System.Boolean,System.Action{UnityEngine.GameObject},System.Action{UnityEngine.GameObject})">
+            <summary>
+            Spawns a crate from a crate reference.
+            </summary>
+            <param name="crateReference">The crate reference to spawn</param>
+            <param name="position">The position to spawn the crate at</param>
+            <param name="rotation">The rotation of the spawned object</param>
+            <param name="ignorePolicy">Ignore spawn policy or not</param>
+            <param name="spawnAction">Code to run once the spawnable is placed</param>
+        </member>
+        <member name="M:BoneLib.HelperMethods.IsLoading">
+            <summary>
+            Checks if the player is in a loading screen or not
+            </summary>
+            <returns>True if player is loading, false if not</returns>
+        </member>
+        <member name="M:BoneLib.HelperMethods.LoadEmbeddedAssetBundle(System.Reflection.Assembly,System.String)">
+            <summary>
+            Loads an embedded assetbundle
+            </summary>
+        </member>
+        <member name="M:BoneLib.HelperMethods.LoadPersistentAsset``1(UnityEngine.AssetBundle,System.String)">
+            <summary>
+            Loads an asset from an assetbundle
+            </summary>
+        </member>
+        <member name="M:BoneLib.HelperMethods.GetResourceBytes(System.Reflection.Assembly,System.String)">
+            <summary>
+            Gets the raw bytes of an embedded resource
+            </summary>
+        </member>
+        <member name="M:BoneLib.HelperMethods.CheckIfAssemblyLoaded(System.String)">
+            <summary>
+             Checks if an assembly is loaded from name
+             </summary>
+        </member>
+        <member name="E:BoneLib.Hooking.OnLevelLoading">
+            <summary>
+            Called at the start of a loading screen.
+            </summary>
+        </member>
+        <member name="E:BoneLib.Hooking.OnLevelLoaded">
+            <summary>
+            Called when the current Level is fully initialized.
+            </summary>
+        </member>
+        <member name="E:BoneLib.Hooking.OnLevelUnloaded">
+            <summary>
+            Called when the current Level unloads.
+            </summary>
+        </member>
+        <member name="E:BoneLib.Hooking.OnUIRigCreated">
+            <summary>
+            Called when the UIRig has been created.
+            </summary>
+        </member>
+        <member name="M:BoneLib.Hooking.CreateHook(System.Reflection.MethodInfo,System.Reflection.MethodInfo,System.Boolean)">
+            <summary>
+            Hooks the <paramref name="original"/> method and logs some debug info.
+            </summary>
+            <param name="original">Method to be patched</param>
+            <param name="hook">Method to be applied as a patch</param>
+            <param name="isPrefix">
+            Controls whether <paramref name="hook"/> is applied as a Prefix or Postfix patch
+            </param>
+        </member>
+        <member name="T:BoneLib.LevelInfo">
+            <summary>
+            A <see cref="T:Il2CppSLZ.Marrow.Warehouse.LevelCrate"/> wrapper for use with level loading events in <see cref="T:BoneLib.Hooking"/>.
+            </summary>
+        </member>
+        <member name="T:BoneLib.Notifications.NotificationType">
+            <summary>
+            The basic types of notifications that can be sent.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationType.Information">
+            <summary>
+            Used to inform the user.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationType.Warning">
+            <summary>
+            Used when the user should be notified of a potential issue.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationType.Error">
+            <summary>
+            Used when the user or program attempts a task and it fails.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationType.Success">
+            <summary>
+            Used when the user or program performs a task and it suceeds.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationType.CustomIcon">
+            <summary>
+            Lets the user specify an customIcon
+            </summary>
+        </member>
+        <member name="T:BoneLib.Notifications.NotificationText">
+            <summary>
+            The class used to supply text in a notification.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationText.Text">
+            <summary>
+            The text.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationText.Color">
+            <summary>
+            The color of the text.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.NotificationText.RichText">
+            <summary>
+            Should rich text be allowed?
+            </summary>
+        </member>
+        <member name="T:BoneLib.Notifications.Notification">
+            <summary>
+            The class used for sending notifications to the player. No constructors, provide your own information.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.Notification.Title">
+            <summary>
+            The title of the notification.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.Notification.Message">
+            <summary>
+            The main body of the notification.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.Notification.ShowTitleOnPopup">
+            <summary>
+            Should the title be used on the popup? (If false, it shows "New Notification".)
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.Notification.PopupLength">
+            <summary>
+            How long the notification will be up.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.Notification.Type">
+            <summary>
+            The type of notification this is.
+            </summary>
+        </member>
+        <member name="F:BoneLib.Notifications.Notification.CustomIcon">
+            <summary>
+            The customIcon to use. Only used if <see cref="F:BoneLib.Notifications.Notification.Type"/> is <see cref="F:BoneLib.Notifications.NotificationType.CustomIcon"/>.
+            </summary>
+        </member>
+        <member name="M:BoneLib.Notifications.Notifier.Send(BoneLib.Notifications.Notification)">
+            <summary>
+            Sends a notification to the player.
+            </summary>
+            <param name="notification">The notification</param>
+        </member>
+        <member name="M:BoneLib.Player.GetPhysicsRig">
+            <summary>
+            Returns the <see cref="P:BoneLib.Player.PhysicsRig"/>.
+            </summary>
+        </member>
+        <member name="M:BoneLib.Player.GetComponentInHand``1(Il2CppSLZ.Marrow.Hand)">
+            <summary>
+            Generic method for getting any component on the object the Player is holding.
+            </summary>
+            <returns>null if there is no component of type <typeparamref name="T"/>, or <paramref name="hand"/> is null.</returns>
+        </member>
+        <member name="M:BoneLib.Player.GetObjectInHand(Il2CppSLZ.Marrow.Hand)">
+            <summary>
+            Returns the object <paramref name="hand"/> is holding or null if <paramref name="hand"/> is null.
+            </summary>
+        </member>
+        <member name="M:BoneLib.Player.RotatePlayer(System.Single)">
+            <summary>
+            Positive values: Clockwise rotation 
+            <para/>
+            Negative values: Counterclockwise rotation
+            </summary>
+        </member>
+        <member name="M:BoneLib.RandomShit.PopupBoxManager.CreateNewShibePopup(System.Action{UnityEngine.GameObject})">
+            <summary>
+            Creates an image popup with an image of a Shibe Inu.
+            </summary>
+            <param name="returnCallback">A callback that will be executed when the popup spawns, or <see langword="null"/> if there was an error.</param>
+        </member>
+        <member name="M:BoneLib.RandomShit.PopupBoxManager.CreateBaseAd">
+            <summary>
+            So basically when I was making this I wasn't using any asset bundles yet and I wanted to keep it that way for whatever reason, so instead of just making an asset bundle with the prefab in it like a normal person, I somehow convinced myself that it was a perfectly sane idea to instead manually create the gameobject with a grip component and text and all that fun stuff through code, and that's how this absolute monstrosity of a function came into existence :)
+            </summary>
+        </member>
+    </members>
+</doc>

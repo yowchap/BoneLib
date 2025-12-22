@@ -1,0 +1,7 @@
+{
+  "name": "BoneLib",
+  "version_number": "3.1.4",
+  "description": "A BONELAB mod for making life easier for other mod creators.",
+  "website_url": "https://github.com/yowchap/BoneLib",
+  "dependencies": ["LavaGang-MelonLoader-0.6.6"]
+}
