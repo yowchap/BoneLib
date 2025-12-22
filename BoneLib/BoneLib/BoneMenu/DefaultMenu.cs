@@ -101,17 +101,10 @@ namespace BoneLib.BoneMenu
             if (!AssetWarehouse.ready)
                 return;
 
-            var guns = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
-            guns.RemoveAll((Il2CppSystem.Predicate<SpawnableCrate>)(x => x.Redacted));
-            Barcode Gun = null;
-            while (Gun == null)
-            {
-                var selected = guns[Random.RandomRangeInt(0, guns.Count)];
-                if (selected?.Tags.Contains("Gun") == true)
-                    Gun = selected.Barcode;
-            }
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Guns.All.Count);
+            string barcode = CommonBarcodes.Guns.All[index];
 
-            HelperMethods.SpawnCrate(Gun.ID, head.position + head.forward, default, Vector3.one, false, null);
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnRandomMelee()
@@ -121,17 +114,10 @@ namespace BoneLib.BoneMenu
             if (!AssetWarehouse.ready)
                 return;
 
-            var melees = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
-            melees.RemoveAll((Il2CppSystem.Predicate<SpawnableCrate>)(x => x.Redacted));
-            Barcode Melee = null;
-            while (Melee == null)
-            {
-                var selected = melees[Random.RandomRangeInt(0, melees.Count)];
-                if (selected?.Tags.Contains("Melee") == true)
-                    Melee = selected.Barcode;
-            }
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Melee.All.Count);
+            string barcode = CommonBarcodes.Melee.All[index];
 
-            HelperMethods.SpawnCrate(Melee.ID, head.position + head.forward, default, Vector3.one, false, null);
+            HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
         }
 
         internal static void SpawnRandomNPC()
@@ -141,17 +127,10 @@ namespace BoneLib.BoneMenu
             if (!AssetWarehouse.ready)
                 return;
 
-            var NPCs = AssetWarehouse.Instance.GetCrates<SpawnableCrate>();
-            NPCs.RemoveAll((Il2CppSystem.Predicate<SpawnableCrate>)(x => x.Redacted));
-            Barcode NPC = null;
-            while (NPC == null)
-            {
-                var selected = NPCs[Random.RandomRangeInt(0, NPCs.Count)];
-                if (selected?.Tags.Contains("NPC") == true)
-                    NPC = selected.Barcode;
-            }
+            int index = Random.RandomRangeInt(0, CommonBarcodes.NPCs.All.Count);
+            string barcode = CommonBarcodes.NPCs.All[index];
 
-            HelperMethods.SpawnCrate(NPC.ID, player.position + player.forward, default, Vector3.one, false, null);
+            HelperMethods.SpawnCrate(barcode, player.position + player.forward, default, Vector3.one, false, null);
         }
 
         internal static void LoadRandomLevel()
@@ -159,11 +138,10 @@ namespace BoneLib.BoneMenu
             if (!AssetWarehouse.ready)
                 return;
 
-            var levels = AssetWarehouse.Instance.GetCrates<LevelCrate>();
-            levels.RemoveAll((Il2CppSystem.Predicate<LevelCrate>)(x => x.Redacted));
-            var level = levels[Random.RandomRangeInt(0, levels.Count)];
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
+            string barcode = CommonBarcodes.Maps.All[index];
 
-            SceneStreamer.Load(level.Barcode, new Barcode(CommonBarcodes.Maps.LoadDefault));
+            SceneStreamer.Load(new(barcode), new Barcode(CommonBarcodes.Maps.LoadDefault));
         }
 
         internal static void ChangeIntoRandomAvatar()
@@ -171,11 +149,10 @@ namespace BoneLib.BoneMenu
             if (!AssetWarehouse.ready)
                 return;
 
-            var avatars = AssetWarehouse.Instance.GetCrates<AvatarCrate>();
-            avatars.RemoveAll((Il2CppSystem.Predicate<AvatarCrate>)(x => x.Redacted));
-            var avatar = avatars[Random.RandomRangeInt(0, avatars.Count)];
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Avatars.All.Count);
+            string barcode = CommonBarcodes.Avatars.All[index];
 
-            Player.RigManager.SwapAvatarCrate(avatar.Barcode, true);
+            Player.RigManager.SwapAvatarCrate(new(barcode), true);
         }
     }
 }
