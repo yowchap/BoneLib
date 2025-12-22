@@ -36,6 +36,7 @@ namespace BoneLib
                 PolyBlank,
                 PolyDebugger
             };
+
             public const string Heavy = "fa534c5a83ee4ec6bd641fec424c4142.Avatar.Heavy";
             public const string Fast = "fa534c5a83ee4ec6bd641fec424c4142.Avatar.Fast";
             public const string Short = "fa534c5a83ee4ec6bd641fec424c4142.Avatar.CharFurv4GB";
@@ -99,8 +100,10 @@ namespace BoneLib
                 Rooftops,
                 NeonParkour
             };
+
             // Story
             public const string MainMenu = "c2534c5a-80e1-4a29-93ca-f3254d656e75";
+
             public const string Descent = "c2534c5a-4197-4879-8cd3-4a695363656e";
             public const string BLHub = "c2534c5a-6b79-40ec-8e98-e58c5363656e";
             public const string LongRun = "c2534c5a-56a6-40ab-a8ce-23074c657665";
@@ -116,29 +119,41 @@ namespace BoneLib
             public const string Ascent = "c2534c5a-db71-49cf-b694-24584c657665";
             public const string Home = "SLZ.BONELAB.Content.Level.LevelOutro";
             public const string VoidG114 = "fa534c5a868247138f50c62e424c4144.Level.VoidG114";
+
             // Sandbox
             public const string Baseline = "c2534c5a-61b3-4f97-9059-79155363656e";
+
             public const string Tuscany = "c2534c5a-2c4c-4b44-b076-203b5363656e";
             public const string MuseumBasement = "fa534c5a83ee4ec6bd641fec424c4142.Level.LevelMuseumBasement";
             public const string HalfwayPark = "fa534c5a83ee4ec6bd641fec424c4142.Level.LevelHalfwayPark";
             public const string GunRange = "fa534c5a83ee4ec6bd641fec424c4142.Level.LevelGunRange";
             public const string Holochamber = "fa534c5a83ee4ec6bd641fec424c4142.Level.LevelHoloChamber";
+
             // Experimental
             public const string BigBoneBowling = "fa534c5a83ee4ec6bd641fec424c4142.Level.LevelKartBowling";
+
             public const string Mirror = "SLZ.BONELAB.Content.Level.LevelMirror";
+
             // Tac Trial
             public const string NeonTrial = "c2534c5a-4f3b-480e-ad2f-69175363656e";
+
             public const string DropPit = "c2534c5a-de61-4df9-8f6c-416954726547";
+
             // Arena
             public const string TunnelTipper = "c2534c5a-c180-40e0-b2b7-325c5363656e";
+
             public const string FantasyArena = "fa534c5a868247138f50c62e424c4144.Level.LevelArenaMin";
             public const string ContainerYard = "c2534c5a-162f-4661-a04d-975d5363656e";
+
             // Parkour
             public const string DungeonWarrior = "c2534c5a-5c2f-4eef-a851-66214c657665";
+
             public const string Rooftops = "c2534c5a-c6ac-48b4-9c5f-b5cd5363656e";
             public const string NeonParkour = "fa534c5a83ee4ec6bd641fec424c4142.Level.SceneparkourDistrictLogic";
+
             // Load levels
             public const string LoadDefault = "fa534c5a83ee4ec6bd641fec424c4142.Level.DefaultLoad";
+
             public const string LoadMod = "SLZ.BONELAB.CORE.Level.LevelModLevelLoad";
         }
 
@@ -154,12 +169,12 @@ namespace BoneLib
                 Cultist,
                 EarlyExitZombie,
                 Ford,
-                FordVRJunkie,
                 Nullbody,
                 NullbodyAgent,
                 NullbodyCorrupted,
                 Nullrat,
                 OmniProjectorHazmat,
+                OmniProjectorNonHazmat,
                 OmniTurret,
                 PeasantFemaleA,
                 PeasantFemaleB,
@@ -174,17 +189,18 @@ namespace BoneLib
                 SkeletonSteel,
                 VoidTurret
             };
+
             public const string Crablet = "c1534c5a-4583-48b5-ac3f-eb9543726162";
             public const string CrabletPlus = "c1534c5a-af28-46cb-84c1-012343726162";
             public const string Cultist = "SLZ.BONELAB.Content.Spawnable.NPCCultist";
             public const string EarlyExitZombie = "c1534c5a-2ab7-46fe-b0d6-7495466f7264";
             public const string Ford = "c1534c5a-3fd8-4d50-9eaf-0695466f7264";
-            public const string FordVRJunkie = "c1534c5a-481a-45d8-8bc1-d810466f7264";
             public const string Nullbody = "c1534c5a-d82d-4f65-89fd-a4954e756c6c";
             public const string NullbodyAgent = "c1534c5a-0e54-4d5b-bdb8-31754e756c6c";
             public const string NullbodyCorrupted = "c1534c5a-2775-4009-9447-22d94e756c6c";
             public const string Nullrat = "c1534c5a-ef15-44c0-88ae-aebc4e756c6c";
             public const string OmniProjectorHazmat = "c1534c5a-7c6d-4f53-b61c-e4024f6d6e69";
+            public const string OmniProjectorNonHazmat = "c1534c5a-9c8a-47b8-8ceb-70b3456e656d";
             public const string OmniTurret = "c1534c5a-0df5-495d-8421-75834f6d6e69";
             public const string PeasantFemaleA = "SLZ.BONELAB.Content.Spawnable.NPCPeasantFemL";
             public const string PeasantFemaleB = "SLZ.BONELAB.Content.Spawnable.NPCPeasantFemM";
@@ -246,6 +262,7 @@ namespace BoneLib
 
             // Pistols
             public const string M1911 = "c1534c5a-fcfc-4f43-8fb0-d29531393131";
+
             public const string Eder22 = "c1534c5a-2a4f-481f-8542-cc9545646572";
             public const string RedEder22 = "SLZ.BONELAB.Content.Spawnable.HandgunEder22training";
             public const string eHGBlaster = "SLZ.BONELAB.CORE.Spawnable.GunEHG";
@@ -254,8 +271,10 @@ namespace BoneLib
             public const string P350 = "c1534c5a-bcb7-4f02-a4f5-da9550333530";
             public const string PT8Alaris = "c1534c5a-50cf-4500-83d5-c0b447756e50";
             public const string Stapler = "fa534c5a868247138f50c62e424c4144.Spawnable.Stapler";
+
             // Rifles
             public const string AKM = "c1534c5a-a6b5-4177-beb8-04d947756e41";
+
             public const string Garand = "SLZ.BONELAB.Content.Spawnable.RifleM1Garand";
             public const string M16ACOG = "c1534c5a-ea97-495d-b0bf-ac955269666c";
             public const string M16Holosight = "c1534c5a-cc53-4aac-b842-46955269666c";
@@ -267,13 +286,17 @@ namespace BoneLib
             public const string MK18LaserForegrip = "c1534c5a-ec8e-418a-a545-cf955269666c";
             public const string MK18Naked = "c1534c5a-5c2b-4cb4-ae31-e7955269666c";
             public const string MK18Sabrelake = "c1534c5a-4b3e-4288-849c-ce955269666c";
+
             // Shotguns
             public const string FAB = "c1534c5a-2774-48db-84fd-778447756e46";
+
             public const string M590A1 = "c1534c5a-7f05-402f-9320-609647756e35";
             public const string M4 = "c1534c5a-e0b5-4d4b-9df3-567147756e4d";
             public const string DuckSeasonShotgun = "c1534c5a-571f-43dc-8bc6-8e9553686f74";
+
             // SMGs
             public const string MP5 = "c1534c5a-d00c-4aa8-adfd-3495534d474d";
+
             public const string MP5KFlashlight = "c1534c5a-3e35-4aeb-b1ec-4a95534d474d";
             public const string MP5KHolosight = "fa534c5a83ee4ec6bd641fec424c4142.Spawnable.MP5KRedDotSight";
             public const string MP5KIronsights = "c1534c5a-9f54-4f32-b8b9-f295534d474d";
@@ -331,8 +354,10 @@ namespace BoneLib
                 Spear,
                 SwordClaymore
             };
+
             // Blunt
             public const string BarbedBat = "c1534c5a-e962-46dd-b1ef-f39542617262";
+
             public const string BaseballBat = "c1534c5a-6441-40aa-a070-909542617365";
             public const string Baseball = "c1534c5a-837c-43ca-b4b5-33d842617365";
             public const string Baton = "fa534c5a868247138f50c62e424c4144.Spawnable.Baton";
@@ -351,8 +376,10 @@ namespace BoneLib
             public const string VikingShield = "c1534c5a-6d15-47c7-9ad4-b04156696b69";
             public const string Warhammer = "c1534c5a-f6f3-46e2-aa51-67214d656c65";
             public const string Wrench = "c1534c5a-02e7-43cf-bc8d-26955772656e";
+
             // Blade
             public const string AxeDouble = "c1534c5a-6d6b-4414-a9f2-af034d656c65";
+
             public const string AxeFirefighter = "c1534c5a-4774-460f-a814-149541786546";
             public const string AxeHorror = "c1534c5a-0ba6-4876-be9c-216741786548";
             public const string BastardSword = "c1534c5a-d086-4e27-918d-ee9542617374";
@@ -391,7 +418,9 @@ namespace BoneLib
                 PowerPuncher,
                 BoardGun,
                 OmniWay,
+                BoxTurret
             };
+
             public const string GoKart = "fa534c5a83ee4ec6bd641fec424c4142.Spawnable.VehicleGokart";
             public const string OmniWay = "fa534c5a868247138f50c62e424c4144.Spawnable.OmniWay";
             public const string SpawnGun = "c1534c5a-5747-42a2-bd08-ab3b47616467";
@@ -402,7 +431,8 @@ namespace BoneLib
             public const string DevManipulator = "c1534c5a-c6a8-45d0-aaa2-2c954465764d";
             public const string GravityCup = "c1534c5a-87ce-436d-b00c-ef9547726176";
             public const string GravityPlate = "c1534c5a-a1c3-437b-85ac-e09547726176";
-            public const string PowerPuncher = " c1534c5a-cebf-42cc-be3a-4595506f7765";
+            public const string PowerPuncher = "c1534c5a-cebf-42cc-be3a-4595506f7765";
+            public const string BoxTurret = "SLZ.BONELAB.Content.Spawnable.BoxTurret";
         }
     }
 }

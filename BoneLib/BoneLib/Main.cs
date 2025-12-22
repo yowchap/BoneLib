@@ -1,9 +1,12 @@
 using BoneLib.BoneMenu;
-using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;
-using Il2CppInterop.Runtime.Injection;
+
+using Il2CppSLZ.Bonelab;
+
 using MelonLoader;
+
+using UnityEngine;
 
 namespace BoneLib
 {
@@ -36,8 +39,6 @@ namespace BoneLib
 
             Hooking.OnLevelLoaded += OnLevelLoaded;
             Hooking.OnUIRigCreated += OnUIRigCreated;
-
-            ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
             //PopupBoxManager.StartCoroutines();
 
