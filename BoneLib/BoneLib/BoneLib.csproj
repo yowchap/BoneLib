@@ -5,12 +5,6 @@
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>$(BONELAB_DIR)\MelonLoader\net6\0Harmony.dll</HintPath>
@@ -27,9 +21,6 @@
     <Reference Include="MelonLoader">
       <HintPath>$(BONELAB_DIR)\MelonLoader\net6\MelonLoader.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Il2CppSLZ.Algorithms">
       <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppSLZ.Algorithms.dll</HintPath>
     </Reference>
@@ -45,8 +36,8 @@
     <Reference Include="Il2CppInterop.Runtime">
       <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Il2CppInterop.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="System.Windows.Forms">
-      <HintPath>$(BONELAB_DIR)\MelonLoader\Dependencies\Mono\System.Windows.Forms.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(BONELAB_DIR)\MelonLoader\net6\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UniTask">
       <HintPath>$(BONELAB_DIR)\MelonLoader\Il2CppAssemblies\Il2CppUniTask.dll</HintPath>

@@ -1,12 +1,9 @@
 using BoneLib.BoneMenu;
+using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;
-
-using Il2CppSLZ.Bonelab;
-
+using Il2CppInterop.Runtime.Injection;
 using MelonLoader;
-
-using UnityEngine;
 
 namespace BoneLib
 {
@@ -15,8 +12,8 @@ namespace BoneLib
         public const string Name = "BoneLib"; // Name of the Mod.  (MUST BE SET)
         public const string Author = "The BONELAB Modding Community"; // Author of the Mod.  (Set as null if none)
         public const string Company = "The BONELAB Modding Community"; // Company that made the Mod.  (Set as null if none)
-        public const string Version = "3.1.2"; // Version of the Mod.  (MUST BE SET)
-        public const string DownloadLink = "https://thunderstore.io/c/bonelab/p/gnonme/BoneLib"; // Download Link for the Mod.  (Set as null if none)
+        public const string Version = "3.1.4"; // Version of the Mod.  (MUST BE SET)
+        public const string DownloadLink = "https://thunderstore.io/c/bonelab/p/bonelib/BoneLib"; // Download Link for the Mod.  (Set as null if none)
     }
 
     internal class Main : MelonMod
@@ -39,6 +36,8 @@ namespace BoneLib
 
             Hooking.OnLevelLoaded += OnLevelLoaded;
             Hooking.OnUIRigCreated += OnUIRigCreated;
+
+            ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
             //PopupBoxManager.StartCoroutines();
 
