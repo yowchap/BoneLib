@@ -11,7 +11,6 @@ namespace BoneLib.BoneMenu
             _elementName = name;
             _elementColor = color;
             _startValue = startValue;
-            _callback = callback;
             _value = _startValue;
             Callback = callback;
         }
