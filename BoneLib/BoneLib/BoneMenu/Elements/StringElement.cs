@@ -5,12 +5,13 @@ namespace BoneLib.BoneMenu
 {
     public sealed class StringElement : Element
     {
-        public StringElement(string name, Color color, string startValue, Action<string> callback = null) : base(name, color)
+        public StringElement(string name, Color color, string startValue = "", Action<string> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
             _startValue = startValue;
             _callback = callback;
+            _value = _startValue;
         }
         
         public string Value

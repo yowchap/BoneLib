@@ -71,6 +71,11 @@ namespace BoneLib.BoneMenu
 
             if (page.Parent.ChildPages.ContainsKey(page.Name))
             {
+                if (CurrentPage == page)
+                {
+                    OpenPage(page.Parent);
+                }
+
                 page.Parent.ChildPages.Remove(page.Name);
             }
         }

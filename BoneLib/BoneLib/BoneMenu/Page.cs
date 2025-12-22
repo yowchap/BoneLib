@@ -175,6 +175,7 @@ namespace BoneLib.BoneMenu
 
         private List<Element> _elements = new List<Element>();
         private List<SubPage> _subPages = new List<SubPage>();
+        private List<PageLinkElement> _links = new List<PageLinkElement>();
 
         private int _maxElements;
 
@@ -221,11 +222,10 @@ namespace BoneLib.BoneMenu
         {
             if (element is PageLinkElement link)
             {
-                Menu.DestroyPage(link.LinkedPage);
+                _links.Remove(link);
             }
 
             _elements.Remove(element);
-            ModConsole.Msg("Remove Element");
             Menu.Internal_OnPageUpdated(this);
         }
 
@@ -243,7 +243,7 @@ namespace BoneLib.BoneMenu
             {
                 if (queryElement is PageLinkElement link)
                 {
-                    Menu.DestroyPage(link.LinkedPage);
+                    _links.Remove(link);
                 }
 
                 _elements.Remove(queryElement);
@@ -262,6 +262,51 @@ namespace BoneLib.BoneMenu
         /// Removes all elements from the page.
         /// </summary>
         public void RemoveAll() => Remove(_elements.ToArray());
+
+        /// <summary>
+        /// Removes a child page.
+        /// </summary>
+        /// <param name="page">The page to remove.</param>
+        public void RemovePage(Page page)
+        {
+            if (page == null || string.IsNullOrEmpty(page.Name) || ChildPages.Count == 0)
+            {
+                return;
+            }
+
+            if (!ChildPages.TryGetValue(page.Name, out Page child))
+            {
+                ModConsole.Error($"Failed to remove child page {page.Name}");
+                return;
+            }
+
+            for (int i = 0; i < _links.Count; i++)
+            {
+                if (_links[i].LinkedPage == child)
+                {
+                    Remove(_links[i]);
+                }
+            }
+
+            Menu.DestroyPage(child);
+        }
+
+        /// <summary>
+        /// Removes a list of child pages.
+        /// </summary>
+        /// <param name="pages">The page to remove.</param>
+        public void RemovePages(Page[] pages)
+        {
+            if (pages.Length == 0)
+            {
+                return;
+            }
+
+            foreach (var page in pages)
+            {
+                RemovePage(page);
+            }
+        }
 
         /// <summary>
         /// Looks at the previous indexed page.
@@ -435,6 +480,7 @@ namespace BoneLib.BoneMenu
             Add(element);
 
             element.AssignPage(page);
+            _links.Add(element);
 
             return element;
         }
