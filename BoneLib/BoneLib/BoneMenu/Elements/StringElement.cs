@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
@@ -12,8 +13,9 @@ namespace BoneLib.BoneMenu
             _startValue = startValue;
             _callback = callback;
             _value = _startValue;
+            Callback = callback;
         }
-        
+
         public string Value
         {
             get
@@ -29,12 +31,12 @@ namespace BoneLib.BoneMenu
 
         private string _startValue;
         private string _value;
-        private Action<string> _callback;
+        public Action<string> Callback { get; set; }
 
         public override void OnElementSelected()
         {
             base.OnElementSelected();
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
     }
 }

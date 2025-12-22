@@ -14,8 +14,8 @@ namespace BoneLib.BoneMenu
             _value = startValue;
             _minValue = minValue;
             _maxValue = maxValue;
-            _increment = increment;
-            _callback = callback;
+            IncrementValue = increment;
+            Callback = callback;
         }
 
         public static event Action<Element, float> OnValueChanged;
@@ -33,29 +33,57 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        private Action<float> _callback;
+        public float MinValue
+        {
+            get
+            {
+                return _minValue;
+            }
+            set
+            {
+                _minValue = value;
+                _value = Mathf.Clamp(_value, _minValue, _maxValue);
+                OnElementChanged.InvokeActionSafe();
+            }
+        }
+
+        public float MaxValue
+        {
+            get
+            {
+                return _maxValue;
+            }
+            set
+            {
+                _maxValue = value;
+                _value = Mathf.Clamp(_value, _minValue, _maxValue);
+                OnElementChanged.InvokeActionSafe();
+            }
+        }
+
+        public Action<float> Callback { get; set; }
 
         private float _value;
         private float _minValue;
         private float _maxValue;
-        private float _increment;
+        public float IncrementValue { get; set; }
 
         public void Increment()
         {
-            _value += _increment;
+            _value += IncrementValue;
             _value = Mathf.Clamp(_value, _minValue, _maxValue);
 
             OnValueChanged.InvokeActionSafe(this, _value);
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
 
         public void Decrement()
         {
-            _value -= _increment;
+            _value -= IncrementValue;
             _value = Mathf.Clamp(_value, _minValue, _maxValue);
 
             OnValueChanged.InvokeActionSafe(this, _value);
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
     }
 }

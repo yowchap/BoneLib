@@ -1,12 +1,16 @@
 ﻿using System;
 using Il2CppTMPro;
 using UnityEngine;
+using MelonLoader;
 
 namespace BoneLib.MonoBehaviours
 {
+    [RegisterTypeInIl2Cpp]
     internal class PopupBox : MonoBehaviour
     {
-        public PopupBox(IntPtr intPtr) : base(intPtr) { }
+        public PopupBox(IntPtr intPtr) : base(intPtr)
+        {
+        }
 
         private TextMeshPro Il2CppTMPro;
 
@@ -14,6 +18,7 @@ namespace BoneLib.MonoBehaviours
         private float timeForNextColor = 0;
         private int curColorIndex = 0;
         private int nextColorIndex = 1;
+
         private Color[] colors = new Color[]
         {
             Color.red,
@@ -21,7 +26,6 @@ namespace BoneLib.MonoBehaviours
             Color.green,
             Color.blue
         };
-
 
         private void Start()
         {

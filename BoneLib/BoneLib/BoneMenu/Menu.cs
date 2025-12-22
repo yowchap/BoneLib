@@ -8,8 +8,11 @@ namespace BoneLib.BoneMenu
     public static class Menu
     {
         public static event Action<Page> OnPageCreated;
+
         public static event Action<Page> OnPageOpened;
+
         public static event Action<Page> OnPageUpdated;
+
         public static event Action<Page> OnPageRemoved;
 
         public static Page CurrentPage
@@ -51,7 +54,7 @@ namespace BoneLib.BoneMenu
         /// <param name="page"></param>
         public static void DestroyPage(Page page)
         {
-            if (page.IsIndexedChild)
+            if (page.IsIndexedChild && CurrentPage == page)
             {
                 if (page.Parent.GetNextPage() != null)
                 {
@@ -106,7 +109,7 @@ namespace BoneLib.BoneMenu
             {
                 _currentPage = page;
             }
-            
+
             Internal_OnPageOpened(_currentPage);
         }
 
@@ -145,7 +148,7 @@ namespace BoneLib.BoneMenu
                 OpenPage(CurrentPage.NextPage());
             }
         }
-        
+
         public static void OpenParentPage()
         {
             if (CurrentPage.IsIndexedChild)
@@ -160,8 +163,8 @@ namespace BoneLib.BoneMenu
         }
 
         /// <summary>
-        /// Displays a dialog that can be used to inform the user. 
-        /// Useful for when a destructive action is about to be done, 
+        /// Displays a dialog that can be used to inform the user.
+        /// Useful for when a destructive action is about to be done,
         /// or can serve as an extra information window.
         /// </summary>
         /// <param name="title">The title of the dialog.</param>
