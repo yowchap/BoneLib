@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using UnityEngine;
 
@@ -57,7 +56,7 @@ namespace BoneLib.BoneMenu
         {
             get
             {
-                if (ChildPages.TryGetValue(name, out Page page))
+                if (TryGetChildPage(name, out Page page))
                 {
                     return page;
                 }
@@ -76,7 +75,8 @@ namespace BoneLib.BoneMenu
             }
             set
             {
-                _name = value;
+				_name = value;
+
                 Menu.Internal_OnPageUpdated(this);
             }
         }
@@ -156,10 +156,9 @@ namespace BoneLib.BoneMenu
         public Texture2D DefaultBackground => MenuBootstrap.defaultBackgroundTexture;
 
         public IReadOnlyList<Element> Elements => _elements.AsReadOnly();
-        public IReadOnlyList<SubPage> SubPages => _subPages.AsReadOnly();
-        public Dictionary<string, Page> ChildPages = new Dictionary<string, Page>();
+        public IReadOnlyList<Page> IndexPages => _indexPages.AsReadOnly();
         public int ElementCount => _elements.Count;
-        public int CurrentSubPage => _subPageIndex;
+        public int CurrentIndexPage => _pageIndex;
 
         public bool IsIndexedChild { get; private set; }
         public bool Filled => ElementCount == _maxElements;
@@ -174,12 +173,11 @@ namespace BoneLib.BoneMenu
         private float _elementSpacing = 60f;
 
         private List<Element> _elements = new List<Element>();
-        private List<SubPage> _subPages = new List<SubPage>();
-        private List<PageLinkElement> _links = new List<PageLinkElement>();
+        private List<Page> _indexPages = new List<Page>();
 
         private int _maxElements;
 
-        private int _subPageIndex = -1;
+        private int _pageIndex = -1;
 
         /// <summary>
         /// Adds an element to the page.
@@ -197,15 +195,15 @@ namespace BoneLib.BoneMenu
                     return;
                 }
 
-                SubPage available = FindAvailable();
+                Page available = FindAvailable();
                 if (available != null)
                 {
-                    AddElementToSubPage(available, element);
+                    AddElementToIndexPage(available, element);
                     return;
                 }
 
-                SubPage subPage = AddSubPage();
-                AddElementToSubPage(subPage, element);
+                Page indexPage = AddIndexPage();
+                AddElementToIndexPage(indexPage, element);
             }
             else
             {
@@ -220,9 +218,9 @@ namespace BoneLib.BoneMenu
         /// <param name="element">The element to remove.</param>
         public void Remove(Element element)
         {
-            if (element is PageLinkElement link)
+            if(element == null)
             {
-                _links.Remove(link);
+                return;
             }
 
             _elements.Remove(element);
@@ -231,37 +229,31 @@ namespace BoneLib.BoneMenu
 
         /// <summary>
         /// Removes multiple elements from the page.
-        /// If the page contains no elements, the page gets destroyed.
         /// </summary>
         /// <param name="elements">The group of elements to remove.</param>
         public void Remove(Element[] elements)
         {
-            HashSet<Element> query = _elements.ToHashSet();
-            query.IntersectWith(elements);
-
-            foreach (Element queryElement in query)
+			for(int i = elements.Length - 1; i >= 0; i--)
             {
-                if (queryElement is PageLinkElement link)
+				Element element = elements[i];
+				if(_elements.Contains(element))
                 {
-                    _links.Remove(link);
+                    Remove(element);
                 }
-
-                _elements.Remove(queryElement);
             }
-
-            if (ElementCount == 0)
-            {
-                Parent._subPages.Remove(this as SubPage);
-                Menu.DestroyPage(this);
-            }
-
-            Menu.Internal_OnPageUpdated(this);
         }
 
         /// <summary>
         /// Removes all elements from the page.
         /// </summary>
-        public void RemoveAll() => Remove(_elements.ToArray());
+        public void RemoveAll()
+        {
+			for(int i = _elements.Count - 1; i >= 0; i--)
+            {
+                //Not using Remove(Element[]) because _elements is a List and don't want to create garbage by doing ToArray
+				Remove(_elements[i]);
+            }
+        }
 
         /// <summary>
         /// Removes a child page.
@@ -269,27 +261,26 @@ namespace BoneLib.BoneMenu
         /// <param name="page">The page to remove.</param>
         public void RemovePage(Page page)
         {
-            if (page == null || string.IsNullOrEmpty(page.Name) || ChildPages.Count == 0)
-            {
-                return;
-            }
-
-            if (!ChildPages.TryGetValue(page.Name, out Page child))
-            {
-                ModConsole.Error($"Failed to remove child page {page.Name}");
-                return;
-            }
-
-            for (int i = 0; i < _links.Count; i++)
-            {
-                if (_links[i].LinkedPage == child)
-                {
-                    Remove(_links[i]);
-                }
-            }
-
-            Menu.DestroyPage(child);
+			Menu.DestroyPage(page);
         }
+
+        /// <summary>
+        /// Removes all page links on this page to the target.
+        /// </summary>
+        /// <param name="page"></param>
+        public void RemovePageLinks(Page page)
+        {
+			for(int i = _elements.Count - 1; i >= 0; i--)
+			{
+				if(_elements[i] is PageLinkElement link)
+				{
+					if(link.LinkedPage == page)
+					{
+						Remove(link);
+					}
+				}
+			}
+		}
 
         /// <summary>
         /// Removes a list of child pages.
@@ -309,22 +300,55 @@ namespace BoneLib.BoneMenu
         }
 
         /// <summary>
+        /// Get a child page by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public Page GetChildPage(string name)
+        {
+            foreach(var element in _elements)
+            {
+                if(element is PageLinkElement link)
+                {
+                    if(link.LinkedPage.Name == name)
+                    {
+                        return link.LinkedPage;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get a child page by name, returning if the page existed.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public bool TryGetChildPage(string name, out Page page)
+        {
+            page = GetChildPage(name);
+            return page != null;
+        }
+
+        /// <summary>
         /// Looks at the previous indexed page.
         /// </summary>
         /// <returns>The previous indexed page.</returns>
         public Page GetPreviousPage()
         {
-            if (_subPageIndex == 0)
+            if (_pageIndex == 0)
             {
-                return _subPages[0];
+                return _indexPages[0];
             }
-            else if (_subPages.Count == 0)
+            else if (_indexPages.Count == 0)
             {
                 return null;
             }
             else
             {
-                return _subPages[_subPageIndex - 1];
+                return _indexPages[_pageIndex - 1];
             }
         }
 
@@ -334,17 +358,17 @@ namespace BoneLib.BoneMenu
         /// <returns>The next indexed page.</returns>
         public Page GetNextPage()
         {
-            if (_subPageIndex + 1 >= _subPages.Count - 1)
+            if (_pageIndex + 1 >= _indexPages.Count - 1)
             {
-                return _subPages[_subPages.Count - 1];
+                return _indexPages[_indexPages.Count - 1];
             }
-            else if (_subPages.Count == 0)
+            else if (_indexPages.Count == 0)
             {
                 return null;
             }
             else
             {
-                return _subPages[_subPageIndex + 1];
+                return _indexPages[_pageIndex + 1];
             }
         }
 
@@ -354,16 +378,16 @@ namespace BoneLib.BoneMenu
         /// <returns></returns>
         public Page NextPage()
         {
-            if (_subPageIndex >= _subPages.Count - 1)
+            if (_pageIndex >= _indexPages.Count - 1)
             {
-                _subPageIndex = _subPages.Count - 1;
+                _pageIndex = _indexPages.Count - 1;
             }
             else
             {
-                _subPageIndex++;
+                _pageIndex++;
             }
 
-            return _subPages[_subPageIndex];
+            return _indexPages[_pageIndex];
         }
         
         /// <summary>
@@ -372,21 +396,21 @@ namespace BoneLib.BoneMenu
         /// <returns></returns>
         public Page PreviousPage()
         {
-            if (_subPageIndex == -1)
+            if (_pageIndex == -1)
             {
-                _subPageIndex = -1;
+                _pageIndex = -1;
             }
             else
             {
-                _subPageIndex--;
+                _pageIndex--;
             }
 
-            if (_subPageIndex <= 0)
+            if (_pageIndex <= 0)
             {
-                return _subPages[0];
+                return _indexPages[0];
             }
 
-            return _subPages[_subPageIndex];
+            return _indexPages[_pageIndex];
         }
 
         /// <summary>
@@ -409,13 +433,13 @@ namespace BoneLib.BoneMenu
         /// <returns></returns>
         public Page CreatePage(string name, Color color, int maxElements = 0, bool createLink = true)
         {
-            if (ChildPages.TryGetValue(name, out Page page))
+            if (TryGetChildPage(name, out Page page))
             {
                 return page;
             }
 
             page = new Page(parent: this, name, color, maxElements);
-            ChildPages.Add(name, page);
+            //ChildPages.Add(name, page);
             Menu.Internal_OnPageUpdated(this);
 
             if (createLink)
@@ -480,20 +504,19 @@ namespace BoneLib.BoneMenu
             Add(element);
 
             element.AssignPage(page);
-            _links.Add(element);
 
             return element;
         }
 
-        private SubPage FindAvailable()
+        private Page FindAvailable()
         {
-            SubPage found = null;
+            Page found = null;
 
-            for (int i = 0; i < _subPages.Count; i++)
+            for (int i = 0; i < _indexPages.Count; i++)
             {
-                if (!_subPages[i].Filled)
+                if (!_indexPages[i].Filled)
                 {
-                    found = _subPages[i];
+                    found = _indexPages[i];
                     break;
                 }
             }
@@ -501,20 +524,20 @@ namespace BoneLib.BoneMenu
             return found;
         }
 
-        private SubPage AddSubPage()
+        private Page AddIndexPage()
         {
-            SubPage subPage = new SubPage();
+            Page subPage = new Page();
             subPage._name = _name;
             subPage._color = _color;
             subPage._maxElements = _maxElements;
             subPage.Parent = this;
             subPage.IsIndexedChild = true;
             subPage.Background = Background;
-            _subPages.Add(subPage);
+            _indexPages.Add(subPage);
             return subPage;
         }
 
-        private void AddElementToSubPage(SubPage subPage, Element element)
+        private void AddElementToIndexPage(Page subPage, Element element)
         {
             if (subPage == null)
             {
