@@ -58,6 +58,10 @@ The VS project uses the system environment variable `BONELAB_DIR` for referencin
 
 ## Changelogs (BoneLib)
 
+#### v3.1.5:
+- Page bugs have been fixed and refactored (Camobiwon)
+- Fixed issues with the UI (adamdev, Camobiwon)
+
 #### v3.1.4:
 - Added dedicated function(s) for removing page children inside of the Page class
 - Added a new button to randomly change avatars and randomly spawn mod spawnables
