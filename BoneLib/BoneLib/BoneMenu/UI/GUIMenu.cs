@@ -51,7 +51,7 @@ namespace BoneLib.BoneMenu.UI
             _pageIndexText = contentTransform.Find("Footer/PageIndexText").GetComponent<TextMeshProUGUI>();
             _incrementPageButton = contentTransform.Find("Footer/NextPage").GetComponent<Button>();
 
-            _scrollRect = GetComponent<ScrollRect>();
+            _scrollRect = contentTransform.Find("Viewport").GetComponent<ScrollRect>();
             _scrollUpButton = contentTransform.Find("Interaction/ScrollUp").GetComponent<Button>();
             _scrollDownButton = contentTransform.Find("Interaction/ScrollDown").GetComponent<Button>();
 
@@ -125,14 +125,14 @@ namespace BoneLib.BoneMenu.UI
         {
             float elementSpacing = _verticalLayoutGroup.spacing;
             int numberOfElements = Menu.CurrentPage.ElementCount;
-            _scrollRect.velocity = Vector2.down * (elementSpacing * numberOfElements) / 4f;
+            _scrollRect.velocity = Vector2.down * (elementSpacing * numberOfElements) / 2f;
         }
 
         public void ScrollDown()
         {
             float elementSpacing = _verticalLayoutGroup.spacing;
             int numberOfElements = Menu.CurrentPage.ElementCount;
-            _scrollRect.velocity = Vector2.up * (elementSpacing * numberOfElements) / 4f;
+            _scrollRect.velocity = Vector2.up * (elementSpacing * numberOfElements) / 2f;
         }
 
         public void ConnectElementToKeyboard(GUIStringElement guiElement)
@@ -188,17 +188,17 @@ namespace BoneLib.BoneMenu.UI
             {
                 Page parent = page.Parent;
 
-                _decrementPageButton.gameObject.SetActive(parent.CurrentSubPage != -1);
-                _incrementPageButton.gameObject.SetActive(parent.CurrentSubPage != parent.SubPages.Count - 1);
+                _decrementPageButton.gameObject.SetActive(parent.CurrentIndexPage != -1);
+                _incrementPageButton.gameObject.SetActive(parent.CurrentIndexPage != parent.IndexPages.Count - 1);
                 _pageIndexText.gameObject.SetActive(true);
-                _pageIndexText.text = $"Page: {parent.CurrentSubPage + 1}/{parent.SubPages.Count}";
+                _pageIndexText.text = $"Page: {parent.CurrentIndexPage + 1}/{parent.IndexPages.Count}";
             }
-            else if (page.Indexed && page.SubPages.Count > 0)
+            else if (page.Indexed && page.IndexPages.Count > 0)
             {
-                _decrementPageButton.gameObject.SetActive(page.CurrentSubPage != -1);
-                _incrementPageButton.gameObject.SetActive(page.CurrentSubPage != page.SubPages.Count - 1);
+                _decrementPageButton.gameObject.SetActive(page.CurrentIndexPage != -1);
+                _incrementPageButton.gameObject.SetActive(page.CurrentIndexPage != page.IndexPages.Count - 1);
                 _pageIndexText.gameObject.SetActive(true);
-                _pageIndexText.text = $"Page: {page.CurrentSubPage + 1}/{page.SubPages.Count}";
+                _pageIndexText.text = $"Page: {page.CurrentIndexPage + 1}/{page.IndexPages.Count}";
             }
             else
             {

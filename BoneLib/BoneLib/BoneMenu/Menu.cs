@@ -29,7 +29,6 @@ namespace BoneLib.BoneMenu
         }
 
         public static Dialog ActiveDialog { get; private set; }
-        public static Dictionary<string, Page> PageDirectory = new Dictionary<string, Page>();
 
         private static bool _initialized = false;
         private static Page _currentPage;
@@ -48,13 +47,18 @@ namespace BoneLib.BoneMenu
         }
 
         /// <summary>
-        /// "Destroys" a page. If this page is selected, it will try to go to its parent
+        /// Destroys a page. If this page is selected, it will try to go to its parent
         /// when it gets destroyed.
         /// </summary>
         /// <param name="page"></param>
         public static void DestroyPage(Page page)
         {
-            if (page.IsIndexedChild && CurrentPage == page)
+			if(page == null)
+			{
+				return;
+			}
+
+			if (page.IsIndexedChild && CurrentPage == page)
             {
                 if (page.Parent.GetNextPage() != null)
                 {
@@ -70,28 +74,17 @@ namespace BoneLib.BoneMenu
             }
 
             Internal_OnPageRemoved(page);
-            PageDirectory.Remove(page.Name);
 
-            if (page.Parent.ChildPages.ContainsKey(page.Name))
+            if (page.Parent.TryGetChildPage(page.Name, out _))
             {
                 if (CurrentPage == page)
                 {
                     OpenPage(page.Parent);
                 }
 
-                page.Parent.ChildPages.Remove(page.Name);
+                //page.Parent.ChildPages.Remove(page.Name);
+                page.Parent.RemovePageLinks(page);
             }
-        }
-
-        public static void OpenPage(string pageName)
-        {
-            if (!PageDirectory.TryGetValue(pageName, out Page page))
-            {
-                OpenPage(Page.Root);
-                throw new KeyNotFoundException("Page does not exist!");
-            }
-
-            OpenPage(page);
         }
 
         public static void OpenPage(Page page)
@@ -101,9 +94,9 @@ namespace BoneLib.BoneMenu
                 OpenPage(Page.Root);
             }
 
-            if (page.SubPages.Count > 0 && page.CurrentSubPage != -1)
+            if (page.IndexPages.Count > 0 && page.CurrentIndexPage != -1)
             {
-                _currentPage = page.SubPages[page.CurrentSubPage];
+                _currentPage = page.IndexPages[page.CurrentIndexPage];
             }
             else
             {
@@ -125,7 +118,7 @@ namespace BoneLib.BoneMenu
 
             Page previousPage = CurrentPage.Parent.PreviousPage();
 
-            if (CurrentPage.Parent.CurrentSubPage == -1)
+            if (CurrentPage.Parent.CurrentIndexPage == -1)
             {
                 OpenPage(CurrentPage.Parent);
                 return;
