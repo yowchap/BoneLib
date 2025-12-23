@@ -28,41 +28,38 @@ Preferences are stored in `UserData\MelonPreferences.cfg`.
 
 <br>
 
-## Auto Updater
-By default this mod will automatically update to the latest release from github when you launch the game. If you want to disable this for any reason, set `OfflineMode` to `true` in the preferences file. If you haven't run the game yet and don't have that file, create it and add the following lines to it.
-```
-[BoneLibUpdater]
-OfflineMode = true
-```
-
-<br>
 
 ## Development Setup
-The VS project uses the system environment variable `BONELAB_DIR` for referencing assemblies and build output paths. Make sure you have this set on your computer to your BONELAB install location (where the .exe is, no trailing slash) for VS to be able to find the files. If this doesn't work right away, try deleting the `.vs` folder for this project and restarting VS.
+The VS project uses the system environment variable `BONELAB_DIR` for referencing assemblies and build output paths. 
+
+Make sure you have this set on your computer to your BONELAB install location (where the .exe is, no trailing slash) for VS to be able to find the files. If this doesn't work right away, try deleting the `.vs` folder for this project and restarting VS.
 
 <br>
 
 ## Credits
 
-**Gnonme / Lvna / Adi / Adamdev:** Main developers
-
-**Parzival:** Added enum with all game layers, improved documentation, made some extension method parameters optional
-
-**Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing, added InvokeActionSafe methods, added animal image popup methods
-
-**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added BoneMenu
-
-**Lakatrazz:** BoneMenu improvements, fixed issues after game updates
-
-**Trev:** LemonLoader support
-
-**SoulWithMae:** SpawnCrate helper methods, added a class with commonly used barcodes, added a notification system, added helper methods for loading stuff from embedded resources
-
-**WNP78:** Ported the mod to ML 0.6 and improved reference DLL handling
+- **Gnonme / Lvna / Adi / adamdev:** Main developers
+- **Parzival:** Added enum with all game layers, improved documentation, made some extension method parameters optional
+- **extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing, added InvokeActionSafe methods, added animal image popup methods
+- **adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added BoneMenu
+- **Lakatrazz:** BoneMenu improvements, fixed issues after game updates
+- **Trev:** LemonLoader support
+- **SoulWithMae:** SpawnCrate helper methods, added a class with commonly used barcodes, added a notification system, added helper methods for loading stuff from embedded resources
+- **WNP78:** Ported the mod to ML 0.6 and improved reference DLL handling
 
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v3.1.4:
+- Added dedicated function(s) for removing page children inside of the Page class
+- Added a new button to randomly change avatars and randomly spawn mod spawnables
+- Fixed animal ads not working
+- Fixed a bug with StringElements not disappearing like they should
+- Fixed a bug where string elements would collide with things in the world
+- Fixed a bug with pages not being removed properly
+- Fixed an issue with pages being changed when removed, even when not viewing them
+- Removed unneeded debug log when an element was being removed
 
 #### v3.0.0:
 - Complete overhaul of BoneMenu which features dialogs, string elements, and more
