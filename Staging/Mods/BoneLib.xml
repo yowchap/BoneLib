@@ -53,7 +53,7 @@
         </member>
         <member name="M:BoneLib.BoneMenu.Menu.DestroyPage(BoneLib.BoneMenu.Page)">
             <summary>
-            "Destroys" a page. If this page is selected, it will try to go to its parent
+            Destroys a page. If this page is selected, it will try to go to its parent
             when it gets destroyed.
             </summary>
             <param name="page"></param>
@@ -96,7 +96,6 @@
         <member name="M:BoneLib.BoneMenu.Page.Remove(BoneLib.BoneMenu.Element[])">
             <summary>
             Removes multiple elements from the page.
-            If the page contains no elements, the page gets destroyed.
             </summary>
             <param name="elements">The group of elements to remove.</param>
         </member>
@@ -111,11 +110,32 @@
             </summary>
             <param name="page">The page to remove.</param>
         </member>
+        <member name="M:BoneLib.BoneMenu.Page.RemovePageLinks(BoneLib.BoneMenu.Page)">
+            <summary>
+            Removes all page links on this page to the target.
+            </summary>
+            <param name="page"></param>
+        </member>
         <member name="M:BoneLib.BoneMenu.Page.RemovePages(BoneLib.BoneMenu.Page[])">
             <summary>
             Removes a list of child pages.
             </summary>
             <param name="pages">The page to remove.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.GetChildPage(System.String)">
+            <summary>
+            Get a child page by name.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Page.TryGetChildPage(System.String,BoneLib.BoneMenu.Page@)">
+            <summary>
+            Get a child page by name, returning if the page existed.
+            </summary>
+            <param name="name"></param>
+            <param name="page"></param>
+            <returns></returns>
         </member>
         <member name="M:BoneLib.BoneMenu.Page.GetPreviousPage">
             <summary>

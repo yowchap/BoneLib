@@ -36,13 +36,15 @@ The VS project uses the system environment variable `BONELAB_DIR` for referencin
 
 ## Credits
 
-**Gnonme / Lvna / Adi / Adamdev:** Main developers
+**Gnonme / Lvna / Adi / adamdev:** Main developers
 
 **Parzival:** Added enum with all game layers, improved documentation, made some extension method parameters optional
 
 **Extraes:** Ported nullable extension methods (originally made by WNP78) from MTINM, lots of testing, added InvokeActionSafe methods, added animal image popup methods
 
-**Adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added BoneMenu
+**adamdev:** Added events for NPC deaths and resurrections, and events for MarrowGame and MarrowScenes, added BoneMenu
+
+**Camobiwon:** Implemented fixes and QoL improvements into BoneMenu
 
 **Lakatrazz:** BoneMenu improvements, fixed issues after game updates
 
@@ -55,6 +57,10 @@ The VS project uses the system environment variable `BONELAB_DIR` for referencin
 <br>
 
 ## Changelogs (BoneLib)
+
+#### v3.1.5:
+- Page bugs have been fixed and refactored (Camobiwon)
+- Fixed issues with the UI (adamdev, Camobiwon)
 
 #### v3.1.4:
 - Added dedicated function(s) for removing page children inside of the Page class
