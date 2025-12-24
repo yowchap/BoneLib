@@ -3,6 +3,7 @@ using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;
 using Il2CppInterop.Runtime.Injection;
+using Il2CppSLZ.Marrow.Audio;
 using MelonLoader;
 
 namespace BoneLib
@@ -62,6 +63,7 @@ namespace BoneLib
         private void OnUIRigCreated()
         {
             MenuBootstrap.InitializeReferences();
+            Audio.Initialize();
         }
     }
 }

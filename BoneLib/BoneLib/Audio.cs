@@ -21,6 +21,50 @@ namespace BoneLib
         public static AudioMixerGroup SoftInteraction => Audio3dManager.softInteraction;
         public static AudioMixerGroup UI => Audio3dManager.ui;
 
+        private static Audio3dManager _audioManager;
+
+        internal static void Initialize()
+        {
+            _audioManager = GameObject.FindObjectOfType<Audio3dManager>();
+        }
+
+        /// <summary>
+        /// Sets the LPF on the master mixer. Values close to 1 sound clear, while values
+        /// close to 0 sound more muffled.
+        /// </summary>
+        public static void SetMuffle(float muffle)
+        {
+            const float baseLPF = 22000;
+            _audioManager.SetLowPassFilter(muffle * baseLPF);
+        }
+
+        /// <summary>
+        /// Sets the master volume. This affects music, sfx, and other mixers.
+        /// </summary>
+        /// <param name="volume"></param>
+        public static void SetMasterVolume(int volume)
+        {
+            Audio3dManager.audio_Master = volume;
+        }
+
+        /// <summary>
+        /// Sets music volume.
+        /// </summary>
+        /// <param name="volume"></param>
+        public static void SetMusicVolume(int volume)
+        {
+            Audio3dManager.audio_Music = volume;
+        }
+
+        /// <summary>
+        /// Sets sound effect volume.
+        /// </summary>
+        /// <param name="volume"></param>
+        public static void SetSFXVolume(int volume)
+        {
+            Audio3dManager.audio_SFX = volume;
+        }
+
         /// <summary>
         /// Plays an audio clip with no spatial blend. Will be heard everywhere.
         /// </summary>
