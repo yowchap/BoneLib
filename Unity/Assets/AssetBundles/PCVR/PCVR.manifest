@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 979077565
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: bonemenu.pack
+      Dependencies: {}
