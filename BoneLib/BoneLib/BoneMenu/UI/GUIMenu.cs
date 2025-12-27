@@ -97,7 +97,7 @@ namespace BoneLib.BoneMenu.UI
             // Restore the background, just in case if we click off
             MenuBootstrap.background.SetActive(true);
             // Disable any active dialogs
-            _guiDialog.gameObject.SetActive(false);
+            OnDialogClosed(Menu.ActiveDialog);
         }
 
         public void OpenKeyboard()
