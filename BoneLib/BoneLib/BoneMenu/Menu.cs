@@ -172,6 +172,20 @@ namespace BoneLib.BoneMenu
             dialog.Internal_OnDialogOpened();
         }
 
+        /// <summary>
+        /// Displays a dialog that can be used to inform the user.
+        /// Useful for when a destructive action is about to be done,
+        /// or can serve as an extra information window.
+        /// </summary>
+        public static void DisplayDialog(DialogData data)
+        {
+            Dialog dialog = new Dialog(data.Title, data.Message, data.Icon, data.Confirm, data.Deny);
+            dialog.SetPrimaryColor(data.Primary);
+            dialog.SetSecondaryColor(data.Secondary);
+            ActiveDialog = dialog;
+            dialog.Internal_OnDialogOpened();
+        }
+
         internal static void Internal_OnPageCreated(Page page)
         {
             OnPageCreated.InvokeActionSafe(page);

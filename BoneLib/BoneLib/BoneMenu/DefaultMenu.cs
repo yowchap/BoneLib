@@ -80,6 +80,26 @@ namespace BoneLib.BoneMenu
                         ModConsole.Msg("Hello from the Dialog confirm option!");
                     });
             });
+
+            Page tooltipPage = funStuffPage.CreatePage("Tooltip Page", Color.white);
+
+            var funcElementTooltip = tooltipPage.CreateFunction("Test Tooltip", Color.white, null);
+            funcElementTooltip.SetTooltip("This function actually does nothing.");
+
+            var intElementTooltip = tooltipPage.CreateInt("Test Tooltip (Int)", Color.white, 0, 1, 0, 10, null);
+            intElementTooltip.SetTooltip("This int stuff does nothing.");
+
+            var floatElementTooltip = tooltipPage.CreateFloat("Test Tooltip (Float)", Color.white, 0, 1, 0, 10, null);
+            floatElementTooltip.SetTooltip("This float stuff does nothing.");
+
+            var enumElementTooltip = tooltipPage.CreateEnum("Test Tooltip (Enum)", Color.white, ElementProperties.Default, null);
+            enumElementTooltip.SetTooltip("ElementProperties comes in two flavors: Password and NoBorder.");
+
+            var stringElementTooltip = tooltipPage.CreateString("Test Tooltip (String)", Color.white, "None", null);
+            stringElementTooltip.SetTooltip("This string element stuff is cool. There's a keyboard too.");
+
+            var boolElementTooltip = tooltipPage.CreateBool("Test Tooltip (Bool)", Color.white, false, null);
+            boolElementTooltip.SetTooltip("This bool stuff does nothing.");
         }
 
         internal static void SpawnUtilityGun()
