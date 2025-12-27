@@ -19,6 +19,10 @@ namespace BoneLib.BoneMenu.UI
         private Button _denyButton;
         private Button _closeButton;
 
+        private Image _background;
+        private Image _headerGradient;
+        private Image _bodyGradient;
+
         private void Awake()
         {
             _titleText = transform.Find("Header/Title").GetComponent<TextMeshProUGUI>();
@@ -27,6 +31,14 @@ namespace BoneLib.BoneMenu.UI
             _acceptButton = transform.Find("Container/ButtonGroup/Option1").GetComponent<Button>();
             _denyButton = transform.Find("Container/ButtonGroup/Option2").GetComponent<Button>();
             _closeButton = transform.Find("Header/Toggle").GetComponent<Button>();
+
+            _background = transform.Find("Background").GetComponent<Image>();
+            _headerGradient = transform.Find("Background/HeaderGradient").GetComponent<Image>();
+            _bodyGradient = transform.Find("Background/BodyGradient").GetComponent<Image>();
+
+            _background.color = Dialog.DefaultPrimaryColor;
+            _headerGradient.color = Dialog.DefaultSecondaryColor;
+            _bodyGradient.color = Dialog.DefaultSecondaryColor;
 
             gameObject.SetActive(false);
         }
@@ -72,6 +84,10 @@ namespace BoneLib.BoneMenu.UI
         {
             _titleText.text = _dialog.DialogTitle;
             _descriptionText.text = _dialog.DialogDescription;
+
+            _background.color = _dialog.PrimaryColor;
+            _headerGradient.color = _dialog.SecondaryColor;
+            _bodyGradient.color = _dialog.SecondaryColor;
 
             gameObject.SetActive(true);
 
