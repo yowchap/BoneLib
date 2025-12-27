@@ -23,8 +23,11 @@ namespace BoneLib.BoneMenu.UI
             _logo = transform.Find("Button/Logo").GetComponent<RawImage>();
             _button = transform.Find("Button").GetComponent<Button>();
             _backline = transform.Find("Button/Backline").gameObject;
+            _infoButton = transform.Find("Tooltip").GetComponent<Button>();
             _fitter = GetComponentInChildren<AspectRatioFitter>(true);
             _button.onClick.AddListener(() => OnPressed());
+            _infoButton.onClick.AddListener(() => Menu.DisplayDialog("INFO", _backingElement.ElementTooltip));
+            _infoButton.gameObject.SetActive(false);
         }
 
         public void AssignElement(FunctionElement element)
@@ -87,6 +90,8 @@ namespace BoneLib.BoneMenu.UI
 
                 _fitter.aspectRatio = width / height;
             }
+
+            _infoButton.gameObject.SetActive(_backingElement.HasTooltip);
         }
     }
 }

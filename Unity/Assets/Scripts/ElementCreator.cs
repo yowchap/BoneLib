@@ -64,16 +64,23 @@ public class ElementCreator : MonoBehaviour
 
         funStuffPage.CreateFunction("Make Dialog (New)", Color.white, () =>
         {
-            Menu.DisplayDialog(
-                "Test",
-                "This is a test message.",
-                primary: Dialog.DefaultPrimaryColor,
-                secondary: Color.red * 0.5f,
-                null,
-                () =>
+            DialogData dialog = new DialogData()
+            {
+                Title = "Test",
+                Message = "This is a test message.",
+                Primary = Dialog.DefaultPrimaryColor,
+                Secondary = Color.red * 0.5f,
+                Icon = null,
+                Confirm = () =>
                 {
                     Debug.Log("Hello from the Dialog confirm option!");
-                });
+                }
+            };
+
+            Menu.DisplayDialog(dialog);
         });
+
+        var funcElementTooltip = funStuffPage.CreateFunction("Test Tooltip", Color.white, null);
+        funcElementTooltip.SetTooltip("This function actually does nothing.");
     }
 }

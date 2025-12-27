@@ -185,11 +185,11 @@ namespace BoneLib.BoneMenu
         /// <param name="secondary">The dialog's secondary color, being the subtle gradients.</param>
         /// <param name="confirmAction">The code that will run when the "Yes" button is pressed.</param>
         /// <param name="denyAction">The code that will run when the "No" button is pressed.</param>
-        public static void DisplayDialog(string title, string message, Color primary, Color secondary, Texture2D icon = null, Action confirmAction = null, Action denyAction = null)
+        public static void DisplayDialog(DialogData data)
         {
-            Dialog dialog = new Dialog(title, message, icon, confirmAction, denyAction);
-            dialog.SetPrimaryColor(primary);
-            dialog.SetSecondaryColor(secondary);
+            Dialog dialog = new Dialog(data.Title, data.Message, data.Icon, data.Confirm, data.Deny);
+            dialog.SetPrimaryColor(data.Primary);
+            dialog.SetSecondaryColor(data.Secondary);
             ActiveDialog = dialog;
             dialog.Internal_OnDialogOpened();
         }
