@@ -61,6 +61,7 @@ The VS project uses the system environment variable `BONELAB_DIR` for referencin
 #### v3.2.0:
 - Added tooltips, so that modders can explain what each mod setting does
 - Added the ability for dialog boxes to have their colors customized
+- Added simple audio functions (change sfx, music, muffle)
 - Fixed wrong visuals on dialog boxes due to overlapping bundle assets
 - Fixed an issue with the dialog box still persisting when the menu was closed
 
