@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 7440906458684579855}
   - component: {fileID: 7456188275086873000}
   m_Layer: 5
-  m_Name: Gradient
+  m_Name: HeaderGradient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2924528, g: 0.28537512, b: 0.10898005, a: 1}
+  m_Color: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -1273,7 +1273,7 @@ GameObject:
   - component: {fileID: 1434474131788512927}
   - component: {fileID: 6053230112756287350}
   m_Layer: 5
-  m_Name: Gradient
+  m_Name: BodyGradient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2537217, g: 0.254717, b: 0.12135102, a: 1}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1705,28 +1705,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd8876b2edb11842871a21ad560f4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dialog:
-    _dialogTitle: WARNING
-    _dialogDescription: Are you sure you want to leave your active Fusion server?
-    _dialogIcon: {fileID: 0}
-    _dialogOptions: -1
-    _confirmFunction:
-      _elementName: Yes
-      _elementColor: {r: 0.040236473, g: 1, b: 0, a: 1}
-      _elementType: 
-      _elementTooltip: 
-      _logo: {fileID: 0}
-    _declineFunction:
-      _elementName: No
-      _elementColor: {r: 1, g: 0, b: 0, a: 1}
-      _elementType: 
-      _elementTooltip: 
-      _logo: {fileID: 0}
-  _titleText: {fileID: 6061678915672537922}
-  _descriptionText: {fileID: 5119814366458318724}
-  _confirmButton: {fileID: 0}
-  _cancelButton: {fileID: 0}
-  _closeButton: {fileID: 0}
 --- !u!1 &6964603318182600430
 GameObject:
   m_ObjectHideFlags: 0

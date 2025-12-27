@@ -23,6 +23,10 @@ namespace BoneLib.BoneMenu.UI
         {
         }
 
+        public virtual void OnTooltipPressed()
+        {
+        }
+
         public virtual void Draw()
         {
             gameObject.SetActive(true);

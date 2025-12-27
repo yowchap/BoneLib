@@ -51,7 +51,6 @@ namespace BoneLib.BoneMenu
             }
         }
 
-        [System.Obsolete("ToolTips were planned to be added, but never finished and they do not do anything")]
         public bool HasTooltip => !string.IsNullOrEmpty(_elementTooltip);
 
         public ElementProperties Properties { get; private set; }
@@ -92,7 +91,6 @@ namespace BoneLib.BoneMenu
             OnElementChanged.InvokeActionSafe();
         }
 
-        [System.Obsolete("ToolTips were planned to be added, but never finished and they do not do anything")]
         public void SetTooltip(string tooltip)
         {
             _elementTooltip = tooltip;

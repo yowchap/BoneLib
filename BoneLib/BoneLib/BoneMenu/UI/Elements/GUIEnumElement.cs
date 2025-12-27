@@ -22,8 +22,11 @@ namespace BoneLib.BoneMenu.UI
             _nameText = transform.Find("Name").GetComponent<TextMeshProUGUI>();
             _valueText = transform.Find("Value").GetComponent<TextMeshProUGUI>();
             _button = transform.Find("Button").GetComponent<Button>();
+            _infoButton = transform.Find("Tooltip").GetComponent<Button>();
 
             _button.onClick.AddListener(new System.Action(() => OnPressed()));
+            _infoButton.onClick.AddListener(new System.Action(() => Menu.DisplayDialog("INFO", _backingElement.ElementTooltip)));
+            _infoButton.gameObject.SetActive(false);
         }
         [HideFromIl2Cpp]
         public void AssignElement(EnumElement element)
@@ -57,6 +60,8 @@ namespace BoneLib.BoneMenu.UI
             _nameText.color = _backingElement.ElementColor;
 
             _valueText.text = _backingElement.Value.ToString();
+
+            _infoButton.gameObject.SetActive(_backingElement.HasTooltip);
         }
 
         public override void OnPressed()
