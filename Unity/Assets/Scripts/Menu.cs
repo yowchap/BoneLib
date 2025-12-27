@@ -173,6 +173,27 @@ namespace BoneLib.BoneMenu
             dialog.Internal_OnDialogOpened();
         }
 
+        /// <summary>
+        /// Displays a dialog that can be used to inform the user.
+        /// Useful for when a destructive action is about to be done,
+        /// or can serve as an extra information window.
+        /// </summary>
+        /// <param name="title">The title of the dialog.</param>
+        /// <param name="message">The message that will be displayed to the user.</param>
+        /// <param name="icon">The icon that will sit alongside the title. Optional.</param>
+        /// <param name="primary">The dialog's primary color, which is just the background.</param>
+        /// <param name="secondary">The dialog's secondary color, being the subtle gradients.</param>
+        /// <param name="confirmAction">The code that will run when the "Yes" button is pressed.</param>
+        /// <param name="denyAction">The code that will run when the "No" button is pressed.</param>
+        public static void DisplayDialog(string title, string message, Color primary, Color secondary, Texture2D icon = null, Action confirmAction = null, Action denyAction = null)
+        {
+            Dialog dialog = new Dialog(title, message, icon, confirmAction, denyAction);
+            dialog.SetPrimaryColor(primary);
+            dialog.SetSecondaryColor(secondary);
+            ActiveDialog = dialog;
+            dialog.Internal_OnDialogOpened();
+        }
+
         internal static void Internal_OnPageCreated(Page page)
         {
             OnPageCreated?.Invoke(page);
