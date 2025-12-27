@@ -58,6 +58,12 @@ The VS project uses the system environment variable `BONELAB_DIR` for referencin
 
 ## Changelogs (BoneLib)
 
+#### v3.2.0:
+- Added tooltips, so that modders can explain what each mod setting does
+- Added the ability for dialog boxes to have their colors customized
+- Fixed wrong visuals on dialog boxes due to overlapping bundle assets
+- Fixed an issue with the dialog box still persisting when the menu was closed
+
 #### v3.1.5:
 - Page bugs have been fixed and refactored (Camobiwon)
 - Fixed issues with the UI (adamdev, Camobiwon)

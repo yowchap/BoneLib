@@ -4,6 +4,30 @@
         <name>BoneLib</name>
     </assembly>
     <members>
+        <member name="M:BoneLib.Audio.SetMuffle(System.Single)">
+            <summary>
+            Sets the LPF on the master mixer. Values close to 1 sound clear, while values
+            close to 0 sound more muffled.
+            </summary>
+        </member>
+        <member name="M:BoneLib.Audio.SetMasterVolume(System.Int32)">
+            <summary>
+            Sets the master volume. This affects music, sfx, and other mixers.
+            </summary>
+            <param name="volume"></param>
+        </member>
+        <member name="M:BoneLib.Audio.SetMusicVolume(System.Int32)">
+            <summary>
+            Sets music volume.
+            </summary>
+            <param name="volume"></param>
+        </member>
+        <member name="M:BoneLib.Audio.SetSFXVolume(System.Int32)">
+            <summary>
+            Sets sound effect volume.
+            </summary>
+            <param name="volume"></param>
+        </member>
         <member name="M:BoneLib.Audio.Play2DOneShot(UnityEngine.AudioClip,UnityEngine.Audio.AudioMixerGroup,System.Single,System.Single)">
             <summary>
             Plays an audio clip with no spatial blend. Will be heard everywhere.
@@ -51,6 +75,36 @@
             <param name="position"></param>
             <param name="callback"></param>
         </member>
+        <member name="T:BoneLib.BoneMenu.DialogData">
+            <summary>
+            Parameter structure for passing in to Menu.DisplayDialog.
+            </summary>
+        </member>
+        <member name="F:BoneLib.BoneMenu.DialogData.Title">
+            <summary>
+            The title of the dialog. Careful not to use too many characters!
+            </summary>
+        </member>
+        <member name="F:BoneLib.BoneMenu.DialogData.Message">
+            <summary>
+            The message of the dialog.
+            </summary>
+        </member>
+        <member name="F:BoneLib.BoneMenu.DialogData.Primary">
+            <summary>
+            Background color.
+            </summary>
+        </member>
+        <member name="F:BoneLib.BoneMenu.DialogData.Secondary">
+            <summary>
+            Gradient color (header and background).
+            </summary>
+        </member>
+        <member name="F:BoneLib.BoneMenu.DialogData.Icon">
+            <summary>
+            Dialog icon that appears in the top-left corner.
+            </summary>
+        </member>
         <member name="M:BoneLib.BoneMenu.Menu.DestroyPage(BoneLib.BoneMenu.Page)">
             <summary>
             Destroys a page. If this page is selected, it will try to go to its parent
@@ -79,6 +133,13 @@
             <param name="icon">The icon that will sit alongside the title. Optional.</param>
             <param name="confirmAction">The code that will run when the "Yes" button is pressed.</param>
             <param name="denyAction">The code that will run when the "No" button is pressed.</param>
+        </member>
+        <member name="M:BoneLib.BoneMenu.Menu.DisplayDialog(BoneLib.BoneMenu.DialogData)">
+            <summary>
+            Displays a dialog that can be used to inform the user.
+            Useful for when a destructive action is about to be done,
+            or can serve as an extra information window.
+            </summary>
         </member>
         <member name="M:BoneLib.BoneMenu.Page.Add(BoneLib.BoneMenu.Element)">
             <summary>
