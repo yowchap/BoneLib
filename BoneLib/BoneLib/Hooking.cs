@@ -51,9 +51,10 @@ namespace BoneLib
         public static event Action<Avatar> OnSwitchAvatarPrefix;
         public static event Action<Avatar> OnSwitchAvatarPostfix;
 
-        public static event Action<float> OnPlayerDamageRecieved;
-        public static event Action<bool> OnPlayerDeathImminent;
-        public static event Action OnPlayerDeath;
+        public static event Action<RigManager, float> OnPlayerDamageReceived;
+        public static event Action<RigManager> OnPlayerDeathImminent;
+        public static event Action<RigManager> OnPlayerDeath;
+        public static event Action<RigManager> OnPlayerResurrected;
 
         // Interaction
         public static event Action<GameObject, Hand> OnGrabObject;
@@ -105,9 +106,10 @@ namespace BoneLib
 
             CreateHook(typeof(PlayerMarker).GetMethod(nameof(PlayerMarker.OnPlayerSpawned), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerSpawned), AccessTools.all));
 
-            Player_Health.add_OnPlayerDamageReceived(OnPlayerDamageRecieved);
-            Player_Health.add_OnDeathImminent(OnPlayerDeathImminent);
-            Player_Health.add_OnPlayerDeath(OnPlayerDeath);
+            CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.TAKEDAMAGE), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerDamageReceivedPostfix), AccessTools.all));
+            CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.ApplyKillDamage), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerDeathImminentPostfix), AccessTools.all));
+            CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.Death), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerDeathPostfix), AccessTools.all));
+            CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.LifeSavingDamgeDealt), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerResurrectedPostfix), AccessTools.all));
 
             while (delayedHooks.Count > 0)
             {
@@ -213,6 +215,10 @@ namespace BoneLib
         private static void OnKillNPCStart(BehaviourBaseNav __instance) => SafeActions.InvokeActionSafe(OnNPCKillStart, __instance);
         private static void OnKillNPCEnd(BehaviourBaseNav __instance) => SafeActions.InvokeActionSafe(OnNPCKillEnd, __instance);
 
+        private static void OnPlayerDamageReceivedPostfix(Player_Health __instance, float damage) => SafeActions.InvokeActionSafe(OnPlayerDamageReceived, __instance._rigManager, damage);
+        private static void OnPlayerDeathPostfix(Player_Health __instance) => SafeActions.InvokeActionSafe(OnPlayerDeath, __instance._rigManager);
+        private static void OnPlayerDeathImminentPostfix(Player_Health __instance) => SafeActions.InvokeActionSafe(OnPlayerDeathImminent, __instance._rigManager);
+        private static void OnPlayerResurrectedPostfix(Player_Health __instance) => SafeActions.InvokeActionSafe(OnPlayerResurrected, __instance._rigManager);
 
         private struct DelayedHookData
         {
