@@ -8,8 +8,11 @@ namespace BoneLib.BoneMenu
     public static class Menu
     {
         public static event Action<Page> OnPageCreated;
+
         public static event Action<Page> OnPageOpened;
+
         public static event Action<Page> OnPageUpdated;
+
         public static event Action<Page> OnPageRemoved;
 
         public static Page CurrentPage
@@ -26,7 +29,6 @@ namespace BoneLib.BoneMenu
         }
 
         public static Dialog ActiveDialog { get; private set; }
-        public static Dictionary<string, Page> PageDirectory = new Dictionary<string, Page>();
 
         private static bool _initialized = false;
         private static Page _currentPage;
@@ -45,13 +47,18 @@ namespace BoneLib.BoneMenu
         }
 
         /// <summary>
-        /// "Destroys" a page. If this page is selected, it will try to go to its parent
+        /// Destroys a page. If this page is selected, it will try to go to its parent
         /// when it gets destroyed.
         /// </summary>
         /// <param name="page"></param>
         public static void DestroyPage(Page page)
         {
-            if (page.IsIndexedChild)
+			if(page == null)
+			{
+				return;
+			}
+
+			if (page.IsIndexedChild && CurrentPage == page)
             {
                 if (page.Parent.GetNextPage() != null)
                 {
@@ -67,23 +74,17 @@ namespace BoneLib.BoneMenu
             }
 
             Internal_OnPageRemoved(page);
-            PageDirectory.Remove(page.Name);
 
-            if (page.Parent.ChildPages.ContainsKey(page.Name))
+            if (page.Parent.TryGetChildPage(page.Name, out _))
             {
-                page.Parent.ChildPages.Remove(page.Name);
-            }
-        }
+                if (CurrentPage == page)
+                {
+                    OpenPage(page.Parent);
+                }
 
-        public static void OpenPage(string pageName)
-        {
-            if (!PageDirectory.TryGetValue(pageName, out Page page))
-            {
-                OpenPage(Page.Root);
-                throw new KeyNotFoundException("Page does not exist!");
+                //page.Parent.ChildPages.Remove(page.Name);
+                page.Parent.RemovePageLinks(page);
             }
-
-            OpenPage(page);
         }
 
         public static void OpenPage(Page page)
@@ -93,15 +94,15 @@ namespace BoneLib.BoneMenu
                 OpenPage(Page.Root);
             }
 
-            if (page.SubPages.Count > 0 && page.CurrentSubPage != -1)
+            if (page.IndexPages.Count > 0 && page.CurrentIndexPage != -1)
             {
-                _currentPage = page.SubPages[page.CurrentSubPage];
+                _currentPage = page.IndexPages[page.CurrentIndexPage];
             }
             else
             {
                 _currentPage = page;
             }
-            
+
             Internal_OnPageOpened(_currentPage);
         }
 
@@ -117,7 +118,7 @@ namespace BoneLib.BoneMenu
 
             Page previousPage = CurrentPage.Parent.PreviousPage();
 
-            if (CurrentPage.Parent.CurrentSubPage == -1)
+            if (CurrentPage.Parent.CurrentIndexPage == -1)
             {
                 OpenPage(CurrentPage.Parent);
                 return;
@@ -140,7 +141,7 @@ namespace BoneLib.BoneMenu
                 OpenPage(CurrentPage.NextPage());
             }
         }
-        
+
         public static void OpenParentPage()
         {
             if (CurrentPage.IsIndexedChild)
@@ -155,8 +156,8 @@ namespace BoneLib.BoneMenu
         }
 
         /// <summary>
-        /// Displays a dialog that can be used to inform the user. 
-        /// Useful for when a destructive action is about to be done, 
+        /// Displays a dialog that can be used to inform the user.
+        /// Useful for when a destructive action is about to be done,
         /// or can serve as an extra information window.
         /// </summary>
         /// <param name="title">The title of the dialog.</param>
@@ -167,6 +168,20 @@ namespace BoneLib.BoneMenu
         public static void DisplayDialog(string title, string message, Texture2D icon = null, Action confirmAction = null, Action denyAction = null)
         {
             Dialog dialog = new Dialog(title, message, icon, confirmAction, denyAction);
+            ActiveDialog = dialog;
+            dialog.Internal_OnDialogOpened();
+        }
+
+        /// <summary>
+        /// Displays a dialog that can be used to inform the user.
+        /// Useful for when a destructive action is about to be done,
+        /// or can serve as an extra information window.
+        /// </summary>
+        public static void DisplayDialog(DialogData data)
+        {
+            Dialog dialog = new Dialog(data.Title, data.Message, data.Icon, data.Confirm, data.Deny);
+            dialog.SetPrimaryColor(data.Primary);
+            dialog.SetSecondaryColor(data.Secondary);
             ActiveDialog = dialog;
             dialog.Internal_OnDialogOpened();
         }

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+
 using Il2CppTMPro;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +11,9 @@ namespace BoneLib.BoneMenu.UI
     [MelonLoader.RegisterTypeInIl2Cpp(false)]
     public sealed class Keyboard : MonoBehaviour
     {
-        public Keyboard(IntPtr ptr) : base(ptr) { }
+        public Keyboard(IntPtr ptr) : base(ptr)
+        {
+        }
 
         public TMP_InputField InputField => _inputField;
 
@@ -63,7 +67,6 @@ namespace BoneLib.BoneMenu.UI
 
             _connectedElement.Value = _inputField.text;
             _connectedElement.OnElementSelected();
-            _connectedGUIElement.Draw();
         }
     }
 }

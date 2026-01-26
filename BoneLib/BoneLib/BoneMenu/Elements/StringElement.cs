@@ -1,18 +1,20 @@
 using System;
+
 using UnityEngine;
 
 namespace BoneLib.BoneMenu
 {
     public sealed class StringElement : Element
     {
-        public StringElement(string name, Color color, string startValue, Action<string> callback = null) : base(name, color)
+        public StringElement(string name, Color color, string startValue = "", Action<string> callback = null) : base(name, color)
         {
             _elementName = name;
             _elementColor = color;
             _startValue = startValue;
-            _callback = callback;
+            _value = _startValue;
+            Callback = callback;
         }
-        
+
         public string Value
         {
             get
@@ -28,12 +30,12 @@ namespace BoneLib.BoneMenu
 
         private string _startValue;
         private string _value;
-        private Action<string> _callback;
+        public Action<string> Callback { get; set; }
 
         public override void OnElementSelected()
         {
             base.OnElementSelected();
-            _callback.InvokeActionSafe(_value);
+            Callback.InvokeActionSafe(_value);
         }
     }
 }

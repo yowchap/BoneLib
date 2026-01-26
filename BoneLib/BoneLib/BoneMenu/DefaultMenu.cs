@@ -1,11 +1,14 @@
 ﻿using BoneLib.Notifications;
 using BoneLib.RandomShit;
 
+using Il2CppSLZ.Bonelab;
 using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Warehouse;
 
 using UnityEngine;
+
+using static BoneLib.CommonBarcodes;
 
 namespace BoneLib.BoneMenu
 {
@@ -46,6 +49,7 @@ namespace BoneLib.BoneMenu
             itemSpawningPage.CreateFunction("Spawn Random Melee", Color.white, SpawnRandomMelee);
             itemSpawningPage.CreateFunction("Spawn Random NPC", Color.white, SpawnRandomNPC);
             itemSpawningPage.CreateFunction("Load Random Level", Color.white, LoadRandomLevel);
+            itemSpawningPage.CreateFunction("Change Into Random Avatar", Color.white, ChangeIntoRandomAvatar);
 
             funStuffPage.CreateFunction("Spawn Ad", Color.white, () => PopupBoxManager.CreateNewPopupBox());
             funStuffPage.CreateFunction("Spawn Shibe Ad", Color.white, () => PopupBoxManager.CreateNewShibePopup());
@@ -68,13 +72,34 @@ namespace BoneLib.BoneMenu
             funStuffPage.CreateFunction("Make Dialog", Color.white, () =>
             {
                 Menu.DisplayDialog(
-                    "Test", 
-                    "This is a test message. Don't worry about it.", 
-                    null, 
-                    () => { 
-                        ModConsole.Msg("Hello from the Dialog confirm option!"); 
-                    }); 
+                    "Test",
+                    "This is a test message. Don't worry about it.",
+                    null,
+                    () =>
+                    {
+                        ModConsole.Msg("Hello from the Dialog confirm option!");
+                    });
             });
+
+            Page tooltipPage = funStuffPage.CreatePage("Tooltip Page", Color.white);
+
+            var funcElementTooltip = tooltipPage.CreateFunction("Test Tooltip", Color.white, null);
+            funcElementTooltip.SetTooltip("This function actually does nothing.");
+
+            var intElementTooltip = tooltipPage.CreateInt("Test Tooltip (Int)", Color.white, 0, 1, 0, 10, null);
+            intElementTooltip.SetTooltip("This int stuff does nothing.");
+
+            var floatElementTooltip = tooltipPage.CreateFloat("Test Tooltip (Float)", Color.white, 0, 1, 0, 10, null);
+            floatElementTooltip.SetTooltip("This float stuff does nothing.");
+
+            var enumElementTooltip = tooltipPage.CreateEnum("Test Tooltip (Enum)", Color.white, ElementProperties.Default, null);
+            enumElementTooltip.SetTooltip("ElementProperties comes in two flavors: Password and NoBorder.");
+
+            var stringElementTooltip = tooltipPage.CreateString("Test Tooltip (String)", Color.white, "None", null);
+            stringElementTooltip.SetTooltip("This string element stuff is cool. There's a keyboard too.");
+
+            var boolElementTooltip = tooltipPage.CreateBool("Test Tooltip (Bool)", Color.white, false, null);
+            boolElementTooltip.SetTooltip("This bool stuff does nothing.");
         }
 
         internal static void SpawnUtilityGun()
@@ -88,10 +113,13 @@ namespace BoneLib.BoneMenu
             Transform head = Player.Head;
             HelperMethods.SpawnCrate(CommonBarcodes.Misc.NimbusGun, head.position + head.forward, default, Vector3.one, false, null);
         }
-        
+
         internal static void SpawnRandomGun()
         {
             Transform head = Player.Head;
+
+            if (!AssetWarehouse.ready)
+                return;
 
             int index = Random.RandomRangeInt(0, CommonBarcodes.Guns.All.Count);
             string barcode = CommonBarcodes.Guns.All[index];
@@ -102,28 +130,49 @@ namespace BoneLib.BoneMenu
         internal static void SpawnRandomMelee()
         {
             Transform head = Player.Head;
-            
+
+            if (!AssetWarehouse.ready)
+                return;
+
             int index = Random.RandomRangeInt(0, CommonBarcodes.Melee.All.Count);
             string barcode = CommonBarcodes.Melee.All[index];
-            
+
             HelperMethods.SpawnCrate(barcode, head.position + head.forward, default, Vector3.one, false, null);
         }
-        
+
         internal static void SpawnRandomNPC()
         {
             Transform player = Player.PhysicsRig.artOutput.transform;
+
+            if (!AssetWarehouse.ready)
+                return;
+
             int index = Random.RandomRangeInt(0, CommonBarcodes.NPCs.All.Count);
             string barcode = CommonBarcodes.NPCs.All[index];
-            
+
             HelperMethods.SpawnCrate(barcode, player.position + player.forward, default, Vector3.one, false, null);
         }
 
         internal static void LoadRandomLevel()
         {
+            if (!AssetWarehouse.ready)
+                return;
+
             int index = Random.RandomRangeInt(0, CommonBarcodes.Maps.All.Count);
             string barcode = CommonBarcodes.Maps.All[index];
             
             HelperMethods.FadeLoadLevel(barcode);
+        }
+
+        internal static void ChangeIntoRandomAvatar()
+        {
+            if (!AssetWarehouse.ready)
+                return;
+
+            int index = Random.RandomRangeInt(0, CommonBarcodes.Avatars.All.Count);
+            string barcode = CommonBarcodes.Avatars.All[index];
+
+            Player.RigManager.SwapAvatarCrate(new(barcode), true);
         }
     }
 }

@@ -22,9 +22,12 @@ namespace BoneLib.BoneMenu.UI
             _nameText = transform.Find("Name").GetComponent<TextMeshProUGUI>();
             _inputField = GetComponent<TMP_InputField>();
             _keyboardButton = transform.Find("ShowKeyboard").GetComponent<Button>();
+            _infoButton = transform.Find("Tooltip").GetComponent<Button>();
 
             _keyboardButton.onClick.AddListener(new System.Action(() => OpenKeyboard()));
             _inputField.onSubmit.AddListener(new System.Action<string>((str) => OnInputFieldSubmit(str)));
+            _infoButton.onClick.AddListener(new System.Action(() => Menu.DisplayDialog("INFO", _backingElement.ElementTooltip)));
+            _infoButton.gameObject.SetActive(false);
         }
 
         [HideFromIl2Cpp]
@@ -60,6 +63,8 @@ namespace BoneLib.BoneMenu.UI
             _nameText.color = _backingElement.ElementColor;
 
             _inputField.text = _backingElement.Value;
+
+            _infoButton.gameObject.SetActive(_backingElement.HasTooltip);
         }
 
         private void OnInputFieldSubmit(string input)

@@ -27,8 +27,12 @@ namespace BoneLib.BoneMenu.UI
             _decrement = transform.Find("Decrement").GetComponent<Button>();
             _increment = transform.Find("Increment").GetComponent<Button>();
 
+            _infoButton = transform.Find("Tooltip").GetComponent<Button>();
+
             _decrement.onClick.AddListener(new System.Action(() => OnDecrement()));
             _increment.onClick.AddListener(new System.Action(() => OnIncrement()));
+            _infoButton.onClick.AddListener(new System.Action(() => Menu.DisplayDialog("INFO", _backingElement.ElementTooltip)));
+            _infoButton.gameObject.SetActive(false);
         }
         [HideFromIl2Cpp]
         public void AssignElement(FloatElement element)
@@ -63,6 +67,8 @@ namespace BoneLib.BoneMenu.UI
             _nameText.color = _backingElement.ElementColor;
 
             _valueText.text = _backingElement.Value.ToString("0.####", CultureInfo.InvariantCulture);
+
+            _infoButton.gameObject.SetActive(_backingElement.HasTooltip);
         }
 
         public void OnIncrement()
