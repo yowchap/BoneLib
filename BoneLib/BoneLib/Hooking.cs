@@ -1,23 +1,21 @@
 ﻿using HarmonyLib;
-using MelonLoader;
-
+using Il2CppSLZ.Bonelab;
+using Il2CppSLZ.Marrow;
+using Il2CppSLZ.Marrow.AI;
+using Il2CppSLZ.Marrow.Data;
+using Il2CppSLZ.Marrow.PuppetMasta;
 using Il2CppSLZ.Marrow.SceneStreaming;
 using Il2CppSLZ.Marrow.Utilities;
 using Il2CppSLZ.Marrow.Warehouse;
 using Il2CppSLZ.VRMK;
-
+using MelonLoader;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-
 using UnityEngine;
-
-using Il2CppSLZ.Marrow.AI;
-using Il2CppSLZ.Marrow.PuppetMasta;
-using Il2CppSLZ.Marrow;
-using Il2CppSLZ.Bonelab;
+using static MelonLoader.MelonLogger;
 
 namespace BoneLib
 {
@@ -55,6 +53,8 @@ namespace BoneLib
         public static event Action<RigManager> OnPlayerDeathImminent;
         public static event Action<RigManager> OnPlayerDeath;
         public static event Action<RigManager> OnPlayerResurrected;
+        
+        public static event Action<CartridgeData, int> OnAmmoInventoryRemoveCartridge;
 
         // Interaction
         public static event Action<GameObject, Hand> OnGrabObject;
@@ -110,6 +110,8 @@ namespace BoneLib
             CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.ApplyKillDamage), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerDeathImminentPostfix), AccessTools.all));
             CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.Death), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerDeathPostfix), AccessTools.all));
             CreateHook(typeof(Player_Health).GetMethod(nameof(Player_Health.LifeSavingDamgeDealt), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnPlayerResurrectedPostfix), AccessTools.all));
+
+            CreateHook(typeof(AmmoInventory).GetMethod(nameof(AmmoInventory.RemoveCartridge), AccessTools.all), typeof(Hooking).GetMethod(nameof(OnAmmoInventoryRemoveCartridgePostfix), AccessTools.all));
 
             while (delayedHooks.Count > 0)
             {
@@ -219,6 +221,8 @@ namespace BoneLib
         private static void OnPlayerDeathPostfix(Player_Health __instance) => SafeActions.InvokeActionSafe(OnPlayerDeath, __instance._rigManager);
         private static void OnPlayerDeathImminentPostfix(Player_Health __instance) => SafeActions.InvokeActionSafe(OnPlayerDeathImminent, __instance._rigManager);
         private static void OnPlayerResurrectedPostfix(Player_Health __instance) => SafeActions.InvokeActionSafe(OnPlayerResurrected, __instance._rigManager);
+
+        private static void OnAmmoInventoryRemoveCartridgePostfix(AmmoInventory __instance, CartridgeData cartridge, int count) => SafeActions.InvokeActionSafe(OnAmmoInventoryRemoveCartridge, cartridge, count);
 
         private struct DelayedHookData
         {
