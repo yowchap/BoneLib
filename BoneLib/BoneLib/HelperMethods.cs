@@ -1,6 +1,7 @@
 ﻿using System;
 using MelonLoader;
 using System.Text.RegularExpressions;
+using Il2CppInterop.Runtime.InteropTypes;
 using Il2CppSLZ.Marrow.Data;
 using Il2CppSLZ.Marrow.Pool;
 using Il2CppSLZ.Marrow.SceneStreaming;
@@ -150,6 +151,83 @@ namespace BoneLib
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Checks if the collection contains a specific Il2Cpp object.
+        /// On Android it compares the <see cref="Il2CppObjectBase.Pointer"/> of each object
+        /// instead of the objects themselves.
+        /// On Windows it behaves identically to <see cref="ICollection{T}.Contains(T)"/>.
+        /// </summary>
+        public static bool ContainsIl2Cpp<T>(this ICollection<T> coll, T item) where T : Il2CppObjectBase
+        {
+            if (MelonUtils.IsWindows)
+                return coll.Contains(item);
+            foreach (var x in coll)
+                if (x.Pointer == item.Pointer)
+                    return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Removes the first occurrence of a specific Il2Cpp object from the collection.
+        /// On Android it compares the <see cref="Il2CppObjectBase.Pointer"/> of each object
+        /// instead of the objects themselves.
+        /// On Windows it behaves identically to <see cref="ICollection{T}.Remove(T)"/>.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="item"/> was removed; otherwise, <see langword="false"/>.
+        /// </returns>
+        public static bool RemoveIl2Cpp<T>(this ICollection<T> coll, T item) where T : Il2CppObjectBase
+        {
+            if (MelonUtils.IsWindows)
+            {
+                return coll.Remove(item);
+            }
+            else if (coll is IList<T> list)
+            {
+                for (int i = 0; i < list.Count; i++)
+                    if (list[i].Pointer == item.Pointer)
+                    {
+                        list.RemoveAt(i);
+                        return true;
+                    }
+                return false;
+            }
+            else
+            {
+                T match = null;
+                bool found = false;
+                foreach (var x in coll)
+                    if (x.Pointer == item.Pointer)
+                    {
+                        match = x;
+                        found = true;
+                        break;
+                    }
+                if (found)
+                    return coll.Remove(match);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Gets the index of a specific Il2Cpp object in the list.
+        /// On Android it compares the <see cref="Il2CppObjectBase.Pointer"/> of each object
+        /// instead of the objects themselves.
+        /// On Windows it behaves identically to <see cref="IList{T}.IndexOf(T)"/>.
+        /// </summary>
+        /// <returns>
+        /// The index of <paramref name="item"/> if found in the list; otherwise, -1.
+        /// </returns>
+        public static int IndexOfIl2Cpp<T>(this IList<T> list, T item) where T : Il2CppObjectBase
+        {
+            if (MelonUtils.IsWindows)
+                return list.IndexOf(item);
+            for (int i = 0; i < list.Count; i++)
+                if (list[i].Pointer == item.Pointer)
+                    return i;
+            return -1;
         }
     }
 }
