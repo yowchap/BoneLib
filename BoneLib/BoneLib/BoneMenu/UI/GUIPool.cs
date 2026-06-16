@@ -43,12 +43,6 @@ namespace BoneLib.BoneMenu.UI
         {
             GameObject clone = GetFirst(_inactiveObjects);
 
-            if (_inactiveObjects.Count == 0)
-            {
-                Grow(_size);
-                return Spawn(parent);
-            }
-
             _activeObjects.Add(clone);
             _inactiveObjects.Remove(clone);
             clone.transform.SetParent(parent);
@@ -112,8 +106,9 @@ namespace BoneLib.BoneMenu.UI
         private GameObject GetFirst(List<GameObject> list)
         {
             GameObject found = null;
+            int i;
 
-            for (int i = 0; i < list.Count; i++)
+            for (i = 0; i < list.Count; i++)
             {
                 if (list[i] == null)
                 {
@@ -127,7 +122,11 @@ namespace BoneLib.BoneMenu.UI
                 }
             }
 
-            return found;
+            if (found != null)
+                return found;
+
+            Grow(_size);
+            return list[i];
         }
     }
 }
