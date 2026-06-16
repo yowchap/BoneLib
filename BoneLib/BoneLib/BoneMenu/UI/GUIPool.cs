@@ -86,7 +86,7 @@ namespace BoneLib.BoneMenu.UI
         public void OnReturn(GUIPoolee poolee)
         {
             _inactiveObjects.Add(poolee.gameObject);
-            _activeObjects.Remove(poolee.gameObject);
+            _activeObjects.RemoveIl2Cpp(poolee.gameObject);
             poolee.gameObject.SetActive(false);
             poolee.transform.SetParent(transform);
         }
