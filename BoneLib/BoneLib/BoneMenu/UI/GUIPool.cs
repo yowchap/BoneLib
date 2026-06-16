@@ -64,6 +64,11 @@ namespace BoneLib.BoneMenu.UI
             {
                 GameObject activeObject = _activeObjects[i];
 
+                if (activeObject == null)
+                {
+                    _activeObjects.RemoveAt(i--);
+                    continue;
+                }
                 if (!activeObject.TryGetComponent(out GUIPoolee poolee))
                 {
                     continue;
@@ -110,6 +115,11 @@ namespace BoneLib.BoneMenu.UI
 
             for (int i = 0; i < list.Count; i++)
             {
+                if (list[i] == null)
+                {
+                    list.RemoveAt(i--);
+                    continue;
+                }
                 if (!list[i].activeInHierarchy)
                 {
                     found = list[i];
