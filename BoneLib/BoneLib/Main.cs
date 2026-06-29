@@ -3,6 +3,7 @@ using BoneLib.MonoBehaviours;
 using BoneLib.Notifications;
 using BoneLib.RandomShit;
 using Il2CppInterop.Runtime.Injection;
+using Il2CppSLZ.Marrow;
 using Il2CppSLZ.Marrow.Audio;
 using MelonLoader;
 
@@ -37,6 +38,7 @@ namespace BoneLib
 
             Hooking.OnLevelLoaded += OnLevelLoaded;
             Hooking.OnUIRigCreated += OnUIRigCreated;
+            Hooking.OnAmmoInventoryRemoveCartridge += OnAmmoInventoryRemoveCartridge;
 
             ClassInjector.RegisterTypeInIl2Cpp<PopupBox>();
 
@@ -64,6 +66,14 @@ namespace BoneLib
         {
             MenuBootstrap.InitializeReferences();
             Audio.Initialize();
+        }
+
+        private void OnAmmoInventoryRemoveCartridge(Il2CppSLZ.Marrow.Data.CartridgeData cartridge, int count)
+        {
+            if (Preferences.infiniteAmmo.entry.Value)
+            {
+                AmmoInventory.Instance.AddCartridge(cartridge, count);
+            }
         }
     }
 }
