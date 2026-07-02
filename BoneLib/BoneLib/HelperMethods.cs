@@ -161,7 +161,7 @@ namespace BoneLib
         /// </summary>
         public static bool ContainsIl2Cpp<T>(this ICollection<T> coll, T item) where T : Il2CppObjectBase
         {
-            if (MelonUtils.IsWindows)
+            if (MelonUtils.IsWindows || item == null)
                 return coll.Contains(item);
             foreach (var x in coll)
                 if (x.Pointer == item.Pointer)
@@ -180,7 +180,7 @@ namespace BoneLib
         /// </returns>
         public static bool RemoveIl2Cpp<T>(this ICollection<T> coll, T item) where T : Il2CppObjectBase
         {
-            if (MelonUtils.IsWindows)
+            if (MelonUtils.IsWindows || item == null)
             {
                 return coll.Remove(item);
             }
@@ -222,7 +222,7 @@ namespace BoneLib
         /// </returns>
         public static int IndexOfIl2Cpp<T>(this IList<T> list, T item) where T : Il2CppObjectBase
         {
-            if (MelonUtils.IsWindows)
+            if (MelonUtils.IsWindows || item == null)
                 return list.IndexOf(item);
             for (int i = 0; i < list.Count; i++)
                 if (list[i].Pointer == item.Pointer)
