@@ -115,7 +115,7 @@ namespace BoneLib
                 volume,
                 pitch,
                 new Il2CppSystem.Nullable<float>(0f),
-                new Il2CppSystem.Nullable<float>(0f),
+                new Il2CppSystem.Nullable<float>(1f),
                 new Il2CppSystem.Nullable<float>(spatialBlend));
         }
 
@@ -137,7 +137,7 @@ namespace BoneLib
                 volume,
                 pitch,
                 new Il2CppSystem.Nullable<float>(0f),
-                new Il2CppSystem.Nullable<float>(0f),
+                new Il2CppSystem.Nullable<float>(1f),
                 new Il2CppSystem.Nullable<float>(spatialBlend));
         }
 
