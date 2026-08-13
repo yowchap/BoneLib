@@ -352,6 +352,36 @@
              Checks if an assembly is loaded from name
              </summary>
         </member>
+        <member name="M:BoneLib.HelperMethods.ContainsIl2Cpp``1(System.Collections.Generic.ICollection{``0},``0)">
+            <summary>
+            Checks if the collection contains a specific Il2Cpp object.
+            On Android it compares the <see cref="P:Il2CppInterop.Runtime.InteropTypes.Il2CppObjectBase.Pointer"/> of each object
+            instead of the objects themselves.
+            On Windows it behaves identically to <see cref="M:System.Collections.Generic.ICollection`1.Contains(`0)"/>.
+            </summary>
+        </member>
+        <member name="M:BoneLib.HelperMethods.RemoveIl2Cpp``1(System.Collections.Generic.ICollection{``0},``0)">
+            <summary>
+            Removes the first occurrence of a specific Il2Cpp object from the collection.
+            On Android it compares the <see cref="P:Il2CppInterop.Runtime.InteropTypes.Il2CppObjectBase.Pointer"/> of each object
+            instead of the objects themselves.
+            On Windows it behaves identically to <see cref="M:System.Collections.Generic.ICollection`1.Remove(`0)"/>.
+            </summary>
+            <returns>
+            <see langword="true"/> if <paramref name="item"/> was removed; otherwise, <see langword="false"/>.
+            </returns>
+        </member>
+        <member name="M:BoneLib.HelperMethods.IndexOfIl2Cpp``1(System.Collections.Generic.IList{``0},``0)">
+            <summary>
+            Gets the index of a specific Il2Cpp object in the list.
+            On Android it compares the <see cref="P:Il2CppInterop.Runtime.InteropTypes.Il2CppObjectBase.Pointer"/> of each object
+            instead of the objects themselves.
+            On Windows it behaves identically to <see cref="M:System.Collections.Generic.IList`1.IndexOf(`0)"/>.
+            </summary>
+            <returns>
+            The index of <paramref name="item"/> if found in the list; otherwise, -1.
+            </returns>
+        </member>
         <member name="E:BoneLib.Hooking.OnLevelLoading">
             <summary>
             Called at the start of a loading screen.
