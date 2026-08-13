@@ -43,12 +43,6 @@ namespace BoneLib.BoneMenu.UI
         {
             GameObject clone = GetFirst(_inactiveObjects);
 
-            if (_inactiveObjects.Count == 0)
-            {
-                Grow(_size);
-                return Spawn(parent);
-            }
-
             _activeObjects.Add(clone);
             _inactiveObjects.Remove(clone);
             clone.transform.SetParent(parent);
@@ -64,6 +58,11 @@ namespace BoneLib.BoneMenu.UI
             {
                 GameObject activeObject = _activeObjects[i];
 
+                if (activeObject == null)
+                {
+                    _activeObjects.RemoveAt(i--);
+                    continue;
+                }
                 if (!activeObject.TryGetComponent(out GUIPoolee poolee))
                 {
                     continue;
@@ -86,7 +85,7 @@ namespace BoneLib.BoneMenu.UI
         public void OnReturn(GUIPoolee poolee)
         {
             _inactiveObjects.Add(poolee.gameObject);
-            _activeObjects.Remove(poolee.gameObject);
+            _activeObjects.RemoveIl2Cpp(poolee.gameObject);
             poolee.gameObject.SetActive(false);
             poolee.transform.SetParent(transform);
         }
@@ -107,9 +106,15 @@ namespace BoneLib.BoneMenu.UI
         private GameObject GetFirst(List<GameObject> list)
         {
             GameObject found = null;
+            int i;
 
-            for (int i = 0; i < list.Count; i++)
+            for (i = 0; i < list.Count; i++)
             {
+                if (list[i] == null)
+                {
+                    list.RemoveAt(i--);
+                    continue;
+                }
                 if (!list[i].activeInHierarchy)
                 {
                     found = list[i];
@@ -117,7 +122,11 @@ namespace BoneLib.BoneMenu.UI
                 }
             }
 
-            return found;
+            if (found != null)
+                return found;
+
+            Grow(_size);
+            return list[i];
         }
     }
 }
